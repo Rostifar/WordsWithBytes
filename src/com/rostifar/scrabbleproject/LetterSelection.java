@@ -25,6 +25,16 @@ public class LetterSelection {
             for (int f = 0; f < integer_list[j]; f++)
                 adding_characters.add(letters_list[j]);
         }
+        
+         int list_factorial = adding_characters.size();
+        if(Max_letters < 7) {
+            Random rand = new Random();
+            int randomNum = rand.nextInt((100 - 0) + 1) + 0;
+            char selected_letter = adding_characters.get(randomNum);
+            System.out.println(selected_letter);
+
+
+        }
 
 
 
