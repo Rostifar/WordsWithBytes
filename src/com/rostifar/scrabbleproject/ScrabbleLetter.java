@@ -11,7 +11,7 @@ public class ScrabbleLetter {
 
     public ScrabbleLetter(char letter) {
         this.letter = letter;
-        pointValue = findPointValueForLetter();
+        pointValue = findPointValueForLetter(letter);
     }
 
     //Prevent use of default constructor
@@ -35,7 +35,33 @@ public class ScrabbleLetter {
      * lookup the point value (from 1 - 10) for the specified letter based on the scrabble alphabet map.
      * @return the point value (from 1 - 10)
      */
-    private int findPointValueForLetter() {
-        return 1;
+    private int findPointValueForLetter(char letter) {
+
+        if (letter == ' ')
+            return 0;
+
+        if ("LSUNRTOAIE".indexOf(Character.toUpperCase(letter)) > 0)
+            return 1;
+
+        if ("GD".indexOf(Character.toUpperCase(letter)) > 0)
+            return 2;
+
+        if ("BCMP".indexOf(Character.toUpperCase(letter)) > 0)
+            return 3;
+
+        if ("FHVWY".indexOf(Character.toUpperCase(letter)) > 0)
+            return 4;
+
+        if (letter == 'K')
+            return 5;
+
+        if ("JX".indexOf(Character.toUpperCase(letter)) > 0)
+            return 8;
+
+        if ("QZ".indexOf(Character.toUpperCase(letter)) > 0)
+            return 10;
+
+        return 0;
+
     }
 }

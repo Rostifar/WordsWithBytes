@@ -13,16 +13,22 @@ public class ScrabbleAlphabetFactory {
 
 
     public void init() {
-        loadForZeroPoints();
+
+        loadLetters();
+
     }
 
-    private void loadLettersValuedAtZeroPoints() {
-        letterMap.put(' ', createDuplicateLetters(' ' , 2));
-    }
 
-    private void loadLettersValuedAt1Point() {
+
+    /**
+     * Load Scrabble letters for the various point values
+     */
+    private void loadLetters() {
 
         ArrayList<ScrabbleLetter> lettersValuedAtOnePoint = new ArrayList<>();
+
+
+        letterMap.put(Character.valueOf(' '), createDuplicateLetters(' ' , 2));
 
         letterMap.put(Character.valueOf('L'), createDuplicateLetters('L', 4));
         letterMap.put(Character.valueOf('S'), createDuplicateLetters('S', 4));
