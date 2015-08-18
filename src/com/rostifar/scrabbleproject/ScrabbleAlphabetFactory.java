@@ -46,6 +46,12 @@ public class ScrabbleAlphabetFactory {
         letterMap.put(Character.valueOf('E'), createDuplicateLetters('E', 12));
     }
 
+    /**
+     * Create multiple instances of the same letter.
+     * @param letter scrabble alphabet letter to duplicate
+     * @param numberOfDuplications number of duplicates to create
+     * @return result List of duplciate letters
+     */
     private List<ScrabbleLetter> createDuplicateLetters(char letter, int numberOfDuplications) {
         List<ScrabbleLetter> duplicateListOfLetters;
         duplicateListOfLetters = new ArrayList<>();
