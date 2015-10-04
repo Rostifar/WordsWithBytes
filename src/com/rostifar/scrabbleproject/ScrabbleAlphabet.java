@@ -1,7 +1,7 @@
 package com.rostifar.scrabbleproject;
 
 /**
- * Created by d14048 on 8/19/2015.
+ * Created by Dad. Not sure why because I havn't worked on this for so long :P
  */
 public interface ScrabbleAlphabet {
 
