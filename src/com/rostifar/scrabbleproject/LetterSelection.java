@@ -1,9 +1,8 @@
 package com.rostifar.scrabbleproject;
 
-import javax.xml.stream.events.Characters;
-import java.lang.reflect.Array;
-import java.security.SecureRandom;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by ross on 7/25/15.
@@ -12,7 +11,7 @@ public class LetterSelection {
 
     private char[] letters_list = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}; // This and the array below both hold letters and their respective quantity. ex: letters_list[1] -> integer_list[1]
     private int[] integer_list = {9, 2, 2, 4, 12, 2, 3, 2, 9, 1, 1, 4, 2, 6, 8, 2, 1, 6, 4, 6, 4, 2, 2, 1, 2, 1};
-
+    private static final int MAX_LETTERS = 7; //FIXME - what should this value be?
 
 
 
@@ -27,7 +26,7 @@ public class LetterSelection {
         }
         
          int list_factorial = adding_characters.size();
-        if(Max_letters < 7) {
+        if (MAX_LETTERS < 7) {
             Random rand = new Random();
             int randomNum = rand.nextInt((100 - 0) + 1) + 0;
             char selected_letter = adding_characters.get(randomNum);
