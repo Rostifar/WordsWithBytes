@@ -8,5 +8,6 @@ package com.rostifar.scrabbleproject;
 public class ScrabbleLetter {
     private char letter;
     private int pointValue = 0;
+    protected int numberoflettersleft;
 
 }

@@ -8,7 +8,7 @@ public class GameManager {
 
     boolean isfirstround;
 
-    boolean isgameover;
+    protected boolean isgameover;
 
     public void setup(){}
 

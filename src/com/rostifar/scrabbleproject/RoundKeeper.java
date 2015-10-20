@@ -9,26 +9,27 @@ public class RoundKeeper {
 
 
     GameManager gameManager;
+    ScrabbleLetter scrabbleLetter;
+    ScrabbleBoard scrabbleBoard;
 
 
-
-    int roundKeeper(){
+    int roundKeeper() {
 
         if (gameManager.isfirstround == true) {
             numberofturns = 0;
 
-            for (numberofturns = 0; numberofturns < 100; numberofturns ++) {
+            for (numberofturns = 0; numberofturns < 100; numberofturns++) {
 
-                if (numberofletterleft == 0 || numberofspacesremaining == 0) {
+                if (scrabbleLetter.numberoflettersleft == 0 || scrabbleBoard.numberofspacesremaining == 0) {
                     return numberofturns;
-                }
-                else if(isgameover == true){
+                } else if (gameManager.isgameover == true) {
                     return numberofturns;
                 }
             }
 
 
-
         }
+        return numberofturns;
     }
 }
+

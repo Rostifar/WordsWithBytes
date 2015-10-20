@@ -6,6 +6,7 @@ package com.rostifar.scrabbleproject;
 public class ScrabbleBoard {
     public static final int ROW_LENGTH = 15;
     public static final int COLUMN_LENGTH = 15;
+    protected int numberofspacesremaining;
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
