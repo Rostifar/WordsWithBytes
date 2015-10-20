@@ -6,6 +6,10 @@ package com.rostifar.scrabbleproject;
  */
 public class GameManager {
 
+    boolean isfirstround;
+
+    boolean isgameover;
+
     public void setup(){}
 
     public void determineFirstPlayer(){}

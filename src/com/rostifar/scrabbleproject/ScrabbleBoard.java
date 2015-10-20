@@ -10,9 +10,9 @@ public class ScrabbleBoard {
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
     public void setupBoard() {
-        for (int col = 0; col < COLUMN_LENGTH col++) {
-            for (int row = 0; col < ROW_LENGTH row++) {
-                case col()
+        for (int col = 0; col < COLUMN_LENGTH; col++) {
+            for (int row = 0; col < ROW_LENGTH; row++) {
+                case col
             }
         }
     }
