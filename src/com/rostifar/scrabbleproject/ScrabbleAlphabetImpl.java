@@ -5,11 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Cal Briden (Dad)
- * Concrete implementation of ScrabbleAlphabet
- */
-public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
+public class ScrabbleAlphabetImpl  {
     private Map<Character, List<ScrabbleLetter>> letterMap = new HashMap<>();
 
     /**
@@ -25,7 +21,21 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
      */
     private void loadLetters() {
 
+        ArrayList<ScrabbleLetter> lettersValuedAtZeroPoints = new ArrayList<>();
+
         ArrayList<ScrabbleLetter> lettersValuedAtOnePoint = new ArrayList<>();
+
+        ArrayList<ScrabbleLetter> lettersValuedAtTwoPoints = new ArrayList<>();
+
+        ArrayList<ScrabbleLetter> letterValuedAtThreePoints = new ArrayList<>();
+
+        ArrayList<ScrabbleLetter> lettersValuedAtFourPoints = new ArrayList<>();
+
+        ArrayList<ScrabbleLetter> lettersValuedAtFivePoints = new ArrayList<>();
+
+        ArrayList<ScrabbleLetter> lettersValuedAtEightPoints = new ArrayList<>();
+
+        ArrayList<ScrabbleLetter> lettersValuedAtTenPoints = new ArrayList<>();
 
         letterMap.put(Character.valueOf(' '), createDuplicateLetters(' ' , 2));
 
@@ -43,6 +53,38 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         letterMap.put(Character.valueOf('I'), createDuplicateLetters('I', 9));
 
         letterMap.put(Character.valueOf('E'), createDuplicateLetters('E', 12));
+
+        letterMap.put(Character.valueOf('D'), createDuplicateLetters('D', 4));
+        letterMap.put(Character.valueOf('G'), createDuplicateLetters('G', 3));
+
+        letterMap.put(Character.valueOf('B'), createDuplicateLetters('B', 2));
+        letterMap.put(Character.valueOf('C'), createDuplicateLetters('C', 2));
+        letterMap.put(Character.valueOf('M'), createDuplicateLetters('M', 2));
+        letterMap.put(Character.valueOf('P'), createDuplicateLetters('P', 2));
+
+        letterMap.put(Character.valueOf('F'), createDuplicateLetters('F', 2));
+        letterMap.put(Character.valueOf('H'), createDuplicateLetters('H', 2));
+        letterMap.put(Character.valueOf('V'), createDuplicateLetters('V', 2));
+        letterMap.put(Character.valueOf('W'), createDuplicateLetters('W', 2));
+        letterMap.put(Character.valueOf('Y'), createDuplicateLetters('Y', 2));
+
+        letterMap.put(Character.valueOf('K'), createDuplicateLetters('K', 1));
+
+        letterMap.put(Character.valueOf('J'), createDuplicateLetters('J', 1));
+        letterMap.put(Character.valueOf('X'), createDuplicateLetters('X', 1));
+
+        letterMap.put(Character.valueOf('Q'), createDuplicateLetters('Q', 1));
+        letterMap.put(Character.valueOf('Z'), createDuplicateLetters('Z', 1));
+
+        System.out.println(letterMap);
+
+
+
+
+
+
+
+
     }
 
     /**
@@ -51,12 +93,14 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
      * @param numberOfDuplications number of duplicates to create
      * @return result List of duplciate letters
      */
-    private List<ScrabbleLetter> createDuplicateLetters(char letter, int numberOfDuplications) {
-        List<ScrabbleLetter> duplicateListOfLetters;
-        duplicateListOfLetters = new ArrayList<>();
 
-        for (int dupCntr = 0; dupCntr < numberOfDuplications; dupCntr++) {
-            duplicateListOfLetters.add(new ScrabbleLetter(letter));
+
+
+    private List<ScrabbleLetter> createDuplicateLetters(char letter, int numberOfDuplications) {
+        List<ScrabbleLetter> duplicateListOfLetters = new ArrayList<>();
+
+        for (int dupCounter = 0; dupCounter < numberOfDuplications; dupCounter++) {
+            duplicateListOfLetters.add(new ScrabbleLetter());
         }
         return duplicateListOfLetters;
     }

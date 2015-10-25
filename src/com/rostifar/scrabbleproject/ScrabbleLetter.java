@@ -6,7 +6,7 @@ package com.rostifar.scrabbleproject;
  * see  https://en.wikipedia.org/wiki/Scrabble_letter_distributions
  */
 public class ScrabbleLetter {
-    private char letter;
+    public char letter;
     private int pointValue = 0;
     protected int numberoflettersleft;
 

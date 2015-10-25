@@ -13,7 +13,6 @@ public class ScrabbleBoard {
     public void setupBoard() {
         for (int col = 0; col < COLUMN_LENGTH; col++) {
             for (int row = 0; col < ROW_LENGTH; row++) {
-                case col
             }
         }
     }

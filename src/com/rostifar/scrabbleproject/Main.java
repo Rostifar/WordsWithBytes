@@ -5,6 +5,16 @@ package com.rostifar.scrabbleproject;
  */
 public class Main {
     public static void main(String[] args) {
+
+        Main main = new Main();
+        main.setupGame();
+    }
+
+    public void setupGame() {
+
+        ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
+
+
     }
 
 
