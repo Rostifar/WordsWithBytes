@@ -7,6 +7,16 @@ package com.rostifar.scrabbleproject;
  */
 public class ScrabbleLetter {
     private char letter;
-    private int pointValue = 0;
+    private PointValue pointValue;
 
+    public ScrabbleLetter(char aLetter, int aPointValue) {
+        letter = aLetter;
+        pointValue = new PointValue(aPointValue);
+
+    }
+
+    @Override
+    public String toString() {
+        return "ScrabbleLetter: " + letter + "\tPoint value: " + pointValue + "\t";
+    }
 }

@@ -56,7 +56,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         duplicateListOfLetters = new ArrayList<>();
 
         for (int dupCntr = 0; dupCntr < numberOfDuplications; dupCntr++) {
-            duplicateListOfLetters.add(new ScrabbleLetter(letter));
+            duplicateListOfLetters.add(new ScrabbleLetter(letter, 0));
         }
         return duplicateListOfLetters;
     }
