@@ -8,4 +8,12 @@ package com.rostifar.scrabbleproject;
  */
 public interface ScrabbleAlphabet {
 
+    void sortLettersByNumberValue();
+
+
+
+
+
+
+
 }
