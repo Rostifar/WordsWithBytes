@@ -5,21 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ScrabbleAlphabetImpl  {
+public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
     private Map<Character, List<ScrabbleLetter>> letterMap = new HashMap<>();
 
-    /**
-     * Constructor is private. Use Factory class to create instances.
-     */
-    protected ScrabbleAlphabetImpl() {
-        loadLetters();
-    }
 
-
-    /**
-     * Load Scrabble letters for the various point values
-     */
-    private void loadLetters() {
+    public void sortLettersByNumberValue() {
 
         ArrayList<ScrabbleLetter> lettersValuedAtZeroPoints = new ArrayList<>();
 
@@ -36,6 +26,26 @@ public class ScrabbleAlphabetImpl  {
         ArrayList<ScrabbleLetter> lettersValuedAtEightPoints = new ArrayList<>();
 
         ArrayList<ScrabbleLetter> lettersValuedAtTenPoints = new ArrayList<>();
+
+    }
+
+    /**
+     *
+     *
+     * Constructor is private. Use Factory class to create instances.
+     */
+    protected ScrabbleAlphabetImpl() {
+        loadLetters();
+    }
+
+
+    /**
+     *
+     * Load Scrabble letters for the various point values
+     */
+    private void loadLetters() {
+
+
 
         letterMap.put(Character.valueOf(' '), createDuplicateLetters(' ' , 2));
 
@@ -76,8 +86,6 @@ public class ScrabbleAlphabetImpl  {
         letterMap.put(Character.valueOf('Q'), createDuplicateLetters('Q', 1));
         letterMap.put(Character.valueOf('Z'), createDuplicateLetters('Z', 1));
 
-        System.out.println(letterMap);
-
 
 
 
@@ -103,6 +111,7 @@ public class ScrabbleAlphabetImpl  {
             duplicateListOfLetters.add(new ScrabbleLetter());
         }
         return duplicateListOfLetters;
+
     }
 
 }
