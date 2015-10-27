@@ -6,37 +6,15 @@ package com.rostifar.scrabbleproject;
 public class Main {
     public static void main(String[] args) {
 
-
-
-
-            Main main1 = new Main();
-        main1.newLetterSelection();
-
-       // main1.newGUI();
-        main1.newGameManager();
-        main1.newGameGrid();
-
+        Main main = new Main();
+        main.setupGame();
     }
 
-    public void newLetterSelection() {
-        LetterSelection letter = new LetterSelection();
-        letter.setupLetter();
-    }
+    public void setupGame() {
 
-    public void newGameGrid() {
-        GameBoard gameboard = new GameBoard();
-    }
+        ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
 
-    public void newGameManager() {
-        GameManager gamemanager = new GameManager();
 
-        gamemanager.setupInput();
-
-    }
-
-    public void newGUI() {
-        GUI gui1 = new GUI();
-        gui1.GUI_Setup();
     }
 
 

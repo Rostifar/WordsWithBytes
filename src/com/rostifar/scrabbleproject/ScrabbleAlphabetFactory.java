@@ -10,8 +10,5 @@ import java.util.Map;
  */
 public class ScrabbleAlphabetFactory implements ScrabbleAlphabet {
 
-    public static ScrabbleAlphabet createInstance() {
-        return new ScrabbleAlphabetImpl();
-    }
 
 }
