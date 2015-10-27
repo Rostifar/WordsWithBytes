@@ -9,9 +9,9 @@ public class ScrabbleLetter {
     private char letter;
     private PointValue pointValue;
 
-    public ScrabbleLetter(char aLetter, int aPointValue) {
+    public ScrabbleLetter(char aLetter) {
         letter = aLetter;
-        pointValue = new PointValue(aPointValue);
+       // pointValue = new PointValue(aPointValue);
 
     }
 

@@ -5,7 +5,7 @@ package com.rostifar.scrabbleproject;
  */
 public class RoundKeeper {
 
-    protected int numberofturns;
+    protected int numberOfTurns;
 
 
     GameManager gameManager;
@@ -13,14 +13,14 @@ public class RoundKeeper {
     ScrabbleBoard scrabbleBoard;
 
 
-    int roundKeeper() {
+    /*int roundKeeper() {
 
-        if (gameManager.isfirstround == true) {
+        if (gameManager.isfirstround) {
             numberofturns = 0;
 
             for (numberofturns = 0; numberofturns < 100; numberofturns++) {
 
-                if (scrabbleLetter.numberoflettersleft == 0 || scrabbleBoard.numberofspacesremaining == 0) {
+                if (scrabbleLetter. == 0 || scrabbleBoard.numberofspacesremaining == 0) {
                     return numberofturns;
                 } else if (gameManager.isgameover == true) {
                     return numberofturns;
@@ -30,6 +30,6 @@ public class RoundKeeper {
 
         }
         return numberofturns;
-    }
+    } */
 }
 

@@ -7,10 +7,13 @@ public class Square {
     private SquareEnum squareType;
     private ScrabbleLetter letter;
 
+
     public Square() {
         squareType = SquareEnum.PLAIN;
     }
-    public Square(SquareEnum typeOfSquare) {
+
+    public Square(SquareEnum typeOfSquare)
+    {
         squareType = typeOfSquare;
     }
 
@@ -23,19 +26,23 @@ public class Square {
     }
 
     public boolean isTripleWord() {
-        return  squareType.equals(SquareEnum.TRIPPLE_WORD);
+        return  squareType.equals(SquareEnum.TRIPLE_WORD);
     }
 
     public boolean isDoubleLetter() {
         return squareType.equals(SquareEnum.DOUBLE_LETTER);
     }
 
-    public boolean isTripleLetter() {
-        return  squareType.equals(SquareEnum.TRIPPLE_WORD);
+    public boolean isTripleLetter()
+    {
+        return  squareType.equals(SquareEnum.TRIPLE_LETTER);
     }
 
     public boolean isCenterSquare() {
         return  squareType.equals(SquareEnum.STAR);
+    }
 
+    public String toString() {
+        return squareType.toString();
     }
 }

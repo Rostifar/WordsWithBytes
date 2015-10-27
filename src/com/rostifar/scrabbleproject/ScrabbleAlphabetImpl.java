@@ -25,7 +25,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
      */
     private void loadLetters() {
 
-        ArrayList<ScrabbleLetter> lettersValuedAtOnePoint = new ArrayList<>();
+      //  ArrayList<ScrabbleLetter> lettersValuedAtOnePoint = new ArrayList<>();
 
         letterMap.put(Character.valueOf(' '), createDuplicateLetters(' ' , 2));
 
@@ -56,9 +56,13 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         duplicateListOfLetters = new ArrayList<>();
 
         for (int dupCntr = 0; dupCntr < numberOfDuplications; dupCntr++) {
-            duplicateListOfLetters.add(new ScrabbleLetter(letter, 0));
+            duplicateListOfLetters.add(new ScrabbleLetter(letter));
         }
         return duplicateListOfLetters;
     }
 
+    @Override
+    public void sortLettersByNumberValue() {
+
+    }
 }

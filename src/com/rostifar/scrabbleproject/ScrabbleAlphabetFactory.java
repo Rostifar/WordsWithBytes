@@ -11,4 +11,8 @@ import java.util.Map;
 public class ScrabbleAlphabetFactory implements ScrabbleAlphabet {
 
 
+    @Override
+    public void sortLettersByNumberValue() {
+
+    }
 }

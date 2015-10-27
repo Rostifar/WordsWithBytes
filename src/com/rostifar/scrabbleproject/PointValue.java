@@ -7,12 +7,16 @@ public class PointValue {
 
     public int value;
 
-    public PointValue(int aValue) {
-        value = aValue;
+    public PointValue(char aLetter) {
+        value = getValueForLetter(aLetter);
     }
 
     @Override
     public String toString() {
         return "PointValue: " + value;
+    }
+
+    private int getValueForLetter(char aLetter) {
+        return 0;
     }
 }
