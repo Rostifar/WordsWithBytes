@@ -3,7 +3,7 @@ package com.rostifar.scrabbleproject;
 import java.util.Map;
 
 /**
- * Created by Cal Briden (Dad) on 8/12/2015.
+ * Created by Cal Briden (Dad) & Ross Briden on 8/12/2015.
  * Model class for representation of an individual letter that can appear in the scrabble alphabet.
  * see  https://en.wikipedia.org/wiki/Scrabble_letter_distributions
  */

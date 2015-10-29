@@ -1,5 +1,6 @@
 package com.rostifar.scrabbleproject;
 
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.*;
 
 public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
@@ -12,6 +13,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
     protected ScrabbleAlphabetImpl() {
         loadLetters();
     }
+
 
 
     /**
@@ -59,14 +61,14 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
         letterMap.put(Character.valueOf('Q'), createDuplicateLetters('Q', 1));
         letterMap.put(Character.valueOf('Z'), createDuplicateLetters('Z', 1));
-        
+
 
     }
 
     /**
      * Create multiple instances of the same letter.
      *
-     * @param letter               scrabble alphabet letter to duplicate
+     * @param letter scrabble alphabet letter to duplicate
      * @param numberOfDuplications number of duplicates to create
      * @return result List of duplciate letters
      */
