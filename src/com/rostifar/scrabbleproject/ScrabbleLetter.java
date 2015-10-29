@@ -1,5 +1,7 @@
 package com.rostifar.scrabbleproject;
 
+import java.util.Map;
+
 /**
  * Created by Cal Briden (Dad) on 8/12/2015.
  * Model class for representation of an individual letter that can appear in the scrabble alphabet.
@@ -19,4 +21,12 @@ public class ScrabbleLetter {
     public String toString() {
         return "ScrabbleLetter: " + letter + "\tPoint value: " + pointValue + "\t";
     }
+
+    private int getPointValue(char aLetter) {
+        //Switch statement
+        //case a, b,c ,d return point value for these letters
+        return getPointValue(aLetter);
+    }
+
+
 }
