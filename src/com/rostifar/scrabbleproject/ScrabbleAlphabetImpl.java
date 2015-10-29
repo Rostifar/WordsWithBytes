@@ -27,6 +27,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
         ArrayList<ScrabbleLetter> lettersValuedAtOnePoint = new ArrayList<>();
 
+      
         letterMap.put(Character.valueOf(' '), createDuplicateLetters(' ' , 2));
 
         letterMap.put(Character.valueOf('L'), createDuplicateLetters('L', 4));
@@ -43,6 +44,28 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         letterMap.put(Character.valueOf('I'), createDuplicateLetters('I', 9));
 
         letterMap.put(Character.valueOf('E'), createDuplicateLetters('E', 12));
+
+        letterMap.put(Character.valueOf('D'), createDuplicateLetters('D', 4));
+        letterMap.put(Character.valueOf('G'), createDuplicateLetters('G', 3));
+
+        letterMap.put(Character.valueOf('B'), createDuplicateLetters('B', 2));
+        letterMap.put(Character.valueOf('C'), createDuplicateLetters('C', 2));
+        letterMap.put(Character.valueOf('M'), createDuplicateLetters('M', 2));
+        letterMap.put(Character.valueOf('P'), createDuplicateLetters('P', 2));
+
+        letterMap.put(Character.valueOf('F'), createDuplicateLetters('F', 2));
+        letterMap.put(Character.valueOf('H'), createDuplicateLetters('H', 2));
+        letterMap.put(Character.valueOf('V'), createDuplicateLetters('V', 2));
+        letterMap.put(Character.valueOf('W'), createDuplicateLetters('W', 2));
+        letterMap.put(Character.valueOf('Y'), createDuplicateLetters('Y', 2));
+
+        letterMap.put(Character.valueOf('K'), createDuplicateLetters('K', 1));
+
+        letterMap.put(Character.valueOf('J'), createDuplicateLetters('J', 1));
+        letterMap.put(Character.valueOf('X'), createDuplicateLetters('X', 1));
+
+        letterMap.put(Character.valueOf('Q'), createDuplicateLetters('Q', 1));
+        letterMap.put(Character.valueOf('Z'), createDuplicateLetters('Z', 1));
     }
 
     /**
