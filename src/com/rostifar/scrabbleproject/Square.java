@@ -9,11 +9,10 @@ public class Square {
 
 
     public Square() {
-        squareType = SquareEnum.PLAIN;
+        squareType = SquareEnum.REGULAR;
     }
 
-    public Square(SquareEnum typeOfSquare)
-    {
+    public Square(SquareEnum typeOfSquare) {
         squareType = typeOfSquare;
     }
 
@@ -26,22 +25,22 @@ public class Square {
     }
 
     public boolean isTripleWord() {
-        return  squareType.equals(SquareEnum.TRIPLE_WORD);
+        return squareType.equals(SquareEnum.TRIPLE_WORD);
     }
 
     public boolean isDoubleLetter() {
         return squareType.equals(SquareEnum.DOUBLE_LETTER);
     }
 
-    public boolean isTripleLetter()
-    {
-        return  squareType.equals(SquareEnum.TRIPLE_LETTER);
+    public boolean isTripleLetter() {
+        return squareType.equals(SquareEnum.TRIPLE_LETTER);
     }
 
     public boolean isCenterSquare() {
-        return  squareType.equals(SquareEnum.STAR);
+        return squareType.equals(SquareEnum.CENTER_STAR);
     }
 
+    @Override
     public String toString() {
         return squareType.toString();
     }

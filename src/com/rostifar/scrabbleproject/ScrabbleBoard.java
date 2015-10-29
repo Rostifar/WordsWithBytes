@@ -14,24 +14,41 @@ public class ScrabbleBoard {
     }
 
     private void setupBoard() {
+        //setupDoubleWords();
+        setupTripleWords();
+        setupDoubleLetters();
+        setupDefaultSquares();
+
+    }
+
+    private void setupDefaultSquares() {
+        //Set any square not already assigned to a plain regular space
+        for (int col = 0; col < COLUMN_LENGTH; col++) {
+            for (int row = 0; row < ROW_LENGTH; row++) {
+                if (board[col][row] == null)
+                    board[col][row] = new Square(SquareEnum.REGULAR);
+            }
+        }
+    }
+
+    private void setupTripleWords() {
         board[0][0] = new Square(SquareEnum.TRIPLE_WORD);
         board[0][7] = new Square(SquareEnum.TRIPLE_WORD);
         board[0][COLUMN_LENGTH - 1] = new Square(SquareEnum.TRIPLE_WORD);
         board[COLUMN_LENGTH - 1][0] = new Square(SquareEnum.TRIPLE_WORD);
         board[COLUMN_LENGTH - 1][7] = new Square(SquareEnum.TRIPLE_WORD);
         board[COLUMN_LENGTH - 1][COLUMN_LENGTH - 1] = new Square(SquareEnum.TRIPLE_WORD);
+    }
 
-        board[0][3] = new Square(SquareEnum.DOUBLE_LETTER);
+
+    private void setupDoubleLetters() {
+        board[0][3]  = new Square(SquareEnum.DOUBLE_LETTER);
         board[0][11] = new Square(SquareEnum.DOUBLE_LETTER);
+        board[3][6]  = new Square(SquareEnum.DOUBLE_LETTER);
+        board[3][8]  = new Square(SquareEnum.DOUBLE_LETTER);
+        board[4][0] = new Square(SquareEnum.DOUBLE_LETTER);
+        board[4][COLUMN_LENGTH - 1] = new Square(SquareEnum.DOUBLE_LETTER);
 
-
-        //Set any square not already assigned to a plain space
-        for (int col = 0; col < COLUMN_LENGTH; col++) {
-            for (int row = 0; row < ROW_LENGTH; row++) {
-                if (board[col][row] == null)
-                    board[col][row] = new Square(SquareEnum.PLAIN);
-            }
-        }
     }
 
     @Override
