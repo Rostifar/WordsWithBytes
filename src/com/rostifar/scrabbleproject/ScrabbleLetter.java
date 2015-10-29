@@ -13,7 +13,7 @@ public class ScrabbleLetter {
 
     public ScrabbleLetter(char aLetter) {
         letter = aLetter;
-       // pointValue = new PointValue(aPointValue);
+        pointValue = new PointValue(aLetter);
 
     }
 
@@ -22,11 +22,7 @@ public class ScrabbleLetter {
         return "ScrabbleLetter: " + letter + "\tPoint value: " + pointValue + "\t";
     }
 
-    private int getPointValue(char aLetter) {
-        //Switch statement
-        //case a, b,c ,d return point value for these letters
-        return getPointValue(aLetter);
-    }
+
 
 
 }
