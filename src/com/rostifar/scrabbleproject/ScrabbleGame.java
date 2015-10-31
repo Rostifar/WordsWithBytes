@@ -5,7 +5,13 @@ package com.rostifar.scrabbleproject;
  */
 public class ScrabbleGame {
 
-    public void startGame(){}
+
+
+    public void startGame() {
+
+    }
+
+
 
     public void endOfGame(){}
 }

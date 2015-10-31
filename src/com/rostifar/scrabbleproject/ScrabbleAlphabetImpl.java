@@ -1,6 +1,6 @@
 package com.rostifar.scrabbleproject;
 
-import java.sql.SQLFeatureNotSupportedException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
@@ -62,6 +62,9 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         letterMap.put(Character.valueOf('Q'), createDuplicateLetters('Q', 1));
         letterMap.put(Character.valueOf('Z'), createDuplicateLetters('Z', 1));
 
+        //Basic notation for removing letter from map through list: map.get(Character.valueOf('Insert Letter')).remove(number of object);
+
+
 
 
     }
@@ -88,6 +91,49 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
     }
 
+    protected ScrabbleLetter transferScrabbleLetterToRack() {
+
+        Random random = new Random();
+
+        List<Character> listOfLetterKeys = new ArrayList<>();
+        listOfLetterKeys.add('A');
+        listOfLetterKeys.add('B');
+        listOfLetterKeys.add('C');
+        listOfLetterKeys.add('D');
+        listOfLetterKeys.add('E');
+        listOfLetterKeys.add('F');
+        listOfLetterKeys.add('G');
+        listOfLetterKeys.add('H');
+        listOfLetterKeys.add('I');
+        listOfLetterKeys.add('J');
+        listOfLetterKeys.add('K');
+        listOfLetterKeys.add('L');
+        listOfLetterKeys.add('M');
+        listOfLetterKeys.add('N');
+        listOfLetterKeys.add('O');
+        listOfLetterKeys.add('P');
+        listOfLetterKeys.add('Q');
+        listOfLetterKeys.add('R');
+        listOfLetterKeys.add('S');
+        listOfLetterKeys.add('T');
+        listOfLetterKeys.add('U');
+        listOfLetterKeys.add('V');
+        listOfLetterKeys.add('W');
+        listOfLetterKeys.add('X');
+        listOfLetterKeys.add('Y');
+        listOfLetterKeys.add('Z');
+        listOfLetterKeys.add('_');
+
+        char randomlySelectedLetter = listOfLetterKeys.get(random.nextInt(listOfLetterKeys.size()));
+        int randomlySelectedObjectNumber;
+
+        ScrabbleLetter removeLetter = letterMap.get(Character.valueOf(randomlySelectedLetter)).remove(0);
+
+
+
+        return removeLetter;
+
+    }
 
 
 

@@ -7,11 +7,13 @@ public class Player {
     private Rack rack;
     private String name;
     private int turnCounter;
+    private ScrabbleAlphabetImpl scrabbleAlphabet;
 
     public Player(String aName) {
         name = aName;
         turnCounter = 0;
         rack = new Rack();
+
     }
 
     public String getName() {
