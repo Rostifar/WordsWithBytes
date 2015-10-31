@@ -79,7 +79,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
 
     private List<ScrabbleLetter> createDuplicateLetters(char letter, int numberOfDuplications) {
-        List<ScrabbleLetter> duplicateListOfLetters = new ArrayList<>();
+        List<ScrabbleLetter> duplicateListOfLetters = new ArrayList<ScrabbleLetter>();
 
         for (int dupCntr = 0; dupCntr < numberOfDuplications; dupCntr++) {
             duplicateListOfLetters.add(new ScrabbleLetter(letter));
@@ -126,6 +126,15 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
         char randomlySelectedLetter = listOfLetterKeys.get(random.nextInt(listOfLetterKeys.size()));
         int randomlySelectedObjectNumber;
+
+        List<ScrabbleLetter> letterList =  letterMap.get(Character.valueOf(randomlySelectedLetter));
+        ScrabbleLetter letterToRemove = letterList.listIterator().next();
+
+        if (letterToRemove != null) {
+            //add letterToRemove to rack;
+            letterList.remove(letterToRemove);
+        }
+
 
         ScrabbleLetter removeLetter = letterMap.get(Character.valueOf(randomlySelectedLetter)).remove(0);
 
