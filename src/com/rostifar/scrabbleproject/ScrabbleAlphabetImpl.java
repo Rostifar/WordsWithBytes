@@ -1,17 +1,19 @@
 package com.rostifar.scrabbleproject;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
     private Map<Character, List<ScrabbleLetter>> letterMap = new HashMap<>();
 
+    static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_";
 
-      /**
+
+
+    /**
      * Constructor is private. Use Factory class to create instances.
      */
     protected ScrabbleAlphabetImpl() {
         loadLetters();
+        transferScrabbleLetterToRack();
     }
 
 
@@ -66,7 +68,6 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
 
 
-
     }
 
     /**
@@ -91,43 +92,21 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
     }
 
+    /**
+     *Out of a list of keys a random key is drawn.
+     *Then an instance of a ScrabbleLetter is removed from the letterList.
+     * Which is then placed on the rack, waiting for the player to use that letter.*/
+
+
     protected ScrabbleLetter transferScrabbleLetterToRack() {
 
         Random random = new Random();
 
-        List<Character> listOfLetterKeys = new ArrayList<>();
-        listOfLetterKeys.add('A');
-        listOfLetterKeys.add('B');
-        listOfLetterKeys.add('C');
-        listOfLetterKeys.add('D');
-        listOfLetterKeys.add('E');
-        listOfLetterKeys.add('F');
-        listOfLetterKeys.add('G');
-        listOfLetterKeys.add('H');
-        listOfLetterKeys.add('I');
-        listOfLetterKeys.add('J');
-        listOfLetterKeys.add('K');
-        listOfLetterKeys.add('L');
-        listOfLetterKeys.add('M');
-        listOfLetterKeys.add('N');
-        listOfLetterKeys.add('O');
-        listOfLetterKeys.add('P');
-        listOfLetterKeys.add('Q');
-        listOfLetterKeys.add('R');
-        listOfLetterKeys.add('S');
-        listOfLetterKeys.add('T');
-        listOfLetterKeys.add('U');
-        listOfLetterKeys.add('V');
-        listOfLetterKeys.add('W');
-        listOfLetterKeys.add('X');
-        listOfLetterKeys.add('Y');
-        listOfLetterKeys.add('Z');
-        listOfLetterKeys.add('_');
+        char[] arrayOfLetterKeys = alphabet.toCharArray();
 
-        char randomlySelectedLetter = listOfLetterKeys.get(random.nextInt(listOfLetterKeys.size()));
-        int randomlySelectedObjectNumber;
+        char randomlySelectedLetter = arrayOfLetterKeys[random.nextInt(27)];
 
-        List<ScrabbleLetter> letterList =  letterMap.get(Character.valueOf(randomlySelectedLetter));
+        List<ScrabbleLetter> letterList = letterMap.get(Character.valueOf(randomlySelectedLetter));
         ScrabbleLetter letterToRemove = letterList.listIterator().next();
 
         if (letterToRemove != null) {
@@ -135,12 +114,8 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
             letterList.remove(letterToRemove);
         }
 
+        return letterToRemove;
 
-        ScrabbleLetter removeLetter = letterMap.get(Character.valueOf(randomlySelectedLetter)).remove(0);
-
-
-
-        return removeLetter;
 
     }
 
