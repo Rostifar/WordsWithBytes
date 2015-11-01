@@ -13,7 +13,6 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
      */
     protected ScrabbleAlphabetImpl() {
         loadLetters();
-        transferScrabbleLetterToRack();
     }
 
 
@@ -100,18 +99,20 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
     protected ScrabbleLetter transferScrabbleLetterToRack() {
 
+        Rack rack = new Rack();
+
         Random random = new Random();
 
         char[] arrayOfLetterKeys = alphabet.toCharArray();
 
-        char randomlySelectedLetter = arrayOfLetterKeys[random.nextInt(27)];
+        char randomlySelectedKey = arrayOfLetterKeys[random.nextInt(27)];
 
-        List<ScrabbleLetter> letterList = letterMap.get(Character.valueOf(randomlySelectedLetter));
-        ScrabbleLetter letterToRemove = letterList.listIterator().next();
+        List<ScrabbleLetter> letterList = letterMap.get(Character.valueOf(randomlySelectedKey));
+        ScrabbleLetter letterToRemove = letterList.listIterator().next(); //Checks whether there is a letter to remove within the selected key.
 
-        if (letterToRemove != null) {
-            //add letterToRemove to rack;
-            letterList.remove(letterToRemove);
+        if (letterToRemove != null) { //if there is a letter to remove, remove that letter and move it to the rack.
+            ScrabbleLetter letterRemoved = letterList.remove(random.nextInt(letterList.size()));
+            rack.getLetters(letterRemoved);
         }
 
         return letterToRemove;

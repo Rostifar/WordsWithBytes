@@ -16,6 +16,10 @@ public class Main {
 
         ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
 
+        Rack rack = new Rack();
+
+        scrabbleAlphabet.transferScrabbleLetterToRack();
+
 
 
     }

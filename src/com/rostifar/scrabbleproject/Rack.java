@@ -10,20 +10,15 @@ import java.util.Map;
  */
 public class Rack {
 
-    List<ScrabbleLetter> listLettersOnRack = new ArrayList<>();
-    ScrabbleAlphabetImpl scrabbleAlphabet;
-
-
+    List<ScrabbleLetter> lettersOnRack = new ArrayList<>();
 
     private boolean lettersNeeded;
 
+    protected List<ScrabbleLetter> getLetters(ScrabbleLetter newScrabbleLetter) {
 
+        lettersOnRack.add(newScrabbleLetter);
 
-    private List<ScrabbleLetter> getLetters(int numberOfLettersNeeded) {
-        for (int minimumNumberOfLettersNeeded = 0; minimumNumberOfLettersNeeded <= numberOfLettersNeeded; minimumNumberOfLettersNeeded++) {
-            listLettersOnRack.add(scrabbleAlphabet.transferScrabbleLetterToRack());
-        }
-        return listLettersOnRack;
+        return lettersOnRack;
     }
 
     protected void removeLetter() {
