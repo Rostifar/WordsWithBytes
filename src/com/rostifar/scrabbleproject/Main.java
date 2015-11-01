@@ -14,7 +14,10 @@ public class Main {
 
     public void setupGame() {
 
-        ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
+       ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
+     /*   ScrabbleBoard board = new ScrabbleBoard();
+        System.out.println(board);*/
+
 
         Rack rack = new Rack();
 

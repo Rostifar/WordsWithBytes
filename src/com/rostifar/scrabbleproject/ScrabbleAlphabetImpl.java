@@ -98,7 +98,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
      * Which is then placed on the rack, waiting for the player to use that letter.*/
 
 
-    protected void transferScrabbleLetterToRack() {
+    protected void transferScrabbleLetterToRack(Rack rack) {
 
         int numberOfLettersRequiredToBeOnRack = 7;
 
@@ -112,11 +112,15 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
         List<ScrabbleLetter> letterList = letterMap.get(Character.valueOf(randomlySelectedKey));
 
+        if (letterList.isEmpty())
+            return;
+
         ScrabbleLetter letterToRemove = letterList.listIterator().next();//Checks whether there is a letter to remove within the selected key.
 
         if (letterToRemove != null) { //if there is a letter to remove, remove that letter and move it to the rack.
             ScrabbleLetter removedLetter = letterList.remove(random.nextInt(letterList.size()));
 
+         //TODO: rack.addLetter(removedLetter);
 
 
         }
