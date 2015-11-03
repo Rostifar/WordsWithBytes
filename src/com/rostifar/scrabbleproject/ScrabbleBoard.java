@@ -52,24 +52,47 @@ public class ScrabbleBoard {
     }
 
     private void setupTripleWords() {
-        board[0][0] = new Square(SquareEnum.TRIPLE_WORD);
-        board[0][7] = new Square(SquareEnum.TRIPLE_WORD);
-        board[0][COLUMN_LENGTH - 1] = new Square(SquareEnum.TRIPLE_WORD);
-        board[COLUMN_LENGTH - 1][0] = new Square(SquareEnum.TRIPLE_WORD);
-        board[COLUMN_LENGTH - 1][7] = new Square(SquareEnum.TRIPLE_WORD);
-        board[COLUMN_LENGTH - 1][COLUMN_LENGTH - 1] = new Square(SquareEnum.TRIPLE_WORD);
-    }
+
+        for (int row = 0; row <= ROW_LENGTH - 1; row += 7) {
+            for (int col = 0; col < ROW_LENGTH; col += 7) {
+                if (row == 7 && col == 7) //Skip over center square
+                    continue;
+                board[row][col] = new Square(SquareEnum.TRIPLE_WORD);
+            }
+        }
+     }
 
 
     private void setupDoubleLetters() {
-        board[0][3]  = new Square(SquareEnum.DOUBLE_LETTER);
-        board[0][11] = new Square(SquareEnum.DOUBLE_LETTER);
-        board[3][6]  = new Square(SquareEnum.DOUBLE_LETTER);
-        board[3][8]  = new Square(SquareEnum.DOUBLE_LETTER);
-        board[4][0] = new Square(SquareEnum.DOUBLE_LETTER);
-        board[4][7] = new Square(SquareEnum.DOUBLE_LETTER);
-        board[4][COLUMN_LENGTH - 1] = new Square(SquareEnum.DOUBLE_LETTER);
-        //TODO: This only does the top part of the board!!! HACK!
+        //Row 0, 7 and 14 are the same
+        for (int row = 0; row <= ROW_LENGTH - 1; row += 7) {
+            board[row][3] = new Square(SquareEnum.DOUBLE_LETTER);
+            board[row][11] = new Square(SquareEnum.DOUBLE_LETTER);
+        }
+
+        //Row 2 and row 12 are the same
+        for (int row = 2; row <= 12; row += 10) {
+            board[row][6] = new Square(SquareEnum.DOUBLE_LETTER);
+            board[row][8] = new Square(SquareEnum.DOUBLE_LETTER);
+        }
+
+        //Row 3 and row 11 are the same
+        for (int row = 3; row <= 12; row += 8) {
+            for (int col = 0; col < COLUMN_LENGTH; col += 7) {
+                board[row][col] = new Square(SquareEnum.DOUBLE_LETTER);
+                //board[3][7] = new Square(SquareEnum.DOUBLE_LETTER);
+                // board[3][COLUMN_LENGTH - 1] = new Square(SquareEnum.DOUBLE_LETTER);
+            }
+        }
+
+        //Row 6 and row 8 are the same
+        for (int row = 6; row <= 8; row += 2) {
+            board[row][2] = new Square(SquareEnum.DOUBLE_LETTER);
+            board[row][6] = new Square(SquareEnum.DOUBLE_LETTER);
+            board[row][8] = new Square(SquareEnum.DOUBLE_LETTER);
+            board[row][12] = new Square(SquareEnum.DOUBLE_LETTER);
+        }
+
     }
 
     private void setupTripleLetters() {
