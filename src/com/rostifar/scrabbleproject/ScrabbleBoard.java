@@ -6,6 +6,8 @@ package com.rostifar.scrabbleproject;
 public class ScrabbleBoard {
     public static final int ROW_LENGTH = 15;
     public static final int COLUMN_LENGTH = 15;
+    public static final int CENTER_SQUARE = 7;
+
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
@@ -34,7 +36,7 @@ public class ScrabbleBoard {
     }
 
     private void setupCenterSquare() {
-        board[7][7] =  new Square(SquareEnum.CENTER_STAR);
+        board[CENTER_SQUARE][CENTER_SQUARE] =  new Square(SquareEnum.CENTER_STAR);
     }
 
     /**
@@ -55,7 +57,7 @@ public class ScrabbleBoard {
 
         for (int row = 0; row <= ROW_LENGTH - 1; row += 7) {
             for (int col = 0; col < ROW_LENGTH; col += 7) {
-                if (row == 7 && col == 7) //Skip over center square
+                if (row == CENTER_SQUARE && col == CENTER_SQUARE) //Skip over center square
                     continue;
                 board[row][col] = new Square(SquareEnum.TRIPLE_WORD);
             }
@@ -80,12 +82,11 @@ public class ScrabbleBoard {
         for (int row = 3; row <= 12; row += 8) {
             for (int col = 0; col < COLUMN_LENGTH; col += 7) {
                 board[row][col] = new Square(SquareEnum.DOUBLE_LETTER);
-                //board[3][7] = new Square(SquareEnum.DOUBLE_LETTER);
-                // board[3][COLUMN_LENGTH - 1] = new Square(SquareEnum.DOUBLE_LETTER);
             }
         }
 
         //Row 6 and row 8 are the same
+        //TODO: factor out the column indices
         for (int row = 6; row <= 8; row += 2) {
             board[row][2] = new Square(SquareEnum.DOUBLE_LETTER);
             board[row][6] = new Square(SquareEnum.DOUBLE_LETTER);
