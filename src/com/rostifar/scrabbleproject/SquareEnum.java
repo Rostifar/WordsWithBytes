@@ -8,7 +8,7 @@ public enum SquareEnum {
 
     private String displayValue;
 
-    private SquareEnum(String aDisplayValue) {
+    SquareEnum(String aDisplayValue) {
         displayValue = aDisplayValue;
     }
 

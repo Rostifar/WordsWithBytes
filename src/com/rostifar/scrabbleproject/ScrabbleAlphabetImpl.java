@@ -4,9 +4,6 @@ import java.util.*;
 public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
     private Map<Character, List<ScrabbleLetter>> letterMap = new HashMap<>();
 
-   private static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-
-
 
     /**
      * Constructor is private. Use Factory class to create instances.
@@ -75,7 +72,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
      *
      * @param letter scrabble alphabet letter to duplicate
      * @param numberOfDuplications number of duplicates to create
-     * @return result List of duplciate letters
+     * @return result List of duplicate letters
      */
 
 
@@ -92,28 +89,36 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
     }
 
-    private List<Character> getLetterKeys() {
+    private List<Character> getAvailableLetters() {
         List<Character> listOfVerifiedKeys = new ArrayList<>();
 
-        for (char check : letterMap.keySet())
-        if (!letterMap.get(check).isEmpty()) {
-            listOfVerifiedKeys.add(check);
+        for (char check : letterMap.keySet()) {
+            if (!letterMap.get(check).isEmpty()) {
+                listOfVerifiedKeys.add(check);
+            }
         }
+
         return listOfVerifiedKeys;
+    }
+
+    public List<ScrabbleLetter> getLetters(int numberOfLetters) {
+        List<ScrabbleLetter> letters;
+
+        for (int letterCnt = 0; letterCnt < numberOfLetters; letterCnt++) {
+        }
+
+        return getLetters(9);
+
     }
 
 
 
-    protected void transferScrabbleLetterToRack() {
-
+    protected void transferScrabbleLetterToRack(Rack rack) {
         Random random = new Random();
-
-        char randomlySelectedKey = getLetterKeys().get(random.nextInt(getLetterKeys().size()));
+        char randomlySelectedKey = getAvailableLetters().get(random.nextInt(getAvailableLetters().size()));
 
         List<ScrabbleLetter> letterList = letterMap.get(randomlySelectedKey);
-
         ScrabbleLetter letterToRemove = letterList.get(random.nextInt(letterList.size()));
-
 
     }
 

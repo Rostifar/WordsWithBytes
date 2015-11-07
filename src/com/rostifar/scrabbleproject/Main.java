@@ -15,7 +15,9 @@ public class Main {
     public void setupGame() {
 
        ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
-        scrabbleAlphabet.transferScrabbleLetterToRack();
+        scrabbleAlphabet.transferScrabbleLetterToRack(new Rack());
+
+
 
 
 
