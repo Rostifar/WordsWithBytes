@@ -4,7 +4,7 @@ import java.util.*;
 public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
     private Map<Character, List<ScrabbleLetter>> letterMap = new HashMap<>();
 
-    static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+   private static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_";
 
 
 
@@ -80,7 +80,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
 
     private List<ScrabbleLetter> createDuplicateLetters(char letter, int numberOfDuplications) {
-        List<ScrabbleLetter> duplicateListOfLetters = new ArrayList<ScrabbleLetter>();
+        List<ScrabbleLetter> duplicateListOfLetters = new ArrayList<>();
 
         for (int dupCntr = 0; dupCntr < numberOfDuplications; dupCntr++) {
             duplicateListOfLetters.add(new ScrabbleLetter(letter));
@@ -92,38 +92,37 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
     }
 
+    private List<Character> getLetterKeys() {
+        List<Character> listOfVerifiedKeys = new ArrayList<>();
+
+        for (char check : letterMap.keySet())
+        if (!letterMap.get(check).isEmpty()) {
+            listOfVerifiedKeys.add(check);
+        }
+        return listOfVerifiedKeys;
+
+    }
+
     /**
      *Out of a list of keys a random key is drawn.
      *Then an instance of a ScrabbleLetter is removed from the letterList.
      * Which is then placed on the rack, waiting for the player to use that letter.*/
 
+    //iterate through letter map to check whether
 
-    protected void transferScrabbleLetterToRack(Rack rack) {
 
-        int numberOfLettersRequiredToBeOnRack = 7;
-
+    protected void transferScrabbleLetterToRack() {
 
         Random random = new Random();
 
-        char[] arrayOfLetterKeys = alphabet.toCharArray();
+        List<Character> availableKeys = getLetterKeys();
 
-
-        char randomlySelectedKey = arrayOfLetterKeys[random.nextInt(alphabet.length())];
+        char randomlySelectedKey = availableKeys.get(random.nextInt(availableKeys.size()));
 
         List<ScrabbleLetter> letterList = letterMap.get(Character.valueOf(randomlySelectedKey));
 
-        if (letterList.isEmpty())
-            return;
+        ScrabbleLetter letterToRemove = letterList.get(random.nextInt(letterList.size()));
 
-        ScrabbleLetter letterToRemove = letterList.listIterator().next();//Checks whether there is a letter to remove within the selected key.
-
-        if (letterToRemove != null) { //if there is a letter to remove, remove that letter and move it to the rack.
-            ScrabbleLetter removedLetter = letterList.remove(random.nextInt(letterList.size()));
-
-         //TODO: rack.addLetter(removedLetter);
-
-
-        }
     }
 
 
