@@ -21,44 +21,44 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
 
 
-        letterMap.put ((' '), createDuplicateLetters(' ', 2));
+        letterMap.put (' ', createDuplicateLetters(' ', 2));
 
-        letterMap.put(('L'), createDuplicateLetters('L', 4));
-        letterMap.put(('S'), createDuplicateLetters('S', 4));
-        letterMap.put(('U'), createDuplicateLetters('U', 4));
+        letterMap.put('L', createDuplicateLetters('L', 4));
+        letterMap.put('S', createDuplicateLetters('S', 4));
+        letterMap.put('U', createDuplicateLetters('U', 4));
 
-        letterMap.put(('N'), createDuplicateLetters('N', 6));
-        letterMap.put(('R'), createDuplicateLetters('R', 6));
-        letterMap.put(('T'), createDuplicateLetters('T', 6));
+        letterMap.put('N', createDuplicateLetters('N', 6));
+        letterMap.put('R', createDuplicateLetters('R', 6));
+        letterMap.put('T', createDuplicateLetters('T', 6));
 
-        letterMap.put(('O'), createDuplicateLetters('O', 8));
+        letterMap.put('O', createDuplicateLetters('O', 8));
 
-        letterMap.put(('A'), createDuplicateLetters('A', 9));
-        letterMap.put(('I'), createDuplicateLetters('I', 9));
+        letterMap.put('A', createDuplicateLetters('A', 9));
+        letterMap.put('I', createDuplicateLetters('I', 9));
 
-        letterMap.put(('E'), createDuplicateLetters('E', 12));
+        letterMap.put('E', createDuplicateLetters('E', 12));
 
-        letterMap.put(('D'), createDuplicateLetters('D', 4));
-        letterMap.put(('G'), createDuplicateLetters('G', 3));
+        letterMap.put('D', createDuplicateLetters('D', 4));
+        letterMap.put('G', createDuplicateLetters('G', 3));
 
-        letterMap.put(('B'), createDuplicateLetters('B', 2));
-        letterMap.put(('C'), createDuplicateLetters('C', 2));
-        letterMap.put(('M'), createDuplicateLetters('M', 2));
-        letterMap.put(('P'), createDuplicateLetters('P', 2));
+        letterMap.put('B', createDuplicateLetters('B', 2));
+        letterMap.put('C', createDuplicateLetters('C', 2));
+        letterMap.put('M', createDuplicateLetters('M', 2));
+        letterMap.put('P', createDuplicateLetters('P', 2));
 
-        letterMap.put(('F'), createDuplicateLetters('F', 2));
-        letterMap.put(('H'), createDuplicateLetters('H', 2));
-        letterMap.put(('V'), createDuplicateLetters('V', 2));
-        letterMap.put(('W'), createDuplicateLetters('W', 2));
-        letterMap.put(('Y'), createDuplicateLetters('Y', 2));
+        letterMap.put('F', createDuplicateLetters('F', 2));
+        letterMap.put('H', createDuplicateLetters('H', 2));
+        letterMap.put('V', createDuplicateLetters('V', 2));
+        letterMap.put('W', createDuplicateLetters('W', 2));
+        letterMap.put('Y', createDuplicateLetters('Y', 2));
 
-        letterMap.put(('K'), createDuplicateLetters('K', 1));
+        letterMap.put('K', createDuplicateLetters('K', 1));
 
-        letterMap.put(('J'), createDuplicateLetters('J', 1));
-        letterMap.put(('X'), createDuplicateLetters('X', 1));
+        letterMap.put('J', createDuplicateLetters('J', 1));
+        letterMap.put('X', createDuplicateLetters('X', 1));
 
-        letterMap.put(('Q'), createDuplicateLetters('Q', 1));
-        letterMap.put(('Z'), createDuplicateLetters('Z', 1));
+        letterMap.put('Q', createDuplicateLetters('Q', 1));
+        letterMap.put('Z', createDuplicateLetters('Z', 1));
 
         //Basic notation for removing letter from map through list: map.get(Character.valueOf('Insert Letter')).remove(number of object);
 
