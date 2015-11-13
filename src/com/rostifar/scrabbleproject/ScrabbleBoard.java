@@ -2,6 +2,29 @@ package com.rostifar.scrabbleproject;
 
 /**
  * Created by Dad on 10/4/2015.
+ * Example of the board layout which will show with call to toString()
+ *
+ * 	  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+    ----------------------------------------------
+ 1	|TW|  |  |DL|  |  |  |TW|  |  |  |DL|  |  |TW|
+ 2	|  |DW|  |  |  |TL|  |  |  |TL|  |  |  |TL|  |
+ 3	|  |  |DW|  |  |  |DL|  |DL|  |  |  |DW|  |  |
+ 4	|DL|  |  |DW|  |  |  |DL|  |  |  |DW|  |  |DL|
+ 5	|  |  |  |  |DW|  |  |  |  |  |DW|  |  |  |  |
+ 6	|  |TL|  |  |  |TL|  |  |  |TL|  |  |  |TL|  |
+ 7	|  |  |DL|  |  |  |DL|  |DL|  |  |  |DL|  |  |
+ 8	|TW|  |  |DL|  |  |  | *|  |  |  |DL|  |  |TW|
+ 9	|  |  |DL|  |  |  |DL|  |DL|  |  |  |DL|  |  |
+ 10	|  |TL|  |  |  |TL|  |  |  |TL|  |  |  |TL|  |
+ 11	|  |  |  |  |DW|  |  |  |  |  |DW|  |  |  |  |
+ 12	|DL|  |  |DW|  |  |  |DL|  |  |  |DW|  |  |DL|
+ 13	|  |  |DW|  |  |  |DL|  |DL|  |  |  |DW|  |  |
+ 14	|  |DW|  |  |  |TL|  |  |  |TL|  |  |  |TL|  |
+ 15	|TW|  |  |DL|  |  |  |TW|  |  |  |DL|  |  |TW|
+    ----------------------------------------------
+
+ A good online reference for the board and the game can be found here:
+ @see  http://www.scrabulizer.com/
  */
 public class ScrabbleBoard {
     public static final int ROW_LENGTH = 15;
@@ -12,7 +35,7 @@ public class ScrabbleBoard {
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
     public ScrabbleBoard() {
-        setupBoard();
+        setupBoard(); //Setup the board on instantiation
     }
 
     private void setupBoard() {
@@ -22,11 +45,13 @@ public class ScrabbleBoard {
         setupTripleLetters();
         setupCenterSquare();
         setupDefaultSquares();
-
     }
 
+    /**
+     *  Set any square not already assigned to a plain regular space
+     */
     private void setupDefaultSquares() {
-        //Set any square not already assigned to a plain regular space
+
         for (int col = 0; col < COLUMN_LENGTH; col++) {
             for (int row = 0; row < ROW_LENGTH; row++) {
                 if (board[col][row] == null)
@@ -39,9 +64,6 @@ public class ScrabbleBoard {
         board[CENTER_SQUARE][CENTER_SQUARE] =  new Square(SquareEnum.CENTER_STAR);
     }
 
-    /**
-     * Setup the double word squares on the board.
-     */
     private void setupDoubleWords() {
         for (int row =  1, col =1 ;  row < ROW_LENGTH; row++, col++) {
 
@@ -63,7 +85,6 @@ public class ScrabbleBoard {
             }
         }
      }
-
 
     private void setupDoubleLetters() {
         //Row 0, 7 and 14 are the same
@@ -111,6 +132,28 @@ public class ScrabbleBoard {
         }
 
     }
+
+    /**
+     * @return true if the square located at col,row on the board contains a letter, otherwise false
+     */
+    public boolean squareContainsLetter(int col, int row) {
+        return board[col][row].containsLetter();
+    }
+
+    /**
+     * Add a letter to an empty square on the scrabble board.
+     * @param letterToAdd letter to add to the empty square
+     * @throws ScrabbleGameException if square is not empty. This should not happen if the caller utilizes
+     * the squareContainsLetter() as a prerequsite to calling this  method.
+     */
+    public void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
+
+        if (board[col][row].containsLetter()) {
+            throw new ScrabbleGameException("Space on board is already occupied by letter:" + board[col][row]);
+        }
+
+    }
+
     @Override
     /**
      * Print the board and it's current contents to console using basic characters
