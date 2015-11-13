@@ -4,9 +4,6 @@ import java.util.*;
 public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
     private Map<Character, List<ScrabbleLetter>> letterMap = new HashMap<>();
 
-    static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-
-
 
     /**
      * Constructor is private. Use Factory class to create instances.
@@ -24,44 +21,44 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
 
 
-        letterMap.put(Character.valueOf(' '), createDuplicateLetters(' ', 2));
+        letterMap.put (' ', createDuplicateLetters(' ', 2));
 
-        letterMap.put(Character.valueOf('L'), createDuplicateLetters('L', 4));
-        letterMap.put(Character.valueOf('S'), createDuplicateLetters('S', 4));
-        letterMap.put(Character.valueOf('U'), createDuplicateLetters('U', 4));
+        letterMap.put('L', createDuplicateLetters('L', 4));
+        letterMap.put('S', createDuplicateLetters('S', 4));
+        letterMap.put('U', createDuplicateLetters('U', 4));
 
-        letterMap.put(Character.valueOf('N'), createDuplicateLetters('N', 6));
-        letterMap.put(Character.valueOf('R'), createDuplicateLetters('R', 6));
-        letterMap.put(Character.valueOf('T'), createDuplicateLetters('T', 6));
+        letterMap.put('N', createDuplicateLetters('N', 6));
+        letterMap.put('R', createDuplicateLetters('R', 6));
+        letterMap.put('T', createDuplicateLetters('T', 6));
 
-        letterMap.put(Character.valueOf('O'), createDuplicateLetters('O', 8));
+        letterMap.put('O', createDuplicateLetters('O', 8));
 
-        letterMap.put(Character.valueOf('A'), createDuplicateLetters('A', 9));
-        letterMap.put(Character.valueOf('I'), createDuplicateLetters('I', 9));
+        letterMap.put('A', createDuplicateLetters('A', 9));
+        letterMap.put('I', createDuplicateLetters('I', 9));
 
-        letterMap.put(Character.valueOf('E'), createDuplicateLetters('E', 12));
+        letterMap.put('E', createDuplicateLetters('E', 12));
 
-        letterMap.put(Character.valueOf('D'), createDuplicateLetters('D', 4));
-        letterMap.put(Character.valueOf('G'), createDuplicateLetters('G', 3));
+        letterMap.put('D', createDuplicateLetters('D', 4));
+        letterMap.put('G', createDuplicateLetters('G', 3));
 
-        letterMap.put(Character.valueOf('B'), createDuplicateLetters('B', 2));
-        letterMap.put(Character.valueOf('C'), createDuplicateLetters('C', 2));
-        letterMap.put(Character.valueOf('M'), createDuplicateLetters('M', 2));
-        letterMap.put(Character.valueOf('P'), createDuplicateLetters('P', 2));
+        letterMap.put('B', createDuplicateLetters('B', 2));
+        letterMap.put('C', createDuplicateLetters('C', 2));
+        letterMap.put('M', createDuplicateLetters('M', 2));
+        letterMap.put('P', createDuplicateLetters('P', 2));
 
-        letterMap.put(Character.valueOf('F'), createDuplicateLetters('F', 2));
-        letterMap.put(Character.valueOf('H'), createDuplicateLetters('H', 2));
-        letterMap.put(Character.valueOf('V'), createDuplicateLetters('V', 2));
-        letterMap.put(Character.valueOf('W'), createDuplicateLetters('W', 2));
-        letterMap.put(Character.valueOf('Y'), createDuplicateLetters('Y', 2));
+        letterMap.put('F', createDuplicateLetters('F', 2));
+        letterMap.put('H', createDuplicateLetters('H', 2));
+        letterMap.put('V', createDuplicateLetters('V', 2));
+        letterMap.put('W', createDuplicateLetters('W', 2));
+        letterMap.put('Y', createDuplicateLetters('Y', 2));
 
-        letterMap.put(Character.valueOf('K'), createDuplicateLetters('K', 1));
+        letterMap.put('K', createDuplicateLetters('K', 1));
 
-        letterMap.put(Character.valueOf('J'), createDuplicateLetters('J', 1));
-        letterMap.put(Character.valueOf('X'), createDuplicateLetters('X', 1));
+        letterMap.put('J', createDuplicateLetters('J', 1));
+        letterMap.put('X', createDuplicateLetters('X', 1));
 
-        letterMap.put(Character.valueOf('Q'), createDuplicateLetters('Q', 1));
-        letterMap.put(Character.valueOf('Z'), createDuplicateLetters('Z', 1));
+        letterMap.put('Q', createDuplicateLetters('Q', 1));
+        letterMap.put('Z', createDuplicateLetters('Z', 1));
 
         //Basic notation for removing letter from map through list: map.get(Character.valueOf('Insert Letter')).remove(number of object);
 
@@ -75,12 +72,12 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
      *
      * @param letter scrabble alphabet letter to duplicate
      * @param numberOfDuplications number of duplicates to create
-     * @return result List of duplciate letters
+     * @return result List of duplicate letters
      */
 
 
     private List<ScrabbleLetter> createDuplicateLetters(char letter, int numberOfDuplications) {
-        List<ScrabbleLetter> duplicateListOfLetters = new ArrayList<ScrabbleLetter>();
+        List<ScrabbleLetter> duplicateListOfLetters = new ArrayList<>();
 
         for (int dupCntr = 0; dupCntr < numberOfDuplications; dupCntr++) {
             duplicateListOfLetters.add(new ScrabbleLetter(letter));
@@ -92,38 +89,37 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
     }
 
-    /**
-     *Out of a list of keys a random key is drawn.
-     *Then an instance of a ScrabbleLetter is removed from the letterList.
-     * Which is then placed on the rack, waiting for the player to use that letter.*/
+    private List<Character> getAvailableLetters() {
+        List<Character> listOfVerifiedKeys = new ArrayList<>();
+
+        for (char check : letterMap.keySet()) {
+            if (!letterMap.get(check).isEmpty()) {
+                listOfVerifiedKeys.add(check);
+            }
+        }
+
+        return listOfVerifiedKeys;
+    }
+
+    public List<ScrabbleLetter> getLetters(int numberOfLetters) {
+        List<ScrabbleLetter> letters;
+
+        for (int letterCnt = 0; letterCnt < numberOfLetters; letterCnt++) {
+        }
+
+        return getLetters(9);
+
+    }
+
 
 
     protected void transferScrabbleLetterToRack(Rack rack) {
-
-        int numberOfLettersRequiredToBeOnRack = 7;
-
-
         Random random = new Random();
+        char randomlySelectedKey = getAvailableLetters().get(random.nextInt(getAvailableLetters().size()));
 
-        char[] arrayOfLetterKeys = alphabet.toCharArray();
+        List<ScrabbleLetter> letterList = letterMap.get(randomlySelectedKey);
+        ScrabbleLetter letterToRemove = letterList.get(random.nextInt(letterList.size()));
 
-
-        char randomlySelectedKey = arrayOfLetterKeys[random.nextInt(alphabet.length())];
-
-        List<ScrabbleLetter> letterList = letterMap.get(Character.valueOf(randomlySelectedKey));
-
-        if (letterList.isEmpty())
-            return;
-
-        ScrabbleLetter letterToRemove = letterList.listIterator().next();//Checks whether there is a letter to remove within the selected key.
-
-        if (letterToRemove != null) { //if there is a letter to remove, remove that letter and move it to the rack.
-            ScrabbleLetter removedLetter = letterList.remove(random.nextInt(letterList.size()));
-
-         //TODO: rack.addLetter(removedLetter);
-
-
-        }
     }
 
 

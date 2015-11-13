@@ -8,18 +8,29 @@ import java.util.List;
  */
 public class Rack {
 
-
-
-    protected void getLetters(ScrabbleLetter receivedLetter) {
-
-    }
-
     protected List<ScrabbleLetter> lettersOnRack = new ArrayList<>();
 
 
+    Rack() {
+        getLettersCurrentlyOnRack();
+    }
+
+
+    protected void addLetter(ScrabbleLetter scrabbleLetter) {
+
+        lettersOnRack.add(scrabbleLetter);
+
+
+    }
+
+    protected List getLettersCurrentlyOnRack() {
+        return lettersOnRack;
+    }
 
 
     protected void removeLetter() {
+
+        lettersOnRack.size();
 
 
 
