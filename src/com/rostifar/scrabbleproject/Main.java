@@ -15,13 +15,13 @@ public class Main {
     public void setupGame() {
 
        ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
-        scrabbleAlphabet.transferScrabbleLetterToRack(new Rack());
+        ScrabbleBoard board = new ScrabbleBoard();
+        System.out.println(board);
 
 
+       /* Rack rack = new Rack();
 
-
-
-
+        scrabbleAlphabet.transferScrabbleLetterToRack(rack);*/
 
 
 

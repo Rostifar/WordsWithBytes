@@ -12,15 +12,10 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         loadLetters();
     }
 
-
-
     /**
      * Load Scrabble letters for the various point values
      */
     private void loadLetters() {
-
-
-
         letterMap.put (' ', createDuplicateLetters(' ', 2));
 
         letterMap.put('L', createDuplicateLetters('L', 4));
@@ -59,12 +54,6 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
         letterMap.put('Q', createDuplicateLetters('Q', 1));
         letterMap.put('Z', createDuplicateLetters('Z', 1));
-
-        //Basic notation for removing letter from map through list: map.get(Character.valueOf('Insert Letter')).remove(number of object);
-
-
-
-
     }
 
     /**
@@ -74,8 +63,6 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
      * @param numberOfDuplications number of duplicates to create
      * @return result List of duplicate letters
      */
-
-
     private List<ScrabbleLetter> createDuplicateLetters(char letter, int numberOfDuplications) {
         List<ScrabbleLetter> duplicateListOfLetters = new ArrayList<>();
 
@@ -86,21 +73,24 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         }
 
         return duplicateListOfLetters;
-
     }
 
-    private List<Character> getAvailableLetters() {
-        List<Character> listOfVerifiedKeys = new ArrayList<>();
+    /**
+     * @return a list containing the letters that are available for use
+     */
+    public List<Character> getAvailableLetters() {
+        List<Character> listOfAvaiableLetters = new ArrayList<>();
 
-        for (char check : letterMap.keySet()) {
-            if (!letterMap.get(check).isEmpty()) {
-                listOfVerifiedKeys.add(check);
+        for (char letterToCheck : letterMap.keySet()) {
+            if (!letterMap.get(letterToCheck).isEmpty()) {
+                listOfAvaiableLetters.add(letterToCheck);
             }
         }
 
-        return listOfVerifiedKeys;
+        return listOfAvaiableLetters;
     }
 
+    //TODO: Figure out what to do with this?
     public List<ScrabbleLetter> getLetters(int numberOfLetters) {
         List<ScrabbleLetter> letters;
 
@@ -110,7 +100,6 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         return getLetters(9);
 
     }
-
 
 
     protected void transferScrabbleLetterToRack(Rack rack) {

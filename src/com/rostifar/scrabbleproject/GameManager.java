@@ -7,15 +7,17 @@ package com.rostifar.scrabbleproject;
 public class GameManager {
 
 
-    boolean isfirstround;
+    private boolean isFirstRound;
+    private ScrabbleBoard scrabbleBoard;
 
-    public void setup(){
+    public void setupGame() {
+        scrabbleBoard = new ScrabbleBoard();
 
     }
 
-    public void determineFirstPlayer(){}
+    private void determineFirstPlayer(){}
 
-    public void determinePlayerTurn(){}
+    private void determinePlayerTurn(){}
 
 
 
