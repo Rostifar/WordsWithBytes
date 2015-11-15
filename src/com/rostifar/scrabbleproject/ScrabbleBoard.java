@@ -147,11 +147,7 @@ public class ScrabbleBoard {
      * the squareContainsLetter() as a prerequsite to calling this  method.
      */
     public void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
-
-        if (board[col][row].containsLetter()) {
-            throw new ScrabbleGameException("Space on board is already occupied by letter:" + board[col][row]);
-        }
-
+        board[col][row].setLetter(letterToAdd);
     }
 
     @Override

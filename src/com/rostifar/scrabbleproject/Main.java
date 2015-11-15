@@ -1,37 +1,20 @@
 package com.rostifar.scrabbleproject;
 
-
-
 /**
- * Created by ross on 7/20/15.
+ * Created by ross on 7/20/15. entry point to set a new game in motion
  */
 public class Main {
     public static void main(String[] args) {
 
         Main main = new Main();
-        main.setupGame();
+        main.startGame();
     }
 
-    public void setupGame() {
-
-       ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
-        ScrabbleBoard board = new ScrabbleBoard();
-        System.out.println(board);
-
+    public void startGame() {
+       GameManager gameManager = new ScrabbleGameManager();
+       gameManager.runGame();
 
        /* Rack rack = new Rack();
-
         scrabbleAlphabet.transferScrabbleLetterToRack(rack);*/
-
-
-
-
-
-
     }
-
-
-
-
-
 }

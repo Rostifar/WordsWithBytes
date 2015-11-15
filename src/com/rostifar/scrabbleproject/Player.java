@@ -31,7 +31,7 @@ public class Player {
         return turnCounter == 0;
     }
 
-    public void takeTurn() {
+    public void takeTurn() {return;}
         //TODO: Display board to user
         //Implement logic to ask user for input
         //get Input from user
@@ -41,10 +41,8 @@ public class Player {
         //put 'em on the rack
         //return
 
-    public void exchangeLetters(){};
+    public void exchangeLetters(){return;}
 
-
-    }
 
     public String toString() {
         return "Player " + getName() + " - " + getRack();

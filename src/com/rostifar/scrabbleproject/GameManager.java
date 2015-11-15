@@ -2,24 +2,10 @@ package com.rostifar.scrabbleproject;
 
 
 /**
- * Created by ross on 7/22/15.
+ * Created by Ross on 7/22/15.
+ * TODO: Should we just make this an interface? Determine after we fill in the blanks on the subclass
  */
-public class GameManager {
-
-
-    private boolean isFirstRound;
-    private ScrabbleBoard scrabbleBoard;
-
-    public void setupGame() {
-        scrabbleBoard = new ScrabbleBoard();
-
-    }
-
-    private void determineFirstPlayer(){}
-
-    private void determinePlayerTurn(){}
-
-
-
+public interface GameManager {
+    void runGame();
 
 }

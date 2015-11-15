@@ -8,10 +8,9 @@ public enum SquareEnum {
 
     private String displayValue;
 
-    public SquareEnum(String aDisplayValue) {
+    SquareEnum(String aDisplayValue) {
         displayValue = aDisplayValue;
     }
-
 
     @Override
     public String toString() {
