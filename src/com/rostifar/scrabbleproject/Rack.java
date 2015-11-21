@@ -8,9 +8,15 @@ import java.util.List;
  */
 public class Rack {
     protected List<ScrabbleLetter> lettersOnRack;
+    public static final int ROW_LENGTH = 7;
+    public static final int COLUMN_LENGTH = 1;
 
     public Rack() {
         lettersOnRack = new ArrayList<>();
+        lettersOnRack.add(new ScrabbleLetter('A'));
+        lettersOnRack.add(new ScrabbleLetter('B'));
+        lettersOnRack.add(new ScrabbleLetter('C'));
+
     }
 
     public void addLetter(ScrabbleLetter scrabbleLetter) {
@@ -28,6 +34,31 @@ public class Rack {
     protected void removeLetter() {
 
         lettersOnRack.size();
+    }
+
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (lettersOnRack.isEmpty()) {
+
+            return "|-------|";
+        }
+
+        stringBuilder.append("| ");
+
+        for (ScrabbleLetter letter : lettersOnRack) {
+            stringBuilder.append(letter.getLetter()) .append(" | ");
+        }
+        stringBuilder.append("\n");
+
+        stringBuilder.append("| ");
+
+        for (ScrabbleLetter letter : lettersOnRack) {
+            stringBuilder.append(letter.getPointValue().getValue()) .append(" | ");
+        }
+
+        return stringBuilder.toString();
+
     }
 }
 

@@ -12,9 +12,12 @@ public class Main {
 
     public void startGame() {
        GameManager gameManager = new ScrabbleGameManager();
-       gameManager.runGame();
+      // gameManager.runGame();
 
-       /* Rack rack = new Rack();
-        scrabbleAlphabet.transferScrabbleLetterToRack(rack);*/
+
+
+
+        Rack rack = new Rack();
+        System.out.println(rack);
     }
 }

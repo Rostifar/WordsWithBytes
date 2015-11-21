@@ -17,6 +17,14 @@ public class ScrabbleLetter {
 
     }
 
+    public char getLetter () {
+        return letter;
+    }
+
+    public PointValue getPointValue () {
+        return pointValue;
+    }
+
     @Override
     public String toString() {
         return "ScrabbleLetter: " + letter + "\tPoint value: " + pointValue + "\t";
