@@ -16,11 +16,15 @@ public class PointValue {
         return "PointValue: " + value;
     }
 
+    public int getValue () {
+        return value;
+    }
+
     /**
     Implements a switch statement thus assigning point values to individual letters.
      **/
 
-    private int getPointValueForLetter(char aLetter) {
+    public int getPointValueForLetter(char aLetter) {
 
             int pointValue = 0;
 

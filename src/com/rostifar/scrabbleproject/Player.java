@@ -31,7 +31,10 @@ public class Player {
         return turnCounter == 0;
     }
 
-    public void takeTurn() {return;}
+    public void takeTurn() {
+        ScrabbleBoard scrabbleBoard = new ScrabbleBoard();
+        System.out.println(scrabbleBoard);
+    }
         //TODO: Display board to user
         //Implement logic to ask user for input
         //get Input from user

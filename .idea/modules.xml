@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Scrabble-Project.iml" filepath="$PROJECT_DIR$/Scrabble-Project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WordsWithByte.iml" filepath="$PROJECT_DIR$/WordsWithByte.iml" />
     </modules>
   </component>
 </project>
