@@ -43,14 +43,14 @@ public class Rack {
         stringBuilder.append("| ");
 
         for (ScrabbleLetter letter : lettersOnRack) {
-            stringBuilder.append(letter.getLetter()) .append("  |  ");
+            stringBuilder.append(letter.getLetter()) .append("    |    ");
         }
         stringBuilder.append("\n");
 
         stringBuilder.append("| ");
 
         for (ScrabbleLetter letter : lettersOnRack) {
-            stringBuilder.append(letter.getPointValue().getValue()) .append("  |  ");
+            stringBuilder.append(letter.getPointValue().getValue()) .append("    |    ");
         }
 
         return stringBuilder.toString();
