@@ -11,13 +11,18 @@ public class Main {
     }
 
     public void startGame() {
+
+
        GameManager gameManager = new ScrabbleGameManager();
+        ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
+        Rack rack = new Rack();
+
+
+        System.out.println(rack);
+
+
       // gameManager.runGame();
 
 
-
-
-        Rack rack = new Rack();
-        System.out.println(rack);
     }
 }

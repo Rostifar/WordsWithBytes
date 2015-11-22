@@ -90,26 +90,22 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         return listOfAvaiableLetters;
     }
 
-    //TODO: Figure out what to do with this?
-    public List<ScrabbleLetter> getLetters(int numberOfLetters) {
-        List<ScrabbleLetter> letters;
-
-        for (int letterCnt = 0; letterCnt < numberOfLetters; letterCnt++) {
-        }
-
-        return getLetters(9);
-
-    }
-
-
-    protected void transferScrabbleLetterToRack(Rack rack) {
+    protected List<ScrabbleLetter> getLetters(int numberOfLettersNeeded) {
         Random random = new Random();
-        char randomlySelectedKey = getAvailableLetters().get(random.nextInt(getAvailableLetters().size()));
+        List<ScrabbleLetter> lettersToReturn = new ArrayList<>();
 
-        List<ScrabbleLetter> letterList = letterMap.get(randomlySelectedKey);
-        ScrabbleLetter letterToRemove = letterList.get(random.nextInt(letterList.size()));
+        for (int i = 0; i < numberOfLettersNeeded; i++) {
 
+            char randomlySelectedKey = getAvailableLetters().get(random.nextInt(getAvailableLetters().size()));
+            List<ScrabbleLetter> letterList = letterMap.get(randomlySelectedKey);
+            ScrabbleLetter letterToRemove = letterList.get(random.nextInt(letterList.size()));
+            lettersToReturn.add(letterToRemove);
+        }
+        return lettersToReturn;
     }
+
+
+
 
 
 

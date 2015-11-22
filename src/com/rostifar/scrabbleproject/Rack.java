@@ -13,10 +13,6 @@ public class Rack {
 
     public Rack() {
         lettersOnRack = new ArrayList<>();
-        lettersOnRack.add(new ScrabbleLetter('A'));
-        lettersOnRack.add(new ScrabbleLetter('B'));
-        lettersOnRack.add(new ScrabbleLetter('C'));
-
     }
 
     public void addLetter(ScrabbleLetter scrabbleLetter) {
@@ -47,18 +43,22 @@ public class Rack {
         stringBuilder.append("| ");
 
         for (ScrabbleLetter letter : lettersOnRack) {
-            stringBuilder.append(letter.getLetter()) .append(" | ");
+            stringBuilder.append(letter.getLetter()) .append("  |  ");
         }
         stringBuilder.append("\n");
 
         stringBuilder.append("| ");
 
         for (ScrabbleLetter letter : lettersOnRack) {
-            stringBuilder.append(letter.getPointValue().getValue()) .append(" | ");
+            stringBuilder.append(letter.getPointValue().getValue()) .append("  |  ");
         }
 
         return stringBuilder.toString();
 
+    }
+
+    protected int getNumberOfLettersOnRack() {
+        return lettersOnRack.size();
     }
 }
 

@@ -13,6 +13,7 @@ public class ScrabbleGameManager implements GameManager {
     private ScrabbleBoard scrabbleBoard;
     private List<Player> players;
     private UserInput userInput;
+    private ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
 
     protected ScrabbleGameManager() {
         userInput = new UserInput();
@@ -51,11 +52,18 @@ public class ScrabbleGameManager implements GameManager {
         }
 
         for (int playerIdx = 0; playerIdx < numberOfPlayers; playerIdx++) {
-            players.add(new Player("Player-" + playerIdx));
+            Player player = new Player("Player-" + playerIdx);
+            setupPlayer(player);
+            players.add(player);
         }
     }
 
+    protected void setupPlayer(Player player) {
+        if (player.needsLetters()) {
+            player.addLetters(scrabbleAlphabet.getLetters(player.getNumberOfLettersNeeded()));
+        }
 
+    }
 
     protected void startGame() {
         System.out.println(scrabbleBoard);
