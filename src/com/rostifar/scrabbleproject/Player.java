@@ -54,7 +54,7 @@ public class Player {
 
 
     public String toString() {
-        return "Player " + getName() + " - " + getRack();
+        return "Player " + getName() + "\n" + getRack();
     }
 
     public boolean needsLetters() { //if true getNumberOfLettersNeeded

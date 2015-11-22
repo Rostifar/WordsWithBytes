@@ -98,7 +98,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
             char randomlySelectedKey = getAvailableLetters().get(random.nextInt(getAvailableLetters().size()));
             List<ScrabbleLetter> letterList = letterMap.get(randomlySelectedKey);
-            ScrabbleLetter letterToRemove = letterList.get(random.nextInt(letterList.size()));
+            ScrabbleLetter letterToRemove = letterList.iterator().next();
             lettersToReturn.add(letterToRemove);
         }
         return lettersToReturn;

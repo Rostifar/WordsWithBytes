@@ -2,7 +2,6 @@ package com.rostifar.scrabbleproject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Created by D14048 on 10/4/2015.
@@ -56,6 +55,8 @@ public class ScrabbleGameManager implements GameManager {
             setupPlayer(player);
             players.add(player);
         }
+
+        printPlayers();
     }
 
     protected void setupPlayer(Player player) {
@@ -65,8 +66,14 @@ public class ScrabbleGameManager implements GameManager {
 
     }
 
+    private void printPlayers() {
+        for (Player playr : players) {
+            System.out.println(playr);
+        }
+    }
+
     protected void startGame() {
-        System.out.println(scrabbleBoard);
+      //  System.out.println(scrabbleBoard);
 
     }
 

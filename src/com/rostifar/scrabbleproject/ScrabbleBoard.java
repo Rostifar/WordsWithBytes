@@ -23,8 +23,9 @@ package com.rostifar.scrabbleproject;
  15	|TW|  |  |DL|  |  |  |TW|  |  |  |DL|  |  |TW|
     ----------------------------------------------
 
- A good online reference for the board and the game can be found here:
- @see  http://www.scrabulizer.com/
+ /**
+ * A good online reference for the board and the game can be found here:
+ * @see  http://www.scrabulizer.com/
  */
 public class ScrabbleBoard {
     public static final int ROW_LENGTH = 15;

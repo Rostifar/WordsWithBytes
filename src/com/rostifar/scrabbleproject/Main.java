@@ -14,11 +14,12 @@ public class Main {
 
 
        GameManager gameManager = new ScrabbleGameManager();
-        ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
+       gameManager.runGame();
+        /*ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
         Rack rack = new Rack();
 
 
-        System.out.println(rack);
+        System.out.println(rack);*/
 
 
       // gameManager.runGame();
