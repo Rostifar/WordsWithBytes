@@ -56,6 +56,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         letterMap.put('Z', createDuplicateLetters('Z', 1));
     }
 
+
     /**
      * Create multiple instances of the same letter.
      *

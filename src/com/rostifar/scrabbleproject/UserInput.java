@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class UserInput {
 
 
-    public String getInputFromUser(String prompt) throws UserInputException {
+    public String getInputFromUser(String prompt) {
         if (prompt != null) {
             System.out.println(prompt);
         }
@@ -17,10 +17,7 @@ public class UserInput {
         Scanner userInput = new Scanner(System.in);
         String inputResult = userInput.nextLine();
 
-        if (inputResult == null || inputResult.equals(""))
-            throw new UserInputException("User input was null or empty");
-
-        return  inputResult;
+        return inputResult;
     }
 
     public String getInputFromUser() throws UserInputException {

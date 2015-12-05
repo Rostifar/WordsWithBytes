@@ -46,6 +46,8 @@ public class ScrabbleBoard {
         setupTripleLetters();
         setupCenterSquare();
         setupDefaultSquares();
+
+
     }
 
     /**
