@@ -75,9 +75,12 @@ public class ScrabbleGameManager implements GameManager {
 
 
     private void printPlayers() {
+        
 
-        Arrays.stream(players).forEach((Player player) ->System.out.println(player));
+        for (Player playr : players) {
 
+            System.out.println(playr);
+        }
     }
 
     private boolean isValidInput(String input) {
