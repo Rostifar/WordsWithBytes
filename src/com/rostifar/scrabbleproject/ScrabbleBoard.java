@@ -68,7 +68,7 @@ public class ScrabbleBoard {
     }
 
     private void setupDoubleWords() {
-        for (int row =  1, col =1 ;  row < ROW_LENGTH; row++, col++) {
+        for (int row =  1, col = 1;  row < ROW_LENGTH; row++, col++) {
 
             if (row >= 5 && row <= 8)
                 continue; //Skip middle of board per board layout
