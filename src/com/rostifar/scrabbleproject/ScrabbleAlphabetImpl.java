@@ -85,6 +85,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         for (char letterToCheck : letterMap.keySet()) {
             if (!letterMap.get(letterToCheck).isEmpty()) {
                 listOfAvaiableLetters.add(letterToCheck);
+
             }
         }
 
@@ -101,6 +102,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
             List<ScrabbleLetter> letterList = letterMap.get(randomlySelectedKey);
             ScrabbleLetter letterToRemove = letterList.iterator().next();
             lettersToReturn.add(letterToRemove);
+            letterMap.get(randomlySelectedKey).remove(letterToRemove);
         }
         return lettersToReturn;
     }

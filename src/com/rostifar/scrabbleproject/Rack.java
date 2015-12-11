@@ -8,8 +8,6 @@ import java.util.List;
  */
 public class Rack {
     protected List<ScrabbleLetter> lettersOnRack;
-    public static final int ROW_LENGTH = 7;
-    public static final int COLUMN_LENGTH = 1;
 
     public Rack() {
         lettersOnRack = new ArrayList<>();
@@ -23,13 +21,9 @@ public class Rack {
         lettersOnRack.addAll(scrabbleLetters);
     }
 
-    public List getLettersCurrentlyOnRack() {
-        return lettersOnRack;
-    }
+    protected void removeLetter(ScrabbleLetter scrabbleLetter) {
 
-    protected void removeLetter() {
 
-        lettersOnRack.size();
     }
 
     public String toString() {

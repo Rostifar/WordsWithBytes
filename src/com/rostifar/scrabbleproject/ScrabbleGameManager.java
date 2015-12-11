@@ -1,6 +1,6 @@
 package com.rostifar.scrabbleproject;
 
-import java.util.*;
+import java.util.Scanner;
 
 /**
  * Created by D14048 on 10/4/2015.
@@ -73,6 +73,10 @@ public class ScrabbleGameManager implements GameManager {
 
     }
 
+    public void playWord(Rack rack) {
+
+    }
+
 
     private void printPlayers() {
         
@@ -106,6 +110,12 @@ public class ScrabbleGameManager implements GameManager {
             switch (moveSelected) {
 
                 case ("p"):
+
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.println("Enter your desired word: ");
+                    String word = scanner.nextLine();
+                    System.out.println(word);
+
 
                     //playWord();
                     //enter word and location
