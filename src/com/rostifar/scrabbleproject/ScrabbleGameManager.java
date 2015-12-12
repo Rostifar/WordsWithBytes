@@ -11,6 +11,7 @@ public class ScrabbleGameManager implements GameManager {
     private ScrabbleBoard scrabbleBoard;
     private Player players[];
     private UserInput userInput;
+    private Rack rack;
     private ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
     private String greeting = "Hello, Welcome to WordsWithBytes!";
     private Player currentPlayer;
@@ -73,7 +74,16 @@ public class ScrabbleGameManager implements GameManager {
 
     }
 
-    public void playWord(Rack rack) {
+    public void playWord() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your desired word: ");
+        String input = scanner.nextLine();
+
+        char[] lettersSelected = input.toCharArray();
+
+        
+
 
     }
 
@@ -111,14 +121,7 @@ public class ScrabbleGameManager implements GameManager {
 
                 case ("p"):
 
-                    Scanner scanner = new Scanner(System.in);
-                    System.out.println("Enter your desired word: ");
-                    String word = scanner.nextLine();
-                    System.out.println(word);
-
-
-                    //playWord();
-                    //enter word and location
+                    playWord();
                     takingTurn = false;
                     break;
                 case ("s"):
