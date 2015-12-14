@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Rack {
     protected List<ScrabbleLetter> lettersOnRack;
+    private ScrabbleLetter scrabbleLetter;
 
     public Rack() {
         lettersOnRack = new ArrayList<>();
@@ -21,9 +22,20 @@ public class Rack {
         lettersOnRack.addAll(scrabbleLetters);
     }
 
-    protected void removeLetter(ScrabbleLetter scrabbleLetter) {
+    protected boolean isValidLetter(ScrabbleLetter scrabbleLetter) {
 
+        return lettersOnRack.contains(scrabbleLetter);
+    }
 
+    public void removeLetters() {
+
+        if (isValidLetter(scrabbleLetter)) {
+
+            ScrabbleLetter letterToRemove = lettersOnRack.get(lettersOnRack.indexOf(scrabbleLetter));
+            List<ScrabbleLetter> lettersPlayed = new ArrayList<>();
+            lettersPlayed.add(letterToRemove);
+            lettersOnRack.remove(letterToRemove);
+        }
     }
 
     public String toString() {
