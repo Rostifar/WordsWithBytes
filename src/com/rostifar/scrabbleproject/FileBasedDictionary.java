@@ -7,6 +7,14 @@ import java.util.Scanner;
 
 /**
  * Implement a dictionary as a flat file lookup.
+ * File is in the format of a
+ * 1) Header on the first line,
+ * 2) All other lines | (pipe) delimited with a unique ID as the first field and the word as the second field.
+ * ID|WORD <-- header on first line
+ * 120|abalones <-- examples of records in rest of files
+ * 166|abashments
+ * etc....
+ * This same file and format is used to load the database for a databased dictionary implementation.
  * Created by GitLazy (Dad) on 12/11/2015.
  */
 public class FileBasedDictionary implements Dictionary {
@@ -27,8 +35,8 @@ public class FileBasedDictionary implements Dictionary {
     }
 
     /**
-     * Chech the word against the dictionary for existance
-     * @param aWord does htis word exist in the dictionary?
+     * Chech the word against the dictionary for existence
+     * @param aWord does this word exist in the dictionary?
      * @return true if yes, false if no
      */
     @Override
@@ -38,10 +46,15 @@ public class FileBasedDictionary implements Dictionary {
 
         try (Scanner scanner = new Scanner(fileDictionaryOfWords)) {
 
-            while (scanner.hasNextLine()) {
+            for (int recNumber = 0; scanner.hasNextLine(); recNumber++) {
                 String line = scanner.nextLine();
 
-                if (aWord.equals(line.trim())) {
+                if (recNumber == 0) //Skip over first line in file which is the header
+                    continue;
+
+                String wordInDictionary = line.trim().split("|")[1];
+
+                if (aWord.equals(wordInDictionary)) {
                     foundWord = true;
                     break;
                 }
@@ -51,6 +64,7 @@ public class FileBasedDictionary implements Dictionary {
 
         } catch (IOException e) {
             e.printStackTrace();
+            //FIXME: throw new Exception?
         }
 
         return foundWord;
@@ -58,7 +72,7 @@ public class FileBasedDictionary implements Dictionary {
 
     @Override
     public String getDefinitionForWord(String aWord) throws ScrabbleGameInvalidWordException {
-        throw new ScrabbleGameInvalidWordException(aWord + " Dictionary definitions not available");
+        throw new ScrabbleGameInvalidWordException(aWord + " - Dictionary definitions not available");
     }
 
     /**
