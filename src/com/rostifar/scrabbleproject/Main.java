@@ -11,19 +11,7 @@ public class Main {
     }
 
     public void startGame() {
-
-
        GameManager gameManager = new ScrabbleGameManager();
        gameManager.runGame();
-        /*ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
-        Rack rack = new Rack();
-
-
-        System.out.println(rack);*/
-
-
-      // gameManager.runGame();
-
-
     }
 }

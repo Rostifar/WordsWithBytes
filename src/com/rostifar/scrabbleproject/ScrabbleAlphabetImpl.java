@@ -103,6 +103,8 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
             ScrabbleLetter letterToRemove = letterList.iterator().next();
             lettersToReturn.add(letterToRemove);
             letterMap.get(randomlySelectedKey).remove(letterToRemove);
+
+
         }
         return lettersToReturn;
     }

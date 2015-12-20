@@ -7,16 +7,13 @@ import java.util.Scanner;
  */
 public class ScrabbleGameManager implements GameManager {
 
-    private boolean isFirstRound;
     private ScrabbleBoard scrabbleBoard;
     private Player players[];
     private UserInput userInput;
-    private Rack rack;
     private ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
     private String greeting = "Hello, Welcome to WordsWithBytes!";
     private Player currentPlayer;
-    private Player firstPlayer;
-    private int turnCounter = 0;
+    private ScrabbleWord scrabbleWord;
 
     protected ScrabbleGameManager() {
         userInput = new UserInput();
@@ -47,7 +44,7 @@ public class ScrabbleGameManager implements GameManager {
      */
     private void addPlayers() {
 
-        int numberOfPlayers = 1;
+        int numberOfPlayers;
 
         try {
             String input = userInput.getInputFromUser("How many players? (enter 1,2,3 or 4:");
@@ -74,19 +71,11 @@ public class ScrabbleGameManager implements GameManager {
 
     }
 
-    public void playWord() {
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your desired word: ");
-        String input = scanner.nextLine();
+    private void playWord() {
 
-        char[] lettersSelected = input.toCharArray();
-
-        
-
-
+        scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
     }
-
 
     private void printPlayers() {
         
@@ -120,8 +109,8 @@ public class ScrabbleGameManager implements GameManager {
             switch (moveSelected) {
 
                 case ("p"):
-
                     playWord();
+
                     takingTurn = false;
                     break;
                 case ("s"):
@@ -129,8 +118,6 @@ public class ScrabbleGameManager implements GameManager {
                     takingTurn = false;
                     break;
                 case ("e"):
-
-                    //exchangeLetters();
 
                     break;
 

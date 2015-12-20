@@ -1,7 +1,5 @@
 package com.rostifar.scrabbleproject;
 
-import java.util.Map;
-
 /**
  * Created by Cal Briden (Dad) & Ross Briden on 8/12/2015.
  * Model class for representation of an individual letter that can appear in the scrabble alphabet.

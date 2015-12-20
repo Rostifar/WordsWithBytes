@@ -22,20 +22,13 @@ public class Rack {
         lettersOnRack.addAll(scrabbleLetters);
     }
 
-    protected boolean isValidLetter(ScrabbleLetter scrabbleLetter) {
+    protected boolean isValidLetter(char letterToCheck) {
 
         return lettersOnRack.contains(scrabbleLetter);
     }
 
     public void removeLetters() {
 
-        if (isValidLetter(scrabbleLetter)) {
-
-            ScrabbleLetter letterToRemove = lettersOnRack.get(lettersOnRack.indexOf(scrabbleLetter));
-            List<ScrabbleLetter> lettersPlayed = new ArrayList<>();
-            lettersPlayed.add(letterToRemove);
-            lettersOnRack.remove(letterToRemove);
-        }
     }
 
     public String toString() {
