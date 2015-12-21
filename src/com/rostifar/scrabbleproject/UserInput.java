@@ -15,9 +15,7 @@ public class UserInput {
         }
 
         Scanner userInput = new Scanner(System.in);
-        String inputResult = userInput.nextLine();
-
-        return inputResult;
+        return userInput.nextLine();
     }
 
     public String getInputFromUser() throws UserInputException {

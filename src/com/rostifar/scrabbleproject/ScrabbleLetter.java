@@ -12,7 +12,6 @@ public class ScrabbleLetter {
     public ScrabbleLetter(char aLetter) {
         letter = aLetter;
         pointValue = new PointValue(aLetter);
-
     }
 
     public char getLetter () {
@@ -22,6 +21,14 @@ public class ScrabbleLetter {
     public PointValue getPointValue () {
         return pointValue;
     }
+
+    @Override
+    public boolean equals(Object letter) {
+
+        return this.letter == ((ScrabbleLetter) letter).getLetter();
+    }
+
+
 
     @Override
     public String toString() {

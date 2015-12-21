@@ -14,6 +14,7 @@ public class ScrabbleGameManager implements GameManager {
     private String greeting = "Hello, Welcome to WordsWithBytes!";
     private Player currentPlayer;
     private ScrabbleWord scrabbleWord;
+    private Rack rack;
 
     protected ScrabbleGameManager() {
         userInput = new UserInput();
@@ -75,7 +76,8 @@ public class ScrabbleGameManager implements GameManager {
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
-    }
+        currentPlayer.validateWord(scrabbleWord);
+        }
 
     private void printPlayers() {
         

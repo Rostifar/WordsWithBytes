@@ -31,6 +31,10 @@ public class Player {
         return rack;
     }
 
+    public void validateWord(ScrabbleWord scrabbleWord) {
+        rack.validateWord(scrabbleWord);
+    }
+
     public void exchangeLetters(){
         return;
     }

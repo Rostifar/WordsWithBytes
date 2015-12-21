@@ -1,5 +1,7 @@
 package com.rostifar.scrabbleproject;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +24,16 @@ public class Rack {
         lettersOnRack.addAll(scrabbleLetters);
     }
 
-    protected boolean isValidLetter(char letterToCheck) {
+    protected boolean validateWord(ScrabbleWord scrabbleWordToCheck) {
 
-        return lettersOnRack.contains(scrabbleLetter);
+        for (int i =0; i < scrabbleWordToCheck.word.size(); i++) {
+            if (!lettersOnRack.contains(scrabbleWordToCheck.word.get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
+
 
     public void removeLetters() {
 
