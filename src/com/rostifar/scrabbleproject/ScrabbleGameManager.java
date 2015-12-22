@@ -79,6 +79,8 @@ public class ScrabbleGameManager implements GameManager {
 
         if (currentPlayer.validateWord(scrabbleWord)) {
             currentPlayer.removeLetters(scrabbleWord);
+            currentPlayer.needsLetters();
+            currentPlayer.addLetters(scrabbleAlphabet.getLetters(currentPlayer.getNumberOfLettersNeeded()));
         }
     }
 

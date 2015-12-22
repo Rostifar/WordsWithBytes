@@ -35,10 +35,6 @@ public class Player {
         return rack.validateWord(scrabbleWord);
     }
 
-    public void exchangeLetters(){
-        return;
-    }
-
     public String toString() {
         return "Player " + getName() + "\n" + getRack();
     }
