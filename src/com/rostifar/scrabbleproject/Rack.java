@@ -26,8 +26,8 @@ public class Rack {
 
     protected boolean validateWord(ScrabbleWord scrabbleWordToCheck) {
 
-        for (int i =0; i < scrabbleWordToCheck.word.size(); i++) {
-            if (!lettersOnRack.contains(scrabbleWordToCheck.word.get(i))) {
+        for (int i =0; i < scrabbleWordToCheck.getNumberOfLetters(); i++) {
+            if (!lettersOnRack.contains(scrabbleWordToCheck.getLetterAt(i))) {
                 return false;
             }
         }
@@ -35,8 +35,13 @@ public class Rack {
     }
 
 
-    public void removeLetters() {
+    public void removeLetters(ScrabbleWord scrabbleWord) {
+        List<ScrabbleLetter> lettersToRemove = new ArrayList<>();
 
+        for (int i = 0; i < scrabbleWord.getNumberOfLetters(); i++) {
+            lettersToRemove.add(lettersOnRack.get(lettersOnRack.indexOf(scrabbleWord.getLetterAt(i))));
+        }
+        lettersOnRack.removeAll(lettersToRemove);
     }
 
     public String toString() {

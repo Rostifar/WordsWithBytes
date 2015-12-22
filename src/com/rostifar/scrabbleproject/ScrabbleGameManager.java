@@ -72,12 +72,15 @@ public class ScrabbleGameManager implements GameManager {
 
     }
 
-
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
         currentPlayer.validateWord(scrabbleWord);
+
+        if (currentPlayer.validateWord(scrabbleWord)) {
+            currentPlayer.removeLetters(scrabbleWord);
         }
+    }
 
     private void printPlayers() {
         

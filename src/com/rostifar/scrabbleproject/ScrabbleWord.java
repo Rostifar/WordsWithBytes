@@ -7,12 +7,20 @@ import java.util.List;
  * Created by ross on 12/19/15.
  */
 public class ScrabbleWord {
-    protected List<ScrabbleLetter> word;
+    private List<ScrabbleLetter> word;
 
     public ScrabbleWord(String rawWord) {
         word = new ArrayList<>();
         parseWord(rawWord.toUpperCase());
 
+    }
+
+    public ScrabbleLetter getLetterAt(int index) {
+        return word.get(index);
+    }
+
+    public int getNumberOfLetters() {
+        return word.size();
     }
 
     /**

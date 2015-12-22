@@ -31,8 +31,8 @@ public class Player {
         return rack;
     }
 
-    public void validateWord(ScrabbleWord scrabbleWord) {
-        rack.validateWord(scrabbleWord);
+    public boolean validateWord(ScrabbleWord scrabbleWord) {
+        return rack.validateWord(scrabbleWord);
     }
 
     public void exchangeLetters(){
@@ -55,4 +55,6 @@ public class Player {
     public void addLetters(List<ScrabbleLetter> letters) {
         rack.addLetters(letters);
     }
+
+    public void removeLetters(ScrabbleWord scrabbleWord) {rack.removeLetters(scrabbleWord);}
 }
