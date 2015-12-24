@@ -3,6 +3,7 @@ import java.util.*;
 
 public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
     private Map<Character, List<ScrabbleLetter>> letterMap = new HashMap<>();
+    List<ScrabbleLetter> scrabbleLetterList;
 
 
     /**
@@ -86,10 +87,17 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
             if (!letterMap.get(letterToCheck).isEmpty()) {
                 listOfAvaiableLetters.add(letterToCheck);
 
+
             }
         }
 
         return listOfAvaiableLetters;
+    }
+
+    public void getExchangedLetters(List<ScrabbleLetter> lettersToExchange) {
+        for (ScrabbleLetter scrabbleLetter : lettersToExchange) {
+            letterMap.put(scrabbleLetter.getLetter(), createDuplicateLetters(scrabbleLetter.getLetter(), lettersToExchange.size()));
+        }
     }
 
     protected List<ScrabbleLetter> getLetters(int numberOfLettersNeeded) {
@@ -102,8 +110,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
             List<ScrabbleLetter> letterList = letterMap.get(randomlySelectedKey);
             ScrabbleLetter letterToRemove = letterList.iterator().next();
             lettersToReturn.add(letterToRemove);
-            letterMap.get(randomlySelectedKey).remove(letterToRemove);
-
+            letterMap.get(letterToRemove.getLetter()).remove(letterToRemove);
 
         }
         return lettersToReturn;

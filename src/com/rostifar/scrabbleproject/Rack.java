@@ -1,7 +1,4 @@
 package com.rostifar.scrabbleproject;
-
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +8,7 @@ import java.util.List;
 public class Rack {
     protected List<ScrabbleLetter> lettersOnRack;
     private ScrabbleLetter scrabbleLetter;
+    private ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
 
     public Rack() {
         lettersOnRack = new ArrayList<>();
@@ -24,7 +22,19 @@ public class Rack {
         lettersOnRack.addAll(scrabbleLetters);
     }
 
-    protected boolean validateWord(ScrabbleWord scrabbleWordToCheck) {
+    public void exchangeLetters(char[] lettersToExchange) {
+        List<ScrabbleLetter> letterList;
+
+        for (char letter : lettersToExchange) {
+            scrabbleLetter = new ScrabbleLetter(letter);
+            letterList = new ArrayList<>();
+            letterList.add(scrabbleLetter);
+            lettersOnRack.remove(scrabbleLetter);
+            scrabbleAlphabet.getExchangedLetters(letterList);
+        }
+    }
+
+    protected boolean isValidWord(ScrabbleWord scrabbleWordToCheck) {
 
         for (int i =0; i < scrabbleWordToCheck.getNumberOfLetters(); i++) {
             if (!lettersOnRack.contains(scrabbleWordToCheck.getLetterAt(i))) {
@@ -72,6 +82,7 @@ public class Rack {
     protected int getNumberOfLettersOnRack() {
         return lettersOnRack.size();
     }
+
 }
 
 
