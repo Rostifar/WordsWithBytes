@@ -8,7 +8,6 @@ import java.util.List;
 public class Rack {
     protected List<ScrabbleLetter> lettersOnRack;
     private ScrabbleLetter scrabbleLetter;
-    private ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
 
     public Rack() {
         lettersOnRack = new ArrayList<>();
@@ -23,14 +22,11 @@ public class Rack {
     }
 
     public void exchangeLetters(char[] lettersToExchange) {
-        List<ScrabbleLetter> letterList;
 
         for (char letter : lettersToExchange) {
             scrabbleLetter = new ScrabbleLetter(letter);
-            letterList = new ArrayList<>();
-            letterList.add(scrabbleLetter);
             lettersOnRack.remove(scrabbleLetter);
-            scrabbleAlphabet.getExchangedLetters(letterList);
+            ScrabbleAlphabetImpl.getInstance().getExchangedLetters(scrabbleLetter);
         }
     }
 

@@ -5,12 +5,17 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
     private Map<Character, List<ScrabbleLetter>> letterMap = new HashMap<>();
     List<ScrabbleLetter> scrabbleLetterList;
 
-
+    private static ScrabbleAlphabetImpl alphabetInstance;
     /**
      * Constructor is private. Use Factory class to create instances.
      */
     protected ScrabbleAlphabetImpl() {
+        alphabetInstance = this;
         loadLetters();
+    }
+
+    public static ScrabbleAlphabetImpl getInstance() {
+        return alphabetInstance;
     }
 
     /**
@@ -94,10 +99,10 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         return listOfAvaiableLetters;
     }
 
-    public void getExchangedLetters(List<ScrabbleLetter> lettersToExchange) {
-        for (ScrabbleLetter scrabbleLetter : lettersToExchange) {
-            letterMap.put(scrabbleLetter.getLetter(), createDuplicateLetters(scrabbleLetter.getLetter(), lettersToExchange.size()));
-        }
+
+    public void getExchangedLetters(ScrabbleLetter scrabbleLetter) {
+
+        letterMap.get(scrabbleLetter.getLetter()).add(scrabbleLetter);
     }
 
     protected List<ScrabbleLetter> getLetters(int numberOfLettersNeeded) {
@@ -111,14 +116,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
             ScrabbleLetter letterToRemove = letterList.iterator().next();
             lettersToReturn.add(letterToRemove);
             letterMap.get(letterToRemove.getLetter()).remove(letterToRemove);
-
         }
         return lettersToReturn;
     }
-
-
-
-
-
-
 }
