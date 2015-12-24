@@ -1,5 +1,6 @@
 package com.rostifar.scrabbleproject;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 /**
@@ -8,14 +9,12 @@ import java.util.List;
 public class Player {
     private Rack rack;
     private String name;
-    private int turnCounter;
     private ScrabbleAlphabet scrabbleAlphabet;
     protected static final int RACK_MAX_CAPACITY = 7;
 
 
     public Player(String aName) {
         name = aName;
-        turnCounter = 0;
         rack = new Rack();
     }
 
@@ -31,8 +30,8 @@ public class Player {
         return rack;
     }
 
-    public boolean validateWord(ScrabbleWord scrabbleWord) {
-        return rack.validateWord(scrabbleWord);
+    public boolean isValidWord(ScrabbleWord scrabbleWord) {
+        return rack.isValidWord(scrabbleWord);
     }
 
     public String toString() {
@@ -46,6 +45,10 @@ public class Player {
 
     public int getNumberOfLettersNeeded() {
         return needsLetters() ? RACK_MAX_CAPACITY - rack.getNumberOfLettersOnRack() : 0;
+    }
+
+    public void getLettersToExchange(char[] lettersToExchange) {
+        rack.exchangeLetters(lettersToExchange);
     }
 
     public void addLetters(List<ScrabbleLetter> letters) {

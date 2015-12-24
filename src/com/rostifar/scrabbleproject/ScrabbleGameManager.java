@@ -75,17 +75,20 @@ public class ScrabbleGameManager implements GameManager {
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
-        currentPlayer.validateWord(scrabbleWord);
 
-        if (currentPlayer.validateWord(scrabbleWord)) {
+        if (currentPlayer.isValidWord(scrabbleWord)) {
             currentPlayer.removeLetters(scrabbleWord);
-            currentPlayer.needsLetters();
-            currentPlayer.addLetters(scrabbleAlphabet.getLetters(currentPlayer.getNumberOfLettersNeeded()));
+            if (currentPlayer.needsLetters()) {
+                currentPlayer.addLetters(scrabbleAlphabet.getLetters(currentPlayer.getNumberOfLettersNeeded()));
+            }
+        } else {
+            System.out.println("Error! You do not have the letters you have selected on your Rack. Please play another word.");
+            makeMove();
         }
     }
 
     private void printPlayers() {
-        
+
 
         for (Player playr : players) {
 
@@ -97,6 +100,14 @@ public class ScrabbleGameManager implements GameManager {
         final int MAX_INPUT_LENGTH = 1;
 
         return (input.length() == MAX_INPUT_LENGTH);
+    }
+
+    private void exchangeLetters() {
+        currentPlayer.getLettersToExchange(userInput.getInputFromUser("Which letters would you like to exchange? ").toUpperCase().toCharArray());
+        currentPlayer.needsLetters();
+        currentPlayer.addLetters(scrabbleAlphabet.getLetters(currentPlayer.getNumberOfLettersNeeded()));
+        System.out.println(currentPlayer.getRack());
+
     }
 
     private void makeMove() {
@@ -125,7 +136,7 @@ public class ScrabbleGameManager implements GameManager {
                     takingTurn = false;
                     break;
                 case ("e"):
-
+                    exchangeLetters();
                     break;
 
                 default:
@@ -137,8 +148,7 @@ public class ScrabbleGameManager implements GameManager {
     }
 
 
-
-    private void playerManager () {
+    private void playerManager() {
 
         for (int currntIdx = 0; currntIdx < players.length; currntIdx++) {
 
@@ -164,16 +174,6 @@ public class ScrabbleGameManager implements GameManager {
 
 
     protected void endGame() {
-
-    }
-
-
-    protected void determineFirstPlayer() {
-
-    }
-
-
-    protected void determinePlayerTurn() {
 
     }
 }
