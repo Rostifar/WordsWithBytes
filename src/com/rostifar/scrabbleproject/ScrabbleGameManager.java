@@ -69,7 +69,6 @@ public class ScrabbleGameManager implements GameManager {
         if (player.needsLetters()) {
             player.addLetters(scrabbleAlphabet.getLetters(player.getNumberOfLettersNeeded()));
         }
-
     }
 
     private void playWord() {
@@ -78,13 +77,12 @@ public class ScrabbleGameManager implements GameManager {
 
         if (currentPlayer.isValidWord(scrabbleWord)) {
             currentPlayer.removeLetters(scrabbleWord);
-            if (currentPlayer.needsLetters()) {
-                currentPlayer.addLetters(scrabbleAlphabet.getLetters(currentPlayer.getNumberOfLettersNeeded()));
-            }
+            getLetters();
         } else {
             System.out.println("Error! You do not have the letters you have selected on your Rack. Please play another word.");
             makeMove();
         }
+
     }
 
     private void printPlayers() {
@@ -102,10 +100,16 @@ public class ScrabbleGameManager implements GameManager {
         return (input.length() == MAX_INPUT_LENGTH);
     }
 
+    private void getLetters() {
+        if (currentPlayer.needsLetters()) {
+            currentPlayer.addLetters(scrabbleAlphabet.getLetters(currentPlayer.getNumberOfLettersNeeded()));
+        }
+
+    }
+
     private void exchangeLetters() {
         currentPlayer.getLettersToExchange(userInput.getInputFromUser("Which letters would you like to exchange? ").toUpperCase().toCharArray());
-        currentPlayer.needsLetters();
-        currentPlayer.addLetters(scrabbleAlphabet.getLetters(currentPlayer.getNumberOfLettersNeeded()));
+        getLetters();
         System.out.println(currentPlayer.getRack());
 
     }
