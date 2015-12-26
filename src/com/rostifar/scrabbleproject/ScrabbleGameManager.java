@@ -1,5 +1,10 @@
 package com.rostifar.scrabbleproject;
 
+import com.rostifar.scrabbleproject.dictionary.AbstractDictionary;
+
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -15,6 +20,7 @@ public class ScrabbleGameManager implements GameManager {
     private Player currentPlayer;
     private ScrabbleWord scrabbleWord;
     private Rack rack;
+    private AbstractDictionary dictionary;
 
     protected ScrabbleGameManager() {
         userInput = new UserInput();
@@ -71,6 +77,7 @@ public class ScrabbleGameManager implements GameManager {
         }
     }
 
+
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
@@ -83,13 +90,26 @@ public class ScrabbleGameManager implements GameManager {
             makeMove();
         }
 
+        try {
+            dictionary.isValidWord(scrabbleWord.toString());
+        } catch (Exception e) {
+            if (!isValidInput(scrabbleWord.toString())) {
+                System.out.println("Error! the word you selected is not a real word. Please try again.");
+                makeMove();
+            }
+        }
+
     }
+
+
+
+
+
 
     private void printPlayers() {
 
 
         for (Player playr : players) {
-
             System.out.println(playr);
         }
     }
@@ -104,14 +124,11 @@ public class ScrabbleGameManager implements GameManager {
         if (currentPlayer.needsLetters()) {
             currentPlayer.addLetters(scrabbleAlphabet.getLetters(currentPlayer.getNumberOfLettersNeeded()));
         }
-
     }
 
     private void exchangeLetters() {
         currentPlayer.getLettersToExchange(userInput.getInputFromUser("Which letters would you like to exchange? ").toUpperCase().toCharArray());
         getLetters();
-        System.out.println(currentPlayer.getRack());
-
     }
 
     private void makeMove() {
@@ -141,6 +158,7 @@ public class ScrabbleGameManager implements GameManager {
                     break;
                 case ("e"):
                     exchangeLetters();
+                    takingTurn = false;
                     break;
 
                 default:

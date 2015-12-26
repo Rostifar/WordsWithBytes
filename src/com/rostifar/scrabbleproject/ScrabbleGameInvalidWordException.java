@@ -6,6 +6,8 @@ package com.rostifar.scrabbleproject;
 public class ScrabbleGameInvalidWordException extends ScrabbleGameException {
     public ScrabbleGameInvalidWordException(String msg) {
         super(msg);
+
+
     }
 
 }
