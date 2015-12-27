@@ -3,8 +3,6 @@ import java.util.*;
 
 public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
     private Map<Character, List<ScrabbleLetter>> letterMap = new HashMap<>();
-    List<ScrabbleLetter> scrabbleLetterList;
-
     private static ScrabbleAlphabetImpl alphabetInstance;
     /**
      * Constructor is private. Use Factory class to create instances.
@@ -95,7 +93,6 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
             }
         }
-
         return listOfAvaiableLetters;
     }
 

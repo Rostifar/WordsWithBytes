@@ -9,13 +9,14 @@ import java.util.List;
 public class Player {
     private Rack rack;
     private String name;
-    private ScrabbleAlphabet scrabbleAlphabet;
+    private ScoreKeeper scoreKeeper;
     protected static final int RACK_MAX_CAPACITY = 7;
 
 
     public Player(String aName) {
         name = aName;
         rack = new Rack();
+        scoreKeeper = new ScoreKeeper();
     }
 
     public String getName() {
@@ -26,6 +27,13 @@ public class Player {
         return rack != null;
     }
 
+    public ScoreKeeper getScoreKeeper() {
+        return scoreKeeper;
+    }
+
+    public int getPlayerScore() {
+        return scoreKeeper.getplayerScore();
+    }
     public Rack getRack() {
         return rack;
     }

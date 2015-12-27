@@ -1,11 +1,5 @@
 package com.rostifar.scrabbleproject;
 
-import com.rostifar.scrabbleproject.dictionary.AbstractDictionary;
-
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.List;
-import java.util.Scanner;
 
 /**
  * Created by D14048 on 10/4/2015.
@@ -16,11 +10,8 @@ public class ScrabbleGameManager implements GameManager {
     private Player players[];
     private UserInput userInput;
     private ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
-    private String greeting = "Hello, Welcome to WordsWithBytes!";
     private Player currentPlayer;
     private ScrabbleWord scrabbleWord;
-    private Rack rack;
-    private AbstractDictionary dictionary;
 
     protected ScrabbleGameManager() {
         userInput = new UserInput();
@@ -33,12 +24,9 @@ public class ScrabbleGameManager implements GameManager {
         startGame();
         endGame();
         breakdownGame();
-
-
     }
 
     protected void setupGame() {
-        System.out.println(greeting);
         System.out.println("Setting up Scrabble game...");
         scrabbleBoard = new ScrabbleBoard();
         System.out.println(scrabbleBoard);
@@ -89,26 +77,15 @@ public class ScrabbleGameManager implements GameManager {
             System.out.println("Error! You do not have the letters you have selected on your Rack. Please play another word.");
             makeMove();
         }
-
-        try {
-            dictionary.isValidWord(scrabbleWord.toString());
-        } catch (Exception e) {
-            if (!isValidInput(scrabbleWord.toString())) {
-                System.out.println("Error! the word you selected is not a real word. Please try again.");
-                makeMove();
-            }
-        }
-
+        currentPlayer.getScoreKeeper().getWordPointValue(scrabbleWord);
     }
 
-
-
-
-
+    public void getWordPosition(ScrabbleWord scrabbleword) {
+        int input = Integer.parseInt(userInput.getInputFromUser("At what coordinates would you like to place your selected word?"));
+        System.out.println(input);
+    }
 
     private void printPlayers() {
-
-
         for (Player playr : players) {
             System.out.println(playr);
         }
@@ -132,6 +109,9 @@ public class ScrabbleGameManager implements GameManager {
     }
 
     private void makeMove() {
+
+        System.out.println("\n");
+        System.out.println("Your current score is: " + currentPlayer.getPlayerScore());
         String moveSelected;
         boolean takingTurn = true;
 

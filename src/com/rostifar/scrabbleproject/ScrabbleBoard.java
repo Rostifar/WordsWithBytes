@@ -46,8 +46,6 @@ public class ScrabbleBoard {
         setupTripleLetters();
         setupCenterSquare();
         setupDefaultSquares();
-
-
     }
 
     /**
@@ -175,5 +173,9 @@ public class ScrabbleBoard {
         stringBuilder.append("\t----------------------------------------------\n");
 
         return stringBuilder.toString();
+    }
+
+    public void placeWordOnBoard() {
+
     }
 }
