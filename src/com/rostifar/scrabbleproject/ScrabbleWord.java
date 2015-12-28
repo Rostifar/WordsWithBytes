@@ -8,9 +8,11 @@ import java.util.List;
  */
 public class ScrabbleWord {
     private List<ScrabbleLetter> word;
+    private String wordAsString;
 
     public ScrabbleWord(String rawWord) {
         word = new ArrayList<>();
+        wordAsString = rawWord;
         parseWord(rawWord.toUpperCase());
 
     }
@@ -18,6 +20,7 @@ public class ScrabbleWord {
     public ScrabbleLetter getLetterAt(int index) {
         return word.get(index);
     }
+
 
     public int getNumberOfLetters() {
         return word.size();
@@ -33,5 +36,10 @@ public class ScrabbleWord {
         for (char letter : lettersUsed) {
             word.add(new ScrabbleLetter(letter));
         }
+    }
+
+    @Override
+    public String toString() {
+        return wordAsString;
     }
 }

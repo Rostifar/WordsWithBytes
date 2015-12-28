@@ -1,6 +1,9 @@
 package com.rostifar.scrabbleproject;
 
 
+import com.rostifar.scrabbleproject.dictionary.Dictionary;
+import com.rostifar.scrabbleproject.dictionary.DictionaryFactory;
+
 /**
  * Created by D14048 on 10/4/2015.
  */
@@ -12,6 +15,7 @@ public class ScrabbleGameManager implements GameManager {
     private ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
     private Player currentPlayer;
     private ScrabbleWord scrabbleWord;
+
 
     protected ScrabbleGameManager() {
         userInput = new UserInput();
@@ -65,11 +69,7 @@ public class ScrabbleGameManager implements GameManager {
         }
     }
 
-
-    private void playWord() {
-
-        scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
-
+    private void isWordOnRack(ScrabbleWord scrabbleWord) {
         if (currentPlayer.isValidWord(scrabbleWord)) {
             currentPlayer.removeLetters(scrabbleWord);
             getLetters();
@@ -77,6 +77,13 @@ public class ScrabbleGameManager implements GameManager {
             System.out.println("Error! You do not have the letters you have selected on your Rack. Please play another word.");
             makeMove();
         }
+    }
+
+
+    private void playWord() {
+
+        scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
+        isWordOnRack(scrabbleWord);
         currentPlayer.getScoreKeeper().getWordPointValue(scrabbleWord);
     }
 
@@ -106,6 +113,18 @@ public class ScrabbleGameManager implements GameManager {
     private void exchangeLetters() {
         currentPlayer.getLettersToExchange(userInput.getInputFromUser("Which letters would you like to exchange? ").toUpperCase().toCharArray());
         getLetters();
+    }
+
+    private boolean isWordInDictionary(String word) {
+        Dictionary dictionary = null;
+        try {
+            dictionary = DictionaryFactory.getDictionary();
+        } catch (ScrabbleGameException e) {
+            e.printStackTrace();
+        }
+
+        assert dictionary != null;
+        return dictionary.isValidWord(word);
     }
 
     private void makeMove() {
@@ -140,7 +159,10 @@ public class ScrabbleGameManager implements GameManager {
                     exchangeLetters();
                     takingTurn = false;
                     break;
+                case ("quit"):
 
+                    makeMove();
+                    break;
                 default:
                     break;
             }
