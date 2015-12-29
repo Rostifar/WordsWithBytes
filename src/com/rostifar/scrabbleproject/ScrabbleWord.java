@@ -21,7 +21,6 @@ public class ScrabbleWord {
         return word.get(index);
     }
 
-
     public int getNumberOfLetters() {
         return word.size();
     }
@@ -31,7 +30,6 @@ public class ScrabbleWord {
     *Places each instance of a ScrabbleLetter into an array list
     */
     private void parseWord(String rawWord) {
-
         char[] lettersUsed = rawWord.toCharArray();
         for (char letter : lettersUsed) {
             word.add(new ScrabbleLetter(letter));

@@ -8,6 +8,8 @@ import java.util.List;
 public class Rack {
     protected List<ScrabbleLetter> lettersOnRack;
     private ScrabbleLetter scrabbleLetter;
+    List<ScrabbleLetter> lettersToRemove = new ArrayList<>();
+
 
     public Rack() {
         lettersOnRack = new ArrayList<>();
@@ -41,13 +43,17 @@ public class Rack {
     }
 
 
-    public void removeLetters(ScrabbleWord scrabbleWord) {
-        List<ScrabbleLetter> lettersToRemove = new ArrayList<>();
+    public List<ScrabbleLetter> removeLetters(ScrabbleWord scrabbleWord) {
 
         for (int i = 0; i < scrabbleWord.getNumberOfLetters(); i++) {
             lettersToRemove.add(lettersOnRack.get(lettersOnRack.indexOf(scrabbleWord.getLetterAt(i))));
         }
         lettersOnRack.removeAll(lettersToRemove);
+        return lettersToRemove;
+    }
+
+    public List<ScrabbleLetter> getLettersToRemove() {
+        return lettersToRemove;
     }
 
     public String toString() {

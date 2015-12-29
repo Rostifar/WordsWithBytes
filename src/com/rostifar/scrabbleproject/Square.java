@@ -24,6 +24,7 @@ public class Square {
     public void setLetter(ScrabbleLetter aScrabbleLetter) throws ScrabbleGameException {
         if (containsLetter())
             throw new ScrabbleGameException("Space on board is already occupied by letter:" + getLetter());
+
     }
 
     public ScrabbleLetter getLetter() {

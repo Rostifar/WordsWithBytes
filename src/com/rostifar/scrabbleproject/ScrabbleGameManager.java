@@ -4,6 +4,9 @@ package com.rostifar.scrabbleproject;
 import com.rostifar.scrabbleproject.dictionary.Dictionary;
 import com.rostifar.scrabbleproject.dictionary.DictionaryFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by D14048 on 10/4/2015.
  */
@@ -84,13 +87,20 @@ public class ScrabbleGameManager implements GameManager {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
         isWordOnRack(scrabbleWord);
-        currentPlayer.getScoreKeeper().getWordPointValue(scrabbleWord);
+        int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
+        int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));
+        String orientation = userInput.getInputFromUser("Would you like your selected word to go horizontal or vertical ?");
+        System.out.println(scrabbleBoard);
+
+        if (scrabbleBoard.squareContainsLetter(col, row)){
+            System.out.println("The location you have selected already has been used. Please try again.");
+            makeMove();
+        } else {
+            scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove(), col, row, orientation);
+        }
     }
 
-    public void getWordPosition(ScrabbleWord scrabbleword) {
-        int input = Integer.parseInt(userInput.getInputFromUser("At what coordinates would you like to place your selected word?"));
-        System.out.println(input);
-    }
+
 
     private void printPlayers() {
         for (Player playr : players) {
@@ -103,6 +113,8 @@ public class ScrabbleGameManager implements GameManager {
 
         return (input.length() == MAX_INPUT_LENGTH);
     }
+
+
 
     private void getLetters() {
         if (currentPlayer.needsLetters()) {
@@ -122,15 +134,11 @@ public class ScrabbleGameManager implements GameManager {
         } catch (ScrabbleGameException e) {
             e.printStackTrace();
         }
-
-        assert dictionary != null;
         return dictionary.isValidWord(word);
     }
 
     private void makeMove() {
 
-        System.out.println("\n");
-        System.out.println("Your current score is: " + currentPlayer.getPlayerScore());
         String moveSelected;
         boolean takingTurn = true;
 

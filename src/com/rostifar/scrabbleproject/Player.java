@@ -31,9 +31,6 @@ public class Player {
         return scoreKeeper;
     }
 
-    public int getPlayerScore() {
-        return scoreKeeper.getplayerScore();
-    }
     public Rack getRack() {
         return rack;
     }

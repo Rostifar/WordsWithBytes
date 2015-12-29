@@ -11,7 +11,7 @@ public class ScoreKeeper {
         getplayerScore();
     }
 
-    public int getWordPointValue(ScrabbleWord scrabbleWord) {
+    public void getWordPointValue(ScrabbleWord scrabbleWord) {
         int letterPointValue;
         PointValue pointValue;
         wordPointValue = 0;
@@ -21,11 +21,9 @@ public class ScoreKeeper {
             pointValue = new PointValue(scrabbleLetter.getLetter());
             letterPointValue = pointValue.getValue();
             wordPointValue += letterPointValue;
-            totalPoints += wordPointValue;
         }
-        return wordPointValue;
+        totalPoints += wordPointValue;
     }
-
     public int getplayerScore() {
         return totalPoints;
     }

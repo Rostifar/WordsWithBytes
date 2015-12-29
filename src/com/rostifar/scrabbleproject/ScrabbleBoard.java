@@ -1,5 +1,7 @@
 package com.rostifar.scrabbleproject;
 
+import java.util.List;
+
 /**
  * Created by Dad on 10/4/2015.
  * Example of the board layout which will show with call to toString()
@@ -143,12 +145,32 @@ public class ScrabbleBoard {
 
     /**
      * Add a letter to an empty square on the scrabble board.
-     * @param letterToAdd letter to add to the empty square
      * @throws ScrabbleGameException if square is not empty. This should not happen if the caller utilizes
      * the squareContainsLetter() as a prerequsite to calling this  method.
      */
+
+    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, int col, int row, String orientation) {
+        try {
+            for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
+                switch (orientation) {
+
+                    case "vertical":
+                        addLetterToSquare(scrabbleLetter, col, row++);
+                        break;
+                    case "horizontal":
+                        addLetterToSquare(scrabbleLetter, col++, row);
+                        break;
+                    default:
+                }
+            }
+        } catch (ScrabbleGameException e) {
+            System.out.println("The position you entered already has a letter. Please try again.");
+        }
+    }
+
     public void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
         board[col][row].setLetter(letterToAdd);
+
     }
 
     @Override
