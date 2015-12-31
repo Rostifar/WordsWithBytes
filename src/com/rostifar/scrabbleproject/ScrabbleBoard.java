@@ -27,7 +27,7 @@ import java.util.List;
 
  /**
  * A good online reference for the board and the game can be found here:
- * @see  http://www.scrabulizer.com/
+ * @see  /
  */
 public class ScrabbleBoard {
     public static final int ROW_LENGTH = 15;
@@ -143,22 +143,34 @@ public class ScrabbleBoard {
         return board[col][row].containsLetter();
     }
 
+    private int calculatePointValueForWord(List<ScrabbleLetter> scrabbleLetter ,int col, int row) {
+
+        if (S)
+    }
+
     /**
      * Add a letter to an empty square on the scrabble board.
      * @throws ScrabbleGameException if square is not empty. This should not happen if the caller utilizes
      * the squareContainsLetter() as a prerequsite to calling this  method.
      */
 
-    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, int col, int row, String orientation) {
+    public int addWordToBoard(List<ScrabbleLetter> lettersToAdd, int col, int row, String orientation) {
+        PointValue pointValue;
+        int totalPointsForWord = 0;
         try {
             for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
+
+                if(board[col][row].isSpecialSquare()) {
+                    lettersToAdd.
+                }
+
                 switch (orientation) {
 
-                    case "vertical":
-                        addLetterToSquare(scrabbleLetter, col, row++);
-                        break;
-                    case "horizontal":
+                    case "v":
                         addLetterToSquare(scrabbleLetter, col++, row);
+                        break;
+                    case "h":
+                        addLetterToSquare(scrabbleLetter, col, row++);
                         break;
                     default:
                 }
@@ -166,6 +178,10 @@ public class ScrabbleBoard {
         } catch (ScrabbleGameException e) {
             System.out.println("The position you entered already has a letter. Please try again.");
         }
+        for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
+            totalPointsForWord += scrabbleLetter.getPointValue().getValue();
+        }
+        return totalPointsForWord;
     }
 
     public void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
@@ -179,7 +195,7 @@ public class ScrabbleBoard {
      */
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\t  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15\n");
+        stringBuilder.append("\t  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14\n");
         stringBuilder.append("\t----------------------------------------------\n");
 
         for (int col = 0; col < COLUMN_LENGTH; col++) {

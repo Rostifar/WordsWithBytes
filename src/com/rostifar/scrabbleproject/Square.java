@@ -32,6 +32,10 @@ public class Square {
         return letter;
     }
 
+    public boolean isSpecialSquare() {
+        return isCenterSquare() || isDoubleLetter() || isTripleLetter() || isTripleWord() || isDoubleWord();
+    }
+
 
     public boolean isDoubleWord() {
         return squareType.equals(SquareEnum.DOUBLE_WORD);
@@ -57,7 +61,7 @@ public class Square {
     public String toString() {
 
         if (this.containsLetter())
-            return String.valueOf(letter);
+            return String.valueOf(" " + letter.getLetter());
 
         return squareType.toString();
     }

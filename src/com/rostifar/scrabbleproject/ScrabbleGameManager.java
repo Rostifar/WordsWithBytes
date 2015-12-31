@@ -88,7 +88,7 @@ public class ScrabbleGameManager implements GameManager {
         isWordOnRack(scrabbleWord);
         int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
         int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));
-        String orientation = userInput.getInputFromUser("Would you like your selected word to go horizontal or vertical ?");
+        String orientation = userInput.getInputFromUser("Would you like your selected word to go horizontal or vertical ? (ie. v or h)");
         System.out.println(scrabbleBoard);
 
         if (scrabbleBoard.squareContainsLetter(col, row)){
@@ -96,6 +96,7 @@ public class ScrabbleGameManager implements GameManager {
             makeMove();
         } else {
             scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove(), col, row, orientation);
+            currentPlayer.getScoreKeeper().getWordPointValue(scrabbleWord);
         }
     }
 
