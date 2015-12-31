@@ -20,7 +20,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
      * Load Scrabble letters for the various point values
      */
     private void loadLetters() {
-        letterMap.put (' ', createDuplicateLetters(' ', 2));
+        letterMap.put ('_', createDuplicateLetters('_', 2));
 
         letterMap.put('L', createDuplicateLetters('L', 4));
         letterMap.put('S', createDuplicateLetters('S', 4));
@@ -94,6 +94,10 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
             }
         }
         return listOfAvaiableLetters;
+    }
+
+    public Set<Character> listOfLetters() {
+        return letterMap.keySet();
     }
 
 

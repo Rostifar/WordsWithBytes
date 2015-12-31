@@ -85,6 +85,9 @@ public class ScrabbleGameManager implements GameManager {
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
+        if (scrabbleWord.wordContainsBlankLetter()) {
+            scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter()));
+        }
         isWordOnRack(scrabbleWord);
         int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
         int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));
@@ -100,7 +103,15 @@ public class ScrabbleGameManager implements GameManager {
         }
     }
 
+    public ScrabbleLetter exchangeBlankLetter(ScrabbleLetter blankLetter) {
+        System.out.println(scrabbleAlphabet.listOfLetters());
+        char selectedLetter = userInput.getInputFromUser("The word you have played contains a blank letter. Please select the letter you would like to exchange it for: ").toUpperCase().charAt(0);
+        ScrabbleLetter newScrabbleLetter = new ScrabbleLetter(selectedLetter);
+        newScrabbleLetter.overridePointValue();
+        currentPlayer.getRack().replaceBlankLetter(newScrabbleLetter, blankLetter);
 
+        return newScrabbleLetter;
+    }
 
     private void printPlayers() {
         for (Player playr : players) {

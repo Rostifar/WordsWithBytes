@@ -28,6 +28,10 @@ public class ScrabbleLetter {
         return this.letter == ((ScrabbleLetter) letter).getLetter();
     }
 
+    public int overridePointValue() {
+        return pointValue.value = 0;
+    }
+
 
 
     @Override

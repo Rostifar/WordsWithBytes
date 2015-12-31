@@ -36,8 +36,31 @@ public class ScrabbleWord {
         }
     }
 
+    public boolean wordContainsBlankLetter() {
+        List<Boolean> searchForBlankLetter = new ArrayList<>();
+        char blankLetter = '_';
+
+        for (ScrabbleLetter scrabbleLetter: word) {
+            searchForBlankLetter.add(scrabbleLetter.getLetter() == blankLetter);
+        }
+        return searchForBlankLetter.contains(true);
+    }
+
+    public ScrabbleLetter getBlankLetter() {
+        List<Character> checkForBlankLetter = new ArrayList<>();
+        for (ScrabbleLetter scrabbleLetter : word) {
+            checkForBlankLetter.add(scrabbleLetter.getLetter());
+        }
+        return word.get(checkForBlankLetter.indexOf('_'));
+    }
+
     @Override
     public String toString() {
         return wordAsString;
+    }
+
+    public void replaceLetter(ScrabbleLetter letterToReplace) {
+        word.remove(getBlankLetter());
+        word.add(word.indexOf(getBlankLetter()), letterToReplace);
     }
 }

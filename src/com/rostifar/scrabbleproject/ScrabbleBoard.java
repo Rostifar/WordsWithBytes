@@ -143,9 +143,7 @@ public class ScrabbleBoard {
         return board[col][row].containsLetter();
     }
 
-    private int calculatePointValueForWord(List<ScrabbleLetter> scrabbleLetter ,int col, int row) {
-
-        if (S)
+    private void calculatePointValueForWord(List<ScrabbleLetter> scrabbleLetter ,int col, int row) {
     }
 
     /**
@@ -159,10 +157,6 @@ public class ScrabbleBoard {
         int totalPointsForWord = 0;
         try {
             for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
-
-                if(board[col][row].isSpecialSquare()) {
-                    lettersToAdd.
-                }
 
                 switch (orientation) {
 

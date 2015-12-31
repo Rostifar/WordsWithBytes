@@ -7,8 +7,7 @@ import java.util.List;
  */
 public class Rack {
     protected List<ScrabbleLetter> lettersOnRack;
-    private ScrabbleLetter scrabbleLetter;
-    List<ScrabbleLetter> lettersToRemove = new ArrayList<>();
+    private List<ScrabbleLetter> lettersToRemove = new ArrayList<>();
 
 
     public Rack() {
@@ -24,6 +23,7 @@ public class Rack {
     }
 
     public void exchangeLetters(char[] lettersToExchange) {
+        ScrabbleLetter scrabbleLetter;
 
         for (char letter : lettersToExchange) {
             scrabbleLetter = new ScrabbleLetter(letter);
@@ -42,6 +42,10 @@ public class Rack {
         return true;
     }
 
+    public void replaceBlankLetter(ScrabbleLetter replacementLetter, ScrabbleLetter blankLetter) {
+        lettersOnRack.add(replacementLetter);
+        lettersOnRack.remove(blankLetter);
+    }
 
     public List<ScrabbleLetter> removeLetters(ScrabbleWord scrabbleWord) {
 
