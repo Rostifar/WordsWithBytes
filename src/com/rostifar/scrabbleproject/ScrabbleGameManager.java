@@ -89,10 +89,10 @@ public class ScrabbleGameManager implements GameManager {
             scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter()));
         }
         isWordOnRack(scrabbleWord);
+        System.out.println(scrabbleBoard);
         int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
         int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));
         String orientation = userInput.getInputFromUser("Would you like your selected word to go horizontal or vertical ? (ie. v or h)");
-        System.out.println(scrabbleBoard);
 
         if (scrabbleBoard.squareContainsLetter(col, row)){
             System.out.println("The location you have selected already has been used. Please try again.");
@@ -100,6 +100,8 @@ public class ScrabbleGameManager implements GameManager {
         } else {
             scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove(), col, row, orientation);
             currentPlayer.getScoreKeeper().getWordPointValue(scrabbleWord);
+            System.out.println(scrabbleBoard);
+
         }
     }
 

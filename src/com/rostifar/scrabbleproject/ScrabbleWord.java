@@ -60,7 +60,8 @@ public class ScrabbleWord {
     }
 
     public void replaceLetter(ScrabbleLetter letterToReplace) {
-        word.remove(getBlankLetter());
         word.add(word.indexOf(getBlankLetter()), letterToReplace);
+        word.remove(getBlankLetter());
+
     }
 }
