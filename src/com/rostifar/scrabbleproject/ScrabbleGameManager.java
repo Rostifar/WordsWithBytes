@@ -4,6 +4,8 @@ package com.rostifar.scrabbleproject;
 import com.rostifar.scrabbleproject.dictionary.Dictionary;
 import com.rostifar.scrabbleproject.dictionary.DictionaryFactory;
 
+import java.util.Arrays;
+
 
 /**
  * Created by D14048 on 10/4/2015.
@@ -87,6 +89,7 @@ public class ScrabbleGameManager implements GameManager {
             scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter()));
         }
         isWordOnRack(scrabbleWord);
+        System.out.println(scrabbleBoard);
         int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
         int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));
         String orientation = userInput.getInputFromUser("Would you like your selected word to go horizontal or vertical ? (ie. v or h)");
@@ -95,6 +98,7 @@ public class ScrabbleGameManager implements GameManager {
             makeMove();
         } else {
             scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove(), col, row, orientation);
+            removeWordFromSelection();
             currentPlayer.getScoreKeeper().getWordPointValue(scrabbleWord);
             System.out.println(scrabbleBoard);
 
@@ -108,6 +112,10 @@ public class ScrabbleGameManager implements GameManager {
         currentPlayer.getRack().replaceBlankLetter(newScrabbleLetter, blankLetter);
 
         return newScrabbleLetter;
+    }
+
+    private void removeWordFromSelection() {
+        currentPlayer.getRack().getLettersToRemove().removeAll(currentPlayer.getRack().getLettersToRemove());
     }
 
     private void printPlayers() {
