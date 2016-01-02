@@ -144,6 +144,7 @@ public class ScrabbleBoard {
     }
 
     private void calculatePointValueForWord(List<ScrabbleLetter> scrabbleLetter ,int col, int row) {
+
     }
 
     /**

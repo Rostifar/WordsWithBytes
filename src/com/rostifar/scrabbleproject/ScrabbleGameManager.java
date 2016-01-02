@@ -4,8 +4,6 @@ package com.rostifar.scrabbleproject;
 import com.rostifar.scrabbleproject.dictionary.Dictionary;
 import com.rostifar.scrabbleproject.dictionary.DictionaryFactory;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by D14048 on 10/4/2015.
@@ -85,17 +83,15 @@ public class ScrabbleGameManager implements GameManager {
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
-        if (scrabbleWord.wordContainsBlankLetter()) {
+        if (scrabbleWord.containsBlankLetter()) {
             scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter()));
         }
         isWordOnRack(scrabbleWord);
-        System.out.println(scrabbleBoard);
         int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
         int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));
         String orientation = userInput.getInputFromUser("Would you like your selected word to go horizontal or vertical ? (ie. v or h)");
-
-        if (scrabbleBoard.squareContainsLetter(col, row)){
-            System.out.println("The location you have selected already has been used. Please try again.");
+        if (scrabbleBoard.squareContainsLetter(col, row)) {
+            System.out.println("Error the location you have selected has been already used. ");
             makeMove();
         } else {
             scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove(), col, row, orientation);
@@ -108,8 +104,7 @@ public class ScrabbleGameManager implements GameManager {
     public ScrabbleLetter exchangeBlankLetter(ScrabbleLetter blankLetter) {
         System.out.println(scrabbleAlphabet.listOfLetters());
         char selectedLetter = userInput.getInputFromUser("The word you have played contains a blank letter. Please select the letter you would like to exchange it for: ").toUpperCase().charAt(0);
-        ScrabbleLetter newScrabbleLetter = new ScrabbleLetter(selectedLetter);
-        newScrabbleLetter.overridePointValue();
+        ScrabbleLetter newScrabbleLetter = new BlankScrabbleLetter(selectedLetter);
         currentPlayer.getRack().replaceBlankLetter(newScrabbleLetter, blankLetter);
 
         return newScrabbleLetter;

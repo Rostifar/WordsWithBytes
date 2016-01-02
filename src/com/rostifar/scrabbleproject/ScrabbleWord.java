@@ -36,14 +36,13 @@ public class ScrabbleWord {
         }
     }
 
-    public boolean wordContainsBlankLetter() {
-        List<Boolean> searchForBlankLetter = new ArrayList<>();
-        char blankLetter = '_';
+    public boolean containsBlankLetter() {
+        List<Boolean> isBlankLetter = new ArrayList<>();
 
-        for (ScrabbleLetter scrabbleLetter: word) {
-            searchForBlankLetter.add(scrabbleLetter.getLetter() == blankLetter);
+        for (ScrabbleLetter scrabbleLetter : word) {
+            isBlankLetter.add(scrabbleLetter.getLetter() == '_');
         }
-        return searchForBlankLetter.contains(true);
+        return isBlankLetter.contains(true);
     }
 
     public ScrabbleLetter getBlankLetter() {

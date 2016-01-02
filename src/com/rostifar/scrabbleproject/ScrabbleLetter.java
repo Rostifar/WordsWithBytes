@@ -6,8 +6,8 @@ package com.rostifar.scrabbleproject;
  * see  https://en.wikipedia.org/wiki/Scrabble_letter_distributions
  */
 public class ScrabbleLetter {
-    private char letter;
-    private PointValue pointValue;
+    protected char letter;
+    protected PointValue pointValue;
 
     public ScrabbleLetter(char aLetter) {
         letter = aLetter;
@@ -26,10 +26,6 @@ public class ScrabbleLetter {
     public boolean equals(Object letter) {
 
         return this.letter == ((ScrabbleLetter) letter).getLetter();
-    }
-
-    public int overridePointValue() {
-        return pointValue.value = 0;
     }
 
 

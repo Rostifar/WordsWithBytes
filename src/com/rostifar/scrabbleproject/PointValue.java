@@ -5,10 +5,14 @@ package com.rostifar.scrabbleproject;
  */
 public class PointValue {
 
-    public int value;
+    protected int value;
 
     public PointValue(char aLetter) {
         value = getPointValueForLetter(aLetter);
+    }
+
+    public PointValue(int pointValue) {
+        value = pointValue;
     }
 
     @Override
