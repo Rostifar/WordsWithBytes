@@ -153,12 +153,9 @@ public class ScrabbleBoard {
      * the squareContainsLetter() as a prerequsite to calling this  method.
      */
 
-    public int addWordToBoard(List<ScrabbleLetter> lettersToAdd, int col, int row, String orientation) {
-        PointValue pointValue;
-        int totalPointsForWord = 0;
+    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, int col, int row, String orientation) {
         try {
             for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
-
                 switch (orientation) {
 
                     case "v":
@@ -166,7 +163,6 @@ public class ScrabbleBoard {
                             col = col + 1;
                         }
                         addLetterToSquare(scrabbleLetter, col++, row);
-                        lettersToAdd.remove(scrabbleLetter);
                         break;
                     case "h":
                         if (squareContainsLetter(col, row)) {
@@ -180,14 +176,11 @@ public class ScrabbleBoard {
         } catch (ScrabbleGameException e) {
             System.out.println("The position you entered already has a letter. Please try again.");
         }
-      for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
-            totalPointsForWord += scrabbleLetter.getPointValue().getValue();
-        }
-        return totalPointsForWord;
     }
 
     public void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
         board[col][row].setLetter(letterToAdd);
+
 
     }
 
@@ -217,8 +210,5 @@ public class ScrabbleBoard {
 
     public void intersectLetters(int col, int row) {
 
-        if (squareContainsLetter(col, row)){
-
-        }
     }
 }

@@ -4,8 +4,6 @@ package com.rostifar.scrabbleproject;
 import com.rostifar.scrabbleproject.dictionary.Dictionary;
 import com.rostifar.scrabbleproject.dictionary.DictionaryFactory;
 
-import java.util.Arrays;
-
 
 /**
  * Created by D14048 on 10/4/2015.
@@ -93,6 +91,7 @@ public class ScrabbleGameManager implements GameManager {
         int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
         int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));
         String orientation = userInput.getInputFromUser("Would you like your selected word to go horizontal or vertical ? (ie. v or h)");
+
         if (scrabbleBoard.squareContainsLetter(col, row)) {
             System.out.println("Error the location you have selected has been already used. ");
             makeMove();
@@ -101,7 +100,6 @@ public class ScrabbleGameManager implements GameManager {
             removeWordFromSelection();
             currentPlayer.getScoreKeeper().getWordPointValue(scrabbleWord);
             System.out.println(scrabbleBoard);
-
         }
     }
 

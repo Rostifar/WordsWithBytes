@@ -6,12 +6,16 @@ import java.util.List;
  * Created by D14048 on 10/4/2015.
  */
 public class Rack {
-    protected List<ScrabbleLetter> lettersOnRack;
+    private List<ScrabbleLetter> lettersOnRack;
     private List<ScrabbleLetter> lettersToRemove = new ArrayList<>();
 
 
     public Rack() {
         lettersOnRack = new ArrayList<>();
+    }
+
+    public List<ScrabbleLetter> getLettersOnRack() {
+        return lettersOnRack;
     }
 
     public void addLetter(ScrabbleLetter scrabbleLetter) {
