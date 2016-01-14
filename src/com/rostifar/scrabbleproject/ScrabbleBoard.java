@@ -150,7 +150,7 @@ public class ScrabbleBoard {
     /**
      * Add a letter to an empty square on the scrabble board.
      * @throws ScrabbleGameException if square is not empty. This should not happen if the caller utilizes
-     * the squareContainsLetter() as a prerequsite to calling this  method.
+     * the squareContainsLetter() as a prerequisite to calling this  method.
      */
 
     public int addWordToBoard(List<ScrabbleLetter> lettersToAdd, int col, int row, String orientation) {

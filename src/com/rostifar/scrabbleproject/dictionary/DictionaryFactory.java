@@ -2,8 +2,6 @@ package com.rostifar.scrabbleproject.dictionary;
 
 import com.rostifar.scrabbleproject.ScrabbleGameException;
 
-import java.io.IOException;
-
 /**
  * Created by GitLazy (Dad) on 12/23/2015.
  * Factory class used to construct the various types of Dictionaries and initialize them for use.
