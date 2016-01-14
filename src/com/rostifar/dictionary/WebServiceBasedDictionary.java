@@ -1,4 +1,4 @@
-package com.rostifar.scrabbleproject.dictionary;
+package com.rostifar.dictionary;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
