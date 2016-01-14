@@ -1,6 +1,9 @@
 package com.rostifar.scrabbleproject;
 
-import java.lang.reflect.Array;
+import com.rostifar.wordDistrobution.ScrabbleLetter;
+import com.rostifar.wordDistrobution.ScrabbleWord;
+import com.rostifar.gamecontrol.ScoreKeeper;
+
 import java.util.List;
 
 /**

@@ -1,4 +1,4 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.wordDistrobution;
 
 /**
  * Created by Cal Briden (Dad) & Ross Briden on 8/12/2015.

@@ -1,4 +1,5 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.wordDistrobution;
+
 import java.util.*;
 
 public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
@@ -7,7 +8,7 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
     /**
      * Constructor is private. Use Factory class to create instances.
      */
-    protected ScrabbleAlphabetImpl() {
+    public ScrabbleAlphabetImpl() {
         alphabetInstance = this;
         loadLetters();
     }
@@ -73,8 +74,6 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
 
         for (int dupCntr = 0; dupCntr < numberOfDuplications; dupCntr++) {
             duplicateListOfLetters.add(new ScrabbleLetter(letter));
-
-
         }
 
         return duplicateListOfLetters;
@@ -89,35 +88,38 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         for (char letterToCheck : letterMap.keySet()) {
             if (!letterMap.get(letterToCheck).isEmpty()) {
                 listOfAvaiableLetters.add(letterToCheck);
-
-
             }
         }
         return listOfAvaiableLetters;
     }
 
-    public Set<Character> listOfLetters() {
+    public Set<Character> getListOfLetters(){
         return letterMap.keySet();
     }
 
+    private char randomlySelectedLetterKey(){
+        List<Character> availableKeys = getAvailableLetters();
+        Random random = new Random();
 
-    public void getExchangedLetters(ScrabbleLetter scrabbleLetter) {
-
-        letterMap.get(scrabbleLetter.getLetter()).add(scrabbleLetter);
+        int randomKeyIndex = random.nextInt(availableKeys.size());
+        return availableKeys.get(randomKeyIndex);
     }
 
-    protected List<ScrabbleLetter> getLetters(int numberOfLettersNeeded) {
-        Random random = new Random();
+    public List<ScrabbleLetter> getLetters(int numberOfLettersNeeded) {
+        List<ScrabbleLetter> letterList;
         List<ScrabbleLetter> lettersToReturn = new ArrayList<>();
 
         for (int i = 0; i < numberOfLettersNeeded; i++) {
-
-            char randomlySelectedKey = getAvailableLetters().get(random.nextInt(getAvailableLetters().size()));
-            List<ScrabbleLetter> letterList = letterMap.get(randomlySelectedKey);
+            letterList = letterMap.get(randomlySelectedLetterKey());
             ScrabbleLetter letterToRemove = letterList.iterator().next();
             lettersToReturn.add(letterToRemove);
             letterMap.get(letterToRemove.getLetter()).remove(letterToRemove);
         }
         return lettersToReturn;
+    }
+
+
+    public void getExchangedLetters(ScrabbleLetter scrabbleLetter) {
+        letterMap.get(scrabbleLetter.getLetter()).add(scrabbleLetter);
     }
 }

@@ -1,4 +1,4 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.scabbleboard;
 
 /**
  * Created by DAD on 10/18/2015.

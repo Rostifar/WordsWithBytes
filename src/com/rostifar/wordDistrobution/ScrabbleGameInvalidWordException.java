@@ -1,4 +1,6 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.wordDistrobution;
+
+import com.rostifar.gamecontrol.ScrabbleGameException;
 
 /**
  * Created by GitLazy (Dad) on 12/11/2015.

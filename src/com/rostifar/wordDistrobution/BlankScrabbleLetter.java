@@ -1,4 +1,4 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.wordDistrobution;
 
 /**
  * Created by ross on 1/1/16.

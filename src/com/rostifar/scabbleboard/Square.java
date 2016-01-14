@@ -1,4 +1,7 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.scabbleboard;
+
+import com.rostifar.gamecontrol.ScrabbleGameException;
+import com.rostifar.wordDistrobution.ScrabbleLetter;
 
 /**
  * Class to model a Square on the scrabble board. The Square has knowledge about it's score value (triple word, etc)

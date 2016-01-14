@@ -1,8 +1,7 @@
-package com.rostifar.scrabbleproject.dictionary;
+package com.rostifar.dictionary;
 
-import com.rostifar.scrabbleproject.ScrabbleGameInvalidWordException;
+import com.rostifar.wordDistrobution.ScrabbleGameInvalidWordException;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 import java.util.Scanner;

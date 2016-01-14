@@ -1,5 +1,6 @@
 package com.rostifar.scrabbleproject;
 
+import com.rostifar.wordDistrobution.ScrabbleAlphabetImpl;
 import org.junit.Test;
 
 /**

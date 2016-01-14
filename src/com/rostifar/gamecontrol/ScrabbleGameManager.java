@@ -1,8 +1,14 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.gamecontrol;
 
 
-import com.rostifar.scrabbleproject.dictionary.Dictionary;
-import com.rostifar.scrabbleproject.dictionary.DictionaryFactory;
+import com.rostifar.scabbleboard.ScrabbleBoard;
+import com.rostifar.wordDistrobution.BlankScrabbleLetter;
+import com.rostifar.wordDistrobution.ScrabbleAlphabetImpl;
+import com.rostifar.wordDistrobution.ScrabbleLetter;
+import com.rostifar.wordDistrobution.ScrabbleWord;
+import com.rostifar.scrabbleproject.*;
+import com.rostifar.dictionary.Dictionary;
+import com.rostifar.dictionary.DictionaryFactory;
 
 
 /**
@@ -15,7 +21,9 @@ public class ScrabbleGameManager implements GameManager {
     private UserInput userInput;
     private ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
     private Player currentPlayer;
+    private Rack playerRack;
     private ScrabbleWord scrabbleWord;
+
 
 
     protected ScrabbleGameManager() {
@@ -104,7 +112,7 @@ public class ScrabbleGameManager implements GameManager {
     }
 
     public ScrabbleLetter exchangeBlankLetter(ScrabbleLetter blankLetter) {
-        System.out.println(scrabbleAlphabet.listOfLetters());
+        System.out.println(scrabbleAlphabet.getListOfLetters());
         char selectedLetter = userInput.getInputFromUser("The word you have played contains a blank letter. Please select the letter you would like to exchange it for: ").toUpperCase().charAt(0);
         ScrabbleLetter newScrabbleLetter = new BlankScrabbleLetter(selectedLetter);
         currentPlayer.getRack().replaceBlankLetter(newScrabbleLetter, blankLetter);
@@ -113,7 +121,7 @@ public class ScrabbleGameManager implements GameManager {
     }
 
     private void removeWordFromSelection() {
-        currentPlayer.getRack().getLettersToRemove().removeAll(currentPlayer.getRack().getLettersToRemove());
+        playerRack.getLettersToRemove().removeAll(playerRack.getLettersToRemove());
     }
 
     private void printPlayers() {
@@ -199,6 +207,7 @@ public class ScrabbleGameManager implements GameManager {
         for (int currntIdx = 0; currntIdx < players.length; currntIdx++) {
 
             currentPlayer = players[currntIdx];
+            playerRack = currentPlayer.getRack();
 
             System.out.println("\n");
             System.out.println(currentPlayer);

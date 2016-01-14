@@ -1,10 +1,13 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.gamecontrol;
+
+import com.rostifar.wordDistrobution.ScrabbleLetter;
+import com.rostifar.wordDistrobution.ScrabbleWord;
+import com.rostifar.wordDistrobution.PointValue;
 
 /**
  * Created by D14048 on 10/4/2015.
  */
 public class ScoreKeeper {
-    private int wordPointValue;
     private int totalPoints;
 
     public ScoreKeeper() {
@@ -14,7 +17,7 @@ public class ScoreKeeper {
     public void getWordPointValue(ScrabbleWord scrabbleWord) {
         int letterPointValue;
         PointValue pointValue;
-        wordPointValue = 0;
+        int wordPointValue = 0;
 
         for (int i = 0; i < scrabbleWord.getNumberOfLetters(); i++) {
             ScrabbleLetter scrabbleLetter = scrabbleWord.getLetterAt(i);
@@ -24,6 +27,7 @@ public class ScoreKeeper {
         }
         totalPoints += wordPointValue;
     }
+
     public int getplayerScore() {
         return totalPoints;
     }

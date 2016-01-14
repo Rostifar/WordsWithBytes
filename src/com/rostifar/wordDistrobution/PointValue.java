@@ -1,4 +1,4 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.wordDistrobution;
 
 /**
  * Created by Dad on 10/4/2015.

@@ -1,4 +1,4 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.gamecontrol;
 
 
 /**

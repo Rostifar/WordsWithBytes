@@ -1,6 +1,11 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.scabbleboard;
 
+import com.rostifar.gamecontrol.ScrabbleGameException;
+import com.rostifar.wordDistrobution.ScrabbleLetter;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Dad on 10/4/2015.
@@ -117,7 +122,6 @@ public class ScrabbleBoard {
             board[row][8] = new Square(SquareEnum.DOUBLE_LETTER);
             board[row][12] = new Square(SquareEnum.DOUBLE_LETTER);
         }
-
     }
 
     private void setupTripleLetters() {
@@ -141,10 +145,6 @@ public class ScrabbleBoard {
      */
     public boolean squareContainsLetter(int col, int row) {
         return board[col][row].containsLetter();
-    }
-
-    private void calculatePointValueForWord(List<ScrabbleLetter> scrabbleLetter ,int col, int row) {
-
     }
 
     /**
@@ -180,8 +180,6 @@ public class ScrabbleBoard {
 
     public void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
         board[col][row].setLetter(letterToAdd);
-
-
     }
 
     @Override
@@ -208,7 +206,4 @@ public class ScrabbleBoard {
         return stringBuilder.toString();
     }
 
-    public void intersectLetters(int col, int row) {
-
-    }
 }

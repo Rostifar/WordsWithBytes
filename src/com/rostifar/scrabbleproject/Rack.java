@@ -1,4 +1,8 @@
 package com.rostifar.scrabbleproject;
+import com.rostifar.wordDistrobution.ScrabbleAlphabetImpl;
+import com.rostifar.wordDistrobution.ScrabbleLetter;
+import com.rostifar.wordDistrobution.ScrabbleWord;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +22,6 @@ public class Rack {
         return lettersOnRack;
     }
 
-    public void addLetter(ScrabbleLetter scrabbleLetter) {
-        lettersOnRack.add(scrabbleLetter);
-    }
 
     public void addLetters(List<ScrabbleLetter> scrabbleLetters) {
         lettersOnRack.addAll(scrabbleLetters);

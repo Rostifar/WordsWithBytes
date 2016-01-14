@@ -1,4 +1,4 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.gamecontrol;
 
 /**
  * Created by ross on 7/20/15. entry point to set a new game in motion

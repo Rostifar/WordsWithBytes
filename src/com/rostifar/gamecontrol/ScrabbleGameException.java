@@ -1,4 +1,4 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.gamecontrol;
 
 /**
  * Created by Dad on 11/13/2015.

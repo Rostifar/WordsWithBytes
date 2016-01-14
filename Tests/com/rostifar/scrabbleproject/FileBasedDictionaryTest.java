@@ -1,7 +1,8 @@
 package com.rostifar.scrabbleproject;
 
-import com.rostifar.scrabbleproject.dictionary.Dictionary;
-import com.rostifar.scrabbleproject.dictionary.DictionaryFactory;
+import com.rostifar.gamecontrol.ScrabbleGameException;
+import com.rostifar.dictionary.Dictionary;
+import com.rostifar.dictionary.DictionaryFactory;
 import org.junit.Before;
 import org.junit.Test;
 

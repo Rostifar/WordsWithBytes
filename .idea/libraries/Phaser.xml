@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Phaser" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$USER_HOME$/ScrabbleProject/phaser" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$USER_HOME$/ScrabbleProject/phaser" />
+    </CLASSES>
+    <DOCUMENTATION>
+      <root url="http://phaser.io/docs/2.4.4/index" />
+    </DOCUMENTATION>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,4 +1,4 @@
-package com.rostifar.scrabbleproject;
+package com.rostifar.wordDistrobution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +31,7 @@ public class ScrabbleWord {
     */
     private void parseWord(String rawWord) {
         char[] lettersUsed = rawWord.toCharArray();
+
         for (char letter : lettersUsed) {
             word.add(new ScrabbleLetter(letter));
         }
@@ -61,6 +62,5 @@ public class ScrabbleWord {
     public void replaceLetter(ScrabbleLetter letterToReplace) {
         word.add(word.indexOf(getBlankLetter()), letterToReplace);
         word.remove(getBlankLetter());
-
     }
 }

@@ -1,4 +1,4 @@
-package com.rostifar.scrabbleproject.dictionary;
+package com.rostifar.dictionary;
 
 import java.util.Locale;
 
