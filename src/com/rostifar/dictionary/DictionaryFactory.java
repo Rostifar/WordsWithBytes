@@ -1,6 +1,6 @@
-package com.rostifar.dictionary;
+package com.rostifar.scrabbleproject.dictionary;
 
-import com.rostifar.gamecontrol.ScrabbleGameException;
+import com.rostifar.scrabbleproject.ScrabbleGameException;
 
 /**
  * Created by GitLazy (Dad) on 12/23/2015.
@@ -29,7 +29,7 @@ public final class DictionaryFactory {
     }
 
    private static  Class<?> getDictionaryClass() throws ClassNotFoundException {
-        Class<?> dictionaryClass = Class.forName("com.rostifar.dictionary.FileBasedDictionary");
+        Class<?> dictionaryClass = Class.forName("com.rostifar.scrabbleproject.dictionary.FileBasedDictionary");
         return dictionaryClass;
     }
 
