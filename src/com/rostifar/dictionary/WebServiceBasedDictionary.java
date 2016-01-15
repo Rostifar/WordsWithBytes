@@ -29,7 +29,6 @@ public class WebServiceBasedDictionary implements Dictionary {
 
 
         Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_XML);
-        /*invocationBuilder.header("some-header", "true");*/
         Response response = invocationBuilder.get();
         System.out.println(response.getStatus());
         System.out.println(response.readEntity(String.class));

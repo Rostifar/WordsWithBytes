@@ -3,6 +3,7 @@ package com.rostifar.scabbleboard;
 import com.rostifar.gamecontrol.ScrabbleGameException;
 import com.rostifar.wordDistrobution.ScrabbleLetter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,12 @@ public class ScrabbleBoard {
     public static final int ROW_LENGTH = 15;
     public static final int COLUMN_LENGTH = 15;
     public static final int CENTER_SQUARE = 7;
+    private SquareEnum squareType;
+    private List<Integer> letterPointValues;
+    private int col;
+    private int row;
+    private String orientation;
+
 
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
@@ -147,24 +154,39 @@ public class ScrabbleBoard {
         return board[col][row].containsLetter();
     }
 
+    public void setUserSelectedLocation(int col, int row) {
+        this.col = col;
+        this.row = row;
+    }
+
+    public void setUserSelectedOrientation(String orientation) {
+        this.orientation = orientation;
+    }
+
     /**
      * Add a letter to an empty square on the scrabble board.
      * @throws ScrabbleGameException if square is not empty. This should not happen if the caller utilizes
      * the squareContainsLetter() as a prerequisite to calling this  method.
      */
 
-    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, int col, int row, String orientation) {
+    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd) {
         try {
             for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
                 switch (orientation) {
-
                     case "v":
-                        if (squareContainsLetter(col, row)) {
+                        if (squareContainsLetter(col,row)) {
                             col = col + 1;
                         }
                         addLetterToSquare(scrabbleLetter, col++, row);
+
+                        if (board[col][row].isSpecialSquare()) {
+                            calculateSpecialPointValue(board[col][row].getLetter(), squareType(col, row));
+                        }
                         break;
                     case "h":
+                        squareType(col, row);
+                        calculateWordPointValue(scrabbleLetter.getPointValue().getValue());
+
                         if (squareContainsLetter(col, row)) {
                             row = row + 1;
                         }
@@ -178,8 +200,45 @@ public class ScrabbleBoard {
         }
     }
 
+    public List<Integer> calculateWordPointValue(int scrabbleLetterPointValue){
+        letterPointValues = new ArrayList<>();
+
+        letterPointValues.add(scrabbleLetterPointValue);
+        return letterPointValues;
+    }
+    
+
     public void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
         board[col][row].setLetter(letterToAdd);
+    }
+
+    public void calculateSpecialPointValue(ScrabbleLetter scrabbleLetter, SquareEnum squareType) {
+        int scrabbleLetterPointValue = scrabbleLetter.getPointValue().getValue();
+        switch (squareType) {
+
+            case DOUBLE_LETTER:
+                scrabbleLetterPointValue = scrabbleLetterPointValue * 2;
+                letterPointValues.add(scrabbleLetterPointValue);
+                break;
+            case DOUBLE_WORD:
+                break;
+            case TRIPLE_LETTER:
+                scrabbleLetterPointValue = scrabbleLetterPointValue * 3;
+                letterPointValues.add(scrabbleLetterPointValue);
+                break;
+            case TRIPLE_WORD:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public SquareEnum squareType(int col, int row){
+
+        if (board[col][row].isSpecialSquare()) {
+            return board[col][row].getSquareType();
+        }
+        return SquareEnum.REGULAR;
     }
 
     @Override

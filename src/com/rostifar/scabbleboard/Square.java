@@ -20,6 +20,10 @@ public class Square {
         squareType = typeOfSquare;
     }
 
+    public SquareEnum getSquareType(){
+        return squareType;
+    }
+
     public boolean containsLetter() {
         return letter != null;
     }
@@ -34,6 +38,7 @@ public class Square {
     public ScrabbleLetter getLetter() {
         return letter;
     }
+
 
     public boolean isSpecialSquare() {
         return isCenterSquare() || isDoubleLetter() || isTripleLetter() || isTripleWord() || isDoubleWord();

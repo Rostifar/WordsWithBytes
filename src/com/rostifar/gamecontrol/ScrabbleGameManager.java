@@ -104,9 +104,10 @@ public class ScrabbleGameManager implements GameManager {
             System.out.println("Error the location you have selected has been already used. ");
             makeMove();
         } else {
-            scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove(), col, row, orientation);
+            scrabbleBoard.setUserSelectedLocation(col, row);
+            scrabbleBoard.setUserSelectedOrientation(orientation);
+            scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove());
             removeWordFromSelection();
-            currentPlayer.getScoreKeeper().getWordPointValue(scrabbleWord);
             System.out.println(scrabbleBoard);
         }
     }

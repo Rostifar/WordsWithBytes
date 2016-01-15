@@ -1,6 +1,5 @@
-package com.rostifar.scrabbleproject.dictionary;
-
-import com.rostifar.scrabbleproject.ScrabbleGameException;
+package com.rostifar.dictionary;
+import com.rostifar.gamecontrol.ScrabbleGameException;
 
 /**
  * Created by GitLazy (Dad) on 12/23/2015.
