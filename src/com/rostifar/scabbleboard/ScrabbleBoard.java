@@ -1,5 +1,6 @@
 package com.rostifar.scabbleboard;
 
+import com.rostifar.gamecontrol.ScoreKeeper;
 import com.rostifar.gamecontrol.ScrabbleGameException;
 import com.rostifar.wordDistrobution.ScrabbleLetter;
 
@@ -39,13 +40,10 @@ public class ScrabbleBoard {
     public static final int ROW_LENGTH = 15;
     public static final int COLUMN_LENGTH = 15;
     public static final int CENTER_SQUARE = 7;
-    private SquareEnum squareType;
-    private List<Integer> letterPointValues;
     private int col;
     private int row;
     private String orientation;
-
-
+    private List<Integer> letterPointValues = new ArrayList<>();
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
@@ -175,21 +173,19 @@ public class ScrabbleBoard {
                 switch (orientation) {
                     case "v":
                         if (squareContainsLetter(col,row)) {
+                            collectScrabblePointValues(board[col][row].getLetter());
                             col = col + 1;
                         }
+                        collectScrabblePointValues(scrabbleLetter);
                         addLetterToSquare(scrabbleLetter, col++, row);
-
-                        if (board[col][row].isSpecialSquare()) {
-                            calculateSpecialPointValue(board[col][row].getLetter(), squareType(col, row));
-                        }
                         break;
-                    case "h":
-                        squareType(col, row);
-                        calculateWordPointValue(scrabbleLetter.getPointValue().getValue());
 
+                    case "h":
                         if (squareContainsLetter(col, row)) {
+                            collectScrabblePointValues(board[col][row].getLetter());
                             row = row + 1;
                         }
+                        collectScrabblePointValues(scrabbleLetter);
                         addLetterToSquare(scrabbleLetter, col, row++);
                         break;
                     default:
@@ -200,10 +196,12 @@ public class ScrabbleBoard {
         }
     }
 
-    public List<Integer> calculateWordPointValue(int scrabbleLetterPointValue){
-        letterPointValues = new ArrayList<>();
-
+    private List<Integer> calculateWordPointValue(int scrabbleLetterPointValue) {
         letterPointValues.add(scrabbleLetterPointValue);
+        return letterPointValues;
+    }
+
+    public List<Integer> getWordPointValue() {
         return letterPointValues;
     }
     
@@ -212,24 +210,40 @@ public class ScrabbleBoard {
         board[col][row].setLetter(letterToAdd);
     }
 
+    public void collectScrabblePointValues(ScrabbleLetter letter){
+
+            if (board[col][row].isSpecialSquare()) {
+                calculateSpecialPointValue(letter, board[col][row].getSquareType());
+            } else {
+                calculateWordPointValue(letter.getPointValue().getValue());
+            }
+        }
+
+
     public void calculateSpecialPointValue(ScrabbleLetter scrabbleLetter, SquareEnum squareType) {
         int scrabbleLetterPointValue = scrabbleLetter.getPointValue().getValue();
+
         switch (squareType) {
 
             case DOUBLE_LETTER:
                 scrabbleLetterPointValue = scrabbleLetterPointValue * 2;
-                letterPointValues.add(scrabbleLetterPointValue);
-                break;
-            case DOUBLE_WORD:
+                calculateWordPointValue(scrabbleLetterPointValue);
                 break;
             case TRIPLE_LETTER:
                 scrabbleLetterPointValue = scrabbleLetterPointValue * 3;
-                letterPointValues.add(scrabbleLetterPointValue);
+                calculateWordPointValue(scrabbleLetterPointValue);
                 break;
-            case TRIPLE_WORD:
+            case DOUBLE_WORD:
                 break;
             default:
                 break;
+        }
+    }
+
+    public void clearWordPointValue() {
+
+        for (int i = 0; i < letterPointValues.size(); i++) {
+            letterPointValues.remove(i);
         }
     }
 

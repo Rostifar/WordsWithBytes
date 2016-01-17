@@ -38,5 +38,6 @@
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="jaxrs-ri" level="project" />
     <orderEntry type="library" name="javax.ws.rs-api-2.0.1" level="project" />
+    <orderEntry type="library" name="Phaser" level="project" />
   </component>
 </module>

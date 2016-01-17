@@ -30,9 +30,14 @@ public class Player {
         return rack != null;
     }
 
-    public ScoreKeeper getScoreKeeper() {
+    public int getCurrentPlayerScore(){
+        return scoreKeeper.getplayerScore();
+    }
+
+    public ScoreKeeper getScoreKeeper(){
         return scoreKeeper;
     }
+
 
     public Rack getRack() {
         return rack;

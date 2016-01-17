@@ -91,6 +91,7 @@ public class ScrabbleGameManager implements GameManager {
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
+
         if (scrabbleWord.containsBlankLetter()) {
             scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter()));
         }
@@ -107,8 +108,11 @@ public class ScrabbleGameManager implements GameManager {
             scrabbleBoard.setUserSelectedLocation(col, row);
             scrabbleBoard.setUserSelectedOrientation(orientation);
             scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove());
+            currentPlayer.getScoreKeeper().getWordPointValue(scrabbleBoard.getWordPointValue());
+            scrabbleBoard.clearWordPointValue();
             removeWordFromSelection();
             System.out.println(scrabbleBoard);
+            System.out.println(currentPlayer.getCurrentPlayerScore());
         }
     }
 
