@@ -221,6 +221,7 @@ public class ScrabbleGameManager implements GameManager {
                 currntIdx = -1;
             }
         }
+
     }
 
 

@@ -1,13 +1,9 @@
 package com.rostifar.scabbleboard;
 
-import com.rostifar.gamecontrol.ScoreKeeper;
 import com.rostifar.gamecontrol.ScrabbleGameException;
 import com.rostifar.wordDistrobution.ScrabbleLetter;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Dad on 10/4/2015.
@@ -72,6 +68,7 @@ public class ScrabbleBoard {
             }
         }
     }
+
 
     private void setupCenterSquare() {
         board[CENTER_SQUARE][CENTER_SQUARE] =  new Square(SquareEnum.CENTER_STAR);
@@ -157,6 +154,22 @@ public class ScrabbleBoard {
         this.row = row;
     }
 
+    public int getWordColumn() {
+        return col;
+    }
+
+    public int getWordRow() {
+        return row;
+    }
+
+    public String getWordOrientation() {
+        return orientation;
+    }
+
+    public Square getSquarePosition(int col, int row){
+        return board[col][row];
+    }
+
     public void setUserSelectedOrientation(String orientation) {
         this.orientation = orientation;
     }
@@ -168,8 +181,11 @@ public class ScrabbleBoard {
      */
 
     public void addWordToBoard(List<ScrabbleLetter> lettersToAdd) {
+        int currentIndex = 0;
+
         try {
             for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
+                currentIndex = lettersToAdd.indexOf(scrabbleLetter);
                 switch (orientation) {
                     case "v":
                         if (squareContainsLetter(col,row)) {
