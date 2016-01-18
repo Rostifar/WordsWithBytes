@@ -2,6 +2,7 @@ package com.rostifar.gamecontrol;
 
 
 import com.rostifar.scabbleboard.ScrabbleBoard;
+import com.rostifar.scabbleboard.ScrabbleBoardMechanics;
 import com.rostifar.wordDistrobution.BlankScrabbleLetter;
 import com.rostifar.wordDistrobution.ScrabbleAlphabetImpl;
 import com.rostifar.wordDistrobution.ScrabbleLetter;
@@ -23,6 +24,7 @@ public class ScrabbleGameManager implements GameManager {
     private Player currentPlayer;
     private Rack playerRack;
     private ScrabbleWord scrabbleWord;
+
 
 
 
@@ -88,6 +90,7 @@ public class ScrabbleGameManager implements GameManager {
         }
     }
 
+
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
@@ -105,8 +108,10 @@ public class ScrabbleGameManager implements GameManager {
             System.out.println("Error the location you have selected has been already used. ");
             makeMove();
         } else {
-            scrabbleBoard.setUserSelectedLocation(col, row);
+            scrabbleBoard.setWordCol(col);
+            scrabbleBoard.setWordRow(row);
             scrabbleBoard.setUserSelectedOrientation(orientation);
+            scrabbleBoard.getScrabbleBoardInstance(scrabbleBoard);
             scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove());
             currentPlayer.getScoreKeeper().getWordPointValue(scrabbleBoard.getWordPointValue());
             scrabbleBoard.clearWordPointValue();

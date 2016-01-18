@@ -40,6 +40,7 @@ public class ScrabbleBoard {
     private int row;
     private String orientation;
     private List<Integer> letterPointValues = new ArrayList<>();
+    private ScrabbleBoardMechanics scrabbleBoardMechanics;
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
@@ -145,13 +146,25 @@ public class ScrabbleBoard {
     /**
      * @return true if the square located at col,row on the board contains a letter, otherwise false
      */
+
+    public void getScrabbleBoardInstance(ScrabbleBoard scrabbleBoard) {
+        scrabbleBoardMechanics = new ScrabbleBoardMechanics(scrabbleBoard);
+    }
+
     public boolean squareContainsLetter(int col, int row) {
         return board[col][row].containsLetter();
     }
 
-    public void setUserSelectedLocation(int col, int row) {
-        this.col = col;
-        this.row = row;
+    public void setUserSelectedOrientation(String orientation) {
+        this.orientation = orientation;
+    }
+
+    public int setWordRow(int row) {
+        return this.row = row;
+    }
+
+    public int setWordCol(int col) {
+        return this.col = col;
     }
 
     public int getWordColumn() {
@@ -170,9 +183,6 @@ public class ScrabbleBoard {
         return board[col][row];
     }
 
-    public void setUserSelectedOrientation(String orientation) {
-        this.orientation = orientation;
-    }
 
     /**
      * Add a letter to an empty square on the scrabble board.
@@ -182,6 +192,7 @@ public class ScrabbleBoard {
 
     public void addWordToBoard(List<ScrabbleLetter> lettersToAdd) {
         int currentIndex = 0;
+        scrabbleBoardMechanics.checkForConnectingWords();
 
         try {
             for (ScrabbleLetter scrabbleLetter : lettersToAdd) {

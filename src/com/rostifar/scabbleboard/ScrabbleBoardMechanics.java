@@ -7,10 +7,11 @@ import java.util.List;
  * Created by ross on 1/16/16.
  */
 public class ScrabbleBoardMechanics {
+
     private ScrabbleBoard scrabbleBoard;
-    private int col = scrabbleBoard.getWordColumn();
-    private int row = scrabbleBoard.getWordRow();
-    private String orientation = scrabbleBoard.getWordOrientation();
+    private int col;
+    private int row;
+    private String orientation;
     private List<ScrabbleLetter> horzAdditiveConnectedWord;
     private List<ScrabbleLetter> horzSubtractiveConnectedWord;
     private List<ScrabbleLetter> vertAdditiveConnectedWord;
@@ -19,8 +20,31 @@ public class ScrabbleBoardMechanics {
     private boolean up = true;
     private boolean foundConnectingWords;
 
+    public ScrabbleBoardMechanics(ScrabbleBoard scrabbleBoard) {
+        this.scrabbleBoard = scrabbleBoard;
+        setCol(scrabbleBoard.getWordColumn());
+        setRow(scrabbleBoard.getWordRow());
+        setOrientation(scrabbleBoard.getWordOrientation());
+    }
+
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setOrientation(String orientation) {
+        this.orientation = orientation;
+    }
+
     public void checkForConnectingWords() {
         checkForFirstLetter();
+        if (foundConnectingWords) {
+
+        }
     }
 
     public void checkForFirstLetter() {
@@ -64,20 +88,26 @@ public class ScrabbleBoardMechanics {
                 column = col;
                 vertSubtractiveConnectedWord.add(scrabbleBoard.getSquarePosition(newColumnNumber, rowNumber).getLetter());
                 expandWordSearch(newColumnNumber, rowNumber, false);
+            } else {
+                return;
             }
         }
     }
 
     public void expandWordSearch(int col, int row, boolean direction) {
+        int defaultCol = this.col + 1;
+        int defaultRow = this.row + 1;
         foundConnectingWords = true;
 
         if (direction) {
             while (scrabbleBoard.getSquarePosition(col, ++row).containsLetter()) {
                 horzAdditiveConnectedWord.add(scrabbleBoard.getSquarePosition(col, row).getLetter());
             }
+            col = defaultCol;
             while (scrabbleBoard.getSquarePosition(++col, row).containsLetter()) {
                 vertAdditiveConnectedWord.add(scrabbleBoard.getSquarePosition(col, row).getLetter());
             }
+            row = defaultRow;
         }else{
             return;
         }
@@ -86,9 +116,12 @@ public class ScrabbleBoardMechanics {
             while (scrabbleBoard.getSquarePosition(col, --row).containsLetter()) {
                 horzSubtractiveConnectedWord.add(scrabbleBoard.getSquarePosition(col, row).getLetter());
             }
+            col = defaultCol;
             while (scrabbleBoard.getSquarePosition(--col, row).containsLetter()) {
                 vertSubtractiveConnectedWord.add(scrabbleBoard.getSquarePosition(col, row).getLetter());
             }
+            row = defaultRow;
+
         }else{
             return;
         }
