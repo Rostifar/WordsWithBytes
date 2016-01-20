@@ -41,6 +41,7 @@ public class ScrabbleBoard {
     private String orientation;
     private List<Integer> letterPointValues = new ArrayList<>();
     private ScrabbleBoardMechanics scrabbleBoardMechanics;
+    private int wordScoreMultiplier;
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
@@ -184,6 +185,7 @@ public class ScrabbleBoard {
     }
 
 
+
     /**
      * Add a letter to an empty square on the scrabble board.
      * @throws ScrabbleGameException if square is not empty. This should not happen if the caller utilizes
@@ -191,18 +193,14 @@ public class ScrabbleBoard {
      */
 
     public void addWordToBoard(List<ScrabbleLetter> lettersToAdd) {
-        int currentIndex = 0;
-        scrabbleBoardMechanics.checkForConnectingWords();
-
+        scrabbleBoardMechanics.getInitalPostion(getSquarePosition(col, row));
         try {
             for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
-                currentIndex = lettersToAdd.indexOf(scrabbleLetter);
+                determinePreviouslyPlacedLetters();
+                checkForNearbyWords(scrabbleLetter);
+
                 switch (orientation) {
                     case "v":
-                        if (squareContainsLetter(col,row)) {
-                            collectScrabblePointValues(board[col][row].getLetter());
-                            col = col + 1;
-                        }
                         collectScrabblePointValues(scrabbleLetter);
                         addLetterToSquare(scrabbleLetter, col++, row);
                         break;
@@ -221,6 +219,11 @@ public class ScrabbleBoard {
         } catch (ScrabbleGameException e) {
             System.out.println("The position you entered already has a letter. Please try again.");
         }
+    }
+
+    private void checkForNearbyWords(ScrabbleLetter scrabbleLetter) {
+        scrabbleBoardMechanics.getCurrentLetter(scrabbleLetter);
+        scrabbleBoardMechanics.checkForConnectingWords();
     }
 
     private List<Integer> calculateWordPointValue(int scrabbleLetterPointValue) {
@@ -246,7 +249,6 @@ public class ScrabbleBoard {
             }
         }
 
-
     public void calculateSpecialPointValue(ScrabbleLetter scrabbleLetter, SquareEnum squareType) {
         int scrabbleLetterPointValue = scrabbleLetter.getPointValue().getValue();
 
@@ -261,7 +263,10 @@ public class ScrabbleBoard {
                 calculateWordPointValue(scrabbleLetterPointValue);
                 break;
             case DOUBLE_WORD:
+                wordScoreMultiplier += 2;
                 break;
+            case TRIPLE_WORD:
+                wordScoreMultiplier += 3;
             default:
                 break;
         }
@@ -274,13 +279,15 @@ public class ScrabbleBoard {
         }
     }
 
-    public SquareEnum squareType(int col, int row){
+    public void determinePreviouslyPlacedLetters() {
 
-        if (board[col][row].isSpecialSquare()) {
-            return board[col][row].getSquareType();
+        if (squareContainsLetter(col,row) && orientation.equals("v")) {
+            col = col + 1;
+        } else if (squareContainsLetter(col,row) && orientation.equals("h")){
+            row = row + 1;
         }
-        return SquareEnum.REGULAR;
     }
+
 
     @Override
     /**
