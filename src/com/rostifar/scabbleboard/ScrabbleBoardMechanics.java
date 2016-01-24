@@ -22,13 +22,29 @@ public class ScrabbleBoardMechanics {
     private boolean foundConnectingWords;
     private ScrabbleLetter currentLetter;
     private Square initalPosition;
-    private List<ScrabbleLetter> wordToCheck = new ArrayList<>();
+    private List<ScrabbleLetter> secondaryWordToCheck = new ArrayList<>();
+    private List<ScrabbleLetter> primaryWordToCheck = new ArrayList<>();
+    private List<ScrabbleLetter> playedWord;
 
     public ScrabbleBoardMechanics(ScrabbleBoard scrabbleBoard) {
         this.scrabbleBoard = scrabbleBoard;
         setCol(scrabbleBoard.getWordColumn());
         setRow(scrabbleBoard.getWordRow());
         setOrientation(scrabbleBoard.getWordOrientation());
+    }
+
+    public List<ScrabbleLetter> getSecondaryWord() {
+        if (foundConnectingWords) {
+            connectFoundParallelWords();
+            return secondaryWordToCheck;
+        }
+        secondaryWordToCheck.clear();
+        return secondaryWordToCheck;
+    }
+
+    public List<ScrabbleLetter> getPrimaryWord() {
+        connectMainWord();
+        return primaryWordToCheck;
     }
 
     public void setCol(int col) {
@@ -49,28 +65,44 @@ public class ScrabbleBoardMechanics {
             Collections.reverse(horzSubtractiveConnectedWord);
             horzSubtractiveConnectedWord.add(currentLetter);
             horzSubtractiveConnectedWord.addAll(horzAdditiveConnectedWord);
-            wordToCheck.addAll(horzSubtractiveConnectedWord);
+            secondaryWordToCheck.addAll(horzSubtractiveConnectedWord);
+            clearExcessHorizontalWords();
         }
 
         if (orientation.equals("h")) {
             Collections.reverse(vertSubtractiveConnectedWord);
             vertSubtractiveConnectedWord.add(currentLetter);
             vertSubtractiveConnectedWord.addAll(vertAdditiveConnectedWord);
-            wordToCheck.addAll(vertSubtractiveConnectedWord);
+            secondaryWordToCheck.addAll(vertSubtractiveConnectedWord);
+            clearExcessVerticalWords();
         }
     }
 
     public void connectMainWord() {
 
-    }
+        if (orientation.equals("v")) {
 
-    public boolean isInitalPosition() {
-        return initalPosition == scrabbleBoard.getSquarePosition(col, row);
+            for(ScrabbleLetter scrabbleLetter : playedWord) {
+                vertSubtractiveConnectedWord.add(scrabbleLetter);
+            }
+            vertSubtractiveConnectedWord.addAll(vertAdditiveConnectedWord);
+            primaryWordToCheck = vertSubtractiveConnectedWord;
+            clearExcessVerticalWords();
+        }
+
+        if (orientation.equals("h")) {
+
+            for(ScrabbleLetter scrabbleLetter : playedWord) {
+                horzSubtractiveConnectedWord.add(scrabbleLetter);
+            }
+            horzSubtractiveConnectedWord.addAll(horzAdditiveConnectedWord);
+            primaryWordToCheck = horzSubtractiveConnectedWord;
+            clearExcessHorizontalWords();
+        }
     }
 
     public void checkForConnectingWords() {
         checkForFirstLetter();
-
     }
 
     public void checkForFirstLetter() {
@@ -82,33 +114,33 @@ public class ScrabbleBoardMechanics {
 
         while (up && forward) {
             if (scrabbleBoard.getSquarePosition(column, rowNumber + 1).containsLetter()) {
-                int newRowNumber = rowNumber;
-                horzAdditiveConnectedWord.add(scrabbleBoard.getSquarePosition(column, newRowNumber).getLetter());
-                expandWordSearch(col, newRowNumber, true);
+                rowNumber = rowNumber + 1;
+                horzAdditiveConnectedWord.add(scrabbleBoard.getSquarePosition(column, rowNumber).getLetter());
+                expandWordSearch(col, rowNumber, true, horzAdditiveConnectedWord);
                 rowNumber = row;
             }
             if (scrabbleBoard.getSquarePosition(column + 1, rowNumber).containsLetter()) {
-                int newColNumber = column;
-                vertAdditiveConnectedWord.add(scrabbleBoard.getSquarePosition(newColNumber, rowNumber).getLetter());
-                expandWordSearch(newColNumber, rowNumber, true);
+                column = column + 1;
+                vertAdditiveConnectedWord.add(scrabbleBoard.getSquarePosition(column, rowNumber).getLetter());
+                expandWordSearch(column, rowNumber, true, vertAdditiveConnectedWord);
                 column = col;
             }
             up = false;
             forward = false;
         }
 
-        while (!up && !forward && scrabbleBoard.getSquarePosition(column, rowNumber) == initalPosition) {
-            if (scrabbleBoard.getSquarePosition(column, rowNumber - 1).containsLetter()) {
-                int newRowNumber = rowNumber;
-                horzSubtractiveConnectedWord.add(scrabbleBoard.getSquarePosition(column, newRowNumber).getLetter());
-                expandWordSearch(column, newRowNumber, false);
+        while (!up && !forward) {
+            if (scrabbleBoard.getSquarePosition(column, rowNumber - 1).containsLetter() && (orientation.equals("v") || scrabbleBoard.getSquarePosition(column, rowNumber) == initalPosition)) {
+                rowNumber = rowNumber - 1;
+                horzSubtractiveConnectedWord.add(scrabbleBoard.getSquarePosition(column, rowNumber).getLetter());
+                expandWordSearch(column, rowNumber, false, horzSubtractiveConnectedWord);
                 rowNumber = row;
             }
 
-            if (scrabbleBoard.getSquarePosition(column - 1, rowNumber).containsLetter()) {
-                int newColumnNumber = column;
-                vertSubtractiveConnectedWord.add(scrabbleBoard.getSquarePosition(newColumnNumber, rowNumber).getLetter());
-                expandWordSearch(newColumnNumber, rowNumber, false);
+            if (scrabbleBoard.getSquarePosition(column - 1, rowNumber).containsLetter() && (orientation.equals("h") || scrabbleBoard.getSquarePosition(column, rowNumber) == initalPosition)) {
+                column = column - 1;
+                vertSubtractiveConnectedWord.add(scrabbleBoard.getSquarePosition(column, rowNumber).getLetter());
+                expandWordSearch(column, rowNumber, false, vertSubtractiveConnectedWord);
                 column = col;
             } else {
                 return;
@@ -116,36 +148,39 @@ public class ScrabbleBoardMechanics {
         }
     }
 
-    public void expandWordSearch(int col, int row, boolean direction) {
-        int defaultCol = this.col;
-        int defaultRow = this.row;
+    public void expandWordSearch(int col, int row, boolean direction, List<ScrabbleLetter> selectedList) {
+        int defaultCol = col;
+        int defaultRow = row;
         foundConnectingWords = true;
 
         if (direction) {
-            while (scrabbleBoard.getSquarePosition(col, ++row).containsLetter()) {
+            while (scrabbleBoard.getSquarePosition(col, ++row).containsLetter() && selectedList == horzAdditiveConnectedWord) {
                 horzAdditiveConnectedWord.add(scrabbleBoard.getSquarePosition(col, row).getLetter());
             }
-            col = defaultCol;
-            while (scrabbleBoard.getSquarePosition(++col, row).containsLetter()) {
+            row = defaultRow;
+            while (scrabbleBoard.getSquarePosition(++col, row).containsLetter() && selectedList == vertAdditiveConnectedWord) {
                 vertAdditiveConnectedWord.add(scrabbleBoard.getSquarePosition(col, row).getLetter());
             }
-            row = defaultRow;
+            col = defaultCol;
         }
 
         if (!direction) {
-            while (scrabbleBoard.getSquarePosition(col, --row).containsLetter()) {
+            while (scrabbleBoard.getSquarePosition(col, --row).containsLetter() && selectedList == horzSubtractiveConnectedWord) {
                 horzSubtractiveConnectedWord.add(scrabbleBoard.getSquarePosition(col, row).getLetter());
             }
-            col = defaultCol;
-            while (scrabbleBoard.getSquarePosition(--col, row).containsLetter()) {
+            row = defaultRow;
+            while (scrabbleBoard.getSquarePosition(--col, row).containsLetter() && selectedList == vertSubtractiveConnectedWord) {
                 vertSubtractiveConnectedWord.add(scrabbleBoard.getSquarePosition(col, row).getLetter());
             }
         }
     }
 
-    private void clearExcessWords() {
+    private void clearExcessHorizontalWords() {
         horzAdditiveConnectedWord.clear();
         horzSubtractiveConnectedWord.clear();
+    }
+
+    private void clearExcessVerticalWords() {
         vertAdditiveConnectedWord.clear();
         vertSubtractiveConnectedWord.clear();
     }
@@ -157,6 +192,27 @@ public class ScrabbleBoardMechanics {
     public void getInitalPostion(Square initalPosition) {
         this.initalPosition = initalPosition;
     }
+
+    public List<ScrabbleLetter> getHorizontalNegative() {
+        return horzSubtractiveConnectedWord;
+    }
+
+    public List<ScrabbleLetter> getHorizontalPositive() {
+        return horzAdditiveConnectedWord;
+    }
+
+    public List<ScrabbleLetter> getVerticalNegative() {
+        return vertSubtractiveConnectedWord;
+    }
+
+    public List<ScrabbleLetter> getVerticalPositive() {
+        return vertAdditiveConnectedWord;
+    }
+
+    public void getPlayedWord(List<ScrabbleLetter> playedWord) {
+        this.playedWord = playedWord;
+    }
 }
+
 
 

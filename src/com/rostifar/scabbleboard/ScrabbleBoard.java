@@ -1,6 +1,7 @@
 package com.rostifar.scabbleboard;
 
 import com.rostifar.gamecontrol.ScrabbleGameException;
+import com.rostifar.scrabbleproject.UserInputException;
 import com.rostifar.wordDistrobution.ScrabbleLetter;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +40,10 @@ public class ScrabbleBoard {
     private int col;
     private int row;
     private String orientation;
-    private List<Integer> letterPointValues = new ArrayList<>();
     private ScrabbleBoardMechanics scrabbleBoardMechanics;
     private int wordScoreMultiplier;
+    private boolean isValidWord;
+    private List<ScrabbleLetter> wordToCalculatePointValue;
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
@@ -185,7 +187,6 @@ public class ScrabbleBoard {
     }
 
 
-
     /**
      * Add a letter to an empty square on the scrabble board.
      * @throws ScrabbleGameException if square is not empty. This should not happen if the caller utilizes
@@ -194,10 +195,12 @@ public class ScrabbleBoard {
 
     public void addWordToBoard(List<ScrabbleLetter> lettersToAdd) {
         scrabbleBoardMechanics.getInitalPostion(getSquarePosition(col, row));
+        scrabbleBoardMechanics.getPlayedWord(lettersToAdd);
         try {
             for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
                 determinePreviouslyPlacedLetters();
                 checkForNearbyWords(scrabbleLetter);
+                validateSecondaryWord();
 
                 switch (orientation) {
                     case "v":
@@ -219,6 +222,7 @@ public class ScrabbleBoard {
         } catch (ScrabbleGameException e) {
             System.out.println("The position you entered already has a letter. Please try again.");
         }
+        validatePrimaryWord();
     }
 
     private void checkForNearbyWords(ScrabbleLetter scrabbleLetter) {
@@ -226,15 +230,18 @@ public class ScrabbleBoard {
         scrabbleBoardMechanics.checkForConnectingWords();
     }
 
-    private List<Integer> calculateWordPointValue(int scrabbleLetterPointValue) {
-        letterPointValues.add(scrabbleLetterPointValue);
-        return letterPointValues;
+    private void validateSecondaryWord() {
+        if (!scrabbleBoardMechanics.getSecondaryWord().isEmpty()) {
+            // validate it with dictionary
+            scrabbleBoardMechanics.getSecondaryWord();
+        }
     }
 
-    public List<Integer> getWordPointValue() {
-        return letterPointValues;
+    private void validatePrimaryWord() {
+        // validate with dictionary
+        scrabbleBoardMechanics.getPrimaryWord();
     }
-    
+
 
     public void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
         board[col][row].setLetter(letterToAdd);
@@ -245,7 +252,7 @@ public class ScrabbleBoard {
             if (board[col][row].isSpecialSquare()) {
                 calculateSpecialPointValue(letter, board[col][row].getSquareType());
             } else {
-                calculateWordPointValue(letter.getPointValue().getValue());
+               // calculateWordPointValue(letter.getPointValue().getValue());
             }
         }
 
@@ -256,11 +263,11 @@ public class ScrabbleBoard {
 
             case DOUBLE_LETTER:
                 scrabbleLetterPointValue = scrabbleLetterPointValue * 2;
-                calculateWordPointValue(scrabbleLetterPointValue);
+               // calculateWordPointValue(scrabbleLetterPointValue);
                 break;
             case TRIPLE_LETTER:
                 scrabbleLetterPointValue = scrabbleLetterPointValue * 3;
-                calculateWordPointValue(scrabbleLetterPointValue);
+               // calculateWordPointValue(scrabbleLetterPointValue);
                 break;
             case DOUBLE_WORD:
                 wordScoreMultiplier += 2;
@@ -272,12 +279,6 @@ public class ScrabbleBoard {
         }
     }
 
-    public void clearWordPointValue() {
-
-        for (int i = 0; i < letterPointValues.size(); i++) {
-            letterPointValues.remove(i);
-        }
-    }
 
     public void determinePreviouslyPlacedLetters() {
 

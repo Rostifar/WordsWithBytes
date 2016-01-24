@@ -24,4 +24,9 @@ public class ScrabbleAlphabetImplTest {
     public void testGetLetters() throws Exception {
 
     }
+
+    @Test
+    public void testGetNumberOfLettersLeft() throws Exception {
+
+    }
 }

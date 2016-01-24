@@ -95,8 +95,13 @@ public class ScrabbleGameManager implements GameManager {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
 
-        if (scrabbleWord.containsBlankLetter()) {
-            scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter()));
+        if (scrabbleWord.getNumberOfBlankLetters() > 0) {
+
+            for (int i = 0; i < scrabbleWord.getNumberOfBlankLetters(); i++) {
+                scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter(i)), i);
+            }
+            scrabbleWord.clearFoundBlankLetters();
+
         }
         isWordOnRack(scrabbleWord);
         System.out.println(scrabbleBoard);
@@ -113,8 +118,6 @@ public class ScrabbleGameManager implements GameManager {
             scrabbleBoard.setUserSelectedOrientation(orientation);
             scrabbleBoard.getScrabbleBoardInstance(scrabbleBoard);
             scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove());
-            currentPlayer.getScoreKeeper().getWordPointValue(scrabbleBoard.getWordPointValue());
-            scrabbleBoard.clearWordPointValue();
             removeWordFromSelection();
             System.out.println(scrabbleBoard);
             System.out.println(currentPlayer.getCurrentPlayerScore());
@@ -241,5 +244,12 @@ public class ScrabbleGameManager implements GameManager {
 
     protected void endGame() {
 
+        if (scrabbleAlphabet.getNumberOfLettersLeft() == 0 && currentPlayer.getRack().getLettersOnRack().size() == 0) {
+            System.out.println("The Game Has Ended.");
+
+            for (Player currentPlayer : players) {
+                System.out.println(currentPlayer.getCurrentPlayerScore());
+            }
+        }
     }
 }
