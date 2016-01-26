@@ -24,6 +24,7 @@ public class ScrabbleGameManager implements GameManager {
     private Player currentPlayer;
     private Rack playerRack;
     private ScrabbleWord scrabbleWord;
+    private boolean isFirstRound = true;
 
 
 
@@ -97,7 +98,6 @@ public class ScrabbleGameManager implements GameManager {
         scrabbleWord.clearFoundBlankLetters();
     }
 
-
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
@@ -119,10 +119,17 @@ public class ScrabbleGameManager implements GameManager {
             scrabbleBoard.setWordRow(row);
             scrabbleBoard.setUserSelectedOrientation(orientation);
             scrabbleBoard.getScrabbleBoardInstance(scrabbleBoard);
-            scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove());
+            scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove(), isFirstRound);
+            isPlacementValid();
             removeWordFromSelection();
             System.out.println(scrabbleBoard);
             System.out.println(currentPlayer.getCurrentPlayerScore());
+        }
+    }
+
+    private void isPlacementValid() {
+        if (!scrabbleBoard.getIsValidWordPlacement()) {
+            makeMove();
         }
     }
 
@@ -195,6 +202,7 @@ public class ScrabbleGameManager implements GameManager {
                     playWord();
 
                     takingTurn = false;
+                    isFirstRound = false;
                     break;
                 case ("s"):
 

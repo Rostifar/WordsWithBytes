@@ -212,6 +212,15 @@ public class ScrabbleBoardMechanics {
     public void getPlayedWord(List<ScrabbleLetter> playedWord) {
         this.playedWord = playedWord;
     }
+
+    public boolean isConnectedToPreviousWord(boolean isFirstTurn) {
+
+        if (getPrimaryWord().isEmpty() && !isFirstTurn) {
+            new NonConnectingPlayException().getMessage();
+            return false;
+        }
+        return true;
+    }
 }
 
 

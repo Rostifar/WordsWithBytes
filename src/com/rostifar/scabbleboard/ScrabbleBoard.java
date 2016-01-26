@@ -42,7 +42,7 @@ public class ScrabbleBoard {
     private String orientation;
     private ScrabbleBoardMechanics scrabbleBoardMechanics;
     private int wordScoreMultiplier;
-    private boolean isValidWord;
+    private boolean isValidWordPlacement;
     private List<ScrabbleLetter> wordToCalculatePointValue;
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
@@ -193,9 +193,16 @@ public class ScrabbleBoard {
      * the squareContainsLetter() as a prerequisite to calling this  method.
      */
 
-    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd) {
+    private void isIntersectingWord(boolean isFirstRound) {
+        if (!scrabbleBoardMechanics.isConnectedToPreviousWord(isFirstRound)) {
+            isValidWordPlacement = false;
+        }
+    }
+
+    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, boolean isFirstRound) {
         scrabbleBoardMechanics.getInitalPostion(getSquarePosition(col, row));
         scrabbleBoardMechanics.getPlayedWord(lettersToAdd);
+        isIntersectingWord(isFirstRound);
         try {
             for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
                 determinePreviouslyPlacedLetters();
@@ -312,6 +319,10 @@ public class ScrabbleBoard {
         stringBuilder.append("\t----------------------------------------------\n");
 
         return stringBuilder.toString();
+    }
+
+    public boolean getIsValidWordPlacement() {
+        return isValidWordPlacement;
     }
 
 }
