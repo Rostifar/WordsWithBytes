@@ -90,18 +90,20 @@ public class ScrabbleGameManager implements GameManager {
         }
     }
 
+    public void evaluateBlankLetters() {
+        for (int i = 0; i < scrabbleWord.getNumberOfBlankLetters(); i++) {
+            scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter(i)), i);
+        }
+        scrabbleWord.clearFoundBlankLetters();
+    }
+
 
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
 
         if (scrabbleWord.getNumberOfBlankLetters() > 0) {
-
-            for (int i = 0; i < scrabbleWord.getNumberOfBlankLetters(); i++) {
-                scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter(i)), i);
-            }
-            scrabbleWord.clearFoundBlankLetters();
-
+            evaluateBlankLetters();
         }
         isWordOnRack(scrabbleWord);
         System.out.println(scrabbleBoard);

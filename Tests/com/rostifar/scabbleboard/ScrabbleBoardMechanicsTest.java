@@ -63,7 +63,66 @@ public class ScrabbleBoardMechanicsTest {
     }
 
     @Test
-    public void testExpandWordSearch() throws Exception {
+    public void testConnectMainWord() throws Exception {
+        List<ScrabbleLetter> randomWord = new ArrayList<>();
+        scrabbleBoardMechanics.setRow(4);
+        scrabbleBoardMechanics.setCol(6);
+        scrabbleBoardMechanics.setOrientation("h");
+        ScrabbleLetter t = new ScrabbleLetter('T');
+        ScrabbleLetter r = new ScrabbleLetter('R');
+        ScrabbleLetter e1 = new ScrabbleLetter('E');
+        ScrabbleLetter e2 = new ScrabbleLetter('E');
+        randomWord.add(t);
+        randomWord.add(r);
+        randomWord.add(e1);
+        randomWord.add(e2);
+        setUp();
+        scrabbleBoardMechanics.checkForConnectingWords();
+        scrabbleBoardMechanics.getPlayedWord(randomWord);
 
+        assertEquals("The correct found word is: ", scrabbleLetter7, scrabbleBoardMechanics.getPrimaryWord().get(1));
+        assertEquals("The correct found word is: ", r, scrabbleBoardMechanics.getPrimaryWord().get(3));
+        assertEquals("The correct found word is: ", e2, scrabbleBoardMechanics.getPrimaryWord().get(6));
+        assertEquals("The correct found word is: ", scrabbleLetter4, scrabbleBoardMechanics.getPrimaryWord().get(4));
+    }
+
+    @Test
+    public void testConnectSecondaryWord() throws Exception {
+        List<ScrabbleLetter> randomWord = new ArrayList<>();
+        scrabbleBoardMechanics.setCol(4);
+        scrabbleBoardMechanics.setRow(7);
+        scrabbleBoardMechanics.setOrientation("v");
+        ScrabbleLetter o1 = new ScrabbleLetter('O');
+        ScrabbleLetter o2 = new ScrabbleLetter('O');
+        randomWord.add(o1);
+        randomWord.add(o2);
+
+        setUp();
+        scrabbleBoardMechanics.checkForConnectingWords();
+        scrabbleBoardMechanics.getPlayedWord(randomWord);
+
+        assertEquals("The correct found letter is: ", scrabbleLetter7, scrabbleBoardMechanics.getSecondaryWord().get(0));
+        assertEquals("The correct found letter is: ", o2, scrabbleBoardMechanics.getSecondaryWord().get(2));
+        assertEquals("The correct found letter is: ", scrabbleLetter4, scrabbleBoardMechanics.getSecondaryWord().get(3));
+
+    }
+
+    @Test
+    public void testUnusualDoubleWordIntersection() throws Exception{
+        List<ScrabbleLetter> randomWord = new ArrayList<>();
+        scrabbleBoardMechanics.setCol(5);
+        scrabbleBoardMechanics.setRow(6);
+        scrabbleBoardMechanics.setOrientation("h");
+        ScrabbleLetter o = new ScrabbleLetter('O');
+        randomWord.add(o);
+
+        setUp();
+        scrabbleBoardMechanics.checkForConnectingWords();
+        scrabbleBoardMechanics.getPlayedWord(randomWord);
+
+        assertEquals("The correct found letter is: ", scrabbleLetter5, scrabbleBoardMechanics.getPrimaryWord().get(1));
+        assertEquals("The correct found letter is: ", scrabbleLetter6, scrabbleBoardMechanics.getSecondaryWord().get(1));
+        assertEquals("The correct found letter is: ", o, scrabbleBoardMechanics.getSecondaryWord().get(0));
+        assertEquals("The correct found letter is: ", o, scrabbleBoardMechanics.getPrimaryWord().get(0));
     }
 }
