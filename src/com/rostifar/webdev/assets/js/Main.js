@@ -8,7 +8,14 @@ function preload(){
     game.load.image()
 }
 
-function create(){}
+var button;
+
+function create(){
+    button = game.add.button(game.world.centerX - 95, 400, 'button', actionOnClick, this, 2, 1, 0);
+}
 
 function update(){}
+
+function actionOnClick() {
+}
 
