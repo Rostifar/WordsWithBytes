@@ -22,7 +22,6 @@ public class ScoreKeeper {
             totalPoints += letterPointValue;
         }
     }
-
     public int getplayerScore() {
         return totalPoints;
     }

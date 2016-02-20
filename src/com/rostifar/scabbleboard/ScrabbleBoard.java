@@ -207,20 +207,14 @@ public class ScrabbleBoard {
             for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
                 determinePreviouslyPlacedLetters();
                 checkForNearbyWords(scrabbleLetter);
-                validateSecondaryWord();
+                isSecondaryWordValid();
 
                 switch (orientation) {
                     case "v":
-                        collectScrabblePointValues(scrabbleLetter);
                         addLetterToSquare(scrabbleLetter, col++, row);
                         break;
 
                     case "h":
-                        if (squareContainsLetter(col, row)) {
-                            collectScrabblePointValues(board[col][row].getLetter());
-                            row = row + 1;
-                        }
-                        collectScrabblePointValues(scrabbleLetter);
                         addLetterToSquare(scrabbleLetter, col, row++);
                         break;
                     default:
@@ -229,22 +223,29 @@ public class ScrabbleBoard {
         } catch (ScrabbleGameException e) {
             System.out.println("The position you entered already has a letter. Please try again.");
         }
-        validatePrimaryWord();
+        isPrimaryWordValid();
     }
 
     private void checkForNearbyWords(ScrabbleLetter scrabbleLetter) {
         scrabbleBoardMechanics.getCurrentLetter(scrabbleLetter);
         scrabbleBoardMechanics.checkForConnectingWords();
     }
-
-    private void validateSecondaryWord() {
-        if (!scrabbleBoardMechanics.getSecondaryWord().isEmpty()) {
-            // validate it with dictionary
-            scrabbleBoardMechanics.getSecondaryWord();
-        }
+    private void totalWordPointValue(List<ScrabbleLetter> wordToAdd) {
     }
 
-    private void validatePrimaryWord() {
+    private void wordsToCheck(List<ScrabbleLetter> scrabbleLetters) {
+        List<List<ScrabbleLetter>> wordsToBeChecked = new ArrayList<>();
+
+    }
+
+    private boolean isSecondaryWordValid() {
+        if (scrabbleBoardMechanics.getSecondaryWord().isEmpty()) {
+
+        }
+        return false;
+    }
+
+    private void isPrimaryWordValid() {
         // validate with dictionary
         scrabbleBoardMechanics.getPrimaryWord();
     }

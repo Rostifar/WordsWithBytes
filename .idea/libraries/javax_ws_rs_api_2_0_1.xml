@@ -3,7 +3,6 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/jaxrs-ri/api/javax.ws.rs-api-2.0.1.jar!/" />
     </CLASSES>
-    <JAVADOC />
     <SOURCES />
   </library>
 </component>
