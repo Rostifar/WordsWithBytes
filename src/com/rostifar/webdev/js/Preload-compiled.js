@@ -1,7 +1,7 @@
 /**
  * Created by ross on 2/7/16.
  */
-WordsWithBytes.Preload = function(game) {
+WordsWithBytes.Preload = function (game) {
 
     this.background = null;
     this.ready = false;
@@ -49,14 +49,14 @@ WordsWithBytes.Preload.prototype = {
         this.load.script('filterX', 'https://cdn.rawgit.com/photonstorm/phaser/master/filters/BlurX.js');
         this.load.script('filterY', 'https://cdn.rawgit.com/photonstorm/phaser/master/filters/BlurY.js');
         this.load.image('space-background', 'assets/images/space.jpg');
-
     },
 
-    update: function() {
-        if (this.cache.isSoundDecoded('introMusic') && this.ready == false)
-        {
+    update: function () {
+        if (this.cache.isSoundDecoded('introMusic') && this.ready == false) {
             this.ready = true;
             this.state.start('MainMenu');
         }
     }
 };
+
+//# sourceMappingURL=Preload-compiled.js.map
