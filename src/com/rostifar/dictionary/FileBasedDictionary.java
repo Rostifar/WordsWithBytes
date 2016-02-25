@@ -53,8 +53,8 @@ public class FileBasedDictionary extends AbstractDictionary implements Dictionar
      * @param aWord does this word exist in the dictionary?
      * @return true if yes, false if no
      */
-    @Override
-    public boolean isValidWord(String aWord) {
+
+    public boolean isValidWord(String aWord) throws Exception {
 
         boolean foundWord = false;
        // scanner.
@@ -77,7 +77,7 @@ public class FileBasedDictionary extends AbstractDictionary implements Dictionar
         return foundWord;
     }
 
-    @Override
+
     public String getDefinitionForWord(String aWord) throws ScrabbleGameInvalidWordException {
         throw new ScrabbleGameInvalidWordException(aWord + " - Dictionary definitions not available");
     }
@@ -85,8 +85,13 @@ public class FileBasedDictionary extends AbstractDictionary implements Dictionar
     /**
      * As of now we are only supporting english...
      */
-    @Override
+
     public Locale getLanguage() {
         return Locale.ENGLISH;
+    }
+
+    @Override
+    public DictionaryLookupResult lookupWord(String lookupWord) throws Exception {
+        return null;
     }
 }
