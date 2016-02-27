@@ -28,7 +28,7 @@ public final class DictionaryFactory {
     }
 
    private static  Class<?> getDictionaryClass() throws ClassNotFoundException {
-        Class<?> dictionaryClass = Class.forName("com.rostifar.scrabbleproject.dictionary.FileBasedDictionary");
+        Class<?> dictionaryClass = Class.forName("com.rostifar.dictionary.WebServiceBasedDictionary");
         return dictionaryClass;
     }
 
