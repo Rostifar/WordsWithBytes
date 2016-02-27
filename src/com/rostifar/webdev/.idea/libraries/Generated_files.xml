@@ -1,0 +1,39 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/js/Boot-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/Game-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/tile-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/MainMenu-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/ScrabbleBoard-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/Preload-compiled.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/Full Screen Mobile/src/Game-compiled.js" />
+      <root url="file://$PROJECT_DIR$/Full Screen Mobile/src/Boot-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/Menu-compiled.js" />
+      <root url="file://$PROJECT_DIR$/Full Screen Mobile/src/MainMenu-compiled.js" />
+      <root url="file://$PROJECT_DIR$/Full Screen Mobile/src/Preloader-compiled.js" />
+      <root url="file://$PROJECT_DIR$/src/Boot-compiled.js" />
+      <root url="file://$PROJECT_DIR$/Full Screen Mobile/src/Game-compiled.js" />
+      <root url="file://$PROJECT_DIR$/Full Screen Mobile/src/Boot-compiled.js" />
+      <root url="file://$PROJECT_DIR$/src/Game-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/Menu-compiled.js" />
+      <root url="file://$PROJECT_DIR$/src/MainMenu-compiled.js" />
+      <root url="file://$PROJECT_DIR$/Full Screen Mobile/src/MainMenu-compiled.js" />
+      <root url="file://$PROJECT_DIR$/Full Screen Mobile/src/Preloader-compiled.js" />
+      <root url="file://$PROJECT_DIR$/src/Preloader-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/Main-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/Main-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/Boot-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/Game-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/tile-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/MainMenu-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/ScrabbleBoard-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/Preload-compiled.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
