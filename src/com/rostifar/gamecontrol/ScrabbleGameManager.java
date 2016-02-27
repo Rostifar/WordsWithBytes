@@ -1,14 +1,16 @@
 package com.rostifar.gamecontrol;
 
-
+import com.rostifar.dictionary.Dictionary;
+import com.rostifar.dictionary.DictionaryFactory;
+import com.rostifar.dictionary.DictionaryLookupResult;
 import com.rostifar.scabbleboard.ScrabbleBoard;
+import com.rostifar.scrabbleproject.Player;
+import com.rostifar.scrabbleproject.Rack;
+import com.rostifar.scrabbleproject.UserInput;
 import com.rostifar.wordDistrobution.BlankScrabbleLetter;
 import com.rostifar.wordDistrobution.ScrabbleAlphabetImpl;
 import com.rostifar.wordDistrobution.ScrabbleLetter;
 import com.rostifar.wordDistrobution.ScrabbleWord;
-import com.rostifar.scrabbleproject.*;
-import com.rostifar.dictionary.Dictionary;
-import com.rostifar.dictionary.DictionaryFactory;
 
 
 /**
@@ -23,24 +25,26 @@ public class ScrabbleGameManager implements GameManager {
     private Player currentPlayer;
     private Rack playerRack;
     private ScrabbleWord scrabbleWord;
+    private boolean isFirstRound = true;
 
 
 
-    protected ScrabbleGameManager() {
+
+    protected ScrabbleGameManager() throws ScrabbleGameException {
         userInput = new UserInput();
         setupGame();
     }
 
     @Override
     public void runGame() {
-
         startGame();
         endGame();
         breakdownGame();
     }
 
-    protected void setupGame() {
+    protected void setupGame() throws ScrabbleGameException {
         System.out.println("Setting up Scrabble game...");
+        loadConfig();
         scrabbleBoard = new ScrabbleBoard();
         System.out.println(scrabbleBoard);
         addPlayers();
@@ -88,12 +92,19 @@ public class ScrabbleGameManager implements GameManager {
         }
     }
 
+    public void evaluateBlankLetters() {
+        for (int i = 0; i < scrabbleWord.getNumberOfBlankLetters(); i++) {
+            scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter(i)), i);
+        }
+        scrabbleWord.clearFoundBlankLetters();
+    }
+
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
 
-        if (scrabbleWord.containsBlankLetter()) {
-            scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter()));
+        if (scrabbleWord.getNumberOfBlankLetters() > 0) {
+            evaluateBlankLetters();
         }
         isWordOnRack(scrabbleWord);
         System.out.println(scrabbleBoard);
@@ -105,14 +116,21 @@ public class ScrabbleGameManager implements GameManager {
             System.out.println("Error the location you have selected has been already used. ");
             makeMove();
         } else {
-            scrabbleBoard.setUserSelectedLocation(col, row);
+            scrabbleBoard.setWordCol(col);
+            scrabbleBoard.setWordRow(row);
             scrabbleBoard.setUserSelectedOrientation(orientation);
-            scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove());
-            currentPlayer.getScoreKeeper().getWordPointValue(scrabbleBoard.getWordPointValue());
-            scrabbleBoard.clearWordPointValue();
+            scrabbleBoard.getScrabbleBoardInstance(scrabbleBoard);
+            scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove(), isFirstRound);
+            isPlacementValid();
             removeWordFromSelection();
             System.out.println(scrabbleBoard);
             System.out.println(currentPlayer.getCurrentPlayerScore());
+        }
+    }
+
+    private void isPlacementValid() {
+        if (!scrabbleBoard.getIsValidWordPlacement()) {
+            makeMove();
         }
     }
 
@@ -154,14 +172,19 @@ public class ScrabbleGameManager implements GameManager {
         getLetters();
     }
 
-    private boolean isWordInDictionary(String word) {
+    private boolean isWordInDictionary(String word) throws ScrabbleGameException {
         Dictionary dictionary = null;
+        DictionaryLookupResult result;
+
         try {
             dictionary = DictionaryFactory.getDictionary();
+            result = dictionary.lookupWord(word);
         } catch (ScrabbleGameException e) {
             e.printStackTrace();
+            return false;
         }
-        return dictionary.isValidWord(word);
+
+        return result != null ? result.isValidWord() : false;
     }
 
     private void makeMove() {
@@ -185,6 +208,7 @@ public class ScrabbleGameManager implements GameManager {
                     playWord();
 
                     takingTurn = false;
+                    isFirstRound = false;
                     break;
                 case ("s"):
 
@@ -221,6 +245,7 @@ public class ScrabbleGameManager implements GameManager {
                 currntIdx = -1;
             }
         }
+
     }
 
 
@@ -235,5 +260,20 @@ public class ScrabbleGameManager implements GameManager {
 
     protected void endGame() {
 
+        if (scrabbleAlphabet.getNumberOfLettersLeft() == 0 && currentPlayer.getRack().getLettersOnRack().size() == 0) {
+            System.out.println("The Game Has Ended.");
+
+            for (Player currentPlayer : players) {
+                System.out.println(currentPlayer.getCurrentPlayerScore());
+            }
+        }
+    }
+
+    /**
+     * Load the properties file from the Resources folder.
+     * @throws Exception if file cannot be found or loaded
+     */
+    private void loadConfig() throws ScrabbleGameException {
+        ScrabbleGameConfiguration.initialize();
     }
 }

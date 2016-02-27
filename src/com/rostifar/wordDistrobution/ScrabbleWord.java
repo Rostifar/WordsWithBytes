@@ -9,6 +9,7 @@ import java.util.List;
 public class ScrabbleWord {
     private List<ScrabbleLetter> word;
     private String wordAsString;
+    List<ScrabbleLetter> blankLetters = new ArrayList<>();
 
     public ScrabbleWord(String rawWord) {
         word = new ArrayList<>();
@@ -26,9 +27,9 @@ public class ScrabbleWord {
     }
 
     /**
-    *Takes apart userinputed word and converts each Character to a ScrabbleLetter, In order to validate the user actually has these letters in their Rack.
-    *Places each instance of a ScrabbleLetter into an array list
-    */
+     *Takes apart userinputed word and converts each Character to a ScrabbleLetter, In order to validate the user actually has these letters in their Rack.
+     *Places each instance of a ScrabbleLetter into an array list
+     */
     private void parseWord(String rawWord) {
         char[] lettersUsed = rawWord.toCharArray();
 
@@ -37,13 +38,23 @@ public class ScrabbleWord {
         }
     }
 
-    public boolean containsBlankLetter() {
-        List<Boolean> isBlankLetter = new ArrayList<>();
+    public void searchForBlankLetter() {
 
         for (ScrabbleLetter scrabbleLetter : word) {
-            isBlankLetter.add(scrabbleLetter.getLetter() == '_');
+
+            if (scrabbleLetter.letter == '_') {
+                blankLetters.add(scrabbleLetter);
         }
-        return isBlankLetter.contains(true);
+        }
+    }
+
+    public ScrabbleLetter getBlankLetter(int currentBlankLetterIndex) {
+        return blankLetters.get(currentBlankLetterIndex);
+    }
+
+    public int getNumberOfBlankLetters() {
+        searchForBlankLetter();
+        return blankLetters.size();
     }
 
     public ScrabbleLetter getBlankLetter() {
@@ -59,8 +70,12 @@ public class ScrabbleWord {
         return wordAsString;
     }
 
-    public void replaceLetter(ScrabbleLetter letterToReplace) {
-        word.add(word.indexOf(getBlankLetter()), letterToReplace);
-        word.remove(getBlankLetter());
+    public void replaceLetter(ScrabbleLetter letterToReplace, int currentBlankLetter) {
+        word.add(word.indexOf(blankLetters.get(currentBlankLetter)), letterToReplace);
+        word.remove(blankLetters.get(currentBlankLetter));
+    }
+
+    public void clearFoundBlankLetters() {
+        blankLetters.clear();
     }
 }

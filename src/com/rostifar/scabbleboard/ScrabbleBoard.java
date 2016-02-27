@@ -1,20 +1,17 @@
 package com.rostifar.scabbleboard;
 
-import com.rostifar.gamecontrol.ScoreKeeper;
 import com.rostifar.gamecontrol.ScrabbleGameException;
+import com.rostifar.scrabbleproject.UserInputException;
 import com.rostifar.wordDistrobution.ScrabbleLetter;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Dad on 10/4/2015.
  * Example of the board layout which will show with call to toString()
  *
  * 	  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
-    ----------------------------------------------
+ ----------------------------------------------
  1	|TW|  |  |DL|  |  |  |TW|  |  |  |DL|  |  |TW|
  2	|  |DW|  |  |  |TL|  |  |  |TL|  |  |  |TL|  |
  3	|  |  |DW|  |  |  |DL|  |DL|  |  |  |DW|  |  |
@@ -30,8 +27,7 @@ import java.util.Map;
  13	|  |  |DW|  |  |  |DL|  |DL|  |  |  |DW|  |  |
  14	|  |DW|  |  |  |TL|  |  |  |TL|  |  |  |TL|  |
  15	|TW|  |  |DL|  |  |  |TW|  |  |  |DL|  |  |TW|
-    ----------------------------------------------
-
+ ----------------------------------------------
  /**
  * A good online reference for the board and the game can be found here:
  * @see  /
@@ -43,7 +39,10 @@ public class ScrabbleBoard {
     private int col;
     private int row;
     private String orientation;
-    private List<Integer> letterPointValues = new ArrayList<>();
+    private ScrabbleBoardMechanics scrabbleBoardMechanics;
+    private int wordScoreMultiplier;
+    private boolean isValidWordPlacement;
+    private List<ScrabbleLetter> wordToCalculatePointValue;
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
@@ -73,6 +72,7 @@ public class ScrabbleBoard {
         }
     }
 
+
     private void setupCenterSquare() {
         board[CENTER_SQUARE][CENTER_SQUARE] =  new Square(SquareEnum.CENTER_STAR);
     }
@@ -97,7 +97,7 @@ public class ScrabbleBoard {
                 board[row][col] = new Square(SquareEnum.TRIPLE_WORD);
             }
         }
-     }
+    }
 
     private void setupDoubleLetters() {
         //Row 0, 7 and 14 are the same
@@ -148,18 +148,43 @@ public class ScrabbleBoard {
     /**
      * @return true if the square located at col,row on the board contains a letter, otherwise false
      */
-    public boolean squareContainsLetter(int col, int row) {
-        return board[col][row].containsLetter();
+
+    public void getScrabbleBoardInstance(ScrabbleBoard scrabbleBoard) {
+        scrabbleBoardMechanics = new ScrabbleBoardMechanics(scrabbleBoard);
     }
 
-    public void setUserSelectedLocation(int col, int row) {
-        this.col = col;
-        this.row = row;
+    public boolean squareContainsLetter(int col, int row) {
+        return board[col][row].containsLetter();
     }
 
     public void setUserSelectedOrientation(String orientation) {
         this.orientation = orientation;
     }
+
+    public int setWordRow(int row) {
+        return this.row = row;
+    }
+
+    public int setWordCol(int col) {
+        return this.col = col;
+    }
+
+    public int getWordColumn() {
+        return col;
+    }
+
+    public int getWordRow() {
+        return row;
+    }
+
+    public String getWordOrientation() {
+        return orientation;
+    }
+
+    public Square getSquarePosition(int col, int row){
+        return board[col][row];
+    }
+
 
     /**
      * Add a letter to an empty square on the scrabble board.
@@ -167,44 +192,63 @@ public class ScrabbleBoard {
      * the squareContainsLetter() as a prerequisite to calling this  method.
      */
 
-    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd) {
+    private void isIntersectingWord(boolean isFirstRound) {
+        if (!scrabbleBoardMechanics.isConnectedToPreviousWord(isFirstRound)) {
+            isValidWordPlacement = false;
+        }
+    }
+
+    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, boolean isFirstRound) {
+        scrabbleBoardMechanics.getInitalPostion(getSquarePosition(col, row));
+        scrabbleBoardMechanics.getPlayedWord(lettersToAdd);
+        isIntersectingWord(isFirstRound);
         try {
             for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
-                switch (orientation) {
-                    case "v":
-                        if (squareContainsLetter(col,row)) {
-                            collectScrabblePointValues(board[col][row].getLetter());
-                            col = col + 1;
-                        }
-                        collectScrabblePointValues(scrabbleLetter);
-                        addLetterToSquare(scrabbleLetter, col++, row);
-                        break;
+                determinePreviouslyPlacedLetters();
+                checkForNearbyWords(scrabbleLetter);
+                isSecondaryWordValid();
 
-                    case "h":
-                        if (squareContainsLetter(col, row)) {
-                            collectScrabblePointValues(board[col][row].getLetter());
-                            row = row + 1;
-                        }
-                        collectScrabblePointValues(scrabbleLetter);
-                        addLetterToSquare(scrabbleLetter, col, row++);
-                        break;
-                    default:
+                switch (orientation) {
+                case "v":
+                    addLetterToSquare(scrabbleLetter, col++, row);
+                    break;
+
+                case "h":
+                    addLetterToSquare(scrabbleLetter, col, row++);
+                    break;
+                default:
                 }
             }
         } catch (ScrabbleGameException e) {
             System.out.println("The position you entered already has a letter. Please try again.");
         }
+        isPrimaryWordValid();
     }
 
-    private List<Integer> calculateWordPointValue(int scrabbleLetterPointValue) {
-        letterPointValues.add(scrabbleLetterPointValue);
-        return letterPointValues;
+    private void checkForNearbyWords(ScrabbleLetter scrabbleLetter) {
+        scrabbleBoardMechanics.getCurrentLetter(scrabbleLetter);
+        scrabbleBoardMechanics.checkForConnectingWords();
+    }
+    private void totalWordPointValue(List<ScrabbleLetter> wordToAdd) {
     }
 
-    public List<Integer> getWordPointValue() {
-        return letterPointValues;
+    private void wordsToCheck(List<ScrabbleLetter> scrabbleLetters) {
+        List<List<ScrabbleLetter>> wordsToBeChecked = new ArrayList<>();
+
     }
-    
+
+    private boolean isSecondaryWordValid() {
+        if (scrabbleBoardMechanics.getSecondaryWord().isEmpty()) {
+
+        }
+        return false;
+    }
+
+    private void isPrimaryWordValid() {
+        // validate with dictionary
+        scrabbleBoardMechanics.getPrimaryWord();
+    }
+
 
     public void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
         board[col][row].setLetter(letterToAdd);
@@ -212,48 +256,46 @@ public class ScrabbleBoard {
 
     public void collectScrabblePointValues(ScrabbleLetter letter){
 
-            if (board[col][row].isSpecialSquare()) {
-                calculateSpecialPointValue(letter, board[col][row].getSquareType());
-            } else {
-                calculateWordPointValue(letter.getPointValue().getValue());
-            }
+        if (board[col][row].isSpecialSquare()) {
+            calculateSpecialPointValue(letter, board[col][row].getSquareType());
+        } else {
+            // calculateWordPointValue(letter.getPointValue().getValue());
         }
-
+    }
 
     public void calculateSpecialPointValue(ScrabbleLetter scrabbleLetter, SquareEnum squareType) {
         int scrabbleLetterPointValue = scrabbleLetter.getPointValue().getValue();
 
         switch (squareType) {
 
-            case DOUBLE_LETTER:
-                scrabbleLetterPointValue = scrabbleLetterPointValue * 2;
-                calculateWordPointValue(scrabbleLetterPointValue);
-                break;
-            case TRIPLE_LETTER:
-                scrabbleLetterPointValue = scrabbleLetterPointValue * 3;
-                calculateWordPointValue(scrabbleLetterPointValue);
-                break;
-            case DOUBLE_WORD:
-                break;
-            default:
-                break;
+        case DOUBLE_LETTER:
+            scrabbleLetterPointValue = scrabbleLetterPointValue * 2;
+            // calculateWordPointValue(scrabbleLetterPointValue);
+            break;
+        case TRIPLE_LETTER:
+            scrabbleLetterPointValue = scrabbleLetterPointValue * 3;
+            // calculateWordPointValue(scrabbleLetterPointValue);
+            break;
+        case DOUBLE_WORD:
+            wordScoreMultiplier += 2;
+            break;
+        case TRIPLE_WORD:
+            wordScoreMultiplier += 3;
+        default:
+            break;
         }
     }
 
-    public void clearWordPointValue() {
 
-        for (int i = 0; i < letterPointValues.size(); i++) {
-            letterPointValues.remove(i);
+    public void determinePreviouslyPlacedLetters() {
+
+        if (squareContainsLetter(col,row) && orientation.equals("v")) {
+            col = col + 1;
+        } else if (squareContainsLetter(col,row) && orientation.equals("h")){
+            row = row + 1;
         }
     }
 
-    public SquareEnum squareType(int col, int row){
-
-        if (board[col][row].isSpecialSquare()) {
-            return board[col][row].getSquareType();
-        }
-        return SquareEnum.REGULAR;
-    }
 
     @Override
     /**
@@ -277,6 +319,10 @@ public class ScrabbleBoard {
         stringBuilder.append("\t----------------------------------------------\n");
 
         return stringBuilder.toString();
+    }
+
+    public boolean getIsValidWordPlacement() {
+        return isValidWordPlacement;
     }
 
 }

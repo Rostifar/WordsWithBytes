@@ -1,13 +1,11 @@
 package com.rostifar.dictionary;
 
-import java.util.Locale;
+import com.rostifar.gamecontrol.ScrabbleGameException;
 
 /**
  * Defines the public contract for use of a dictionary.
  * Created by GitLazy (Dad) on 12/11/2015.
  */
 public interface Dictionary {
-    boolean isValidWord(String aWord);
-    String getDefinitionForWord(String aWord) throws Exception;
-    Locale getLanguage();
+    DictionaryLookupResult lookupWord(String lookupWord) throws ScrabbleGameException;
 }

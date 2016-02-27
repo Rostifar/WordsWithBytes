@@ -1,9 +1,8 @@
 package com.rostifar.dictionary;
 
-import com.rostifar.wordDistrobution.ScrabbleGameInvalidWordException;
+import com.rostifar.gamecontrol.ScrabbleGameException;
 
 import java.io.InputStream;
-import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -21,7 +20,6 @@ import java.util.Scanner;
 public class FileBasedDictionary extends AbstractDictionary implements Dictionary {
     private static final String FILE_PATH = "dictionary.dsv";
     private static final char FIELD_DELIMITER = '|';
-    Scanner scanner;
     InputStream inputStream;
 
     /**
@@ -44,7 +42,6 @@ public class FileBasedDictionary extends AbstractDictionary implements Dictionar
     public Dictionary initialize() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         inputStream = classLoader.getResourceAsStream(FILE_PATH);
-        scanner = new Scanner(inputStream);
         return this;
     }
 
@@ -53,12 +50,11 @@ public class FileBasedDictionary extends AbstractDictionary implements Dictionar
      * @param aWord does this word exist in the dictionary?
      * @return true if yes, false if no
      */
-    @Override
-    public boolean isValidWord(String aWord) {
 
-        boolean foundWord = false;
-       // scanner.
-        scanner.reset();
+    public DictionaryLookupResult searchDictionary(String aWord) throws ScrabbleGameException {
+
+        DictionaryLookupResult lookupResult = new DictionaryLookupResult(aWord);
+        Scanner scanner = new Scanner(inputStream);
 
         for (int recNumber = 0; scanner.hasNextLine(); recNumber++) {
             String line = scanner.nextLine();
@@ -66,27 +62,23 @@ public class FileBasedDictionary extends AbstractDictionary implements Dictionar
             if (recNumber == 0) //Skip over first line in file which is the header
                 continue;
 
+            if (recNumber % 5000 == 0)
+                System.out.println("Searched: " + recNumber + " words...");
+
             String wordInDictionary = line.substring(line.indexOf(FIELD_DELIMITER) + 1);
 
             if (aWord.equals(wordInDictionary)) {
-                foundWord = true;
+                lookupResult.setIsValidWord(true);
+                System.out.println("FOUND: " + aWord + " at " + recNumber);
                 break;
             }
         }
 
-        return foundWord;
+        return lookupResult;
     }
 
     @Override
-    public String getDefinitionForWord(String aWord) throws ScrabbleGameInvalidWordException {
-        throw new ScrabbleGameInvalidWordException(aWord + " - Dictionary definitions not available");
-    }
-
-    /**
-     * As of now we are only supporting english...
-     */
-    @Override
-    public Locale getLanguage() {
-        return Locale.ENGLISH;
+    public DictionaryLookupResult lookupWord(String lookupWord) throws ScrabbleGameException {
+        return searchDictionary(lookupWord);
     }
 }
