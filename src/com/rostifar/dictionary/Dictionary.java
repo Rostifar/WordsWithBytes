@@ -8,5 +8,4 @@ import com.rostifar.gamecontrol.ScrabbleGameException;
  */
 public interface Dictionary {
     DictionaryLookupResult lookupWord(String lookupWord) throws ScrabbleGameException;
-    //boolean isValidWord(DictionaryLookupResult dictionaryLookupResult);
 }

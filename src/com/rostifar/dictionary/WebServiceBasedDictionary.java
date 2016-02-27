@@ -1,5 +1,6 @@
 package com.rostifar.dictionary;
 
+import com.rostifar.gamecontrol.ScrabbleGameException;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
@@ -13,8 +14,6 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.net.URL;
 import java.util.List;
 
@@ -54,8 +53,9 @@ public class WebServiceBasedDictionary extends AbstractDictionary implements Dic
         try {
             result = "";
             URL url = new URL(urlString + "&word=" + lookupWord);
-            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.wellsfargo.com", 8080));
-            conn = (HttpURLConnection) url.openConnection(proxy);
+         /*   Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.xxx.com", 8080));
+            conn = (HttpURLConnection) url.openConnection(proxy);*/
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.addRequestProperty("User-Agent", "Mozilla/5.0");
             conn.setRequestProperty("Accept", "application/xml");
@@ -78,10 +78,10 @@ public class WebServiceBasedDictionary extends AbstractDictionary implements Dic
             BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
             String output;
-            System.out.println("Output from Server .... \n");
+            System.out.println("Consuming output from Server .... \n");
 
             while ((output = br.readLine()) != null) {
-                System.out.println(output);
+                //System.out.println(output);
                 result += output;
             }
 
@@ -98,7 +98,7 @@ public class WebServiceBasedDictionary extends AbstractDictionary implements Dic
     }
 
     @Override
-    public DictionaryLookupResult lookupWord(String lookupWord) throws Exception {
+    public DictionaryLookupResult lookupWord(String lookupWord) throws ScrabbleGameException {
         return parseResult(lookupWord, invokeService(lookupWord));
     }
 
@@ -136,28 +136,33 @@ public class WebServiceBasedDictionary extends AbstractDictionary implements Dic
      * @return
      * @throws Exception
      */
-    private DictionaryLookupResult parseResult(String lookupWord, String xmlResult) throws Exception {
+    private DictionaryLookupResult parseResult(String lookupWord, String xmlResult) throws ScrabbleGameException {
         DictionaryLookupResult lookupResult = new DictionaryLookupResult(lookupWord);
+        XMLStreamReader xmlStreamReader;
+        StAXStreamBuilder builder;
+        Document jdomDoc;
 
-        // Use a SAX builder
+        try {
         XMLInputFactory factory = XMLInputFactory.newFactory();
-        XMLStreamReader xmlStreamReader = factory.createXMLStreamReader(new StringReader(xmlResult));
-        StAXStreamBuilder builder = new StAXStreamBuilder();
+            xmlStreamReader = factory.createXMLStreamReader(new StringReader(xmlResult));
+            builder = new StAXStreamBuilder();
+            jdomDoc = builder.build(xmlStreamReader);
+        } catch (Exception exp) {
+            exp.printStackTrace();
+            throw new ScrabbleGameException(exp.getMessage());
+        }
 
-        // build a JDOM2 Document
-        Document jdomDoc = builder.build(xmlStreamReader);
         Element wroot = jdomDoc.getRootElement();
 
-        if (wroot.getChildren().isEmpty())
+        if (wroot.getChildren().isEmpty()) {
             return lookupResult; //No results were found
+        }
 
-        // get the document type
         XPathFactory xFactory = XPathFactory.instance();
-        Filter filter = new ElementFilter(Namespace.getNamespace("dict", "http://services.aonaware.com/webservices/"));
-        XPathExpression expr = xFactory.compile("//dict:Definitions/dict:Definition/dict:WordDefinition", filter, null, Namespace.getNamespace("dict", "http://services.aonaware.com/webservices/"));
+        Filter filter = new ElementFilter();
+        XPathExpression expr = xFactory.compile("//dict:Definitions/dict:Definition/dict:WordDefinition", filter,
+                null, Namespace.getNamespace("dict", "http://services.aonaware.com/webservices/"));
         List<Element> links = expr.evaluate(jdomDoc);
-
-        //get the root element
 
         WordDefinitions definitions = new WordDefinitions();
 

@@ -1,4 +1,5 @@
 package com.rostifar.dictionary;
+import com.rostifar.gamecontrol.ScrabbleGameConfiguration;
 import com.rostifar.gamecontrol.ScrabbleGameException;
 
 /**
@@ -8,6 +9,7 @@ import com.rostifar.gamecontrol.ScrabbleGameException;
 public final class DictionaryFactory {
 
     private static Dictionary dictionary;
+    private static Class<?> dictionaryClass;
     public static Dictionary getDictionary() throws ScrabbleGameException {
 
         if (dictionary != null)
@@ -27,9 +29,33 @@ public final class DictionaryFactory {
         return dictionaryInstance.initialize();
     }
 
+    /**
+     * Example: "com.rostifar.dictionary.WebServiceBasedDictionary"
+     * @return
+     * @throws ClassNotFoundException
+     */
    private static  Class<?> getDictionaryClass() throws ClassNotFoundException {
-        Class<?> dictionaryClass = Class.forName("com.rostifar.dictionary.WebServiceBasedDictionary");
+        if (dictionaryClass == null) {
+            dictionaryClass = Class.forName(ScrabbleGameConfiguration.getProperties().getProperty("dictionaryClass"));
+        }
+
         return dictionaryClass;
+    }
+
+    /**
+     * Implemented for Unit testing purposes only!
+     * @param aClassName a String representing a class (with prepended package) name that implements
+     *  the Dictionary interface.
+     * @throws ClassNotFoundException if the class cannot be found or loaded
+     */
+    public static void setDictionaryClass(String aClassName) throws ClassNotFoundException {
+        if (aClassName == null) {
+            dictionaryClass = null;
+        }
+        else {
+            dictionaryClass = Class.forName(aClassName);
+            dictionary = null;
+        }
     }
 
 }
