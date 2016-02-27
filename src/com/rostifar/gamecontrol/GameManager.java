@@ -7,5 +7,4 @@ package com.rostifar.gamecontrol;
  */
 public interface GameManager {
     void runGame();
-
 }

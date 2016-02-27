@@ -33,6 +33,7 @@ public class Square {
             throw new ScrabbleGameException("Space on board is already occupied by letter:" + getLetter());
 
         letter = aScrabbleLetter;
+        squareType = SquareEnum.REGULAR;
     }
 
     public ScrabbleLetter getLetter() {

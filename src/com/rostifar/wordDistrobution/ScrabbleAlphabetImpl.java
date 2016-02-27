@@ -118,8 +118,15 @@ public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
         return lettersToReturn;
     }
 
-
     public void getExchangedLetters(ScrabbleLetter scrabbleLetter) {
         letterMap.get(scrabbleLetter.getLetter()).add(scrabbleLetter);
+    }
+
+    public int getNumberOfLettersLeft(){
+        int bagSize = 0;
+        for (char key : letterMap.keySet()) {
+            bagSize += letterMap.get(key).size();
+        }
+        return bagSize;
     }
 }
