@@ -33,6 +33,7 @@ public class ScrabbleBoardMechanics {
         setOrientation(scrabbleBoard.getWordOrientation());
     }
 
+
     public List<ScrabbleLetter> getSecondaryWord() {
         if (foundConnectingWords) {
             connectFoundParallelWords();

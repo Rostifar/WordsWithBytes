@@ -1,7 +1,9 @@
 package com.rostifar.wordDistrobution;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ross on 12/19/15.
@@ -9,13 +11,18 @@ import java.util.List;
 public class ScrabbleWord {
     private List<ScrabbleLetter> word;
     private String wordAsString;
-    List<ScrabbleLetter> blankLetters = new ArrayList<>();
+    List<ScrabbleLetter> blankLetters;
+    List<Integer> positionOnRack;
 
     public ScrabbleWord(String rawWord) {
         word = new ArrayList<>();
         wordAsString = rawWord;
         parseWord(rawWord.toUpperCase());
 
+    }
+
+    public List<ScrabbleLetter> lettersInWord() {
+        return word;
     }
 
     public ScrabbleLetter getLetterAt(int index) {
@@ -39,30 +46,25 @@ public class ScrabbleWord {
     }
 
     public void searchForBlankLetter() {
+        blankLetters = new ArrayList<>();
+        positionOnRack = new ArrayList<>();
 
         for (ScrabbleLetter scrabbleLetter : word) {
 
             if (scrabbleLetter.letter == '_') {
                 blankLetters.add(scrabbleLetter);
-        }
+                positionOnRack.add(word.indexOf(scrabbleLetter));
+            }
         }
     }
 
-    public ScrabbleLetter getBlankLetter(int currentBlankLetterIndex) {
-        return blankLetters.get(currentBlankLetterIndex);
+
+    public List<ScrabbleLetter> getBlankScrabbleLetters() {
+        return blankLetters;
     }
 
-    public int getNumberOfBlankLetters() {
-        searchForBlankLetter();
-        return blankLetters.size();
-    }
-
-    public ScrabbleLetter getBlankLetter() {
-        List<Character> checkForBlankLetter = new ArrayList<>();
-        for (ScrabbleLetter scrabbleLetter : word) {
-            checkForBlankLetter.add(scrabbleLetter.getLetter());
-        }
-        return word.get(checkForBlankLetter.indexOf('_'));
+    public List<Integer> getBlankScrabbleLetterPostion() {
+        return positionOnRack;
     }
 
     @Override
@@ -70,9 +72,9 @@ public class ScrabbleWord {
         return wordAsString;
     }
 
-    public void replaceLetter(ScrabbleLetter letterToReplace, int currentBlankLetter) {
-        word.add(word.indexOf(blankLetters.get(currentBlankLetter)), letterToReplace);
-        word.remove(blankLetters.get(currentBlankLetter));
+    public void replaceLetter(ScrabbleLetter letterToAdd, int letterLocation) {
+        word.add(letterLocation, letterToAdd);
+        word.remove(letterLocation + 1);
     }
 
     public void clearFoundBlankLetters() {

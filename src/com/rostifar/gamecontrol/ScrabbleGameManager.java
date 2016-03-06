@@ -12,6 +12,9 @@ import com.rostifar.wordDistrobution.ScrabbleAlphabetImpl;
 import com.rostifar.wordDistrobution.ScrabbleLetter;
 import com.rostifar.wordDistrobution.ScrabbleWord;
 
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * Created by D14048 on 10/4/2015.
@@ -26,6 +29,8 @@ public class ScrabbleGameManager implements GameManager {
     private Rack playerRack;
     private ScrabbleWord scrabbleWord;
     private boolean isFirstRound = true;
+    private ScrabbleWord currentWord;
+    private ScrabbleLetter currentLetter;
 
 
 
@@ -83,27 +88,40 @@ public class ScrabbleGameManager implements GameManager {
     }
 
     private void isWordOnRack(ScrabbleWord scrabbleWord) {
-        if (currentPlayer.isValidWord(scrabbleWord)) {
-            currentPlayer.removeLetters(scrabbleWord);
-            getLetters();
-        } else {
+        if (!currentPlayer.isValidWord(scrabbleWord)) {
             System.out.println("Error! You do not have the letters you have selected on your Rack. Please play another word.");
             makeMove();
         }
     }
 
     public void evaluateBlankLetters() {
-        for (int i = 0; i < scrabbleWord.getNumberOfBlankLetters(); i++) {
-            scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter(i)), i);
+        List<ScrabbleLetter> blankLetters = currentWord.getBlankScrabbleLetters();
+        List<Integer> positions = currentWord.getBlankScrabbleLetterPostion();
+
+        for (ScrabbleLetter blankLetter: blankLetters) {
+            exchangeBlankLetter(blankLetter, positions.get(blankLetters.indexOf(blankLetter)));
         }
-        scrabbleWord.clearFoundBlankLetters();
+    }
+
+    public void exchangeBlankLetter(ScrabbleLetter blankLetter, int position) {
+        System.out.println(scrabbleAlphabet.getListOfLetters());
+        char selectedLetter = userInput.getInputFromUser("The word you have played contains a blank letter. Please select the letter you would like to exchange it for: ").toUpperCase().charAt(0);
+        ScrabbleLetter newScrabbleLetter = new BlankScrabbleLetter(selectedLetter);
+        currentPlayer.getRack().replaceBlankLetter(newScrabbleLetter, blankLetter);
+        addReplacedLetterToWord(newScrabbleLetter, position);
+
+    }
+
+    public void addReplacedLetterToWord(ScrabbleLetter newWord, int position) {
+        scrabbleWord.replaceLetter(newWord, position);
     }
 
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
-
-        if (scrabbleWord.getNumberOfBlankLetters() > 0) {
+        currentWord = scrabbleWord;
+        scrabbleWord.searchForBlankLetter();
+        if (!scrabbleWord.getBlankScrabbleLetters().isEmpty()) {
             evaluateBlankLetters();
         }
         isWordOnRack(scrabbleWord);
@@ -120,31 +138,20 @@ public class ScrabbleGameManager implements GameManager {
             scrabbleBoard.setWordRow(row);
             scrabbleBoard.setUserSelectedOrientation(orientation);
             scrabbleBoard.getScrabbleBoardInstance(scrabbleBoard);
-            scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove(), isFirstRound);
-            isPlacementValid();
-            removeWordFromSelection();
+            scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord(), isFirstRound);
+            //isPlacementValid();
             System.out.println(scrabbleBoard);
             System.out.println(currentPlayer.getCurrentPlayerScore());
         }
+
+        currentPlayer.removeLetters(scrabbleWord);
+        getLetters();
     }
 
     private void isPlacementValid() {
         if (!scrabbleBoard.getIsValidWordPlacement()) {
             makeMove();
         }
-    }
-
-    public ScrabbleLetter exchangeBlankLetter(ScrabbleLetter blankLetter) {
-        System.out.println(scrabbleAlphabet.getListOfLetters());
-        char selectedLetter = userInput.getInputFromUser("The word you have played contains a blank letter. Please select the letter you would like to exchange it for: ").toUpperCase().charAt(0);
-        ScrabbleLetter newScrabbleLetter = new BlankScrabbleLetter(selectedLetter);
-        currentPlayer.getRack().replaceBlankLetter(newScrabbleLetter, blankLetter);
-
-        return newScrabbleLetter;
-    }
-
-    private void removeWordFromSelection() {
-        playerRack.getLettersToRemove().removeAll(playerRack.getLettersToRemove());
     }
 
     private void printPlayers() {
@@ -159,6 +166,9 @@ public class ScrabbleGameManager implements GameManager {
         return (input.length() == MAX_INPUT_LENGTH);
     }
 
+    public void retryPlay() {
+        makeMove();
+    }
 
 
     private void getLetters() {

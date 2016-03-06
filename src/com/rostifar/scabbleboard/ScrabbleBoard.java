@@ -192,7 +192,7 @@ public class ScrabbleBoard {
      * the squareContainsLetter() as a prerequisite to calling this  method.
      */
 
-    private void isIntersectingWord(boolean isFirstRound) {
+    private void isIntersectingWord(boolean isFirstRound) { 
         if (!scrabbleBoardMechanics.isConnectedToPreviousWord(isFirstRound)) {
             isValidWordPlacement = false;
         }
@@ -201,7 +201,7 @@ public class ScrabbleBoard {
     public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, boolean isFirstRound) {
         scrabbleBoardMechanics.getInitalPostion(getSquarePosition(col, row));
         scrabbleBoardMechanics.getPlayedWord(lettersToAdd);
-        isIntersectingWord(isFirstRound);
+        //isIntersectingWord(isFirstRound);
         try {
             for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
                 determinePreviouslyPlacedLetters();
@@ -220,8 +220,10 @@ public class ScrabbleBoard {
                 }
             }
         } catch (ScrabbleGameException e) {
+
             System.out.println("The position you entered already has a letter. Please try again.");
         }
+
         isPrimaryWordValid();
     }
 
@@ -229,6 +231,7 @@ public class ScrabbleBoard {
         scrabbleBoardMechanics.getCurrentLetter(scrabbleLetter);
         scrabbleBoardMechanics.checkForConnectingWords();
     }
+
     private void totalWordPointValue(List<ScrabbleLetter> wordToAdd) {
     }
 

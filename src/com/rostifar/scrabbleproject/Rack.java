@@ -11,8 +11,6 @@ import java.util.List;
  */
 public class Rack {
     private List<ScrabbleLetter> lettersOnRack;
-    private List<ScrabbleLetter> lettersToRemove = new ArrayList<>();
-
 
     public Rack() {
         lettersOnRack = new ArrayList<>();
@@ -53,6 +51,7 @@ public class Rack {
     }
 
     public List<ScrabbleLetter> removeLetters(ScrabbleWord scrabbleWord) {
+        List<ScrabbleLetter> lettersToRemove = new ArrayList<>();
 
         for (int i = 0; i < scrabbleWord.getNumberOfLetters(); i++) {
             lettersToRemove.add(lettersOnRack.get(lettersOnRack.indexOf(scrabbleWord.getLetterAt(i))));
@@ -61,9 +60,6 @@ public class Rack {
         return lettersToRemove;
     }
 
-    public List<ScrabbleLetter> getLettersToRemove() {
-        return lettersToRemove;
-    }
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
