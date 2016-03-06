@@ -1,9 +1,5 @@
 package com.rostifar.gamecontrol;
 
-import com.rostifar.wordDistrobution.ScrabbleLetter;
-import com.rostifar.wordDistrobution.ScrabbleWord;
-import com.rostifar.wordDistrobution.PointValue;
-
 import java.util.List;
 
 /**

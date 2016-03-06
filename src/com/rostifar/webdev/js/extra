@@ -1,0 +1,13 @@
+    * Uses mouse position to calculate where to place letter on board.
+     * Calculates ScrabbleBoard's actual dimensions in terms of canvas.
+     * Helps "snap" letter into appropriate place through use of each space's center.
+     */
+    calculatePointerLocation: function() {
+
+        this.calculateCenterCoordinates(maxHeight, maxWidth, excessPixelsY, excessPixelsX);
+
+        if ((this.currentLetter.x >= excessPixelsX && this.currentLetter.x <= maxWidth) && (this.currentLetter.y >= excessPixelsY && this.currentLetter.y <= maxHeight) && this.currentLetter.input.onUp) {
+            this.searchForClosestLetter();
+
+            }
+        },
