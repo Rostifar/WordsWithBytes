@@ -43,6 +43,10 @@ public class ScrabbleBoard {
     private int wordScoreMultiplier;
     private boolean isValidWordPlacement;
     private List<ScrabbleLetter> wordToCalculatePointValue;
+    private List<List<ScrabbleLetter>> wordsToBeChecked = new ArrayList<>();
+    private List<Integer> letterPositionCol = new ArrayList<>();
+    private List<Integer> letterPositionRow = new ArrayList<>();
+
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
@@ -198,33 +202,44 @@ public class ScrabbleBoard {
         }
     }
 
-    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, boolean isFirstRound) {
+    public void validateWordPlacement(List<ScrabbleLetter> selectedLetters) {
+
         scrabbleBoardMechanics.getInitalPostion(getSquarePosition(col, row));
-        scrabbleBoardMechanics.getPlayedWord(lettersToAdd);
-        //isIntersectingWord(isFirstRound);
-        try {
-            for (ScrabbleLetter scrabbleLetter : lettersToAdd) {
-                determinePreviouslyPlacedLetters();
-                checkForNearbyWords(scrabbleLetter);
-                isSecondaryWordValid();
 
-                switch (orientation) {
-                case "v":
-                    addLetterToSquare(scrabbleLetter, col++, row);
-                    break;
-
-                case "h":
-                    addLetterToSquare(scrabbleLetter, col, row++);
-                    break;
-                default:
-                }
-            }
-        } catch (ScrabbleGameException e) {
-
-            System.out.println("The position you entered already has a letter. Please try again.");
+        for (ScrabbleLetter scrabbleLetter : selectedLetters) {
+            determinePreviouslyPlacedLetters();
+            checkForNearbyWords(scrabbleLetter);
+            getSecondaryWord();
+            getLetterCoordinates(scrabbleLetter);
         }
+        getPrimaryWord();
+    }
 
-        isPrimaryWordValid();
+    private void getLetterCoordinates(ScrabbleLetter currentLetter) {
+
+        switch (getWordOrientation()) {
+
+            case "v":
+                currentLetter.setDesiredPositionCol(col++);
+                currentLetter.setDesiredPositionRow(row);
+                break;
+            case "h":
+                currentLetter.setDesiredPositionCol(col);
+                currentLetter.setDesiredPositionRow(row++);
+                break;
+        }
+    }
+
+    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, boolean isFirstRound) {
+
+        for (ScrabbleLetter currentLetter : lettersToAdd) {
+            try {
+                addLetterToSquare(currentLetter, currentLetter.getDesiredPositionCol(), currentLetter.getDesiredPositionRow());
+            } catch (ScrabbleGameException e) {
+                e.getMessage();
+            }
+        }
+        isIntersectingWord(isFirstRound);
     }
 
     private void checkForNearbyWords(ScrabbleLetter scrabbleLetter) {
@@ -232,24 +247,21 @@ public class ScrabbleBoard {
         scrabbleBoardMechanics.checkForConnectingWords();
     }
 
-    private void totalWordPointValue(List<ScrabbleLetter> wordToAdd) {
-    }
+    private void getSecondaryWord() {
 
-    private void wordsToCheck(List<ScrabbleLetter> scrabbleLetters) {
-        List<List<ScrabbleLetter>> wordsToBeChecked = new ArrayList<>();
-
-    }
-
-    private boolean isSecondaryWordValid() {
-        if (scrabbleBoardMechanics.getSecondaryWord().isEmpty()) {
-
+        if (!scrabbleBoardMechanics.getSecondaryWordToCheck().isEmpty()) {
+            wordsToBeChecked.add(scrabbleBoardMechanics.getSecondaryWordToCheck());
         }
-        return false;
     }
 
-    private void isPrimaryWordValid() {
-        // validate with dictionary
-        scrabbleBoardMechanics.getPrimaryWord();
+    private void getPrimaryWord() {
+        if (!scrabbleBoardMechanics.getPrimaryWord().isEmpty()) {
+            wordsToBeChecked.add(scrabbleBoardMechanics.getPrimaryWord());
+        }
+    }
+
+    public List<List<ScrabbleLetter>> getWordsToBeChecked() {
+        return wordsToBeChecked;
     }
 
 

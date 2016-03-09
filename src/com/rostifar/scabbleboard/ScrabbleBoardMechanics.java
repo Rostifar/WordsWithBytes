@@ -17,6 +17,7 @@ public class ScrabbleBoardMechanics {
     private List<ScrabbleLetter> horzSubtractiveConnectedWord = new ArrayList<>();
     private List<ScrabbleLetter> vertAdditiveConnectedWord = new ArrayList<>();
     private List<ScrabbleLetter> vertSubtractiveConnectedWord = new ArrayList<>();
+    private List<ScrabbleLetter> secondaryWord;
     private boolean forward = true;
     private boolean up = true;
     private boolean foundConnectingWords;
@@ -33,15 +34,6 @@ public class ScrabbleBoardMechanics {
         setOrientation(scrabbleBoard.getWordOrientation());
     }
 
-
-    public List<ScrabbleLetter> getSecondaryWord() {
-        if (foundConnectingWords) {
-            connectFoundParallelWords();
-            return secondaryWordToCheck;
-        }
-        secondaryWordToCheck.clear();
-        return secondaryWordToCheck;
-    }
 
     public List<ScrabbleLetter> getPrimaryWord() {
         connectMainWord();
@@ -60,46 +52,41 @@ public class ScrabbleBoardMechanics {
         this.orientation = orientation;
     }
 
-    public void connectFoundParallelWords() {
+    public List<ScrabbleLetter> getSecondaryWordToCheck() {
 
         if (orientation.equals("v")) {
+
             Collections.reverse(horzSubtractiveConnectedWord);
-            horzSubtractiveConnectedWord.add(currentLetter);
-            horzSubtractiveConnectedWord.addAll(horzAdditiveConnectedWord);
             secondaryWordToCheck.addAll(horzSubtractiveConnectedWord);
-            clearExcessHorizontalWords();
+            secondaryWordToCheck.add(currentLetter);
+            secondaryWordToCheck.addAll(horzAdditiveConnectedWord);
         }
 
         if (orientation.equals("h")) {
             Collections.reverse(vertSubtractiveConnectedWord);
-            vertSubtractiveConnectedWord.add(currentLetter);
-            vertSubtractiveConnectedWord.addAll(vertAdditiveConnectedWord);
             secondaryWordToCheck.addAll(vertSubtractiveConnectedWord);
-            clearExcessVerticalWords();
+            secondaryWordToCheck.add(currentLetter);
+            secondaryWordToCheck.addAll(vertAdditiveConnectedWord);
         }
+        return secondaryWordToCheck;
     }
 
-    public void connectMainWord() {
+    public List<ScrabbleLetter> connectMainWord() {
 
         if (orientation.equals("v")) {
 
-            for(ScrabbleLetter scrabbleLetter : playedWord) {
-                vertSubtractiveConnectedWord.add(scrabbleLetter);
-            }
-            vertSubtractiveConnectedWord.addAll(vertAdditiveConnectedWord);
-            primaryWordToCheck = vertSubtractiveConnectedWord;
-            clearExcessVerticalWords();
+            Collections.reverse(vertSubtractiveConnectedWord);
+            primaryWordToCheck.addAll(vertSubtractiveConnectedWord);
+            primaryWordToCheck.add(currentLetter);
         }
 
         if (orientation.equals("h")) {
 
-            for(ScrabbleLetter scrabbleLetter : playedWord) {
-                horzSubtractiveConnectedWord.add(scrabbleLetter);
-            }
-            horzSubtractiveConnectedWord.addAll(horzAdditiveConnectedWord);
-            primaryWordToCheck = horzSubtractiveConnectedWord;
-            clearExcessHorizontalWords();
+            Collections.reverse(horzSubtractiveConnectedWord);
+            primaryWordToCheck.addAll(horzSubtractiveConnectedWord);
+            primaryWordToCheck.add(currentLetter);
         }
+        return primaryWordToCheck;
     }
 
     public void checkForConnectingWords() {
@@ -107,11 +94,11 @@ public class ScrabbleBoardMechanics {
     }
 
     public void checkForFirstLetter() {
+
         int column = this.col;
         int rowNumber = this.row;
         boolean forward = this.forward;
         boolean up = this.up;
-
 
         while (up && forward) {
             if (scrabbleBoard.getSquarePosition(column, rowNumber + 1).containsLetter()) {
@@ -176,15 +163,6 @@ public class ScrabbleBoardMechanics {
         }
     }
 
-    private void clearExcessHorizontalWords() {
-        horzAdditiveConnectedWord.clear();
-        horzSubtractiveConnectedWord.clear();
-    }
-
-    private void clearExcessVerticalWords() {
-        vertAdditiveConnectedWord.clear();
-        vertSubtractiveConnectedWord.clear();
-    }
 
     public void getCurrentLetter(ScrabbleLetter scrabbleLetter) {
         this.currentLetter = scrabbleLetter;
