@@ -1,5 +1,7 @@
 package com.rostifar.gamecontrol;
 
+import com.rostifar.wordDistrobution.ScrabbleLetter;
+
 import java.util.List;
 
 /**
@@ -7,16 +9,19 @@ import java.util.List;
  */
 public class ScoreKeeper {
     private int totalPoints;
+    private int totalPointValueForWord;
 
     public ScoreKeeper() {
         getplayerScore();
     }
 
-    public void getWordPointValue(List<Integer> wordPointValue) {
+    public void getWordPointValue(List<ScrabbleLetter> wordToBeScored, int wordPointValueScaleFactor) {
 
-        for (int letterPointValue : wordPointValue) {
-            totalPoints += letterPointValue;
+        for (ScrabbleLetter letter : wordToBeScored) {
+            totalPointValueForWord += letter.getPointValue().getValue();
         }
+        totalPoints += (totalPointValueForWord * wordPointValueScaleFactor);
+        totalPointValueForWord = 0;
     }
     public int getplayerScore() {
         return totalPoints;

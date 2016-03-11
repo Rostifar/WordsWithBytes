@@ -24,6 +24,9 @@ public class ScrabbleLetter {
         return pointValue;
     }
 
+
+
+
     @Override
     public boolean equals(Object letter) {
 
@@ -48,4 +51,5 @@ public class ScrabbleLetter {
     public int getDesiredPositionRow() {
         return desiredPositionRow;
     }
+
 }

@@ -42,11 +42,7 @@ public class ScrabbleBoard {
     private ScrabbleBoardMechanics scrabbleBoardMechanics;
     private int wordScoreMultiplier;
     private boolean isValidWordPlacement;
-    private List<ScrabbleLetter> wordToCalculatePointValue;
     private List<List<ScrabbleLetter>> wordsToBeChecked = new ArrayList<>();
-    private List<Integer> letterPositionCol = new ArrayList<>();
-    private List<Integer> letterPositionRow = new ArrayList<>();
-
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
@@ -203,7 +199,7 @@ public class ScrabbleBoard {
     }
 
     public void validateWordPlacement(List<ScrabbleLetter> selectedLetters) {
-
+        wordScoreMultiplier = 0;
         scrabbleBoardMechanics.getInitalPostion(getSquarePosition(col, row));
 
         for (ScrabbleLetter scrabbleLetter : selectedLetters) {
@@ -230,6 +226,18 @@ public class ScrabbleBoard {
         }
     }
 
+    public void calculateMovePointValue() {
+        for (List<ScrabbleLetter> word : wordsToBeChecked) {
+
+            for (ScrabbleLetter currentLetter : word) {
+
+                if (board[currentLetter.getDesiredPositionCol()][currentLetter.getDesiredPositionRow()].isSpecialSquare()) {
+                    calculateSpecialPointValue(currentLetter, board[currentLetter.getDesiredPositionCol()][currentLetter.getDesiredPositionRow()].getSquareType());
+                }
+            }
+        }
+    }
+
     public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, boolean isFirstRound) {
 
         for (ScrabbleLetter currentLetter : lettersToAdd) {
@@ -242,6 +250,10 @@ public class ScrabbleBoard {
         isIntersectingWord(isFirstRound);
     }
 
+    public int getWordPointValueScaleFactor() {
+        return wordScoreMultiplier;
+    }
+
     private void checkForNearbyWords(ScrabbleLetter scrabbleLetter) {
         scrabbleBoardMechanics.getCurrentLetter(scrabbleLetter);
         scrabbleBoardMechanics.checkForConnectingWords();
@@ -249,14 +261,14 @@ public class ScrabbleBoard {
 
     private void getSecondaryWord() {
 
-        if (!scrabbleBoardMechanics.getSecondaryWordToCheck().isEmpty()) {
-            wordsToBeChecked.add(scrabbleBoardMechanics.getSecondaryWordToCheck());
+        if (!scrabbleBoardMechanics.getSecondaryWord().isEmpty()) {
+            wordsToBeChecked.add(scrabbleBoardMechanics.getSecondaryWord());
         }
     }
 
     private void getPrimaryWord() {
-        if (!scrabbleBoardMechanics.getPrimaryWord().isEmpty()) {
-            wordsToBeChecked.add(scrabbleBoardMechanics.getPrimaryWord());
+        if (!scrabbleBoardMechanics.getMainWord().isEmpty()) {
+            wordsToBeChecked.add(scrabbleBoardMechanics.getMainWord());
         }
     }
 
@@ -269,27 +281,15 @@ public class ScrabbleBoard {
         board[col][row].setLetter(letterToAdd);
     }
 
-    public void collectScrabblePointValues(ScrabbleLetter letter){
-
-        if (board[col][row].isSpecialSquare()) {
-            calculateSpecialPointValue(letter, board[col][row].getSquareType());
-        } else {
-            // calculateWordPointValue(letter.getPointValue().getValue());
-        }
-    }
-
     public void calculateSpecialPointValue(ScrabbleLetter scrabbleLetter, SquareEnum squareType) {
-        int scrabbleLetterPointValue = scrabbleLetter.getPointValue().getValue();
 
         switch (squareType) {
 
         case DOUBLE_LETTER:
-            scrabbleLetterPointValue = scrabbleLetterPointValue * 2;
-            // calculateWordPointValue(scrabbleLetterPointValue);
+            scrabbleLetter.getPointValue().setNewPointValue(2);
             break;
         case TRIPLE_LETTER:
-            scrabbleLetterPointValue = scrabbleLetterPointValue * 3;
-            // calculateWordPointValue(scrabbleLetterPointValue);
+            scrabbleLetter.getPointValue().setNewPointValue(3);
             break;
         case DOUBLE_WORD:
             wordScoreMultiplier += 2;

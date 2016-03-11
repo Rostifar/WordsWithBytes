@@ -15,6 +15,10 @@ public class PointValue {
         value = pointValue;
     }
 
+    public void setNewPointValue(int scaleFactor) {
+        value = value * scaleFactor;
+    }
+
     @Override
     public String toString() {
         return "PointValue: " + value;

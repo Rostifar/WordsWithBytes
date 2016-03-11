@@ -18,6 +18,7 @@ public class ScrabbleBoardMechanics {
     private List<ScrabbleLetter> vertAdditiveConnectedWord = new ArrayList<>();
     private List<ScrabbleLetter> vertSubtractiveConnectedWord = new ArrayList<>();
     private List<ScrabbleLetter> secondaryWord;
+    private List<ScrabbleLetter> mainWord;
     private boolean forward = true;
     private boolean up = true;
     private boolean foundConnectingWords;
@@ -34,12 +35,6 @@ public class ScrabbleBoardMechanics {
         setOrientation(scrabbleBoard.getWordOrientation());
     }
 
-
-    public List<ScrabbleLetter> getPrimaryWord() {
-        connectMainWord();
-        return primaryWordToCheck;
-    }
-
     public void setCol(int col) {
         this.col = col;
     }
@@ -52,7 +47,7 @@ public class ScrabbleBoardMechanics {
         this.orientation = orientation;
     }
 
-    public List<ScrabbleLetter> getSecondaryWordToCheck() {
+    public void connectSecondaryWord() {
 
         if (orientation.equals("v")) {
 
@@ -68,30 +63,38 @@ public class ScrabbleBoardMechanics {
             secondaryWordToCheck.add(currentLetter);
             secondaryWordToCheck.addAll(vertAdditiveConnectedWord);
         }
-        return secondaryWordToCheck;
     }
 
-    public List<ScrabbleLetter> connectMainWord() {
+    public void connectMainWord() {
 
-        if (orientation.equals("v")) {
+        if (orientation.equals("v") ) {
 
             Collections.reverse(vertSubtractiveConnectedWord);
-            primaryWordToCheck.addAll(vertSubtractiveConnectedWord);
-            primaryWordToCheck.add(currentLetter);
+            mainWord.addAll(vertSubtractiveConnectedWord);
+            mainWord.add(currentLetter);
+            mainWord.addAll(vertAdditiveConnectedWord);
         }
-
-        if (orientation.equals("h")) {
+        else if (orientation.equals("h")) {
 
             Collections.reverse(horzSubtractiveConnectedWord);
             primaryWordToCheck.addAll(horzSubtractiveConnectedWord);
             primaryWordToCheck.add(currentLetter);
+            primaryWordToCheck.addAll(horzSubtractiveConnectedWord);
         }
-        return primaryWordToCheck;
+
     }
 
     public void checkForConnectingWords() {
         checkForFirstLetter();
+        connectMainWord();
+        connectSecondaryWord();
+        clearPreviouslyFoundLetters();
+
     }
+
+    public List<ScrabbleLetter> getMainWord() {return primaryWordToCheck;}
+
+    public List<ScrabbleLetter> getSecondaryWord() {return secondaryWordToCheck;}
 
     public void checkForFirstLetter() {
 
@@ -134,6 +137,7 @@ public class ScrabbleBoardMechanics {
                 return;
             }
         }
+        foundConnectingWords = false;
     }
 
     public void expandWordSearch(int col, int row, boolean direction, List<ScrabbleLetter> selectedList) {
@@ -188,13 +192,20 @@ public class ScrabbleBoardMechanics {
         return vertAdditiveConnectedWord;
     }
 
+    private void clearPreviouslyFoundLetters() {
+        horzAdditiveConnectedWord.clear();
+        horzSubtractiveConnectedWord.clear();
+        vertAdditiveConnectedWord.clear();
+        vertSubtractiveConnectedWord.clear();
+    }
+
     public void getPlayedWord(List<ScrabbleLetter> playedWord) {
         this.playedWord = playedWord;
     }
 
     public boolean isConnectedToPreviousWord(boolean isFirstTurn) {
 
-        if (getPrimaryWord().isEmpty() && !isFirstTurn) {
+        if (.isEmpty() && !isFirstTurn) {
             new NonConnectingPlayException().getMessage();
             return false;
         }

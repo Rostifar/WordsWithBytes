@@ -140,6 +140,9 @@ public class ScrabbleGameManager implements GameManager {
             scrabbleBoard.validateWordPlacement(scrabbleWord.lettersInWord());
             if (playedWordsAreValid()) {
                 scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord(), isFirstRound);
+                scrabbleBoard.calculateMovePointValue();
+                getWordPointValue();
+                scrabbleBoard.getWordsToBeChecked().clear();
             }
             //isPlacementValid();
             System.out.println(scrabbleBoard);
@@ -147,6 +150,14 @@ public class ScrabbleGameManager implements GameManager {
         }
         currentPlayer.removeLetters(scrabbleWord);
         getLetters();
+    }
+
+    private void getWordPointValue() {
+
+        for (List<ScrabbleLetter> word : scrabbleBoard.getWordsToBeChecked()) {
+
+            currentPlayer.getScoreKeeper().getWordPointValue(word, scrabbleBoard.getWordPointValueScaleFactor());
+        }
     }
 
     private void validateWord(ScrabbleWord playedWord) {
@@ -172,17 +183,12 @@ public class ScrabbleGameManager implements GameManager {
         return true;
     }
 
-    private void isPlacementValid() {
-        if (!scrabbleBoard.getIsValidWordPlacement()) {
-            makeMove();
-        }
-    }
-
     private void printPlayers() {
         for (Player playr : players) {
             System.out.println(playr);
         }
     }
+
 
     private boolean isValidInput(String input) {
         final int MAX_INPUT_LENGTH = 1;
