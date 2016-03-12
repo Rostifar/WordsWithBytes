@@ -2,14 +2,22 @@
  * Created by ross on 2/22/16.
  */
 
-function ScrabbleBoard(game) {
+function ScrabbleBoard(game, boardWidth, boardHeight) {
 
-    this.scrabbleBoard = game.add.image(game.world.centerX, game.world.centerY, 'scrabbleBoard');
-    this.boardWidth = this.scrabbleBoard.width;
+    this.boardWidth = boardWidth;
     this.gameWidth = game.width;
     this.gameHeight = game.height;
-    this.boardHeight = this.scrabbleBoard.height;
-    this.scrabbleBoard.anchor.setTo(0.5);
+    this.boardHeight = boardHeight;
+    var boardOverview = [[]];
+    (function () {
+
+        for (var i = 0; i < 15; i++) {
+            for (var j = 0; j < 15; j++) {
+
+                boardOverview.push(null, null);
+            }
+        }
+    })();
 }
 
 ScrabbleBoard.prototype.calculateExcessPixelsX = function () {
@@ -17,7 +25,7 @@ ScrabbleBoard.prototype.calculateExcessPixelsX = function () {
 };
 
 ScrabbleBoard.prototype.calculateMaxBoardWidth = function () {
-    return this.gameWidth - this.calculateMaxBoardWidth();
+    return this.gameWidth - this.calculateExcessPixelsX();
 };
 
 ScrabbleBoard.prototype.calculateExcessPixelsY = function () {
@@ -26,10 +34,6 @@ ScrabbleBoard.prototype.calculateExcessPixelsY = function () {
 
 ScrabbleBoard.prototype.calculateMaxBoardHeight = function () {
     return this.gameHeight - this.calculateExcessPixelsY();
-};
-
-ScrabbleBoard.prototype.boardObject = function () {
-    return this.scrabbleBoard;
 };
 
 //# sourceMappingURL=ScrabbleBoard-compiled.js.map

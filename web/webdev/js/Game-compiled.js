@@ -6,81 +6,35 @@ WordsWithBytes.Game = function (game) {};
 
 WordsWithBytes.Game.prototype = {
 
-    sortNumber: function (a, b) {
-        return a - b;
+    createScore: function (scrabbleBoardWidth) {
+
+        var scoreFont = "50px Arial";
+        var xLocation = scrabbleBoardWidth / 2;
+        this.scoreLabel = this.game.add.text(xLocation, 5, "0", { font: scoreFont, fill: "#ffffff", stroke: "#535353", strokeThickness: 15 });
+        this.scoreLabel.align = 'center';
     },
 
-    createLetters: function () {
-
-        var me = this;
-    },
-
-    calculateCenterCoordinates: function (boardHeight, boardWidth, excessPixelsY, excessPixelsX) {
-
-        var me = this;
-
-        var yScaleFactor = this.scrabbleBoard.height / 15;
-        var xScaleFactor = this.scrabbleBoard.width / 15;
-        this.centerCoordinatesX = [];
-        this.centerCoordinatesY = [];
-
-        for (var initialPixelHeight = excessPixelsY; initialPixelHeight <= boardHeight; initialPixelHeight += yScaleFactor) {
-            this.centerCoordinatesY.push(initialPixelHeight + 1);
-        }
-        for (var initialPixelWidth = excessPixelsX; initialPixelWidth <= boardWidth; initialPixelWidth += xScaleFactor) {
-            this.centerCoordinatesX.push(initialPixelWidth);
-        }
-    },
-
-    searchForClosestLetter: function () {
-
-        var closestSquaresX = [];
-        var closestSquaresY = [];
-
-        for (var i = 0; i < 15; i++) {
-            closestSquaresX.push(Math.abs(this.pointerX - this.centerCoordinatesX[i]));
-            closestSquaresY.push(Math.abs(this.pointerY - this.centerCoordinatesY[i]));
-        }
-
-        closestSquaresX.sort(this.sortNumber);
-        closestSquaresY.sort(this.sortNumber);
-        this.testLetter.x = closestSquaresX[0];
-        this.testLetter.y = closestSquaresY[0];
-    },
+    createLetters: function () {},
 
     /** @update
-     * Uses mouse position to calculate where to place letter on board.
-     * Calculates ScrabbleBoard's actual dimensions in terms of canvas.
-     * Helps "snap" letter into appropriate place through use of each space's center.
-     */
-    // calculatePointerLocation: function() {
-
-    //   this.calculateCenterCoordinates(maxHeight, maxWidth, excessPixelsY, excessPixelsX);
-
-    // if ((this.currentLetter.x >= excessPixelsX && this.currentLetter.x <= maxWidth) && (this.currentLetter.y >= excessPixelsY && this.currentLetter.y <= maxHeight) && this.currentLetter.input.onUp) {
-    //            this.searchForClosestLetter();
-
-    //          }
-    //        },
-
+      /*
+     * Added properties which place the background of the game and the board on the game canvas.
+     * Along with formatting these objects on the canvas.
+     * */
     create: function () {
 
-        var scrabbleBoard = new ScrabbleBoard(this.game);
-
         this.game.add.sprite(0, 0, 'space-background');
-        this.scrabbleBoard.anchor.setTo(0.5);
-        this.testLetter = this.add.sprite(0, 0, 'blankLetter');
-        this.currentLetter = this.testLetter;
-
-        this.testLetter.inputEnabled = true;
-        this.testLetter.input.enableDrag(true);
+        var boardImage = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'scrabbleBoard');
+        boardImage.anchor.setTo(0.5);
+        var scrabbleBoard = new ScrabbleBoard(this.game, boardImage.width, boardImage.height);
+        this.createScore(scrabbleBoard.calculateMaxBoardWidth());
+        this.rack = new Rack();
+        this.interfaceMechanics = new InterfaceMechanics(this.scrabbleBoard);
     },
 
     update: function () {
-
         this.pointerX = this.game.input.x;
         this.pointerY = this.game.input.y;
-        // this.calculatePointerLocation();
     }
 
 };

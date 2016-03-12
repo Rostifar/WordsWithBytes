@@ -12,34 +12,4 @@ import static org.junit.Assert.*;
  */
 public class ScrabbleGameManagerTest {
 
-
-    @Test
-    public void testRunGame() throws Exception {
-
-    }
-
-    @Test
-    public void testSetupGame() throws Exception {
-
-    }
-
-    @Test
-    public void testSetupPlayer() throws Exception {
-
-    }
-    
-    @Test
-    public void testStartGame() throws Exception {
-
-    }
-
-    @Test
-    public void testBreakdownGame() throws Exception {
-
-    }
-
-    @Test
-    public void testEndGame() throws Exception {
-
-    }
 }

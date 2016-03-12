@@ -2,12 +2,16 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/js/Rack-compiled.js" />
         <item url="file://$PROJECT_DIR$/js/Boot-compiled.js" />
-        <item url="file://$PROJECT_DIR$/js/Game-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/ScoreKeeper-compiled.js" />
         <item url="file://$PROJECT_DIR$/js/tile-compiled.js" />
-        <item url="file://$PROJECT_DIR$/js/MainMenu-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/Game-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/ScrabbleLetter-compiled.js" />
         <item url="file://$PROJECT_DIR$/js/ScrabbleBoard-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/MainMenu-compiled.js" />
         <item url="file://$PROJECT_DIR$/js/Preload-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/InterfaceMechanics-compiled.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
@@ -27,12 +31,16 @@
       <root url="file://$PROJECT_DIR$/src/Preloader-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/Main-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/Main-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/Rack-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/Boot-compiled.js" />
-      <root url="file://$PROJECT_DIR$/js/Game-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/ScoreKeeper-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/tile-compiled.js" />
-      <root url="file://$PROJECT_DIR$/js/MainMenu-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/Game-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/ScrabbleLetter-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/ScrabbleBoard-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/MainMenu-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/Preload-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/InterfaceMechanics-compiled.js" />
     </CLASSES>
     <SOURCES />
   </library>

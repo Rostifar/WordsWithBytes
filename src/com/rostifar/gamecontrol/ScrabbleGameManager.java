@@ -7,10 +7,10 @@ import com.rostifar.scabbleboard.ScrabbleBoard;
 import com.rostifar.scrabbleproject.Player;
 import com.rostifar.scrabbleproject.Rack;
 import com.rostifar.scrabbleproject.UserInput;
-import com.rostifar.wordDistrobution.BlankScrabbleLetter;
-import com.rostifar.wordDistrobution.ScrabbleAlphabetImpl;
-import com.rostifar.wordDistrobution.ScrabbleLetter;
-import com.rostifar.wordDistrobution.ScrabbleWord;
+import com.rostifar.wordDistrobution.*;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -26,6 +26,8 @@ public class ScrabbleGameManager implements GameManager {
     private Rack playerRack;
     private ScrabbleWord scrabbleWord;
     private boolean isFirstRound = true;
+    private ScrabbleWord currentWord;
+    private ScrabbleLetter currentLetter;
 
 
 
@@ -83,30 +85,44 @@ public class ScrabbleGameManager implements GameManager {
     }
 
     private void isWordOnRack(ScrabbleWord scrabbleWord) {
-        if (currentPlayer.isValidWord(scrabbleWord)) {
-            currentPlayer.removeLetters(scrabbleWord);
-            getLetters();
-        } else {
+        if (!currentPlayer.isValidWord(scrabbleWord)) {
             System.out.println("Error! You do not have the letters you have selected on your Rack. Please play another word.");
             makeMove();
         }
     }
 
     public void evaluateBlankLetters() {
-        for (int i = 0; i < scrabbleWord.getNumberOfBlankLetters(); i++) {
-            scrabbleWord.replaceLetter(exchangeBlankLetter(scrabbleWord.getBlankLetter(i)), i);
+        List<ScrabbleLetter> blankLetters = currentWord.getBlankScrabbleLetters();
+        List<Integer> positions = currentWord.getBlankScrabbleLetterPostion();
+
+        for (ScrabbleLetter blankLetter: blankLetters) {
+            exchangeBlankLetter(blankLetter, positions.get(blankLetters.indexOf(blankLetter)));
         }
-        scrabbleWord.clearFoundBlankLetters();
+    }
+
+    public void exchangeBlankLetter(ScrabbleLetter blankLetter, int position) {
+        System.out.println(scrabbleAlphabet.getListOfLetters());
+        char selectedLetter = userInput.getInputFromUser("The word you have played contains a blank letter. Please select the letter you would like to exchange it for: ").toUpperCase().charAt(0);
+        ScrabbleLetter newScrabbleLetter = new BlankScrabbleLetter(selectedLetter);
+        currentPlayer.getRack().replaceBlankLetter(newScrabbleLetter, blankLetter);
+        addReplacedLetterToWord(newScrabbleLetter, position);
+
+    }
+
+    public void addReplacedLetterToWord(ScrabbleLetter newWord, int position) {
+        scrabbleWord.replaceLetter(newWord, position);
     }
 
     private void playWord() {
 
         scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
-
-        if (scrabbleWord.getNumberOfBlankLetters() > 0) {
+        currentWord = scrabbleWord;
+        scrabbleWord.searchForBlankLetter();
+        if (!scrabbleWord.getBlankScrabbleLetters().isEmpty()) {
             evaluateBlankLetters();
         }
         isWordOnRack(scrabbleWord);
+        validateWord(scrabbleWord);
         System.out.println(scrabbleBoard);
         int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
         int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));
@@ -115,36 +131,56 @@ public class ScrabbleGameManager implements GameManager {
         if (scrabbleBoard.squareContainsLetter(col, row)) {
             System.out.println("Error the location you have selected has been already used. ");
             makeMove();
+            currentPlayer.getRack();
         } else {
             scrabbleBoard.setWordCol(col);
             scrabbleBoard.setWordRow(row);
             scrabbleBoard.setUserSelectedOrientation(orientation);
             scrabbleBoard.getScrabbleBoardInstance(scrabbleBoard);
-            scrabbleBoard.addWordToBoard(currentPlayer.getRack().getLettersToRemove(), isFirstRound);
-            isPlacementValid();
-            removeWordFromSelection();
+            scrabbleBoard.validateWordPlacement(scrabbleWord.lettersInWord());
+            if (playedWordsAreValid()) {
+                scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord(), isFirstRound);
+                scrabbleBoard.calculateMovePointValue();
+                getWordPointValue();
+                scrabbleBoard.getWordsToBeChecked().clear();
+            }
+            //isPlacementValid();
             System.out.println(scrabbleBoard);
             System.out.println(currentPlayer.getCurrentPlayerScore());
         }
+        currentPlayer.removeLetters(scrabbleWord);
+        getLetters();
     }
 
-    private void isPlacementValid() {
-        if (!scrabbleBoard.getIsValidWordPlacement()) {
-            makeMove();
+    private void getWordPointValue() {
+
+        for (List<ScrabbleLetter> word : scrabbleBoard.getWordsToBeChecked()) {
+
+            currentPlayer.getScoreKeeper().getWordPointValue(word, scrabbleBoard.getWordPointValueScaleFactor());
         }
     }
 
-    public ScrabbleLetter exchangeBlankLetter(ScrabbleLetter blankLetter) {
-        System.out.println(scrabbleAlphabet.getListOfLetters());
-        char selectedLetter = userInput.getInputFromUser("The word you have played contains a blank letter. Please select the letter you would like to exchange it for: ").toUpperCase().charAt(0);
-        ScrabbleLetter newScrabbleLetter = new BlankScrabbleLetter(selectedLetter);
-        currentPlayer.getRack().replaceBlankLetter(newScrabbleLetter, blankLetter);
+    private void validateWord(ScrabbleWord playedWord) {
 
-        return newScrabbleLetter;
+        try {
+            isWordInDictionary(playedWord.toString());
+        } catch(ScrabbleGameInvalidWordException e) {
+            e.getMessage();
+        }
     }
 
-    private void removeWordFromSelection() {
-        playerRack.getLettersToRemove().removeAll(playerRack.getLettersToRemove());
+    private boolean playedWordsAreValid() {
+        for (List<ScrabbleLetter> scrabbleLetterList : scrabbleBoard.getWordsToBeChecked()) {
+            try {
+                isWordInDictionary(scrabbleLetterList.toString());
+
+            } catch (ScrabbleGameInvalidWordException e) {
+                e.getMessage();
+                makeMove();
+                return false;
+            }
+        }
+        return true;
     }
 
     private void printPlayers() {
@@ -153,12 +189,12 @@ public class ScrabbleGameManager implements GameManager {
         }
     }
 
+
     private boolean isValidInput(String input) {
         final int MAX_INPUT_LENGTH = 1;
 
         return (input.length() == MAX_INPUT_LENGTH);
     }
-
 
 
     private void getLetters() {
@@ -172,7 +208,7 @@ public class ScrabbleGameManager implements GameManager {
         getLetters();
     }
 
-    private boolean isWordInDictionary(String word) throws ScrabbleGameException {
+    private boolean isWordInDictionary(String word) throws ScrabbleGameInvalidWordException {
         Dictionary dictionary = null;
         DictionaryLookupResult result;
 

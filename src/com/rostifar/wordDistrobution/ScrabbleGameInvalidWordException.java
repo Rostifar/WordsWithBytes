@@ -8,8 +8,6 @@ import com.rostifar.gamecontrol.ScrabbleGameException;
 public class ScrabbleGameInvalidWordException extends ScrabbleGameException {
     public ScrabbleGameInvalidWordException(String msg) {
         super(msg);
-
-
     }
 
 }

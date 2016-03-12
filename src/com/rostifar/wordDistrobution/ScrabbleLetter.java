@@ -8,6 +8,8 @@ package com.rostifar.wordDistrobution;
 public class ScrabbleLetter {
     protected char letter;
     protected PointValue pointValue;
+    protected int desiredPositionCol;
+    protected int desiredPositionRow;
 
     public ScrabbleLetter(char aLetter) {
         letter = aLetter;
@@ -22,20 +24,32 @@ public class ScrabbleLetter {
         return pointValue;
     }
 
+
+
+
     @Override
     public boolean equals(Object letter) {
 
         return this.letter == ((ScrabbleLetter) letter).getLetter();
     }
 
-
-
     @Override
     public String toString() {
         return "ScrabbleLetter: " + letter + "\tPoint value: " + pointValue + "\t";
     }
 
+    public void setDesiredPositionCol(int col) {
+        this.desiredPositionCol = col;
+    }
 
-
+    public void setDesiredPositionRow(int row) {
+        this.desiredPositionRow = row;
+    }
+    public int getDesiredPositionCol() {
+        return desiredPositionCol;
+    }
+    public int getDesiredPositionRow() {
+        return desiredPositionRow;
+    }
 
 }
