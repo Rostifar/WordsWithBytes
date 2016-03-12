@@ -152,11 +152,11 @@ public class WebServiceBasedDictionary extends AbstractDictionary implements Dic
             throw new ScrabbleGameException(exp.getMessage());
         }
 
-        Element wroot = jdomDoc.getRootElement();
-
+        //Element wroot = jdomDoc.getRootElement();
+/*
         if (wroot.getChildren().isEmpty()) {
             return lookupResult; //No results were found
-        }
+        }*/
 
         XPathFactory xFactory = XPathFactory.instance();
         Filter filter = new ElementFilter();
@@ -165,6 +165,13 @@ public class WebServiceBasedDictionary extends AbstractDictionary implements Dic
         List<Element> links = expr.evaluate(jdomDoc);
 
         WordDefinitions definitions = new WordDefinitions();
+
+        if (links.isEmpty()) {
+            //lookupResult.setIsValidWord(false);
+            return lookupResult;
+        }
+
+        lookupResult.setIsValidWord(true);
 
         for (Element link : links) {
             System.out.println("Definition: " + link.getValue());

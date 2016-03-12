@@ -6,6 +6,7 @@ import com.rostifar.dictionary.DictionaryLookupResult;
 import com.rostifar.gamecontrol.ScrabbleGameConfiguration;
 import com.rostifar.gamecontrol.ScrabbleGameException;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -22,7 +23,7 @@ public class DictionaryTest {
         }
     }
 
-    @Test
+    @Ignore
     public void testIsValidWordOnDefaultDictionary() throws Exception {
         DictionaryFactory.setDictionaryClass(null);
         Dictionary dictionary = DictionaryFactory.getDictionary();
