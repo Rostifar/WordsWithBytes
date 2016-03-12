@@ -74,11 +74,12 @@ WordsWithBytes.Game.prototype = {
     create: function () {
 
         var scrabbleBoard = new ScrabbleBoard(this.game);
-        
-
-
         this.game.add.sprite(0, 0, 'space-background');
-        this.scrabbleBoard.anchor.setTo(0.5);
+        var boardImage = this.game.add.image(this.game.world.centerX, this.game.world.centerY, 'scrabbleBoard');
+
+
+
+        boardImage.anchor.setTo(0.5);
         this.testLetter = this.add.sprite(0, 0, 'blankLetter');
         this.currentLetter = this.testLetter;
 

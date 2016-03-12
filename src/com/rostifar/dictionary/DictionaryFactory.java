@@ -6,7 +6,7 @@ import com.rostifar.gamecontrol.ScrabbleGameException;
  * Created by GitLazy (Dad) on 12/23/2015.
  * Factory class used to construct the various types of Dictionaries and initialize them for use.
  */
-public final class DictionaryFactory {
+public final class DictionaryFactory  {
 
     private static Dictionary dictionary;
     private static Class<?> dictionaryClass;
