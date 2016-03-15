@@ -15,9 +15,9 @@ public class DictionaryLookupResult {
     }
 
     protected DictionaryLookupResult(String word) {
-        found = false;
         this.word = word;
         definitions = new WordDefinitions();
+        found = false;
     }
 
     public boolean isValidWord() {

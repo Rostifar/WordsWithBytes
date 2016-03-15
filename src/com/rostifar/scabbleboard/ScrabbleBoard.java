@@ -207,6 +207,7 @@ public class ScrabbleBoard {
             checkForNearbyWords(scrabbleLetter);
             getSecondaryWord();
             getLetterCoordinates(scrabbleLetter);
+            scrabbleBoardMechanics.clearSecondaryWord();
         }
         getPrimaryWord();
     }
@@ -247,7 +248,7 @@ public class ScrabbleBoard {
                 e.getMessage();
             }
         }
-        isIntersectingWord(isFirstRound);
+        //isIntersectingWord(isFirstRound);
     }
 
     public int getWordPointValueScaleFactor() {

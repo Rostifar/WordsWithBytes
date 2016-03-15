@@ -122,7 +122,7 @@ public class ScrabbleGameManager implements GameManager {
             evaluateBlankLetters();
         }
         isWordOnRack(scrabbleWord);
-        validateWord(scrabbleWord);
+//        validateWord(scrabbleWord);
         System.out.println(scrabbleBoard);
         int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
         int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));
@@ -137,12 +137,11 @@ public class ScrabbleGameManager implements GameManager {
             scrabbleBoard.setWordRow(row);
             scrabbleBoard.setUserSelectedOrientation(orientation);
             scrabbleBoard.getScrabbleBoardInstance(scrabbleBoard);
+            scrabbleBoard.calculateMovePointValue();
             scrabbleBoard.validateWordPlacement(scrabbleWord.lettersInWord());
             if (playedWordsAreValid()) {
                 scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord(), isFirstRound);
-                scrabbleBoard.calculateMovePointValue();
                 getWordPointValue();
-                scrabbleBoard.getWordsToBeChecked().clear();
             }
             //isPlacementValid();
             System.out.println(scrabbleBoard);
@@ -163,7 +162,9 @@ public class ScrabbleGameManager implements GameManager {
     private void validateWord(ScrabbleWord playedWord) {
 
         try {
-            isWordInDictionary(playedWord.toString());
+            if (!isWordInDictionary(playedWord.toString())) {
+                makeMove();
+            }
         } catch(ScrabbleGameInvalidWordException e) {
             e.getMessage();
         }
@@ -171,13 +172,16 @@ public class ScrabbleGameManager implements GameManager {
 
     private boolean playedWordsAreValid() {
         for (List<ScrabbleLetter> scrabbleLetterList : scrabbleBoard.getWordsToBeChecked()) {
+            ScrabbleWord wordPlayed = new ScrabbleWord(scrabbleLetterList);
+
             try {
-                isWordInDictionary(scrabbleLetterList.toString());
+               if (!isWordInDictionary(wordPlayed.toString())) {
+                   makeMove();
+                   return false;
+               }
 
             } catch (ScrabbleGameInvalidWordException e) {
                 e.getMessage();
-                makeMove();
-                return false;
             }
         }
         return true;

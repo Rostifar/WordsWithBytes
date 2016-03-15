@@ -21,8 +21,22 @@ public class ScrabbleWord {
 
     }
 
+    public ScrabbleWord(List<ScrabbleLetter> rawListOfLetters) {
+        wordAsString = String.valueOf(listToCharArray(rawListOfLetters));
+    }
+
+
     public List<ScrabbleLetter> lettersInWord() {
         return word;
+    }
+
+    public char[] listToCharArray(List<ScrabbleLetter> letterList) {
+        char[] arrayOfLetters = new char[letterList.size()];
+
+        for (ScrabbleLetter letter : letterList) {
+            arrayOfLetters[letterList.indexOf(letter)] = letter.getLetter();
+        }
+        return arrayOfLetters;
     }
 
     public ScrabbleLetter getLetterAt(int index) {
