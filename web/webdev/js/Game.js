@@ -10,7 +10,7 @@ var numberOfWordsOnCanvas = 0;
 WordsWithBytes.Game.prototype = {
 
     getLetters: function(listOfLetters) {
-        //get list of letters from backend which acts as keys for letter images
+
     },
 
     getCurrentLetter: function() {
@@ -48,9 +48,7 @@ WordsWithBytes.Game.prototype = {
         this.scrabbleBoard = new ScrabbleBoard(this.game, boardImage.width, boardImage.height);
         this.createScore(this.scrabbleBoard.calculateMaxBoardWidth());
         this.interfaceMechanics = new InterfaceMechanics(this.scrabbleBoard);
-
-
-
+        this.rackPostions = this.interfaceMechanics.calculateRackLocations(this.game);
     },
 
     update: function () {
