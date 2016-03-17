@@ -17,7 +17,8 @@ public class ScrabbleBoardMechanics {
     private List<ScrabbleLetter> horzSubtractiveConnectedWord = new ArrayList<>();
     private List<ScrabbleLetter> vertAdditiveConnectedWord = new ArrayList<>();
     private List<ScrabbleLetter> vertSubtractiveConnectedWord = new ArrayList<>();
-    private List<ScrabbleLetter> mainWord = new ArrayList<>();
+    private List<ScrabbleLetter> secondaryWord;
+    private List<ScrabbleLetter> mainWord;
     private boolean forward = true;
     private boolean up = true;
     private boolean foundConnectingWords;
@@ -48,7 +49,7 @@ public class ScrabbleBoardMechanics {
 
     public void connectSecondaryWord() {
 
-        if (orientation.equals("v") && (!horzSubtractiveConnectedWord.isEmpty()) || !horzAdditiveConnectedWord.isEmpty()) {
+        if (orientation.equals("v")) {
 
             Collections.reverse(horzSubtractiveConnectedWord);
             secondaryWordToCheck.addAll(horzSubtractiveConnectedWord);
@@ -56,7 +57,7 @@ public class ScrabbleBoardMechanics {
             secondaryWordToCheck.addAll(horzAdditiveConnectedWord);
         }
 
-        if (orientation.equals("h") && (!vertSubtractiveConnectedWord.isEmpty() || ! vertAdditiveConnectedWord.isEmpty())) {
+        if (orientation.equals("h")) {
             Collections.reverse(vertSubtractiveConnectedWord);
             secondaryWordToCheck.addAll(vertSubtractiveConnectedWord);
             secondaryWordToCheck.add(currentLetter);
@@ -69,9 +70,9 @@ public class ScrabbleBoardMechanics {
         if (orientation.equals("v") ) {
 
             Collections.reverse(vertSubtractiveConnectedWord);
-            primaryWordToCheck.addAll(vertSubtractiveConnectedWord);
-            primaryWordToCheck.add(currentLetter);
-            primaryWordToCheck.addAll(vertAdditiveConnectedWord);
+            mainWord.addAll(vertSubtractiveConnectedWord);
+            mainWord.add(currentLetter);
+            mainWord.addAll(vertAdditiveConnectedWord);
         }
         else if (orientation.equals("h")) {
 
@@ -88,6 +89,7 @@ public class ScrabbleBoardMechanics {
         connectMainWord();
         connectSecondaryWord();
         clearPreviouslyFoundLetters();
+
     }
 
     public List<ScrabbleLetter> getMainWord() {return primaryWordToCheck;}
@@ -203,19 +205,11 @@ public class ScrabbleBoardMechanics {
 
     public boolean isConnectedToPreviousWord(boolean isFirstTurn) {
 
-        if (!isFirstTurn) {
+        if (/*isEmpty() && */!isFirstTurn) {
             new NonConnectingPlayException().getMessage();
             return false;
         }
         return true;
-    }
-
-    public void clearMainWord() {
-        primaryWordToCheck.clear();
-    }
-
-    public void clearSecondaryWord() {
-        secondaryWordToCheck.clear();
     }
 }
 
