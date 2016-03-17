@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="jaxen-1.1.6">
     <CLASSES>
-      <root url="jar://$USER_HOME$/jaxen-1.1.6.jar!/" />
+      <root url="jar://C:/JDev/JDOM2/lib/jaxen-1.1.6.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
