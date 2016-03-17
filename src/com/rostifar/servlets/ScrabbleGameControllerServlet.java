@@ -1,5 +1,10 @@
 package com.rostifar.servlets;
 
+import com.rostifar.gamecontrol.GameManager;
+import com.rostifar.gamecontrol.ScrabbleGameException;
+import com.rostifar.gamecontrol.ScrabbleGameManager;
+
+import javax.servlet.ServletException;
 import java.io.IOException;
 
 /**
@@ -13,6 +18,12 @@ public class ScrabbleGameControllerServlet extends javax.servlet.http.HttpServle
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        System.out.println(this.getClass().getName() + "DO Post Called!");
+        System.out.println(this.getClass().getName() + "Starting Scrabble Game Engine on Backend...");
+        try {
+            GameManager gameManager = new ScrabbleGameManager();
+            gameManager.runGame();
+        } catch (ScrabbleGameException gameExp) {
+            throw new ServletException(gameExp);
+        }
     }
 }

@@ -10,7 +10,6 @@ import com.rostifar.scrabbleproject.UserInput;
 import com.rostifar.wordDistrobution.*;
 
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -32,7 +31,7 @@ public class ScrabbleGameManager implements GameManager {
 
 
 
-    protected ScrabbleGameManager() throws ScrabbleGameException {
+    public ScrabbleGameManager() throws ScrabbleGameException {
         userInput = new UserInput();
         setupGame();
     }

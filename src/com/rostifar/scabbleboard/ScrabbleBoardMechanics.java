@@ -205,7 +205,7 @@ public class ScrabbleBoardMechanics {
 
     public boolean isConnectedToPreviousWord(boolean isFirstTurn) {
 
-        if (.isEmpty() && !isFirstTurn) {
+        if (/*isEmpty() && */!isFirstTurn) {
             new NonConnectingPlayException().getMessage();
             return false;
         }
