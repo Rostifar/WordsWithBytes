@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="WordsWithBytes:WebExploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/WordsWithBytes_WebExploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="WordsWithBytes/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="WordsWithBytes" />
+        </element>
+        <element id="dir-copy" path="$PROJECT_DIR$/web/webdev" />
+      </element>
+    </root>
+  </artifact>
+</component>
