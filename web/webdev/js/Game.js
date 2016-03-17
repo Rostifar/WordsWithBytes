@@ -4,7 +4,21 @@
 
 WordsWithBytes.Game = function(game){};
 
+var pointer;
+var numberOfWordsOnCanvas = 0;
+
 WordsWithBytes.Game.prototype = {
+
+    getLetters: function(listOfLetters) {
+        //get list of letters from backend which acts as keys for letter images
+    },
+
+    getCurrentLetter: function() {
+
+        //if (pointer.onHold() && Math.abs(this.pointerX - letter.x) < 10 && Math.abs(this.pointerY - letter.y)) {
+          //  this.currentLetter = letter;
+        //}
+    },
 
     createScore: function(scrabbleBoardWidth) {
 
@@ -31,9 +45,8 @@ WordsWithBytes.Game.prototype = {
         this.game.add.sprite(0, 0, 'space-background');
         var boardImage = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'scrabbleBoard');
         boardImage.anchor.setTo(0.5);
-        var scrabbleBoard = new ScrabbleBoard(this.game, boardImage.width, boardImage.height);
-        this.createScore(scrabbleBoard.calculateMaxBoardWidth());
-        this.rack = new Rack();
+        this.scrabbleBoard = new ScrabbleBoard(this.game, boardImage.width, boardImage.height);
+        this.createScore(this.scrabbleBoard.calculateMaxBoardWidth());
         this.interfaceMechanics = new InterfaceMechanics(this.scrabbleBoard);
 
 
@@ -43,6 +56,10 @@ WordsWithBytes.Game.prototype = {
     update: function () {
         this.pointerX = this.game.input.x;
         this.pointerY = this.game.input.y;
+
+
+        if((this.pointerX >= this.scrabbleBoard.calculateExcessPixelsX && this.pointerX <= this.scrabbleBoard.calculateMaxBoardWidth) && this.pointerY >= this.scrabbleBoard.calculateExcessPixelsY && this.pointerY <= this.scrabbleBoard.calculateExcessPixelsY) {
+        }
     }
 
 

@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="72ff8ba9-06ad-4647-8f16-4dbbe9ba13aa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Index.html" afterPath="$PROJECT_DIR$/Index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PageStyle.css" afterPath="$PROJECT_DIR$/PageStyle.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Game-compiled.js" afterPath="$PROJECT_DIR$/js/Game-compiled.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Game-compiled.js.map" afterPath="$PROJECT_DIR$/js/Game-compiled.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Game.js" afterPath="$PROJECT_DIR$/js/Game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/InterfaceMechanics.js" afterPath="$PROJECT_DIR$/js/InterfaceMechanics.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Rack.js" afterPath="$PROJECT_DIR$/js/Rack.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/ScoreKeeper.js" afterPath="$PROJECT_DIR$/js/ScoreKeeper.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/ScrabbleBoard-compiled.js" afterPath="$PROJECT_DIR$/js/ScrabbleBoard-compiled.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/ScrabbleBoard-compiled.js.map" afterPath="$PROJECT_DIR$/js/ScrabbleBoard-compiled.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/ScrabbleBoard.js" afterPath="$PROJECT_DIR$/js/ScrabbleBoard.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/ScrabbleLetter.js" afterPath="$PROJECT_DIR$/js/ScrabbleLetter.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/extra" afterPath="$PROJECT_DIR$/js/extra" />
-    </list>
+    <list default="true" id="72ff8ba9-06ad-4647-8f16-4dbbe9ba13aa" name="Default" comment="" />
     <ignored path="webdev.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -49,20 +33,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScrabbleBoard4.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/images/ScrabbleBoard4.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
+      <file leaf-file-name="ScrabbleBoard-compiled.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/ScrabbleBoard-compiled.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScrabbleBoard.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/ScrabbleBoard.js">
+      <file leaf-file-name="InterfaceMechanics.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/InterfaceMechanics.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="38" column="2" selection-start-line="38" selection-start-column="2" selection-end-line="38" selection-end-column="2" />
+              <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
               <folding>
-                <element signature="n#!!doc;n#ScrabbleBoard#0" expanded="false" />
+                <element signature="n#!!doc;n#InterfaceMechanics#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -80,23 +67,45 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Boot.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/Boot.js">
+      <file leaf-file-name="MainMenu.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/MainMenu.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.18393782">
+              <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+              <folding>
+                <element signature="e#0#38#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-20.0">
+              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="phaser.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/phaser.js">
+      <file leaf-file-name="PageStyle.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PageStyle.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Preload.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/Preload.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="35032" column="6" selection-start-line="35032" selection-start-column="6" selection-end-line="35032" selection-end-column="6" />
+              <caret line="47" column="77" selection-start-line="47" selection-start-column="77" selection-end-line="47" selection-end-column="77" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#0#37#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -106,7 +115,7 @@
         <entry file="file://$PROJECT_DIR$/js/Game.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
+              <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
               <folding>
                 <element signature="e#0#38#0" expanded="false" />
               </folding>
@@ -114,37 +123,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="extra" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/extra">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InterfaceMechanics.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js/InterfaceMechanics.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.39378238">
-              <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
-              <folding>
-                <element signature="n#!!doc;n#InterfaceMechanics#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScoreKeeper.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/ScoreKeeper.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="1" />
-              <folding>
-                <element signature="n#!!doc;n#ScoreKeeper#0" expanded="false" />
-              </folding>
-            </state>
+      <file leaf-file-name="ScrabbleBoard5.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/images/ScrabbleBoard5.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -159,7 +141,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$USER_HOME$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -167,9 +149,7 @@
         <option value="$PROJECT_DIR$/js/Menu.js" />
         <option value="$PROJECT_DIR$/js/Preload-compiled.js" />
         <option value="$PROJECT_DIR$/js/Main.js" />
-        <option value="$PROJECT_DIR$/js/MainMenu.js" />
         <option value="$PROJECT_DIR$/js/Boot.js" />
-        <option value="$PROJECT_DIR$/js/Preload.js" />
         <option value="$PROJECT_DIR$/PageStyle.css" />
         <option value="$PROJECT_DIR$/js/tile.js" />
         <option value="$PROJECT_DIR$/js/InterfaceMechanics.js" />
@@ -179,7 +159,9 @@
         <option value="$PROJECT_DIR$/js/ScrabbleLetter.js" />
         <option value="$PROJECT_DIR$/js/extra" />
         <option value="$PROJECT_DIR$/js/ScrabbleBoard.js" />
+        <option value="$PROJECT_DIR$/js/Preload.js" />
         <option value="$PROJECT_DIR$/js/Game.js" />
+        <option value="$PROJECT_DIR$/js/MainMenu.js" />
       </list>
     </option>
   </component>
@@ -189,9 +171,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="24" />
-    <option name="width" value="1600" />
-    <option name="height" value="876" />
+    <option name="x" value="-1" />
+    <option name="y" value="-4" />
+    <option name="width" value="1602" />
+    <option name="height" value="905" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -284,8 +267,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -293,17 +276,23 @@
     <property name="JavaScriptPreferStrict" value="false" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="js-jscs-nodeInterpreter" value="/usr/bin/node" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="javascript.karma.node_interpreter_path" value="/usr/bin/node" />
+    <property name="js.buildTools.grunt.node_interpreter" value="/usr/bin/node" />
+    <property name="js.buildTools.grunt.grunt-cli.package" value="" />
   </component>
-  <component name="RunManager" selected="Firefox Remote.Unnamed">
+  <component name="RunManager" selected="Chromium Remote.Unnamed">
     <configuration default="true" type="ChromiumRemoteDebugType" factoryName="Chromium Remote">
       <method />
     </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
+    <configuration default="true" type="DartRemoteDebugConfigurationType" factoryName="Dart Remote Debug">
       <method />
     </configuration>
     <configuration default="true" type="DartTestRunConfigurationType" factoryName="Dart Test">
@@ -316,16 +305,44 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="JavaScriptTraceType" factoryName="Spy-js" node="" config="" has-config="false" system-proxy="true" proxy-port="3546" open-browser="false" browser="">
+      <method />
+    </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
     <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
       <method />
     </configuration>
+    <configuration default="true" type="NodeWebKit" factoryName="NW.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="XSLT" factoryName="XSLT">
+      <option name="myOutputFile" />
+      <option name="myOpenOutputFile" value="false" />
+      <option name="myOpenInBrowser" value="false" />
+      <option name="mySmartErrorHandling" value="true" />
+      <option name="myRunnerPort" value="34873" />
+      <option name="myVmArguments" />
+      <option name="myWorkingDirectory" />
+      <option name="myModule" />
+      <option name="myJdk" />
+      <parameters />
+      <OutputType value="CONSOLE" save-to-file="false" />
+      <FileType name="XML" />
+      <JdkChoice value="FROM_MODULE" />
+      <method />
+    </configuration>
     <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
       <option name="cucumberJsArguments" value="" />
       <option name="executablePath" />
       <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.grunt" factoryName="Grunt.js">
+      <envs />
+      <force value="false" />
+      <verbose value="false" />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
@@ -379,10 +396,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="24" width="1600" height="876" extended-state="6" />
-    <editor active="false" />
+    <frame x="-1" y="-4" width="1602" height="905" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.215" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2575" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32892057" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -391,7 +408,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48793283" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48778003" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -431,56 +448,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <option name="time" value="8" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/images/LetterF.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/images/Player3Button.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/images/ScrabbleBoard1.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/images/WordWithBytesLogo.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/GameOver.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Boot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="1" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/phaser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33803" column="0" selection-start-line="33803" selection-start-column="0" selection-end-line="33803" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -687,11 +659,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/images/Player3Button.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/images/ScrabbleBoard1.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -714,39 +681,131 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3329832">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/GameOver.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/phaser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35032" column="6" selection-start-line="35032" selection-start-column="6" selection-end-line="35032" selection-end-column="6" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Boot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/images/ScrabbleBoard4.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/ScrabbleBoard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="2" selection-start-line="38" selection-start-column="2" selection-end-line="38" selection-end-column="2" />
+          <folding>
+            <element signature="n#!!doc;n#ScrabbleBoard#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/images/Player3Button.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/images/Player2Button.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/images/4PlayersButton.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/images/3PlayersButton.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/images/2PlayersButton.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/extra">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Game-compiled.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding>
+            <marker date="1458011819614" expanded="true" signature="0:38" placeholder="/** Created by ross on 1/31/16. ...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/ScoreKeeper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="1" />
+          <folding>
+            <element signature="n#!!doc;n#ScoreKeeper#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/InterfaceMechanics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+          <folding>
+            <element signature="n#!!doc;n#InterfaceMechanics#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PageStyle.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3333334">
-          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/MainMenu.js">
+    <entry file="file://$PROJECT_DIR$/js/ScrabbleLetter.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="49" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="49" />
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
             <element signature="e#0#38#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Preload.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="38" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#37#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/GameOver.js">
+    <entry file="file://$PROJECT_DIR$/js/ScrabbleBoard-compiled.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -762,34 +821,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/phaser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35032" column="6" selection-start-line="35032" selection-start-column="6" selection-end-line="35032" selection-end-column="6" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#38#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Boot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/Rack.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -800,55 +831,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/images/ScrabbleBoard4.png">
+    <entry file="file://$PROJECT_DIR$/assets/images/ScrabbleBoard5.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/ScoreKeeper.js">
+    <entry file="file://$PROJECT_DIR$/js/Preload.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="1" />
+          <caret line="47" column="77" selection-start-line="47" selection-start-column="77" selection-end-line="47" selection-end-column="77" />
           <folding>
-            <element signature="n#!!doc;n#ScoreKeeper#0" expanded="false" />
+            <element signature="e#0#37#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/ScrabbleBoard.js">
+    <entry file="file://$PROJECT_DIR$/js/Game.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="2" selection-start-line="38" selection-start-column="2" selection-end-line="38" selection-end-column="2" />
-          <folding>
-            <element signature="n#!!doc;n#ScrabbleBoard#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/ScrabbleLetter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
           <folding>
             <element signature="e#0#38#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/extra">
+    <entry file="file://$PROJECT_DIR$/js/MainMenu.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/InterfaceMechanics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39378238">
-          <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
+        <state vertical-scroll-proportion="0.18393782">
+          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
           <folding>
-            <element signature="n#!!doc;n#InterfaceMechanics#0" expanded="false" />
+            <element signature="e#0#38#0" expanded="false" />
           </folding>
         </state>
       </provider>

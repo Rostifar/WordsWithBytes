@@ -21,7 +21,6 @@ public class ScoreKeeper {
             totalPointValueForWord += letter.getPointValue().getValue();
         }
         totalPoints += (totalPointValueForWord * wordPointValueScaleFactor);
-        totalPointValueForWord = 0;
     }
     public int getplayerScore() {
         return totalPoints;

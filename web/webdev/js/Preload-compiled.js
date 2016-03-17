@@ -42,12 +42,10 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('zLetter', 'assets/images/LetterZ.png');
         this.load.audio('introMusic', ['assets/music/intro-music.mp3']);
         this.load.image('scrabbleBoard', 'assets/images/ScrabbleBoard5.png');
-        this.load.image('player1Button', 'assets/images/Player1Button.png');
-        this.load.image('player2Button', 'assets/images/Player2Button.png');
-        this.load.image('player3Button', 'assets/images/Player3Button.png');
+        this.load.image('player2Button', 'assets/images/2PlayersButton.png');
+        this.load.image('player3Button', 'assets/images/3PlayersButton.png');
+        this.load.image('player4Button', 'assets/images/4PlayersButton.png');
         this.load.image('scrabbleSample', 'assets/images/SampleScrabbleImage.jpg');
-        this.load.script('filterX', 'https://cdn.rawgit.com/photonstorm/phaser/master/filters/BlurX.js');
-        this.load.script('filterY', 'https://cdn.rawgit.com/photonstorm/phaser/master/filters/BlurY.js');
         this.load.image('space-background', 'assets/images/space.jpg');
     },
 

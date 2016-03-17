@@ -4,24 +4,41 @@
 
 WordsWithBytes.MainMenu = function(game) {};
 
+var button2;
+var button3;
+var button4;
+
 WordsWithBytes.MainMenu.prototype = {
 
     create: function() {
 
         this.music = this.add.audio('introMusic');
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-        var backgroundImage = this.add.sprite(this.camera.width / 2, this.game.camera.height / 2, 'scrabbleSample');
+
+        var backgroundImage = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'space-background');
         backgroundImage.anchor.setTo(0.5, 0.5);
 
-        var blurX = this.add.filter('BlurX');
-        var blurY = this.add.filter('BlurY');
+        var scoreFont = "65px Arial";
+        var playerSelection = this.game.add.text(this.game.world.centerX, this.game.world.centerY / 4, "How Many Players?", {font: scoreFont, fill: "#ffffff", stroke: "#535353", strokeThickness: 15});
+        playerSelection.anchor.set(0.5);
 
-        backgroundImage.filters = [blurX, blurY];
+        button2 = this.game.add.button(this.game.world.centerX, this.game.world.centerY * (0.55), 'player2Button', playerTwoActionOnClick, this, 2, 1, 0);
+        button2.anchor.setTo(0.5, 0.5);
 
-        this.add.sprite(200, this.game.world.centerY, 'player1Button');
-        this.add.sprite(400, this.game.world.centerY, 'player2Button');
-        this.add.sprite(600, this.game.world.centerY, 'player3Button');
+        button3 = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'player3Button', playerThreeActionOnClick, this, 2, 1, 0);
+        button3.anchor.setTo(0.5, 0.5);
 
-        this.state.start('Game');
+        button4 = this.game.add.button(this.game.world.centerX, this.game.world.centerY * (1.45), 'player4Button', playerFourActionOnClick, this, 2, 1, 0);
+        button4.anchor.setTo(0.5, 0.5);
     }
+}
+
+function playerTwoActionOnClick() {
+    this.state.start("Game");
+}
+function playerThreeActionOnClick() {
+    this.state.start("Game");
+}
+function playerFourActionOnClick() {
+    this.state.start("Game");
 }

@@ -50,14 +50,12 @@ public class Rack {
         lettersOnRack.remove(blankLetter);
     }
 
-    public List<ScrabbleLetter> removeLetters(ScrabbleWord scrabbleWord) {
-        List<ScrabbleLetter> lettersToRemove = new ArrayList<>();
+    public void removeLetters(ScrabbleWord scrabbleWord) {
 
-        for (int i = 0; i < scrabbleWord.getNumberOfLetters(); i++) {
-            lettersToRemove.add(lettersOnRack.get(lettersOnRack.indexOf(scrabbleWord.getLetterAt(i))));
+        for (ScrabbleLetter letter : scrabbleWord.lettersInWord()) {
+
+            lettersOnRack.remove(letter);
         }
-        lettersOnRack.removeAll(lettersToRemove);
-        return lettersToRemove;
     }
 
 
