@@ -34,19 +34,22 @@ WordsWithBytes.MainMenu.prototype = {
 }
 
 function playerTwoActionOnClick() {
+    addPlayer("Player1");
+    addPlayer("Player2");
     this.state.start("Game");
 }
 function playerThreeActionOnClick() {
+    //addPlayer("Player2");
     this.state.start("Game");
 }
 function playerFourActionOnClick() {
     this.state.start("Game");
 }
 
-function addPlayer() {
+function addPlayer(playerName) {
     alert("Calling AddPlayerServlet");
 
-    $.post("/AddPlayer", function (data, status) {
+    $.post("/AddPlayer", {name: "John"}, function (data, status) {
         console.log("Data: " + data + "\nStatus: " + status);
     })
 }
