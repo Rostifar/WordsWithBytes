@@ -42,3 +42,11 @@ function playerThreeActionOnClick() {
 function playerFourActionOnClick() {
     this.state.start("Game");
 }
+
+function addPlayer() {
+    alert("Calling AddPlayerServlet");
+
+    $.post("/AddPlayer", function (data, status) {
+        console.log("Data: " + data + "\nStatus: " + status);
+    })
+}

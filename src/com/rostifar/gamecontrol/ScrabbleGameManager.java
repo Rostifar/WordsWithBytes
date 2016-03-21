@@ -6,7 +6,6 @@ import com.rostifar.dictionary.DictionaryLookupResult;
 import com.rostifar.scabbleboard.ScrabbleBoard;
 import com.rostifar.scrabbleproject.Player;
 import com.rostifar.scrabbleproject.Rack;
-import com.rostifar.scrabbleproject.UserInput;
 import com.rostifar.wordDistrobution.*;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class ScrabbleGameManager implements GameManager {
 
     private ScrabbleBoard scrabbleBoard;
     private Player players[];
-    private UserInput userInput;
+    //private UserInput userInput;
     private ScrabbleAlphabetImpl scrabbleAlphabet = new ScrabbleAlphabetImpl();
     private Player currentPlayer;
     private Rack playerRack;
@@ -29,10 +28,8 @@ public class ScrabbleGameManager implements GameManager {
     private ScrabbleLetter currentLetter;
 
 
-
-
     public ScrabbleGameManager() throws ScrabbleGameException {
-        userInput = new UserInput();
+       // userInput = new UserInput();
         setupGame();
     }
 
@@ -48,24 +45,24 @@ public class ScrabbleGameManager implements GameManager {
         loadConfig();
         scrabbleBoard = new ScrabbleBoard();
         System.out.println(scrabbleBoard);
-        addPlayers();
+        addPlayers(2);
         playerManager();
     }
 
     /**
      * Prompt the user for how many players to add
      */
-    private void addPlayers() {
+    private void addPlayers(int numberOfPlayers) {
 
-        int numberOfPlayers;
-
+       // int numberOfPlayers;
+/*
         try {
             String input = userInput.getInputFromUser("How many players? (enter 1,2,3 or 4:");
             numberOfPlayers = Integer.valueOf(input);
         } catch (Exception ue) {
             System.out.println("Error getting user input, defaulting to 2 players");
             numberOfPlayers = 2;
-        }
+        }*/
         players = new Player[numberOfPlayers];
 
         for (int playerIdx = 0; playerIdx < numberOfPlayers; playerIdx++) {
@@ -86,7 +83,7 @@ public class ScrabbleGameManager implements GameManager {
     private void isWordOnRack(ScrabbleWord scrabbleWord) {
         if (!currentPlayer.isValidWord(scrabbleWord)) {
             System.out.println("Error! You do not have the letters you have selected on your Rack. Please play another word.");
-            makeMove();
+            makeMove("p");
         }
     }
 
@@ -101,7 +98,7 @@ public class ScrabbleGameManager implements GameManager {
 
     public void exchangeBlankLetter(ScrabbleLetter blankLetter, int position) {
         System.out.println(scrabbleAlphabet.getListOfLetters());
-        char selectedLetter = userInput.getInputFromUser("The word you have played contains a blank letter. Please select the letter you would like to exchange it for: ").toUpperCase().charAt(0);
+        char selectedLetter = ' '; //userInput.getInputFromUser("The word you have played contains a blank letter. Please select the letter you would like to exchange it for: ").toUpperCase().charAt(0);
         ScrabbleLetter newScrabbleLetter = new BlankScrabbleLetter(selectedLetter);
         currentPlayer.getRack().replaceBlankLetter(newScrabbleLetter, blankLetter);
         addReplacedLetterToWord(newScrabbleLetter, position);
@@ -112,24 +109,26 @@ public class ScrabbleGameManager implements GameManager {
         scrabbleWord.replaceLetter(newWord, position);
     }
 
-    private void playWord() {
+    private void playWord(String word, int col, int row, String orientation) {
 
-        scrabbleWord = new ScrabbleWord(userInput.getInputFromUser("Enter your desired word: "));
+        scrabbleWord = new ScrabbleWord(word);
         currentWord = scrabbleWord;
         scrabbleWord.searchForBlankLetter();
+
         if (!scrabbleWord.getBlankScrabbleLetters().isEmpty()) {
             evaluateBlankLetters();
         }
+
         isWordOnRack(scrabbleWord);
 //        validateWord(scrabbleWord);
         System.out.println(scrabbleBoard);
-        int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
-        int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));
-        String orientation = userInput.getInputFromUser("Would you like your selected word to go horizontal or vertical ? (ie. v or h)");
+        /*int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
+        int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));*/
+       // String orientation = userInput.getInputFromUser("Would you like your selected word to go horizontal or vertical ? (ie. v or h)");
 
         if (scrabbleBoard.squareContainsLetter(col, row)) {
             System.out.println("Error the location you have selected has been already used. ");
-            makeMove();
+            makeMove("p");
             currentPlayer.getRack();
         } else {
             scrabbleBoard.setWordCol(col);
@@ -162,7 +161,7 @@ public class ScrabbleGameManager implements GameManager {
 
         try {
             if (!isWordInDictionary(playedWord.toString())) {
-                makeMove();
+                makeMove("p");
             }
         } catch(ScrabbleGameInvalidWordException e) {
             e.getMessage();
@@ -175,7 +174,7 @@ public class ScrabbleGameManager implements GameManager {
 
             try {
                if (!isWordInDictionary(wordPlayed.toString())) {
-                   makeMove();
+                   makeMove("p");
                    return false;
                }
 
@@ -206,8 +205,8 @@ public class ScrabbleGameManager implements GameManager {
         }
     }
 
-    private void exchangeLetters() {
-        currentPlayer.getLettersToExchange(userInput.getInputFromUser("Which letters would you like to exchange? ").toUpperCase().toCharArray());
+    private void exchangeLetters(char[] lettersToExchange) {
+        currentPlayer.getLettersToExchange(lettersToExchange); //userInput.getInputFromUser("Which letters would you like to exchange? ").toUpperCase().toCharArray());
         getLetters();
     }
 
@@ -226,16 +225,16 @@ public class ScrabbleGameManager implements GameManager {
         return result != null ? result.isValidWord() : false;
     }
 
-    private void makeMove() {
+    private void makeMove(String moveSelected) {
 
-        String moveSelected;
+        //String moveSelected;
         boolean takingTurn = true;
 
         while (takingTurn) {
 
-            String input = userInput.getInputFromUser("Make a move(s = skip turn, p = play word, e = exchange letters): ");
+         /*   String input = userInput.getInputFromUser("Make a move(s = skip turn, p = play word, e = exchange letters): ");
             moveSelected = String.valueOf(input);
-
+*/
             if (!isValidInput(moveSelected)) {
                 System.out.println("invalid entry, try again");
                 continue;
@@ -244,7 +243,7 @@ public class ScrabbleGameManager implements GameManager {
             switch (moveSelected) {
 
                 case ("p"):
-                    playWord();
+                    playWord("test", 1, 2, "v");
 
                     takingTurn = false;
                     isFirstRound = false;
@@ -254,12 +253,13 @@ public class ScrabbleGameManager implements GameManager {
                     takingTurn = false;
                     break;
                 case ("e"):
-                    exchangeLetters();
+                    char[] ex = {'a', 'c'};
+                    exchangeLetters(ex);
                     takingTurn = false;
                     break;
                 case ("quit"):
 
-                    makeMove();
+                    makeMove("p");
                     break;
                 default:
                     break;
@@ -279,7 +279,7 @@ public class ScrabbleGameManager implements GameManager {
 
             System.out.println("\n");
             System.out.println(currentPlayer);
-            makeMove();
+            makeMove("p");
             if (currntIdx == players.length - 1) {
                 currntIdx = -1;
             }

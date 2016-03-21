@@ -14,15 +14,15 @@ import java.io.IOException;
 public class ScrabbleGameControllerServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         System.out.println(this.getClass().getName() + "DO GET Called!");
-        String action = request.getParameter("Action");
+       // String action = request.getParameter("Action");
         //JSObject
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         System.out.println(this.getClass().getName() + "Starting Scrabble Game Engine on Backend...");
 
-            // GameManager gameManager = new ScrabbleGameManager();
-            Player aPlayer = getPlayerFromSession(request);
+            //GameManager gameManager = new ScrabbleGameManager();
+            //Player aPlayer = getPlayerFromSession(request);
             //gameManager.runGame();
 
     }
