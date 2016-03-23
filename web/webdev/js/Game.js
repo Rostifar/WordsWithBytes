@@ -6,7 +6,6 @@ var Game = WordsWithBytes.Game;
 WordsWithBytes.Game = function(game) {};
 
 Game = {
-    Game: this.game
 }
 
 // Gets letters selected by backend and creates an array of selected letter images by using selected letters as keys.
