@@ -9,17 +9,21 @@
     <script src="js/Preload.js" type="text/javascript"></script>
     <script src="js/MainMenu.js" type="text/javascript"></script>
     <script src="js/Game.js" type="text/javascript"></script>
-    <script src="js/tile.js" type="text/javascript"></script>
     <script src="js/ScrabbleBoard.js" type="text/javascript"></script>
     <script src="js/InterfaceMechanics.js" type="text/javascript"></script>
     <script src="js/Rack.js" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
 </head>
 <body>
 
 <div id="WordsWithBytes"></div>
 
 <script type="text/javascript">
+    var WordsWithBytes = {};
+
+    Function.prototype.method = function (name, func) {
+        this.prototype[name] = func;
+        return this;
+    };
 
     window.onload = function() {
 
@@ -30,6 +34,7 @@
 
         game.state.add('Boot', WordsWithBytes.Boot);
         game.state.add('Preload', WordsWithBytes.Preload);
+        game.state.add('Login', WordsWithBytes.Login);
         game.state.add('MainMenu', WordsWithBytes.MainMenu);
         game.state.add('Game', WordsWithBytes.Game);
         game.state.start('Boot');

@@ -44,7 +44,6 @@ public class ScrabbleGameManager implements GameManager {
     }
 
     protected void setupGame() throws ScrabbleGameException {
-        System.out.println("Setting up Scrabble game...");
         loadConfig();
         scrabbleBoard = new ScrabbleBoard();
         System.out.println(scrabbleBoard);
@@ -121,7 +120,7 @@ public class ScrabbleGameManager implements GameManager {
             evaluateBlankLetters();
         }
         isWordOnRack(scrabbleWord);
-//        validateWord(scrabbleWord);
+//      validateWord(scrabbleWord);
         System.out.println(scrabbleBoard);
         int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
         int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));

@@ -1,30 +1,22 @@
 /**
  * Created by ross on 2/22/16.
  */
+var ScrabbleBoard = WordsWithBytes.ScrabbleBoard;
 
+ScrabbleBoard = {
+    s
+}
 
-function ScrabbleBoard(game, boardWidth, boardHeight) {
+WordsWithBytes.ScrabbleBoard = function(game, boardImage) {};
 
-    this.boardWidth = boardWidth;
-    this.gameWidth = game.width;
-    this.gameHeight = game.height;
-    this.boardHeight = boardHeight;
-    var boardOverview = [[]];
-    (function(){
-
-        for(var i = 0; i < 15; i++) {
-            for(var j = 0; j < 15; j++) {
-
-                boardOverview.push(null, null);
-            }
-        }
-    })();
+ScrabbleBoard.prototype = {
 
 }
 
-ScrabbleBoard.prototype.calculateExcessPixelsX = function() {
-    return (this.gameWidth - this.boardWidth) / 2;
-};
+var calculateExcessPixelsX = (function() {
+    this.gameWidth - this.boardWidth / 2;
+})();
+
 
 ScrabbleBoard.prototype.calculateMaxBoardWidth = function() {
     return this.gameWidth - this.calculateExcessPixelsX();

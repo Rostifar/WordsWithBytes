@@ -9,9 +9,7 @@ var numberOfWordsOnCanvas = 0;
 
 WordsWithBytes.Game.prototype = {
 
-    getLetters: function (listOfLetters) {
-        //get list of letters from backend which acts as keys for letter images
-    },
+    getLetters: function (listOfLetters) {},
 
     getCurrentLetter: function () {
 

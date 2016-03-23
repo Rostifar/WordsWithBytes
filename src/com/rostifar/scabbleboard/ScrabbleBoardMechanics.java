@@ -49,7 +49,7 @@ public class ScrabbleBoardMechanics {
 
     public void connectSecondaryWord() {
 
-        if (orientation.equals("v")) {
+        if (orientation.equals("v") && (!horzSubtractiveConnectedWord.isEmpty()) || !horzAdditiveConnectedWord.isEmpty()) {
 
             Collections.reverse(horzSubtractiveConnectedWord);
             secondaryWordToCheck.addAll(horzSubtractiveConnectedWord);
@@ -57,7 +57,7 @@ public class ScrabbleBoardMechanics {
             secondaryWordToCheck.addAll(horzAdditiveConnectedWord);
         }
 
-        if (orientation.equals("h")) {
+        if (orientation.equals("h") && (!vertSubtractiveConnectedWord.isEmpty() || ! vertAdditiveConnectedWord.isEmpty())) {
             Collections.reverse(vertSubtractiveConnectedWord);
             secondaryWordToCheck.addAll(vertSubtractiveConnectedWord);
             secondaryWordToCheck.add(currentLetter);
@@ -210,6 +210,14 @@ public class ScrabbleBoardMechanics {
             return false;
         }
         return true;
+    }
+
+    public void clearMainWord() {
+        mainWord.clear();
+    }
+
+    public void clearSecondaryWord() {
+        secondaryWordToCheck.clear();
     }
 }
 

@@ -1,10 +1,9 @@
 /**
  * Created by ross on 2/23/16.
  */
+var InterfaceMechanics = WordsWithBytes.InterfaceMechanics;
 
-function InterfaceMechanics(scrabbleBoard) {
-    this.scrabbleBoard = scrabbleBoard;
-}
+WordsWithBytes.InterfaceMechanics = function() {};
 
 InterfaceMechanics.prototype.sortNumber = function(a, b) {
     return a - b;
@@ -20,8 +19,6 @@ InterfaceMechanics.prototype.calculateRackLocations = function(game) {
         rackPositionsX.push(originalXPosition);
         originalXPosition = originalXPosition - game.height
     }
-
-
 
 }
 
