@@ -38,18 +38,7 @@
         game.state.add('MainMenu', WordsWithBytes.MainMenu);
         game.state.add('Game', WordsWithBytes.Game);
         game.state.start('Boot');
-
-        callDomainTest();
-
     };
-
-    function  callDomainTest() {
-        alert("Calling back end (Domain)");
-
-        $.get("/GameController", function (data, status) {
-            console.log("Data: " + data + "\nStatus: " + status);
-        })
-    }
 
 </script>
 

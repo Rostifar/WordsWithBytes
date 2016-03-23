@@ -12,4 +12,22 @@
         <servlet-name>GameController</servlet-name>
        <url-pattern>/GameController/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddPlayer</servlet-name>
+        <servlet-class>com.rostifar.servlets.AddPlayerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddPlayer</servlet-name>
+        <url-pattern>/AddPlayer/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PlayWord</servlet-name>
+        <servlet-class>com.rostifar.servlets.PlayWordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PlayWord</servlet-name>
+        <url-pattern>/PlayWord/*</url-pattern>
+    </servlet-mapping>
 </web-app>
