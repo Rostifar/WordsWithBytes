@@ -1,49 +1,50 @@
 /**
  * Created by ross on 2/24/16.
  */
-(function(WordsWithBytes, game) {
+(function(WordsWithBytes) {
+		"use strict";
 
-    function Rack() {
-        Rack.createRackLocations();
-    }
-
-    Rack.createRackLocations = function() {
-
-        (function() {
-            var counter1, counter2;
-             counter1 = 0;
-             counter2 = 0;
-
-            Rack.rackLocations.push(game.world.centerX);
-
-            while (counter1 < 3) {
-                Rack.rackLocations.push(game.world.centerX + (Math.floor(20 * i)));
-                counter1 = +1;
+		class Rack {
+            constructor(game) {
+                this.game = game;
             }
-            while (counter2 < 1) {
-                Rack.rackLocations.push(game.world.centerX + (Math.floor(-20 * j)));
-                counter2 += 1;
+
+            init() {
+                this.gameRack = [];
+                this.numberOfLettersOnRack = this.gameRack.size();
+                this.rackLocations = [];
+
+                function createRackLocations() {
+                    var counter1, counter2;
+                    counter1 = 0;
+                    counter2 = 0;
+
+                    this.rackLocations.push(game.world.centerX);
+
+                    while (counter1 < 3) {
+                        this.rackLocations.push(game.world.centerX + (20 * counter1));
+                        counter1 = +1;
+                    }
+                    while (counter2 < 3) {
+                        this.rackLocations.push(game.world.centerX + (-20 * counter2));
+                        counter2 += 1;
+                    }
+                }
             }
-        })();
-    };
 
-    Rack.prototype = {
-        gameRack: [],
-        numberOfLettersOnRack: Rack.gameRack.size(),
-        rackLocations: []
-    };
+            numberOfLettersOnRack() {
+                return this.numberOfLettersOnRack;
+            }
 
-    Rack.prototype.addLetterToRack = function(letterToAdd) {
-        Rack.gameRack.push(letterToAdd)
-    };
+            addLetterToRack(letterToAdd) {
+                this.gameRack.push(letterToAdd);
+            };
 
-    WordsWithBytes.Rack = Rack;
-
-})(this);
-
-
-
-
-
-
-
+            removeLetterFromRack(letterToRemove) {
+                let previousPosition = this.gameRack.indexOf(letterToRemove) - 1;
+                let currentPosition = previousPosition + 1;
+                this.gameRack.splice(this.gameRack.indexOf(previousPosition, currentPosition))
+            }
+        }
+		WordsWithBytes.Rack = Rack;
+})();

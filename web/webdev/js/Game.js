@@ -22,7 +22,6 @@ Game.method('getLetters', function (listOfLetterKeys) {
 WordsWithBytes.Game.prototype = {
 
 
-
     getCurrentLetter: function() {
 
         //if (pointer.onHold() && Math.abs(this.pointerX - letter.x) < 10 && Math.abs(this.pointerY - letter.y)) {
@@ -58,6 +57,9 @@ WordsWithBytes.Game.prototype = {
         this.scrabbleBoard = new ScrabbleBoard(this.game, boardImage.width, boardImage.height);
         this.createScore(this.scrabbleBoard.calculateMaxBoardWidth());
         this.interfaceMechanics = new InterfaceMechanics(this.scrabbleBoard);
+
+        var rack = new WordsWithBytes.Rack;
+        alert(rack.numberOfLettersOnRack());
 
 
     },
