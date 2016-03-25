@@ -1,4 +1,3 @@
-var WordsWithBytes = {};
 
 WordsWithBytes.Boot = function (game){};
 

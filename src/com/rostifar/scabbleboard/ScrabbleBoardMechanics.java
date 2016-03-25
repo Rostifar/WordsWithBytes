@@ -51,7 +51,7 @@ public class ScrabbleBoardMechanics implements Serializable {
 
     public void connectSecondaryWord() {
 
-        if (orientation.equals("v")) {
+        if (orientation.equals("v") && (!horzSubtractiveConnectedWord.isEmpty()) || !horzAdditiveConnectedWord.isEmpty()) {
 
             Collections.reverse(horzSubtractiveConnectedWord);
             secondaryWordToCheck.addAll(horzSubtractiveConnectedWord);
@@ -59,7 +59,7 @@ public class ScrabbleBoardMechanics implements Serializable {
             secondaryWordToCheck.addAll(horzAdditiveConnectedWord);
         }
 
-        if (orientation.equals("h")) {
+        if (orientation.equals("h") && (!vertSubtractiveConnectedWord.isEmpty() || ! vertAdditiveConnectedWord.isEmpty())) {
             Collections.reverse(vertSubtractiveConnectedWord);
             secondaryWordToCheck.addAll(vertSubtractiveConnectedWord);
             secondaryWordToCheck.add(currentLetter);
@@ -212,6 +212,14 @@ public class ScrabbleBoardMechanics implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public void clearMainWord() {
+        mainWord.clear();
+    }
+
+    public void clearSecondaryWord() {
+        secondaryWordToCheck.clear();
     }
 }
 

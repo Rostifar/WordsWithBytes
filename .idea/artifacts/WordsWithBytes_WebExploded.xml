@@ -8,7 +8,11 @@
           <element id="module-output" name="WordsWithBytes" />
         </element>
         <element id="dir-copy" path="$PROJECT_DIR$/web/webdev" />
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="lib" />
+        </element>
       </element>
+      <element id="javaee-facet-resources" facet="WordsWithBytes/web/Web2" />
     </root>
   </artifact>
 </component>

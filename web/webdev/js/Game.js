@@ -1,17 +1,26 @@
 /**
  * Created by ross on 1/31/16.
  */
+var Game = WordsWithBytes.Game;
 
-WordsWithBytes.Game = function(game){};
+WordsWithBytes.Game = function(game) {};
 
-var pointer;
-var numberOfWordsOnCanvas = 0;
+Game = {
+}
+
+// Gets letters selected by backend and creates an array of selected letter images by using selected letters as keys.
+Game.method('getLetters', function (listOfLetterKeys) {
+
+    var letters = [];
+
+    for (var i = 0; listOfLetterKeys.length; i+1) {
+        letters.push(cache.image(listOfLetterKeys[i]));
+    }
+    return letters;
+});
 
 WordsWithBytes.Game.prototype = {
 
-    getLetters: function(listOfLetters) {
-        //get list of letters from backend which acts as keys for letter images
-    },
 
     getCurrentLetter: function() {
 
@@ -49,11 +58,16 @@ WordsWithBytes.Game.prototype = {
         this.createScore(this.scrabbleBoard.calculateMaxBoardWidth());
         this.interfaceMechanics = new InterfaceMechanics(this.scrabbleBoard);
 
+        var rack = new WordsWithBytes.Rack;
+        alert(rack.numberOfLettersOnRack());
 
 
     },
 
     update: function () {
+
+
+
         this.pointerX = this.game.input.x;
         this.pointerY = this.game.input.y;
 

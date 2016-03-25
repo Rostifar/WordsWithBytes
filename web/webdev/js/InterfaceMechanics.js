@@ -1,14 +1,26 @@
 /**
  * Created by ross on 2/23/16.
  */
+var InterfaceMechanics = WordsWithBytes.InterfaceMechanics;
 
-function InterfaceMechanics(scrabbleBoard) {
-    this.scrabbleBoard = scrabbleBoard;
-}
+WordsWithBytes.InterfaceMechanics = function() {};
 
 InterfaceMechanics.prototype.sortNumber = function(a, b) {
     return a - b;
 };
+
+InterfaceMechanics.prototype.calculateRackLocations = function(game) {
+    var referenceHeight = this.scrabbleBoard.calculateMaxBoardHeight();
+    var originalXPosition = game.centerX;
+    var yPosition = referenceHeight + ((referenceHeight - game.height) / 2);
+    var rackPositionsX = [];
+
+    for (var i = 0; i < 3; i++) {
+        rackPositionsX.push(originalXPosition);
+        originalXPosition = originalXPosition - game.height
+    }
+
+}
 
 InterfaceMechanics.prototype.calculateCenterSquares = function() {
 
