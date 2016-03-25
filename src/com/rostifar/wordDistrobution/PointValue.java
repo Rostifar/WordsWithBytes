@@ -1,9 +1,11 @@
 package com.rostifar.wordDistrobution;
 
+import java.io.Serializable;
+
 /**
  * Created by Dad on 10/4/2015.
  */
-public class PointValue {
+public class PointValue implements Serializable {
 
     protected int value;
 

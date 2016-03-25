@@ -4,12 +4,13 @@ import com.rostifar.wordDistrobution.ScrabbleLetter;
 import com.rostifar.wordDistrobution.ScrabbleWord;
 import com.rostifar.gamecontrol.ScoreKeeper;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Dad and Ross on 10/4/2015.
  */
-public class Player {
+public class Player implements Serializable {
     private Rack rack;
     private String name;
     private ScoreKeeper scoreKeeper;

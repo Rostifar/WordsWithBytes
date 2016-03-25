@@ -22,34 +22,35 @@ WordsWithBytes.MainMenu.prototype = {
         var playerSelection = this.game.add.text(this.game.world.centerX, this.game.world.centerY / 4, "How Many Players?", {font: scoreFont, fill: "#ffffff", stroke: "#535353", strokeThickness: 15});
         playerSelection.anchor.set(0.5);
 
-        button2 = this.game.add.button(this.game.world.centerX, this.game.world.centerY * (0.55), 'player2Button', playerTwoActionOnClick, this, 2, 1, 0);
+        button2 = this.game.add.button(this.game.world.centerX, this.game.world.centerY * (0.55), 'Player2Button', playerTwoActionOnClick, this, 2, 1, 0);
         button2.anchor.setTo(0.5, 0.5);
 
-        button3 = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'player3Button', playerThreeActionOnClick, this, 2, 1, 0);
+        button3 = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'Player3Button', playerThreeActionOnClick, this, 2, 1, 0);
         button3.anchor.setTo(0.5, 0.5);
 
-        button4 = this.game.add.button(this.game.world.centerX, this.game.world.centerY * (1.45), 'player4Button', playerFourActionOnClick, this, 2, 1, 0);
+        button4 = this.game.add.button(this.game.world.centerX, this.game.world.centerY * (1.45), 'Player4Button', playerFourActionOnClick, this, 2, 1, 0);
         button4.anchor.setTo(0.5, 0.5);
     }
 }
 
 function playerTwoActionOnClick() {
-    addPlayer("Player1");
-    addPlayer("Player2");
+    addPlayers(2);
     this.state.start("Game");
 }
 function playerThreeActionOnClick() {
-    //addPlayer("Player2");
+    addPlayer("Player3");
     this.state.start("Game");
 }
 function playerFourActionOnClick() {
+    addPlayer("Player4");
     this.state.start("Game");
 }
 
-function addPlayer(playerName) {
+
+function addPlayers(numOfplayers) {
     alert("Calling AddPlayerServlet");
 
-    $.post("/AddPlayer", {name: "John"}, function (data, status) {
+    $.post("/AddPlayer", {numberOfPlayers: numOfplayers}, function (data, status) {
         console.log("Data: " + data + "\nStatus: " + status);
     })
 }

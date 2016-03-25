@@ -1,7 +1,9 @@
 package com.rostifar.servlets;
 
-import com.rostifar.scrabbleproject.Player;
+import com.rostifar.gamecontrol.ScrabbleGameException;
+import com.rostifar.gamecontrol.ScrabbleGameManager;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,7 +15,7 @@ import java.io.IOException;
  */
 public class ScrabbleGameControllerServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        System.out.println(this.getClass().getName() + "DO GET Called!");
+        System.out.println(this.getClass().getName() + "DO Post Called!");
        // String action = request.getParameter("Action");
         //JSObject
     }
@@ -27,19 +29,24 @@ public class ScrabbleGameControllerServlet extends javax.servlet.http.HttpServle
 
     }
 
-    protected Player getPlayerFromSession(HttpServletRequest request) {
-        // GameManager gameManager = new ScrabbleGameManager();
+    protected ScrabbleGameManager getGameManager(HttpServletRequest request) throws ServletException {
         HttpSession session = request.getSession();
-        Player aPlayer;
-        aPlayer = (Player) session.getAttribute("Player");
-        //gameManager.runGame();
-        return aPlayer;
+        ScrabbleGameManager scrabbleGameManager = (ScrabbleGameManager) session.getAttribute("ScrabbleGameManager");
+
+        if (scrabbleGameManager == null) {
+            try {
+                scrabbleGameManager = new ScrabbleGameManager();
+            } catch (ScrabbleGameException exp) {
+                throw new ServletException(exp.getMessage());
+            }
+        }
+        return scrabbleGameManager;
     }
 
-    protected void storePlayerOnSession(HttpServletRequest request, Player aPlayer) {
+   protected void storeGameManager(HttpServletRequest request, ScrabbleGameManager scrabbleGameManager) {
         // GameManager gameManager = new ScrabbleGameManager();
         HttpSession session = request.getSession();
-        session.setAttribute("Player", aPlayer);
+        session.setAttribute("ScrabbleGameManager", scrabbleGameManager);
     }
 
 

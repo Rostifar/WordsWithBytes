@@ -1,14 +1,13 @@
 package com.rostifar.wordDistrobution;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by ross on 12/19/15.
+ * Created by Ross on 12/19/15.
  */
-public class ScrabbleWord {
+public class ScrabbleWord implements Serializable {
     private List<ScrabbleLetter> word;
     private String wordAsString;
     List<ScrabbleLetter> blankLetters;

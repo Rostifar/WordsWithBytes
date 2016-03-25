@@ -1,7 +1,5 @@
 package com.rostifar.servlets;
 
-import com.rostifar.scrabbleproject.Player;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -12,14 +10,14 @@ import java.io.IOException;
  */
 public class AddPlayerServlet extends ScrabbleGameControllerServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        super.doPost(request, response);
+       // super.doPost(request, response);
 
-        String playerName  = request.getParameter("PlayerName");
+      //  String playerName  = request.getParameter("PlayerName");
+        int numberOfPlayers = Integer.valueOf(request.getParameter("numberOfPlayers"));
 
-        if (playerName == null)
+      /*  if (playerName == null)
             playerName = "UnnamedPlayer-" + System.currentTimeMillis();
-
-        Player player = new Player(playerName);
-        storePlayerOnSession(request, player);
+*/
+        getGameManager(request).addPlayers(numberOfPlayers);
     }
 }

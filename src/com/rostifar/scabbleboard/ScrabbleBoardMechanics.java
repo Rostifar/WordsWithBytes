@@ -1,5 +1,7 @@
 package com.rostifar.scabbleboard;
 import com.rostifar.wordDistrobution.ScrabbleLetter;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 /**
  * Created by ross on 1/16/16.
  */
-public class ScrabbleBoardMechanics {
+public class ScrabbleBoardMechanics implements Serializable {
 
     private ScrabbleBoard scrabbleBoard;
     private int col;
