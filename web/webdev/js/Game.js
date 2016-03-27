@@ -7,6 +7,7 @@ var Game = WordsWithBytes.Game;
 WordsWithBytes.Game = function(game) {};
 
 
+
 // Gets letters selected by backend and creates an array of selected letter images by using selected letters as keys.
 function getLetters(listOfLetterKeys) {
 
@@ -42,8 +43,6 @@ WordsWithBytes.Game.prototype = {
     },
 
     update: function () {
-
-
 
         this.pointerX = this.game.input.x;
         this.pointerY = this.game.input.y;

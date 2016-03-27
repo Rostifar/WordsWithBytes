@@ -1,7 +1,7 @@
 
 (function(WordsWithBytes) {
 
-    function InterfaceMechanics(game, boardImage) {
+    function InterfaceMechanics() {
         InterfaceMechanics.boardWidth = WordsWithBytes.ScrabbleBoard.scaledBoardWidth;
         InterfaceMechanics.centerSquaresX = [];
         InterfaceMechanics.centerSquaresY = [];
@@ -13,12 +13,15 @@
         var yScaleFactor = WordsWithBytes.ScrabbleBoard.scaledBoardHeight / 15;
         var excessPixelsX = WordsWithBytes.ScrabbleBoard.excessPixelsX;
         var excessPixelsY = WordsWithBytes.ScrabbleBoard.excessPixelsY;
+        var scrabbleBoardHeight = WordsWithBytes.ScrabbleBoard.scaledBoardHeight;
+        var scrabbleBoardWidth = WordsWithBytes.ScrabbleBoard.scaledBoardWidth;
 
-        for (var initialPixelWidth = excessPixelsX; initialPixelWidth <= maxWidth; initialPixelWidth += xScaleFactor) {
+
+        for (var initialPixelWidth = excessPixelsX; initialPixelWidth <= scrabbleBoardWidth; initialPixelWidth += xScaleFactor) {
             InterfaceMechanics.centerSquaresX.push(initialPixelWidth);
         }
 
-        for (var initialPixelHeight = excessPixelsY; initialPixelHeight <= maxHeight; initialPixelHeight += yScaleFactor) {
+        for (var initialPixelHeight = excessPixelsY; initialPixelHeight <= scrabbleBoardHeight; initialPixelHeight += yScaleFactor) {
             InterfaceMechanics.centerSquaresY.push(initialPixelHeight);
         }
     }
