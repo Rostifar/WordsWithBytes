@@ -13,6 +13,7 @@
     ScrabbleBoard.scaledBoardWidth = calculateScaledBoardWidth();
     ScrabbleBoard.excessPixelsX = calculateExcessPixelsX();
     ScrabbleBoard.excessPixelsY = calculateExcessPixelsY();
+    ScrabbleBoard.scaledBoardHeight = calculateScaledBoardHeight();
   }
 
   function calculateExcessPixelsX() {

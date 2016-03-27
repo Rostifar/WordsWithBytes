@@ -35,10 +35,10 @@ WordsWithBytes.Game.prototype = {
         boardImage.anchor.setTo(0.5);
         var rack = new Rack(this.game);
         var scrabbleBoard = new ScrabbleBoard(this.game, boardImage);
+        var interfaceMechanics = new InterfaceMechanics();
 
         rack.addLetterToRack('bl');
         rack.addLetterToRack('a');
-
     },
 
     update: function () {
