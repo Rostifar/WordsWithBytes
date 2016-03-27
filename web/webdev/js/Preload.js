@@ -13,8 +13,8 @@ WordsWithBytes.Preload.prototype = {
         this.splash = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'WordsWithBytes-logo');
         this.splash.anchor.setTo(0.5);
 
-        this.load.image('blankLetter', 'assets/images/TestScrabbleLetter.png');
-        this.load.image('aLetter', 'assets/images/LetterA.png');
+        this.load.image('bl', 'assets/images/bl.png');
+        this.load.image('a', 'assets/images/a.png');
         this.load.image('bLetter', 'assets/images/LetterB.png');
         this.load.image('cLetter', 'assets/images/LetterC.png');
         this.load.image('dLetter', 'assets/images/LetterD.png');
@@ -54,7 +54,7 @@ WordsWithBytes.Preload.prototype = {
         if (this.cache.isSoundDecoded('introMusic') && this.ready == false)
         {
             this.ready = true;
-            this.state.start('MainMenu');
+            this.state.start('Game');
         }
     }
 };

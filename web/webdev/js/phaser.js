@@ -28007,7 +28007,7 @@ Phaser.Camera.prototype = {
     * This can be disabled by setting `game.renderer.renderSession.roundPixels = true` to force full pixel rendering.
     * 
     * @method Phaser.Camera#follow
-    * @param {Phaser.Sprite|Phaser.Image|Phaser.Text} target - The object you want the camera to track. Set to null to not follow anything.
+    * @param {Phaser.Sprite|Phaser.Image|Phaser.Text} target - The object you want the camera to tRack Set to null to not follow anything.
     * @param {number} [style] - Leverage one of the existing "deadzone" presets. If you use a custom deadzone, ignore this parameter and manually specify the deadzone after calling follow().
     */
     follow: function (target, style) {
@@ -76996,7 +76996,7 @@ Phaser.DOM = {
     * Orientation values: 'portrait-primary', 'landscape-primary', 'portrait-secondary', 'landscape-secondary'.
     *
     * Order of resolving:
-    * - Screen Orientation API, or variation of - Future track. Most desktop and mobile browsers.
+    * - Screen Orientation API, or variation of - Future tRack Most desktop and mobile browsers.
     * - Screen size ratio check - If fallback is 'screen', suited for desktops.
     * - Viewport size ratio check - If fallback is 'viewport', suited for mobile.
     * - window.orientation - If fallback is 'window.orientation', works iOS and probably most Android; non-recommended track.

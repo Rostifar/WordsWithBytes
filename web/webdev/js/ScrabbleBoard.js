@@ -1,42 +1,37 @@
 /**
  * Created by ross on 2/22/16.
  */
-var ScrabbleBoard = WordsWithBytes.ScrabbleBoard;
 
-ScrabbleBoard = {
-    s
-}
+(function(WordsWithBytes){
 
-WordsWithBytes.ScrabbleBoard = function(game, boardImage) {};
+  function ScrabbleBoard(game, boardImage) {
+    this.game = game;
+    this.gameWidth = this.game.width;
+    this.gameHeight = this.game.height;
+    this.boardWidth = boardImage.width;
+    this.boardHeight = boardImage.height;
+    ScrabbleBoard.scaledBoardWidth = calculateScaledBoardWidth();
+    ScrabbleBoard.excessPixelsX = calculateExcessPixelsX();
+    ScrabbleBoard.excessPixelsY = calculateExcessPixelsY();
+    ScrabbleBoard.scaledBoardHeight = calculateScaledBoardHeight();
+  }
 
-ScrabbleBoard.prototype = {
+  function calculateExcessPixelsX() {
+      return this.gameWidth - this.boardWidth / 2;
+  }
 
-}
+  function calculateScaledBoardWidth() {
+      return this.gameWidth - ScrabbleBoard.excessPixelsX;
+  }
 
-var calculateExcessPixelsX = (function() {
-    this.gameWidth - this.boardWidth / 2;
-})();
-
-
-ScrabbleBoard.prototype.calculateMaxBoardWidth = function() {
-    return this.gameWidth - this.calculateExcessPixelsX();
-};
-
-ScrabbleBoard.prototype.calculateExcessPixelsY = function() {
+  function calculateExcessPixelsY() {
     return (this.gameHeight - this.boardHeight) / 2;
-};
+  }
 
-ScrabbleBoard.prototype.calculateMaxBoardHeight = function() {
-    return this.gameHeight - this.calculateExcessPixelsY();
-};
+  function calculateScaledBoardHeight() {
+    return this.gameHeight - ScrabbleBoard.excessPixelsY;
+  }
 
+  WordsWithBytes.ScrabbleBoard = ScrabbleBoard;
 
-
-
-
-
-
-
-
-
-
+})(this);
