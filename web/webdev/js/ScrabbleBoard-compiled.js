@@ -2,38 +2,36 @@
  * Created by ross on 2/22/16.
  */
 
-function ScrabbleBoard(game, boardWidth, boardHeight) {
+(function (WordsWithBytes) {
 
-    this.boardWidth = boardWidth;
-    this.gameWidth = game.width;
-    this.gameHeight = game.height;
-    this.boardHeight = boardHeight;
-    var boardOverview = [[]];
-    (function () {
+  function ScrabbleBoard(game, boardImage) {
+    this.game = game;
+    this.gameWidth = this.game.width;
+    this.gameHeight = this.game.height;
+    this.boardWidth = boardImage.width;
+    this.boardHeight = boardImage.height;
+    ScrabbleBoard.scaledBoardWidth = calculateScaledBoardWidth();
+    ScrabbleBoard.excessPixelsX = calculateExcessPixelsX();
+    ScrabbleBoard.excessPixelsY = calculateExcessPixelsY();
+  }
 
-        for (var i = 0; i < 15; i++) {
-            for (var j = 0; j < 15; j++) {
+  function calculateExcessPixelsX() {
+    return this.gameWidth - this.boardWidth / 2;
+  }
 
-                boardOverview.push(null, null);
-            }
-        }
-    })();
-}
+  function calculateScaledBoardWidth() {
+    return this.gameWidth - ScrabbleBoard.excessPixelsX;
+  }
 
-ScrabbleBoard.prototype.calculateExcessPixelsX = function () {
-    return (this.gameWidth - this.boardWidth) / 2;
-};
-
-ScrabbleBoard.prototype.calculateMaxBoardWidth = function () {
-    return this.gameWidth - this.calculateExcessPixelsX();
-};
-
-ScrabbleBoard.prototype.calculateExcessPixelsY = function () {
+  function calculateExcessPixelsY() {
     return (this.gameHeight - this.boardHeight) / 2;
-};
+  }
 
-ScrabbleBoard.prototype.calculateMaxBoardHeight = function () {
-    return this.gameHeight - this.calculateExcessPixelsY();
-};
+  function calculateScaledBoardHeight() {
+    return this.gameHeight - ScrabbleBoard.excessPixelsY;
+  }
+
+  WordsWithBytes.ScrabbleBoard = ScrabbleBoard;
+})(this);
 
 //# sourceMappingURL=ScrabbleBoard-compiled.js.map

@@ -4,6 +4,8 @@
 
 WordsWithBytes.MainMenu = function(game) {};
 
+
+
 var button2;
 var button3;
 var button4;

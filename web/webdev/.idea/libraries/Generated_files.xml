@@ -7,8 +7,11 @@
         <item url="file://$PROJECT_DIR$/js/InterfaceMechanics-compiled.js" />
         <item url="file://$PROJECT_DIR$/js/Boot-compiled.js" />
         <item url="file://$PROJECT_DIR$/js/MainMenu-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/Rack-compiled.js" />
         <item url="file://$PROJECT_DIR$/js/Preload-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/Main-compiled.js" />
         <item url="file://$PROJECT_DIR$/js/Game-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/Main-compiled.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
@@ -26,9 +29,6 @@
       <root url="file://$PROJECT_DIR$/Full Screen Mobile/src/MainMenu-compiled.js" />
       <root url="file://$PROJECT_DIR$/Full Screen Mobile/src/Preloader-compiled.js" />
       <root url="file://$PROJECT_DIR$/src/Preloader-compiled.js" />
-      <root url="file://$PROJECT_DIR$/js/Main-compiled.js" />
-      <root url="file://$PROJECT_DIR$/js/Main-compiled.js" />
-      <root url="file://$PROJECT_DIR$/js/Rack-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/ScoreKeeper-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/tile-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/ScrabbleLetter-compiled.js" />
@@ -37,8 +37,11 @@
       <root url="file://$PROJECT_DIR$/js/InterfaceMechanics-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/Boot-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/MainMenu-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/Rack-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/Preload-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/Main-compiled.js" />
       <root url="file://$PROJECT_DIR$/js/Game-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/Main-compiled.js" />
     </CLASSES>
     <SOURCES />
   </library>

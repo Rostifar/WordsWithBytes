@@ -1,5 +1,4 @@
 var WordsWithBytes = {};
-
 WordsWithBytes.Boot = function (game) {};
 
 WordsWithBytes.Boot.prototype = {
@@ -30,27 +29,12 @@ WordsWithBytes.Boot.prototype = {
     },
 
     preload: function () {
-        //assets used for creation of loading screen
         this.load.image('WordsWithBytes-logo', 'assets/images/WordWithBytesLogo.png');
     },
 
     create: function () {
         this.game.stage.backgroundColor = '#659EC7';
-        //scaling options
-
         this.state.start('Preload');
-    },
-
-    enterIncorrectOrientation: function () {
-
-        WordsWithBytes.orientated = false;
-        document.getElementById('orientation').style.display = 'block';
-    },
-
-    leaveIncorrectOrientation: function () {
-
-        WordsWithBytes.orientated = true;
-        document.getElementById('orientation').style.display = 'none';
     }
 };
 

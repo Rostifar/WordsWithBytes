@@ -1,15 +1,15 @@
-
-WordsWithBytes.Boot = function (game){};
+var WordsWithBytes = {};
+WordsWithBytes.Boot = function(game){};
 
 WordsWithBytes.Boot.prototype = {
 
-    scaleStage: function() {
+    scaleStage: function () {
 
-        if(this.game.device.desktop) {
+        if (this.game.device.desktop) {
 
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.scale.minHeight = this.gameHeight;
-            this.scale.minWidth = this.gameWidth/2;
+            this.scale.minWidth = this.gameWidth / 2;
             this.scale.maxHeight = this.gameHeight;
             this.scale.maxWidth = this.gameWidth;
 
@@ -23,7 +23,7 @@ WordsWithBytes.Boot.prototype = {
 
     },
 
-    init: function() {
+    init: function () {
 
         this.scale.pageAlignVertically = true;
         this.scale.pageAlignHorizontally = true;
@@ -31,28 +31,12 @@ WordsWithBytes.Boot.prototype = {
 
     },
 
-	preload: function() {
-		//assets used for creation of loading screen
-		this.load.image('WordsWithBytes-logo', 'assets/images/WordWithBytesLogo.png');
-	},
-
-	create: function() {
-		this.game.stage.backgroundColor = '#659EC7';
-		//scaling options
-
-		this.state.start('Preload');
-	},
-
-    enterIncorrectOrientation: function() {
-
-        WordsWithBytes.orientated = false;
-        document.getElementById('orientation').style.display = 'block';
-
+    preload: function () {
+        this.load.image('WordsWithBytes-logo', 'assets/images/WordWithBytesLogo.png');
     },
 
-    leaveIncorrectOrientation: function() {
-
-        WordsWithBytes.orientated = true;
-        document.getElementById('orientation').style.display = 'none';
+    create: function () {
+        this.game.stage.backgroundColor = '#659EC7';
+        this.state.start('Preload');
     }
-};
+}

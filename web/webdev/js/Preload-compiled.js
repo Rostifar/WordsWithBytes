@@ -13,8 +13,8 @@ WordsWithBytes.Preload.prototype = {
         this.splash = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'WordsWithBytes-logo');
         this.splash.anchor.setTo(0.5);
 
-        this.load.image('blankLetter', 'assets/images/TestScrabbleLetter.png');
-        this.load.image('aLetter', 'assets/images/LetterA.png');
+        this.load.image('bl', 'assets/images/bl.png');
+        this.load.image('a', 'assets/images/a.png');
         this.load.image('bLetter', 'assets/images/LetterB.png');
         this.load.image('cLetter', 'assets/images/LetterC.png');
         this.load.image('dLetter', 'assets/images/LetterD.png');
@@ -42,9 +42,9 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('zLetter', 'assets/images/LetterZ.png');
         this.load.audio('introMusic', ['assets/music/intro-music.mp3']);
         this.load.image('scrabbleBoard', 'assets/images/ScrabbleBoard5.png');
-        this.load.image('player2Button', 'assets/images/Player2Button.png');
-        this.load.image('player3Button', 'assets/images/Player3Button.png');
-        this.load.image('player4Button', 'assets/images/Players4Button.png');
+        this.load.image('player2Button', 'assets/images/2PlayersButton.png');
+        this.load.image('player3Button', 'assets/images/3PlayersButton.png');
+        this.load.image('player4Button', 'assets/images/4PlayersButton.png');
         this.load.image('scrabbleSample', 'assets/images/SampleScrabbleImage.jpg');
         this.load.image('space-background', 'assets/images/space.jpg');
     },
@@ -52,7 +52,7 @@ WordsWithBytes.Preload.prototype = {
     update: function () {
         if (this.cache.isSoundDecoded('introMusic') && this.ready == false) {
             this.ready = true;
-            this.state.start('MainMenu');
+            this.state.start('Game');
         }
     }
 };

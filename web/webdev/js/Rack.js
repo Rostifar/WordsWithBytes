@@ -1,50 +1,59 @@
 /**
  * Created by ross on 2/24/16.
  */
+"use strict";
+
 (function(WordsWithBytes) {
-		"use strict";
+    function Rack(game) {
+        Rack.gameRack = [];
+        Rack.numberOfLettersOnRack = Rack.gameRack.length;
+        Rack.locations = [];
+        Rack.yLocation = game.height - 40;
+        createRackLocations();
+    }
 
-		class Rack {
-            constructor(game) {
-                this.game = game;
-            }
+    function createRackLocations() {
+        var counter1, counter2;
+        counter1 = 0;
+        counter2 = 0;
 
-            init() {
-                this.gameRack = [];
-                this.numberOfLettersOnRack = this.gameRack.size();
-                this.rackLocations = [];
+        WordsWithBytes.Rack.locations.push(game.world.centerX);
 
-                function createRackLocations() {
-                    var counter1, counter2;
-                    counter1 = 0;
-                    counter2 = 0;
-
-                    this.rackLocations.push(game.world.centerX);
-
-                    while (counter1 < 3) {
-                        this.rackLocations.push(game.world.centerX + (20 * counter1));
-                        counter1 = +1;
-                    }
-                    while (counter2 < 3) {
-                        this.rackLocations.push(game.world.centerX + (-20 * counter2));
-                        counter2 += 1;
-                    }
-                }
-            }
-
-            numberOfLettersOnRack() {
-                return this.numberOfLettersOnRack;
-            }
-
-            addLetterToRack(letterToAdd) {
-                this.gameRack.push(letterToAdd);
-            };
-
-            removeLetterFromRack(letterToRemove) {
-                let previousPosition = this.gameRack.indexOf(letterToRemove) - 1;
-                let currentPosition = previousPosition + 1;
-                this.gameRack.splice(this.gameRack.indexOf(previousPosition, currentPosition))
-            }
+        while (counter1 < 3) {
+            ++counter1;
+            Rack.locations.push(game.world.centerX + (50 * counter1));
         }
-		WordsWithBytes.Rack = Rack;
-})();
+        while (counter2 < 3) {
+            ++counter2;
+            Rack.locations.push(game.world.centerX - (50 * counter2));
+        }
+    }
+
+    function shiftLetterPositions() {
+        for (var i = 0; i < Rack.gameRack.length; i++) {
+            Rack.gameRack[i].x = Rack.locations[i];
+        }
+    }
+
+    Rack.prototype.getNumberOfLettersOnRack = function () {
+        return Rack.numberOfLettersOnRack;
+    };
+
+    Rack.prototype.addLetterToRack = function (imageKey) {
+        shiftLetterPositions();
+        var letter = game.add.sprite(Rack.locations[Rack.gameRack.length], Rack.yLocation, imageKey);
+        letter.positionOnRack = letter.x;
+        letter.anchor.setTo(0.5);
+        letter.inputEnabled = true;
+        letter.input.enableDrag(true);
+        Rack.gameRack.push(letter);
+    };
+
+        Rack.prototype.removeLetterFromRack = function (letterToRemove) {
+            var previousPosition = Rack.gameRack.indexOf(letterToRemove) - 1;
+            var currentPosition = previousPosition + 1;
+            Rack.gameRack.splice(Rack.gameRack.indexOf(previousPosition, currentPosition));
+        };
+    WordsWithBytes.Rack = Rack;
+})(this);
+
