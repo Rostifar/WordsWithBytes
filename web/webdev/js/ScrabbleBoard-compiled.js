@@ -5,14 +5,14 @@
 (function (WordsWithBytes) {
 
   function ScrabbleBoard(game, boardImage) {
-    this.game = game;
-    this.gameWidth = this.game.width;
-    this.gameHeight = this.game.height;
+    this.gameWidth = game.width;
+    this.gameHeight = game.height;
     this.boardWidth = boardImage.width;
     this.boardHeight = boardImage.height;
-    ScrabbleBoard.scaledBoardWidth = calculateScaledBoardWidth();
-    ScrabbleBoard.excessPixelsX = calculateExcessPixelsX();
-    ScrabbleBoard.excessPixelsY = calculateExcessPixelsY();
+    this.scaledBoardWidth = calculateScaledBoardWidth();
+    this.excessPixelsX = calculateExcessPixelsX();
+    this.excessPixelsY = calculateExcessPixelsY();
+    this.scaledBoardHeight = calculateScaledBoardHeight();
   }
 
   function calculateExcessPixelsX() {
@@ -20,7 +20,7 @@
   }
 
   function calculateScaledBoardWidth() {
-    return this.gameWidth - ScrabbleBoard.excessPixelsX;
+    return this.gameWidth - this.excessPixelsX;
   }
 
   function calculateExcessPixelsY() {
@@ -28,7 +28,7 @@
   }
 
   function calculateScaledBoardHeight() {
-    return this.gameHeight - ScrabbleBoard.excessPixelsY;
+    return this.gameHeight - this.excessPixelsY;
   }
 
   WordsWithBytes.ScrabbleBoard = ScrabbleBoard;

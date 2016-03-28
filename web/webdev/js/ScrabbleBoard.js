@@ -5,32 +5,20 @@
 (function(WordsWithBytes){
 
   function ScrabbleBoard(game, boardImage) {
-    this.game = game;
-    this.gameWidth = this.game.width;
-    this.gameHeight = this.game.height;
-    this.boardWidth = boardImage.width;
-    this.boardHeight = boardImage.height;
-    ScrabbleBoard.scaledBoardWidth = calculateScaledBoardWidth();
-    ScrabbleBoard.excessPixelsX = calculateExcessPixelsX();
-    ScrabbleBoard.excessPixelsY = calculateExcessPixelsY();
-    ScrabbleBoard.scaledBoardHeight = calculateScaledBoardHeight();
+    ScrabbleBoard.gameWidth = game.width;
+    ScrabbleBoard.gameHeight = game.height;
+    ScrabbleBoard.boardWidth = boardImage.width;
+    ScrabbleBoard.boardHeight = boardImage.height;
   }
 
-  function calculateExcessPixelsX() {
-      return this.gameWidth - this.boardWidth / 2;
-  }
 
-  function calculateScaledBoardWidth() {
-      return this.gameWidth - ScrabbleBoard.excessPixelsX;
-  }
+  ScrabbleBoard.prototype = {
 
-  function calculateExcessPixelsY() {
-    return (this.gameHeight - this.boardHeight) / 2;
-  }
-
-  function calculateScaledBoardHeight() {
-    return this.gameHeight - ScrabbleBoard.excessPixelsY;
-  }
+    excessPixelX: (ScrabbleBoard.gameWidth -  ScrabbleBoard.boardWidth / 2),
+    excessPixelsY: (ScrabbleBoard.gameHeight - ScrabbleBoard.boardHeight / 2),
+    scaledBoardHeight: ScrabbleBoard.gameHeight - ScrabbleBoard.excessPixelsY,
+    scaledBoardWidth: ScrabbleBoard.gameWidth - ScrabbleBoard.excessPixelX
+  };
 
   WordsWithBytes.ScrabbleBoard = ScrabbleBoard;
 

@@ -24,7 +24,6 @@ WordsWithBytes.Game.prototype = {
      * Along with formatting these objects on the canvas.
      * */
     create: function () {
-
         this.game.add.sprite(0, 0, 'space-background');
         var boardImage = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'scrabbleBoard');
         boardImage.anchor.setTo(0.5);

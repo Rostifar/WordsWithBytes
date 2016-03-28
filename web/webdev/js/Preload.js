@@ -47,7 +47,6 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('player4Button', 'assets/images/4PlayersButton.png');
         this.load.image('scrabbleSample', 'assets/images/SampleScrabbleImage.jpg');
         this.load.image('space-background', 'assets/images/space.jpg');
-
     },
 
     update: function() {
