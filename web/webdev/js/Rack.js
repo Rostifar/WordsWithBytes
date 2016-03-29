@@ -6,7 +6,6 @@
 (function(WordsWithBytes) {
     function Rack(game) {
         Rack.gameRack = [];
-        Rack.numberOfLettersOnRack = Rack.gameRack.length;
         Rack.locations = [];
         Rack.yLocation = game.height - 40;
         createRackLocations();
@@ -35,25 +34,54 @@
         }
     }
 
+    Rack.prototype.getInterfaceMechanicsReference = function(interfaceMechanicsReference) {
+        this.interfaceMechanics = interfaceMechanicsReference;
+    };
+
+    function analyzeLetterPlacement() {
+        if (this.interfaceMechanics.isInBoardProximity(Rack.currentLetter)) {
+            this.interfaceMechanics.searchForClosestSquare(Rack.currentLetter);
+        } else {
+            Rack.currentLetter.x = Rack.currentLetter.positionOnRack;
+            Rack.currentLetter.y = Rack.yLocation;
+        }
+    }
+
+    function setCurrentLetter(letter) {
+        Rack.currentLetter = letter;
+    }
+
     Rack.prototype.getNumberOfLettersOnRack = function () {
         return Rack.numberOfLettersOnRack;
     };
 
     Rack.prototype.addLetterToRack = function (imageKey) {
+        var xLocation = Rack.locations[Rack.gameRack.length];
         shiftLetterPositions();
-        var letter = game.add.sprite(Rack.locations[Rack.gameRack.length], Rack.yLocation, imageKey);
-        letter.positionOnRack = letter.x;
+        var letter = game.add.sprite(xLocation, Rack.yLocation, imageKey);
+        letter.positionOnRack = xLocation;
         letter.anchor.setTo(0.5);
         letter.inputEnabled = true;
         letter.input.enableDrag(true);
+        letter.events.onDragStart.add(setCurrentLetter, letter);
+        letter.events.onInputUp.add(analyzeLetterPlacement, this);
+
         Rack.gameRack.push(letter);
     };
 
-        Rack.prototype.removeLetterFromRack = function (letterToRemove) {
-            var previousPosition = Rack.gameRack.indexOf(letterToRemove) - 1;
-            var currentPosition = previousPosition + 1;
-            Rack.gameRack.splice(Rack.gameRack.indexOf(previousPosition, currentPosition));
-        };
+    Rack.prototype.getLetterBeingSelected = function(pointer) {
+        for (var i = 0; i < Rack.gameRack.length; i++) {
+            if (Rack.gameRack[i].isDragged) {
+                //pointer.currentLetter = Rack.gameRack[i];
+            }
+        }
+    };
+
+    Rack.prototype.removeLetterFromRack = function (letterToRemove) {
+        var previousPosition = Rack.gameRack.indexOf(letterToRemove) - 1;
+        var currentPosition = previousPosition + 1;
+        Rack.gameRack.splice(Rack.gameRack.indexOf(previousPosition, currentPosition));
+    };
     WordsWithBytes.Rack = Rack;
 })(this);
 

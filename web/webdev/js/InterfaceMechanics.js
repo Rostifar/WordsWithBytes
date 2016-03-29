@@ -5,17 +5,15 @@
         InterfaceMechanics.boardWidth = WordsWithBytes.ScrabbleBoard.scaledBoardWidth;
         InterfaceMechanics.centerSquaresX = [];
         InterfaceMechanics.centerSquaresY = [];
-        calculateCenterSquares();
     }
 
-    function calculateCenterSquares() {
-        var xScaleFactor = WordsWithBytes.ScrabbleBoard.scaledBoardWidth / 15;
-        var yScaleFactor = WordsWithBytes.ScrabbleBoard.scaledBoardHeight / 15;
-        var excessPixelsX = WordsWithBytes.ScrabbleBoard.excessPixelsX;
-        var excessPixelsY = WordsWithBytes.ScrabbleBoard.excessPixelsY;
-        var scrabbleBoardHeight = WordsWithBytes.ScrabbleBoard.scaledBoardHeight;
-        var scrabbleBoardWidth = WordsWithBytes.ScrabbleBoard.scaledBoardWidth;
-
+    InterfaceMechanics.prototype.calculateCenterSquares = function() {
+        var xScaleFactor = this.scrabbleBoardInstance.scaledBoardWidth / 15;
+        var yScaleFactor = this.scrabbleBoardInstance.scaledBoardHeight / 15;
+        var excessPixelsX = this.scrabbleBoardInstance.excessPixelX;
+        var excessPixelsY = this.scrabbleBoardInstance.excessPixelsY;
+        var scrabbleBoardHeight = this.scrabbleBoardInstance.scaledBoardHeight;
+        var scrabbleBoardWidth = this.scrabbleBoardInstance.scaledBoardWidth;
 
         for (var initialPixelWidth = excessPixelsX; initialPixelWidth <= scrabbleBoardWidth; initialPixelWidth += xScaleFactor) {
             InterfaceMechanics.centerSquaresX.push(initialPixelWidth);
@@ -24,19 +22,23 @@
         for (var initialPixelHeight = excessPixelsY; initialPixelHeight <= scrabbleBoardHeight; initialPixelHeight += yScaleFactor) {
             InterfaceMechanics.centerSquaresY.push(initialPixelHeight);
         }
-    }
+    };
 
     function sortNumber(a,b) {
         return a - b;
     }
 
-    InterfaceMechanics.prototype.isInBoardProximity = function(pointer) {
-        var minimumWidth = WordsWithBytes.ScrabbleBoard.excessPixelsX;
-        var minimumHeight = WordsWithBytes.ScrabbleBoard.excessPixelsY;
-        var maximumHeight = WordsWithBytes.ScrabbleBoard.scaledBoardHeight;
-        var maximumWidth = WordsWithBytes.ScrabbleBoard.scaledBoardWidth;
+    InterfaceMechanics.prototype.isInBoardProximity = function(currentLetter) {
+        var minimumWidth = this.scrabbleBoardInstance.excessPixelX;
+        var minimumHeight = this.scrabbleBoardInstance.excessPixelsY;
+        var maximumHeight = this.scrabbleBoardInstance.scaledBoardHeight;
+        var maximumWidth = this.scrabbleBoardInstance.scaledBoardWidth;
 
-        return ((pointer.x >= minimumWidth && pointer.x <= maximumWidth) && (pointer.y >= minimumHeight && pointer.y <= maximumHeight));
+        return ((currentLetter.x >= minimumWidth && currentLetter.x <= maximumWidth) && (currentLetter.y >= minimumHeight && currentLetter.y <= maximumHeight));
+    };
+
+    InterfaceMechanics.prototype.getScrabbleBoardInstance = function(scrabbleBoardInstance) {
+        this.scrabbleBoardInstance = scrabbleBoardInstance;
     };
 
     InterfaceMechanics.prototype.searchForClosestSquare = function(letter) {
