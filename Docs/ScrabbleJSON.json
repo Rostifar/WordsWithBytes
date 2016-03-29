@@ -1,0 +1,1671 @@
+{
+  "scrabbleBoard": {
+    "col": 0,
+    "row": 0,
+    "wordScoreMultiplier": 0,
+    "isValidWordPlacement": false,
+    "wordsToBeChecked": [ ],
+    "board": [
+      [
+        {
+          "squareType": "TRIPLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_WORD"
+        }
+      ],
+      [
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        }
+      ],
+      [
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        }
+      ],
+      [
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        }
+      ],
+      [
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        }
+      ],
+      [
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        }
+      ],
+      [
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        }
+      ],
+      [
+        {
+          "squareType": "TRIPLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "CENTER_STAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_WORD"
+        }
+      ],
+      [
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        }
+      ],
+      [
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        }
+      ],
+      [
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        }
+      ],
+      [
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        }
+      ],
+      [
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        }
+      ],
+      [
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        }
+      ],
+      [
+        {
+          "squareType": "TRIPLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_WORD"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "DOUBLE_LETTER"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "REGULAR"
+        },
+        {
+          "squareType": "TRIPLE_WORD"
+        }
+      ]
+    ]
+  },
+  "players": [
+    {
+      "rack": {
+        "lettersOnRack": [
+          {
+            "letter": "Z",
+            "pointValue": {
+              "value": 10
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "Y",
+            "pointValue": {
+              "value": 4
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "Q",
+            "pointValue": {
+              "value": 10
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "A",
+            "pointValue": {
+              "value": 1
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "C",
+            "pointValue": {
+              "value": 3
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "R",
+            "pointValue": {
+              "value": 1
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "D",
+            "pointValue": {
+              "value": 2
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          }
+        ]
+      },
+      "name": "Player-0",
+      "scoreKeeper": {
+        "totalPoints": 0,
+        "totalPointValueForWord": 0
+      }
+    },
+    {
+      "rack": {
+        "lettersOnRack": [
+          {
+            "letter": "W",
+            "pointValue": {
+              "value": 4
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "X",
+            "pointValue": {
+              "value": 8
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "_",
+            "pointValue": {
+              "value": 0
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "H",
+            "pointValue": {
+              "value": 4
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "L",
+            "pointValue": {
+              "value": 1
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "H",
+            "pointValue": {
+              "value": 4
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "J",
+            "pointValue": {
+              "value": 8
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          }
+        ]
+      },
+      "name": "Player-1",
+      "scoreKeeper": {
+        "totalPoints": 0,
+        "totalPointValueForWord": 0
+      }
+    },
+    {
+      "rack": {
+        "lettersOnRack": [
+          {
+            "letter": "F",
+            "pointValue": {
+              "value": 4
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "O",
+            "pointValue": {
+              "value": 1
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "M",
+            "pointValue": {
+              "value": 3
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "T",
+            "pointValue": {
+              "value": 1
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "P",
+            "pointValue": {
+              "value": 3
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "U",
+            "pointValue": {
+              "value": 1
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          },
+          {
+            "letter": "P",
+            "pointValue": {
+              "value": 3
+            },
+            "desiredPositionCol": 0,
+            "desiredPositionRow": 0
+          }
+        ]
+      },
+      "name": "Player-2",
+      "scoreKeeper": {
+        "totalPoints": 0,
+        "totalPointValueForWord": 0
+      }
+    }
+  ],
+  "scrabbleAlphabet": {
+    "letterMap": {
+      "A": [
+        {
+          "letter": "A",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "A",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "A",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "A",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "A",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "A",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "A",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "A",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "B": [
+        {
+          "letter": "B",
+          "pointValue": {
+            "value": 3
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "B",
+          "pointValue": {
+            "value": 3
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "C": [
+        {
+          "letter": "C",
+          "pointValue": {
+            "value": 3
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "D": [
+        {
+          "letter": "D",
+          "pointValue": {
+            "value": 2
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "D",
+          "pointValue": {
+            "value": 2
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "D",
+          "pointValue": {
+            "value": 2
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "E": [
+        {
+          "letter": "E",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "E",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "E",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "E",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "E",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "E",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "E",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "E",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "E",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "E",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "E",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "E",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "F": [
+        {
+          "letter": "F",
+          "pointValue": {
+            "value": 4
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "G": [
+        {
+          "letter": "G",
+          "pointValue": {
+            "value": 2
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "G",
+          "pointValue": {
+            "value": 2
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "G",
+          "pointValue": {
+            "value": 2
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "H": [ ],
+      "I": [
+        {
+          "letter": "I",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "I",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "I",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "I",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "I",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "I",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "I",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "I",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "I",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "J": [ ],
+      "K": [
+        {
+          "letter": "K",
+          "pointValue": {
+            "value": 5
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "L": [
+        {
+          "letter": "L",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "L",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "L",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "M": [
+        {
+          "letter": "M",
+          "pointValue": {
+            "value": 3
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "N": [
+        {
+          "letter": "N",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "N",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "N",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "N",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "N",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "N",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "O": [
+        {
+          "letter": "O",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "O",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "O",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "O",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "O",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "O",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "O",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "P": [ ],
+      "Q": [ ],
+      "R": [
+        {
+          "letter": "R",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "R",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "R",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "R",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "R",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "S": [
+        {
+          "letter": "S",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "S",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "S",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "S",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "T": [
+        {
+          "letter": "T",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "T",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "T",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "T",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "T",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "U": [
+        {
+          "letter": "U",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "U",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "U",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "V": [
+        {
+          "letter": "V",
+          "pointValue": {
+            "value": 4
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "V",
+          "pointValue": {
+            "value": 4
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "W": [
+        {
+          "letter": "W",
+          "pointValue": {
+            "value": 4
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "X": [ ],
+      "Y": [
+        {
+          "letter": "Y",
+          "pointValue": {
+            "value": 4
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ],
+      "Z": [ ],
+      "_": [
+        {
+          "letter": "_",
+          "pointValue": {
+            "value": 0
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ]
+    }
+  },
+  "currentPlayer": {
+    "rack": {
+      "lettersOnRack": [
+        {
+          "letter": "Z",
+          "pointValue": {
+            "value": 10
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "Y",
+          "pointValue": {
+            "value": 4
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "Q",
+          "pointValue": {
+            "value": 10
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "A",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "C",
+          "pointValue": {
+            "value": 3
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "R",
+          "pointValue": {
+            "value": 1
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        },
+        {
+          "letter": "D",
+          "pointValue": {
+            "value": 2
+          },
+          "desiredPositionCol": 0,
+          "desiredPositionRow": 0
+        }
+      ]
+    },
+    "name": "Player-0",
+    "scoreKeeper": {
+      "totalPoints": 0,
+      "totalPointValueForWord": 0
+    }
+  },
+  "isFirstRound": true
+}

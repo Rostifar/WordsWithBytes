@@ -5,7 +5,6 @@ import com.rostifar.dictionary.DictionaryFactory;
 import com.rostifar.dictionary.DictionaryLookupResult;
 import com.rostifar.scabbleboard.ScrabbleBoard;
 import com.rostifar.scrabbleproject.Player;
-import com.rostifar.scrabbleproject.Rack;
 import com.rostifar.wordDistrobution.*;
 
 import java.io.Serializable;
@@ -22,11 +21,11 @@ public class ScrabbleGameManager implements Serializable {
     //private UserInput userInput;
     private ScrabbleAlphabet scrabbleAlphabet = new ScrabbleAlphabet();
     private Player currentPlayer;
-    private Rack playerRack;
+    //private Rack playerRack;
     private ScrabbleWord scrabbleWord;
     private boolean isFirstRound = true;
     private ScrabbleWord currentWord;
-    private ScrabbleLetter currentLetter;
+    //private ScrabbleLetter currentLetter;
 
 
     public ScrabbleGameManager() throws ScrabbleGameException {
@@ -66,6 +65,10 @@ public class ScrabbleGameManager implements Serializable {
         currentPlayer = players[0];
 
         printPlayers();
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     protected void setupPlayer(Player player) {
