@@ -1,58 +1,55 @@
 
-(function(WordsWithBytes) {
+var interfaceMechanics = (function(){
+    var centerSquaresX = [];
+    var centerSquaresY = [];
 
-    function InterfaceMechanics() {
-        InterfaceMechanics.boardWidth = WordsWithBytes.ScrabbleBoard.scaledBoardWidth;
-        InterfaceMechanics.centerSquaresX = [];
-        InterfaceMechanics.centerSquaresY = [];
-    }
-
-    InterfaceMechanics.prototype.calculateCenterSquares = function() {
-        var xScaleFactor = this.scrabbleBoardInstance.scaledBoardWidth / 15;
-        var yScaleFactor = this.scrabbleBoardInstance.scaledBoardHeight / 15;
-        var excessPixelsX = this.scrabbleBoardInstance.excessPixelX;
-        var excessPixelsY = this.scrabbleBoardInstance.excessPixelsY;
-        var scrabbleBoardHeight = this.scrabbleBoardInstance.scaledBoardHeight;
-        var scrabbleBoardWidth = this.scrabbleBoardInstance.scaledBoardWidth;
+    function calculateCenterSquares() {
+        var xScaleFactor = scrabbleBoard.scaledBoardWidth / 15;
+        var yScaleFactor = scrabbleBoard.scaledBoardHeight / 15;
+        var excessPixelsX = scrabbleBoard.excessPixelsX;
+        var excessPixelsY = scrabbleBoard.excessPixelsY;
+        var scrabbleBoardHeight = scrabbleBoard.scaledBoardHeight;
+        var scrabbleBoardWidth = scrabbleBoard.scaledBoardWidth;
 
         for (var initialPixelWidth = excessPixelsX; initialPixelWidth <= scrabbleBoardWidth; initialPixelWidth += xScaleFactor) {
-            InterfaceMechanics.centerSquaresX.push(initialPixelWidth);
+            centerSquaresX.push(initialPixelWidth);
         }
 
         for (var initialPixelHeight = excessPixelsY; initialPixelHeight <= scrabbleBoardHeight; initialPixelHeight += yScaleFactor) {
-            InterfaceMechanics.centerSquaresY.push(initialPixelHeight);
+            centerSquaresY.push(initialPixelHeight);
         }
-    };
+    }
 
-    function sortNumber(a,b) {
+    function sortNumber(a, b) {
         return a - b;
     }
 
-    InterfaceMechanics.prototype.isInBoardProximity = function(currentLetter) {
-        var minimumWidth = this.scrabbleBoardInstance.excessPixelX;
-        var minimumHeight = this.scrabbleBoardInstance.excessPixelsY;
-        var maximumHeight = this.scrabbleBoardInstance.scaledBoardHeight;
-        var maximumWidth = this.scrabbleBoardInstance.scaledBoardWidth;
+    return {
 
-        return ((currentLetter.x >= minimumWidth && currentLetter.x <= maximumWidth) && (currentLetter.y >= minimumHeight && currentLetter.y <= maximumHeight));
-    };
+        initCenterSquares: calculateCenterSquares(),
 
-    InterfaceMechanics.prototype.getScrabbleBoardInstance = function(scrabbleBoardInstance) {
-        this.scrabbleBoardInstance = scrabbleBoardInstance;
-    };
+        isInBoardProximity: function(currentLetter) {
+            var minimumWidth = scrabbleBoard.excessPixelsX;
+            var minimumHeight = scrabbleBoard.excessPixelsY;
+            var maximumHeight = scrabbleBoard.scaledBoardHeight;
+            var maximumWidth = scrabbleBoard.scaledBoardWidth;
 
-    InterfaceMechanics.prototype.searchForClosestSquare = function(letter) {
-        var closestSquaresX = [];
-        var closestSquaresY = [];
+            return ((currentLetter.x >= minimumWidth && currentLetter.x <= maximumWidth) && (currentLetter.y >= minimumHeight && currentLetter.y <= maximumHeight));
+        },
 
-        for (var i = 0; i < 15; i++) {
-            closestSquaresX.push(Math.abs(letter.x - InterfaceMechanics.centerSquaresX[i]));
-            closestSquaresY.push(Math.abs(letter.y - InterfaceMechanics.centerSquaresY[i]));
+        searchForClosestSquare: function(letter) {
+            var closestSquaresX = [];
+            var closestSquaresY = [];
+
+            for (var i = 0; i < 15; i++) {
+                closestSquaresX.push(Math.abs(letter.x - centerSquaresX[i]));
+                closestSquaresY.push(Math.abs(letter.y - centerSquaresY[i]));
+            }
+            closestSquaresX.sort(sortNumber);
+            closestSquaresY.sort(sortNumber);
+            letter.x = closestSquaresX[0];
+            letter.y = closestSquaresY[0];
         }
-        closestSquaresX.sort(sortNumber);
-        closestSquaresY.sort(sortNumber);
-        letter.x = closestSquaresX[0];
-        letter.y = closestSquaresY[0];
-    };
-    WordsWithBytes.InterfaceMechanics = InterfaceMechanics;
-})(this);
+    }
+})();
+

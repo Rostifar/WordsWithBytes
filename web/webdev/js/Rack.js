@@ -3,85 +3,83 @@
  */
 "use strict";
 
-(function(WordsWithBytes) {
-    function Rack(game) {
-        Rack.gameRack = [];
-        Rack.locations = [];
-        Rack.yLocation = game.height - 40;
-        createRackLocations();
+var rack = (function () {
+    var game, gameRack, locations, yLocation, currentLetter, xLocation;
+
+    function getGameInstance(gameInstanceReference) {
+        game = gameInstanceReference;
     }
+    gameRack = [];
+    locations = [];
+    yLocation = game.height - 40;
+    xLocation = locations[gameRack.length];
 
     function createRackLocations() {
         var counter1, counter2;
         counter1 = 0;
         counter2 = 0;
 
-        WordsWithBytes.Rack.locations.push(game.world.centerX);
+        locations.push(game.world.centerX);
 
         while (counter1 < 3) {
             ++counter1;
-            Rack.locations.push(game.world.centerX + (50 * counter1));
+            locations.push(game.world.centerX + (50 * counter1));
         }
         while (counter2 < 3) {
             ++counter2;
-            Rack.locations.push(game.world.centerX - (50 * counter2));
-        }
-    }
-
-    function shiftLetterPositions() {
-        for (var i = 0; i < Rack.gameRack.length; i++) {
-            Rack.gameRack[i].x = Rack.locations[i];
-        }
-    }
-
-    Rack.prototype.getInterfaceMechanicsReference = function(interfaceMechanicsReference) {
-        this.interfaceMechanics = interfaceMechanicsReference;
-    };
-
-    function analyzeLetterPlacement() {
-        if (this.interfaceMechanics.isInBoardProximity(Rack.currentLetter)) {
-            this.interfaceMechanics.searchForClosestSquare(Rack.currentLetter);
-        } else {
-            Rack.currentLetter.x = Rack.currentLetter.positionOnRack;
-            Rack.currentLetter.y = Rack.yLocation;
+            locations.push(game.world.centerX - (50 * counter2));
         }
     }
 
     function setCurrentLetter(letter) {
-        Rack.currentLetter = letter;
+        currentLetter = letter;
     }
 
-    Rack.prototype.getNumberOfLettersOnRack = function () {
-        return Rack.numberOfLettersOnRack;
-    };
+    function analyzeLetterPlacement() {
+        if (interfaceMechanics.isInBoardProximity(currentLetter)) {
+            interfaceMechanics.searchForClosestSquare(currentLetter);
+        } else {
+            currentLetter.x = currentLetter.positionOnRack;
+            currentLetter.y = Rack.yLocation;
+        }
+    }
 
-    Rack.prototype.addLetterToRack = function (imageKey) {
-        var xLocation = Rack.locations[Rack.gameRack.length];
+    function shiftLetterPositions() {
+        for (var i = 0; i < gameRack.length; i++) {
+            gameRack[i].x = locations[i];
+        }
+    }
+
+    function addLetterToRack(imageKey) {
         shiftLetterPositions();
-        var letter = game.add.sprite(xLocation, Rack.yLocation, imageKey);
+        var letter = game.add.sprite(xLocation, yLocation, imageKey);
         letter.positionOnRack = xLocation;
         letter.anchor.setTo(0.5);
         letter.inputEnabled = true;
         letter.input.enableDrag(true);
         letter.events.onDragStart.add(setCurrentLetter, letter);
         letter.events.onInputUp.add(analyzeLetterPlacement, this);
+        gameRack.push(letter);
+    }
 
-        Rack.gameRack.push(letter);
-    };
-
-    Rack.prototype.getLetterBeingSelected = function(pointer) {
-        for (var i = 0; i < Rack.gameRack.length; i++) {
-            if (Rack.gameRack[i].isDragged) {
-                //pointer.currentLetter = Rack.gameRack[i];
-            }
-        }
-    };
-
-    Rack.prototype.removeLetterFromRack = function (letterToRemove) {
-        var previousPosition = Rack.gameRack.indexOf(letterToRemove) - 1;
+    function removeLetterFromRack(letterToRemove) {
+        var previousPosition = gameRack.indexOf(letterToRemove) - 1;
         var currentPosition = previousPosition + 1;
-        Rack.gameRack.splice(Rack.gameRack.indexOf(previousPosition, currentPosition));
-    };
-    WordsWithBytes.Rack = Rack;
-})(this);
+        gameRack.splice(gameRack.indexOf(previousPosition, currentPosition));
+    }
 
+    return {
+        getGameInstance: function(gameInstance) {
+            getGameInstance(gameInstance);
+        },
+        initializeRackLocations: createRackLocations(),
+        getNumberOfLettersOnRack: gameRack.length,
+        getCurrentLetter: currentLetter,
+        getLetterToAdd: function(imageKey) {
+            addLetterToRack(imageKey);
+        },
+        getLetterToRemove: function(letterToRemove) {
+           removeLetterFromRack(letterToRemove);
+        }
+    }
+})();

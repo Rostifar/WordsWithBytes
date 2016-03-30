@@ -1,25 +1,44 @@
 /**
- * Created by ross on 2/22/16.
+ * Created by ross on 3/29/16.
  */
 
-(function(WordsWithBytes){
+var scrabbleBoard = (function() {
+    var scrabbleBoardImage, game;
 
-  function ScrabbleBoard(game, boardImage) {
-    ScrabbleBoard.gameWidth = game.width;
-    ScrabbleBoard.gameHeight = game.height;
-    ScrabbleBoard.boardWidth = boardImage.width;
-    ScrabbleBoard.boardHeight = boardImage.height;
-  }
+    function getBoardImage(boardImage) {
+        scrabbleBoardImage = boardImage;
+    }
 
+    function getGameInstance(gameInstance) {
+        game = gameInstance;
+    }
 
-  ScrabbleBoard.prototype = {
+    function calculateExcessPixelsX() {
+        return (game.width - scrabbleBoardImage.width) / 2;
+    }
 
-    excessPixelX: (ScrabbleBoard.gameWidth -  ScrabbleBoard.boardWidth / 2),
-    excessPixelsY: (ScrabbleBoard.gameHeight - ScrabbleBoard.boardHeight / 2),
-    scaledBoardHeight: ScrabbleBoard.gameHeight - ScrabbleBoard.excessPixelsY,
-    scaledBoardWidth: ScrabbleBoard.gameWidth - ScrabbleBoard.excessPixelX
-  };
+    function calculateExcessPixelsY() {
+        return (game.height - scrabbleBoardImage.height) / 2;
+    }
 
-  WordsWithBytes.ScrabbleBoard = ScrabbleBoard;
+    function calculateScaledBoardHeight() {
+        return game.height - calculateExcessPixelsY();
+    }
 
-})(this);
+    function calculateScaledBoardWidth() {
+        return game.width - calculateExcessPixelsX();
+    }
+
+    return {
+        getScrabbleBoardImage: function (scrabbleBoardImage) {
+            getBoardImage(scrabbleBoardImage);
+        },
+        getScrabbleGameInstance: function(gameInstance) {
+            getGameInstance(gameInstance);
+        },
+        excessPixelsX: calculateExcessPixelsX(),
+        excessPixelsY: calculateExcessPixelsY(),
+        scaledBoardHeight: calculateScaledBoardHeight(),
+        scaledBoardWidth: calculateScaledBoardWidth()
+    }
+})();
