@@ -1,13 +1,14 @@
 package com.rostifar.gamecontrol;
 
-import com.rostifar.wordDistrobution.ScrabbleLetter;
+import com.rostifar.wordDistribution.ScrabbleLetter;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by D14048 on 10/4/2015.
+ * Created by Dad on 10/4/2015.
  */
-public class ScoreKeeper {
+public class ScoreKeeper implements Serializable {
     private int totalPoints;
     private int totalPointValueForWord;
 

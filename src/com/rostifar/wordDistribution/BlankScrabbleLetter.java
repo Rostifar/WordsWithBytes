@@ -1,4 +1,4 @@
-package com.rostifar.wordDistrobution;
+package com.rostifar.wordDistribution;
 
 /**
  * Created by ross on 1/1/16.

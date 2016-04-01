@@ -1,19 +1,19 @@
-package com.rostifar.wordDistrobution;
+package com.rostifar.wordDistribution;
 
 import java.util.*;
 
-public class ScrabbleAlphabetImpl implements ScrabbleAlphabet {
+public class ScrabbleAlphabet {
     private Map<Character, List<ScrabbleLetter>> letterMap = new HashMap<>();
-    private static ScrabbleAlphabetImpl alphabetInstance;
+    private static ScrabbleAlphabet alphabetInstance;
     /**
      * Constructor is private. Use Factory class to create instances.
      */
-    public ScrabbleAlphabetImpl() {
+    public ScrabbleAlphabet() {
         alphabetInstance = this;
         loadLetters();
     }
 
-    public static ScrabbleAlphabetImpl getInstance() {
+    public static ScrabbleAlphabet getInstance() {
         return alphabetInstance;
     }
 

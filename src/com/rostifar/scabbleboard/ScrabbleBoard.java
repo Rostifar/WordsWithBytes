@@ -1,8 +1,9 @@
 package com.rostifar.scabbleboard;
 
 import com.rostifar.gamecontrol.ScrabbleGameException;
-import com.rostifar.scrabbleproject.UserInputException;
-import com.rostifar.wordDistrobution.ScrabbleLetter;
+import com.rostifar.wordDistribution.ScrabbleLetter;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ import java.util.List;
  * A good online reference for the board and the game can be found here:
  * @see  /
  */
-public class ScrabbleBoard {
+public class ScrabbleBoard implements Serializable {
     public static final int ROW_LENGTH = 15;
     public static final int COLUMN_LENGTH = 15;
     public static final int CENTER_SQUARE = 7;
@@ -207,7 +208,7 @@ public class ScrabbleBoard {
             checkForNearbyWords(scrabbleLetter);
             getSecondaryWord();
             getLetterCoordinates(scrabbleLetter);
-            scrabbleBoardMechanics.clearSecondaryWord();
+          //  scrabbleBoardMechanics.clearSecondaryWord();
         }
         getPrimaryWord();
     }

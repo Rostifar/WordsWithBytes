@@ -1,15 +1,16 @@
 package com.rostifar.scrabbleproject;
-import com.rostifar.wordDistrobution.ScrabbleAlphabetImpl;
-import com.rostifar.wordDistrobution.ScrabbleLetter;
-import com.rostifar.wordDistrobution.ScrabbleWord;
+import com.rostifar.wordDistribution.ScrabbleAlphabet;
+import com.rostifar.wordDistribution.ScrabbleLetter;
+import com.rostifar.wordDistribution.ScrabbleWord;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by D14048 on 10/4/2015.
  */
-public class Rack {
+public class Rack implements Serializable {
     private List<ScrabbleLetter> lettersOnRack;
 
     public Rack() {
@@ -31,7 +32,7 @@ public class Rack {
         for (char letter : lettersToExchange) {
             scrabbleLetter = new ScrabbleLetter(letter);
             lettersOnRack.remove(scrabbleLetter);
-            ScrabbleAlphabetImpl.getInstance().getExchangedLetters(scrabbleLetter);
+            ScrabbleAlphabet.getInstance().getExchangedLetters(scrabbleLetter);
         }
     }
 

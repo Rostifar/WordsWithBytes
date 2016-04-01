@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>GameController</servlet-name>
-        <servlet-class>com.rostifar.servlets.ScrabbleGameControllerServlet</servlet-class>
+        <servlet-class>com.rostifar.servlets.ScrabbleServletHelper</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GameController</servlet-name>

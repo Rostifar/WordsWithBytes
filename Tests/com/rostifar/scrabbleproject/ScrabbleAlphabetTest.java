@@ -1,13 +1,11 @@
 package com.rostifar.scrabbleproject;
 
-import com.rostifar.wordDistrobution.ScrabbleAlphabetImpl;
-import com.rostifar.wordDistrobution.ScrabbleWord;
 import org.junit.Test;
 
 /**
  * Created by ross on 12/24/15.
  */
-public class ScrabbleAlphabetImplTest {
+public class ScrabbleAlphabetTest {
 
     @Test
     public void testGetAvailableLetters() throws Exception {

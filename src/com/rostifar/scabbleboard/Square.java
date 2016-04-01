@@ -1,14 +1,16 @@
 package com.rostifar.scabbleboard;
 
 import com.rostifar.gamecontrol.ScrabbleGameException;
-import com.rostifar.wordDistrobution.ScrabbleLetter;
+import com.rostifar.wordDistribution.ScrabbleLetter;
+
+import java.io.Serializable;
 
 /**
  * Class to model a Square on the scrabble board. The Square has knowledge about it's score value (triple word, etc)
  * and any letter contained therein.
  * Created by DAD on 10/4/2015.
  */
-public class Square {
+public class Square implements Serializable {
     private SquareEnum squareType;
     private ScrabbleLetter letter;
 

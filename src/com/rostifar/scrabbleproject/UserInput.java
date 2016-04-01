@@ -5,6 +5,7 @@ import java.util.Scanner;
 /**
  * Utility class to manage prompting the user for input.
  * Created by Dad on 11/20/2015.
+ * @deprecated
  */
 public class UserInput {
 

@@ -16,7 +16,7 @@ public class Main {
     }
 
     public void startGame() throws ScrabbleGameException{
-       GameManager gameManager = new ScrabbleGameManager();
+       ScrabbleGameManager gameManager = new ScrabbleGameManager();
        gameManager.runGame();
     }
 
