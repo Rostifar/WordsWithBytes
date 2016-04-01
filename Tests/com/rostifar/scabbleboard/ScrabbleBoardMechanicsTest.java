@@ -1,6 +1,6 @@
 package com.rostifar.scabbleboard;
 
-import com.rostifar.wordDistrobution.ScrabbleLetter;
+import com.rostifar.wordDistribution.ScrabbleLetter;
 import org.junit.Test;
 
 import java.util.ArrayList;

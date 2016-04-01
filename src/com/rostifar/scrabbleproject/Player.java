@@ -1,7 +1,7 @@
 package com.rostifar.scrabbleproject;
 
-import com.rostifar.wordDistrobution.ScrabbleLetter;
-import com.rostifar.wordDistrobution.ScrabbleWord;
+import com.rostifar.wordDistribution.ScrabbleLetter;
+import com.rostifar.wordDistribution.ScrabbleWord;
 import com.rostifar.gamecontrol.ScoreKeeper;
 
 import java.io.Serializable;

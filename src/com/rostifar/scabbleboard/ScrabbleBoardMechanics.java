@@ -1,5 +1,5 @@
 package com.rostifar.scabbleboard;
-import com.rostifar.wordDistrobution.ScrabbleLetter;
+import com.rostifar.wordDistribution.ScrabbleLetter;
 
 import java.io.Serializable;
 import java.util.ArrayList;

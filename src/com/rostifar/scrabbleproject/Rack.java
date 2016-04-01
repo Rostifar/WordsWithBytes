@@ -1,7 +1,7 @@
 package com.rostifar.scrabbleproject;
-import com.rostifar.wordDistrobution.ScrabbleAlphabet;
-import com.rostifar.wordDistrobution.ScrabbleLetter;
-import com.rostifar.wordDistrobution.ScrabbleWord;
+import com.rostifar.wordDistribution.ScrabbleAlphabet;
+import com.rostifar.wordDistribution.ScrabbleLetter;
+import com.rostifar.wordDistribution.ScrabbleWord;
 
 import java.io.Serializable;
 import java.util.ArrayList;

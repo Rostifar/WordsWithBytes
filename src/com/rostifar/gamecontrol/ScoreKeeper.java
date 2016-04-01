@@ -1,6 +1,6 @@
 package com.rostifar.gamecontrol;
 
-import com.rostifar.wordDistrobution.ScrabbleLetter;
+import com.rostifar.wordDistribution.ScrabbleLetter;
 
 import java.io.Serializable;
 import java.util.List;

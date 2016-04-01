@@ -5,7 +5,7 @@ import com.rostifar.dictionary.DictionaryFactory;
 import com.rostifar.dictionary.DictionaryLookupResult;
 import com.rostifar.scabbleboard.ScrabbleBoard;
 import com.rostifar.scrabbleproject.Player;
-import com.rostifar.wordDistrobution.*;
+import com.rostifar.wordDistribution.*;
 
 import java.io.Serializable;
 import java.util.List;

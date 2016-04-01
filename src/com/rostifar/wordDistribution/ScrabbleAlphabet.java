@@ -1,4 +1,4 @@
-package com.rostifar.wordDistrobution;
+package com.rostifar.wordDistribution;
 
 import java.util.*;
 
