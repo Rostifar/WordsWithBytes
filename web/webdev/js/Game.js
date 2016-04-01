@@ -61,6 +61,7 @@ Game.prototype = {
             boardImage.anchor.setTo(0.5);
             var scrabbleBoard = new Game.constructs.ScrabbleBoard(boardImage, this.game.width, this.game.height);
             console.log(scrabbleBoard.locations);
+            console.log()
             //var rack = new Game.constructs.Rack(getNumberOfPlayers); //Backend implementation
            // rack.getLetterToAdd('bl');
            // rack.getLetterToAdd('a');
