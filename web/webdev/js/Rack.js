@@ -5,31 +5,11 @@
 
 var rack = (function () {
     var game, gameRack, locations, yLocation, currentLetter, xLocation;
-
-    function getGameInstance(gameInstanceReference) {
-        game = gameInstanceReference;
-    }
+    game = scrabbleGame.getGame;
     gameRack = [];
     locations = [];
     yLocation = game.height - 40;
     xLocation = locations[gameRack.length];
-
-    function createRackLocations() {
-        var counter1, counter2;
-        counter1 = 0;
-        counter2 = 0;
-
-        locations.push(game.world.centerX);
-
-        while (counter1 < 3) {
-            ++counter1;
-            locations.push(game.world.centerX + (50 * counter1));
-        }
-        while (counter2 < 3) {
-            ++counter2;
-            locations.push(game.world.centerX - (50 * counter2));
-        }
-    }
 
     function setCurrentLetter(letter) {
         currentLetter = letter;
@@ -37,10 +17,10 @@ var rack = (function () {
 
     function analyzeLetterPlacement() {
         if (interfaceMechanics.isInBoardProximity(currentLetter)) {
-            interfaceMechanics.searchForClosestSquare(currentLetter);
+            interfaceMechanics.searchForClosestSquare(currentLetter)
         } else {
             currentLetter.x = currentLetter.positionOnRack;
-            currentLetter.y = Rack.yLocation;
+            currentLetter.y = yLocation;
         }
     }
 
@@ -69,12 +49,8 @@ var rack = (function () {
     }
 
     return {
-        getGameInstance: function(gameInstance) {
-            getGameInstance(gameInstance);
-        },
         initializeRackLocations: createRackLocations(),
         getNumberOfLettersOnRack: gameRack.length,
-        getCurrentLetter: currentLetter,
         getLetterToAdd: function(imageKey) {
             addLetterToRack(imageKey);
         },

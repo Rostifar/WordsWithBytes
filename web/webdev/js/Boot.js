@@ -39,4 +39,4 @@ WordsWithBytes.Boot.prototype = {
         this.game.stage.backgroundColor = '#659EC7';
         this.state.start('Preload');
     }
-}
+};

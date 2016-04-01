@@ -26,7 +26,7 @@ var interfaceMechanics = (function(){
 
     return {
 
-        initCenterSquares: calculateCenterSquares(),
+        //initCenterSquares: calculateCenterSquares(),
 
         isInBoardProximity: function(currentLetter) {
             var minimumWidth = scrabbleBoard.excessPixelsX;
