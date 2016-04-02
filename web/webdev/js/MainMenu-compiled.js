@@ -34,23 +34,25 @@ WordsWithBytes.MainMenu.prototype = {
 };
 
 function playerTwoActionOnClick() {
-    addPlayer("Player1");
-    addPlayer("Player2");
+    addPlayers(2);
     this.state.start("Game");
 }
 function playerThreeActionOnClick() {
-    //addPlayer("Player2");
+    addPlayers(3);
     this.state.start("Game");
 }
 function playerFourActionOnClick() {
+    addPlayers(4);
     this.state.start("Game");
 }
 
-function addPlayer(playerName) {
+function addPlayers(numOfPlayers) {
     alert("Calling AddPlayerServlet");
 
-    $.post("/AddPlayer", { name: "John" }, function (data, status) {
-        console.log("Data: " + data + "\nStatus: " + status);
+    $.post("/AddPlayer", { numberOfPlayers: numOfPlayers }, function (data, status) {
+        //console.log("Data: " + data + "\nStatus: " + status);
+        var gameObj = JSON.parse(data);
+        console.log(gameObj);
     });
 }
 

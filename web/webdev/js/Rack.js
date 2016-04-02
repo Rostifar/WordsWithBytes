@@ -3,7 +3,6 @@
  */
 "use strict";
 
-var rack = (function () {
     var game, gameRack, locations, yLocation, currentLetter, xLocation;
     game = scrabbleGame.getGame;
     gameRack = [];
@@ -50,7 +49,7 @@ var rack = (function () {
 
     return {
         initializeRackLocations: createRackLocations(),
-        getNumberOfLettersOnRack: gameRack.length,
+        getNumberOfLettersOnRack: gameRacik.length,
         getLetterToAdd: function(imageKey) {
             addLetterToRack(imageKey);
         },
@@ -58,4 +57,3 @@ var rack = (function () {
            removeLetterFromRack(letterToRemove);
         }
     }
-})();

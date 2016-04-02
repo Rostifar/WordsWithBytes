@@ -53,7 +53,7 @@ WordsWithBytes.Preload.prototype = {
         if (this.cache.isSoundDecoded('introMusic') && this.ready == false)
         {
             this.ready = true;
-            this.state.start('MainMenu');
+            this.state.start('Game');
         }
     }
 };

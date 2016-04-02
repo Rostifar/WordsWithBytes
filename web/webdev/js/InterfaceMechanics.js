@@ -28,15 +28,6 @@ var interfaceMechanics = (function(){
 
         //initCenterSquares: calculateCenterSquares(),
 
-        isInBoardProximity: function(currentLetter) {
-            var minimumWidth = scrabbleBoard.excessPixelsX;
-            var minimumHeight = scrabbleBoard.excessPixelsY;
-            var maximumHeight = scrabbleBoard.scaledBoardHeight;
-            var maximumWidth = scrabbleBoard.scaledBoardWidth;
-
-            return ((currentLetter.x >= minimumWidth && currentLetter.x <= maximumWidth) && (currentLetter.y >= minimumHeight && currentLetter.y <= maximumHeight));
-        },
-
         searchForClosestSquare: function(letter) {
             var closestSquaresX = [];
             var closestSquaresY = [];
