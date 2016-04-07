@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="java">
+    <CLASSES />
+    <JAVADOC>
+      <root url="file://$USER_HOME$/GSon/gson/gson/docs/javadocs" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$USER_HOME$/GSon/gson/codegen/src/main/java" />
+      <root url="file://$USER_HOME$/GSon/gson/codegen/src/test/java" />
+      <root url="file://$USER_HOME$/GSon/gson/examples/android-proguard-example/src" />
+      <root url="file://$USER_HOME$/GSon/gson/extras/src/main/java" />
+      <root url="file://$USER_HOME$/GSon/gson/extras/src/test/java" />
+      <root url="file://$USER_HOME$/GSon/gson/gson/src/main/java" />
+      <root url="file://$USER_HOME$/GSon/gson/gson/src/test/java" />
+      <root url="file://$USER_HOME$/GSon/gson/metrics/src/main/java" />
+      <root url="file://$USER_HOME$/GSon/gson/proto/src/main/java" />
+      <root url="file://$USER_HOME$/GSon/gson/proto/src/test/java" />
+    </SOURCES>
+  </library>
+</component>

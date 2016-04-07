@@ -3,76 +3,84 @@
  */
 "use strict";
 WordsWithBytes.Game = function(game){
-    this.game = game;
     this.currentPlayer = null;
     this.boardImage = null;
     this.currentLetter = null;
-    WordsWithBytes.scrabbleBoard.excessPixelsX = 0;
-    WordsWithBytes.scrabbleBoard.excessPixelsY = 0;
-    WordsWithBytes.scrabbleBoard.scaledBoardHeight = 0;
-    WordsWithBytes.scrabbleBoard.scaledBoardWidth = 0;
-    WordsWithBytes.rack.locations = [];
-    WordsWithBytes.interfaceMechanics.centerSquaresX = [];
-    WordsWithBytes.interfaceMechanics.centerSquaresY = [];
-    WordsWithBytes.rack.numberOfPlayers = 0;
-
+    this.excessPixelsX = 0;
+    this.excessPixelsY = 0;
+    this.scaledBoardHeight = 0;
+    this.scaledBoardWidth = 0;
+    this.rackLocations = [];
+    this.centerSquaresX = [];
+    this.centerSquaresY = [];
+    this.isPlayerGuessing = false;
 };
 
 WordsWithBytes.Game.prototype =  {
 
-    create: function() {
-        this.game.add.sprite(0, 0, 'space-background');
-        this.boardImage = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'scrabbleBoard');
-        this.boardImage.anchor.setTo(0.5);
-        var scrabbleBoard = WordsWithBytes.Game.ScrabbleBoard;
-    }
-};
-
-WordsWithBytes.scrabbleBoard = {
-
-    caluculateExcessPixelsX: function() {
-        WordsWithBytes.scrabbleBoard.excessPixelsX = (this.game.width - this.boardImage.width) / 2;
+    setupScrabbleGameDimensions: function() {
+        this.excessPixelsX = (this.game.width - this.boardImage.width) / 2;
+        this.excessPixelsY = (this.game.height - this.boardImage.height) / 2;
+        this.scaledBoardHeight = this.game.height - this.excessPixelsY;
+        this.scaledBoardWidth = this.game.width - this.excessPixelsX;
     },
-    calculateExcessPixelsY: function () {
-        WordsWithBytes.scrabbleBoard.excessPixelsY = (this.game.world.height - this.scrabbleBoardImage.height) / 2;
-    },
-    calculateScaledBoardHeight: function () {
-        WordsWithBytes.scrabbleBoard.scaledBoardHeight = this.game.height - WordsWithBytes.scrabbleBoard.excessPixelsY;
-    },
-    calculateScaledBoardWidth: function () {
-        WordsWithBytes.scrabbleBoard.scaledBoardWidth = this.game.width - WordsWithBytes.scrabbleBoard.excessPixelsX;
-    }
-};
 
-WordsWithBytes.interfaceMechanics = {
+    setupRackLocations: function() {
+        var counter1 = 0;
+        var counter2 = 0;
+
+        while (counter1 < 3) {
+            ++counter1;
+            this.rackLocations.push(1 + (50 * counter1));
+        }
+        while (counter2 < 3) {
+            ++counter2;
+            this.rackLocations.push(1 - (50 * counter2));
+        }
+    },
 
     sortNumber: function(a, b) {
       return a - b;
     },
 
-    isInBoardProximity: function() {
-        var minimumWidth = WordsWithBytes.scrabbleBoard.excessPixelsX;
-        var minimumHeight = WordsWithBytes.scrabbleBoard.excessPixelsY;
-        var maximumHeight = WordsWithBytes.scrabbleBoard.scaledBoardHeight;
-        var maximumWidth = WordsWithBytes.scrabbleBoard.scaledBoardWidth;
+    createLetter: function(imageKey) {
+        var letter = this.game.add.sprite(this.game.width - 40, yLocation, imageKey);
+        letter.positionOnRack = xLocation;
+        letter.anchor.setTo(0.5);
+        letter.inputEnabled = true;
+        letter.input.enableDrag(true);
+        letter.events.onDragStart.add(function() {
+            this.isPlayerGuessing = true; this.currentLetter = letter;
+        }, this);
+        letter.events.onInputUp.add(function() {
+            this.isPlayerGuessing = false; this.currentLetter = null;
+        }, this);
+        gameRack.push(letter);
+    },
+
+    calculateCenterSquares: function() {
+        var xScaleFactor = this.scaledBoardWidth / 15;
+        var yScaleFactor = this.scaledBoardHeight / 15;
+
+        for (var initialPixelWidth = this.excessPixelsX; initialPixelWidth <= this.scaledBoardWidth; initialPixelWidth += xScaleFactor) {
+            this.centerSquaresX.push(initialPixelWidth);
+        }
+        for (var initialPixelHeight = this.excessPixelsY; initialPixelHeight <= this.scaledBoardHeight; initialPixelHeight += yScaleFactor) {
+            this.centerSquaresY.push(initialPixelHeight);
+        }
+    },
+
+    isPlayInBoardProximity: function() {
+        var minimumWidth = this.excessPixelsX;
+        var minimumHeight = this.excessPixelsY;
+        var maximumHeight = this.scaledBoardHeight;
+        var maximumWidth = this.scaledBoardWidth;
 
         return ((currentLetter.x >= minimumWidth && currentLetter.x <= maximumWidth) && (currentLetter.y >= minimumHeight && currentLetter.y <= maximumHeight));
     },
 
-    calculateCenterSquare: function() {
-        var xScaleFactor = WordsWithBytes.scrabbleBoard.scaledBoardWidth / 15;
-        var yScaleFactor = WordsWithBytes.scrabbleBoard.scaledBoardHeight / 15;
-        var excessPixelsX = WordsWithBytes.scrabbleBoard.excessPixelsX;
-        var excessPixelsY = WordsWithBytes.scrabbleBoard.excessPixelsY;
-        var scrabbleBoardHeight = WordsWithBytes.scrabbleBoard.scaledBoardHeight;
-        var scrabbleBoardWidth = WordsWithBytes.scrabbleBoard.scaledBoardWidth;
-
-        for (var initialPixelWidth = excessPixelsX; initialPixelWidth <= scrabbleBoardWidth; initialPixelWidth += xScaleFactor) {
-            WordsWithBytes.interfaceMechanics.centerSquaresX.push(initialPixelWidth);
-        }
-
-        for (var initialPixelHeight = excessPixelsY; initialPixelHeight <= scrabbleBoardHeight; initialPixelHeight += yScaleFactor) {
-            WordsWithBytes.interfaceMechanics.centerSquaresY.push(initialPixelHeight);
+    addLettersToRack: function(listOfLettersToAdd) {
+        for (var i = 0; i < listOfLettersToAdd.length; i++) {
         }
     },
 
@@ -81,32 +89,31 @@ WordsWithBytes.interfaceMechanics = {
         var closestSquaresY = [];
 
         for (var i = 0; i < 15; i++) {
-            closestSquaresX.push(Math.abs(this.currentLetter.x - WordsWithBytes.interfaceMechanics.centerSquaresX[i]));
-            closestSquaresY.push(Math.abs(this.currentLetter.y - WordsWithBytes.interfaceMechanics.centerSquaresY[i]));
+            closestSquaresX.push(Math.abs(this.currentLetter.x - this.centerSquaresX[i]));
+            closestSquaresY.push(Math.abs(this.currentLetter.y - this.centerSquaresY[i]));
         }
+
         closestSquaresX.sort(this.sortNumber);
         closestSquaresY.sort(this.sortNumber);
         currentLetter.x = closestSquaresX[0];
         currentLetter.y = closestSquaresY[0];
-        }
+        closestSquaresX.length = 0;
+        closestSquaresY.length = 0;
+    },
 
+    analyzeLetterPlacement: function() {
+
+    },
+
+    create: function() {
+        this.game.add.sprite(0, 0, 'space-background');
+        this.boardImage = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'scrabbleBoard');
+        this.boardImage.anchor.setTo(0.5);
+        this.setupScrabbleGameDimensions();
+    },
+
+    update: function() {
+
+    },
 };
 
-WordsWithBytes.rack = {
-
-    analyzeLetterPlacement: function() {},
-
-    calculateLocations: function() {
-        var counter1 = 0;
-        var counter2 = 0;
-
-        while (counter1 < 3) {
-            ++counter1;
-            WordsWithBytes.rack.locations.push(1 + (50 * counter1));
-        }
-        while (counter2 < 3) {
-            ++counter2;
-            WordsWithBytes.rack.locations.push(1 - (50 * counter2));
-        }
-    }
-};
