@@ -50,7 +50,7 @@ function playerFourActionOnClick() {
 
 
 function addPlayers(numOfPlayers) {
-    alert("Calling AddPlayerServlet");
+   //alert("Calling AddPlayerServlet");
 
     $.post("/AddPlayer", {numberOfPlayers: numOfPlayers}, function (data, status) {
         //console.log("Data: " + data + "\nStatus: " + status);

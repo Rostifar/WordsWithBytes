@@ -1,8 +1,9 @@
 package com.rostifar.wordDistribution;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class ScrabbleAlphabet {
+public class ScrabbleAlphabet implements Serializable {
     private Map<Character, List<ScrabbleLetter>> letterMap = new HashMap<>();
     private static ScrabbleAlphabet alphabetInstance;
     /**
