@@ -4,6 +4,7 @@
 "use strict";
 WordsWithBytes.Game = function(game){
     this.currentPlayer = null;
+    this.players = [];
     this.boardImage = null;
     this.currentLetter = null;
     this.excessPixelsX = 0;
@@ -37,6 +38,10 @@ WordsWithBytes.Game.prototype =  {
             ++counter2;
             this.rackLocations.push(1 - (50 * counter2));
         }
+    },
+
+    addLetterToRack: function() {
+
     },
 
     sortNumber: function(a, b) {
@@ -79,11 +84,6 @@ WordsWithBytes.Game.prototype =  {
         return ((currentLetter.x >= minimumWidth && currentLetter.x <= maximumWidth) && (currentLetter.y >= minimumHeight && currentLetter.y <= maximumHeight));
     },
 
-    addLettersToRack: function(listOfLettersToAdd) {
-        for (var i = 0; i < listOfLettersToAdd.length; i++) {
-        }
-    },
-
     searchForClosestSquare: function() {
         var closestSquaresX = [];
         var closestSquaresY = [];
@@ -101,19 +101,31 @@ WordsWithBytes.Game.prototype =  {
         closestSquaresY.length = 0;
     },
 
-    analyzeLetterPlacement: function() {
+    initMechanicsCalculations: function() {
+        this.setupScrabbleGameDimensions();
+        this.setupRackLocations();
+        this.calculateCenterSquares();
+    },
 
+    calculationsTestSuite: function() {
+        console.log(this.excessPixelsX, this.excessPixelsY, this.scaledBoardWidth, this.scaledBoardHeight);
+
+        for (var i = 0; i < this.centerSquaresX.length; i++) {
+            console.log(this.centerSquaresX[i]);
+            console.log(this.centerSquaresY[i])
+        }
     },
 
     create: function() {
         this.game.add.sprite(0, 0, 'space-background');
         this.boardImage = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'scrabbleBoard');
         this.boardImage.anchor.setTo(0.5);
-        this.setupScrabbleGameDimensions();
+        this.initMechanicsCalculations();
+        this.calculationsTestSuite();
     },
 
     update: function() {
 
-    },
+    }
 };
 
