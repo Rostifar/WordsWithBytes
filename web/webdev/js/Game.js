@@ -17,6 +17,13 @@ WordsWithBytes.Game = function(game){
     this.isPlayerGuessing = false;
 };
 
+/**
+ * @WordsWithBytes.Game.Prototype
+ * #purpose -> holds the main functionality for the whole scrabble game. Especially in the gui department.
+ * #functionality -> many of the functions at the top of the scope are ones which setup the various calculations for running the game
+ * smoothly and adding functionality to the board. While the functions towards the bottom are the general mechanics which helps decide
+ * how the game is to operate(AKA. Main functionality)*/
+
 WordsWithBytes.Game.prototype =  {
 
     setupScrabbleGameDimensions: function() {
