@@ -2,6 +2,7 @@ package com.rostifar.servlets;
 
 import com.rostifar.gamecontrol.ScrabbleGameManager;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.io.IOException;
  * Created by Git:Lazy (Dad) on 3/21/2016.
  * Servlet called by from end to process a player playing a word using back end.
  */
-public class PlayWordServlet extends ScrabbleServletHelper {
+public class PlayWordServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
         //  String playerName  = request.getParameter("PlayerName");

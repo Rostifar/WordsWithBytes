@@ -15,6 +15,9 @@ WordsWithBytes.Game = function(game){
     this.centerSquaresX = [];
     this.centerSquaresY = [];
     this.isPlayerGuessing = false;
+    this.boardTileMap = null;
+    this.boardTileLayer = null;
+    this.scrabbleBoard = null;
 };
 
 /**
@@ -121,6 +124,49 @@ WordsWithBytes.Game.prototype =  {
             console.log(this.centerSquaresX[i]);
             console.log(this.centerSquaresY[i])
         }
+    },
+
+    initScrabbleBoardTiles: function(){
+
+        this.boradTileMap = game.add.tilemap("boardTileMap");
+        //Add the basic tile images needed to create the scrabble board
+        map.addTilesetImage("tileRegular");
+        map.addTilesetImage("tileCenter");
+        map.addTilesetImage("tileDoubleWord");
+        map.addTilesetImage("tileTripleWord");
+        map.addTilesetImage("tileDoubleLetter");
+        map.addTilesetImage("tileTripleLetter");
+
+        this.boardTileLayer = map.createLayer('Scrabble Board Layer 1');
+        //this.boardTileLayer.resizeWorld();
+
+        var me = this;
+       this.getScrabbleBoard();
+
+     /*   //Loop through each column in the grid
+        for (var i = 0; i < me.tileGrid.length; i++){
+
+            //Loop through each position in a specific column, starting from the top
+            for(var j = 0; j < me.tileGrid.length; j++){
+
+                //Add the tile to the game at this grid position
+                var tile = me.addTile(i, j);
+
+                //Keep a track of the tiles position in our tileGrid
+                me.tileGrid[i][j] = tile;
+
+            }
+        }*/
+
+    },
+
+    //Make an AJAX call using JQuery to get the JSON for the current state of the scrabble board and convent it to a Java script object
+    getScrabbleBoard: function () {
+        $.post("/GameInquiry", {inquiryType:"scrabbleBoard"}, function (data, status) {
+            var gameObj = JSON.parse(data);
+            console.log(gameObj);
+            this.scrabbleBoard = gameObj;
+        })
     },
 
     create: function() {

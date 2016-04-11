@@ -15,7 +15,6 @@ import java.util.List;
  * Created by Dad on 10/4/2015.
  */
 public class ScrabbleGameManager implements Serializable {
-
     private ScrabbleBoard scrabbleBoard;
     private Player players[];
     //private UserInput userInput;
@@ -70,6 +69,11 @@ public class ScrabbleGameManager implements Serializable {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
+    public ScrabbleBoard getScrabbleBoard() {
+        return scrabbleBoard;
+    }
+
 
     protected void setupPlayer(Player player) {
         if (player.needsLetters()) {

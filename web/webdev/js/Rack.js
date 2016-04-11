@@ -47,13 +47,4 @@
         gameRack.splice(gameRack.indexOf(previousPosition, currentPosition));
     }
 
-    return {
-        initializeRackLocations: createRackLocations(),
-        getNumberOfLettersOnRack: gameRacik.length,
-        getLetterToAdd: function(imageKey) {
-            addLetterToRack(imageKey);
-        },
-        getLetterToRemove: function(letterToRemove) {
-           removeLetterFromRack(letterToRemove);
-        }
-    }
+

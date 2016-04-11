@@ -5,12 +5,12 @@
          version="3.1">
 
     <servlet>
-        <servlet-name>GameController</servlet-name>
-        <servlet-class>com.rostifar.servlets.ScrabbleServletHelper</servlet-class>
+        <servlet-name>GameInquiry</servlet-name>
+        <servlet-class>com.rostifar.servlets.ScrabbleInquiryServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>GameController</servlet-name>
-       <url-pattern>/GameController/*</url-pattern>
+        <servlet-name>GameInquiry</servlet-name>
+       <url-pattern>/GameInquiry/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

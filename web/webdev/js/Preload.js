@@ -40,6 +40,14 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('xLetter', 'assets/images/LetterX.png');
         this.load.image('yLetter', 'assets/images/LetterY.png');
         this.load.image('zLetter', 'assets/images/LetterZ.png');
+
+        this.load.image('tileRegular', 'Tile-Regular.png');
+        this.load.image('tileCenter', 'Tile-Center.png');
+        this.load.image('tileDoubleWord', 'Tile-DoubleWord.png');
+        this.load.image('tileTripleWord', 'Tile-TripleWord.png');
+        this.load.image('tileDoubleLetter', 'Tile-DoubleLetter.png');
+        this.load.image('tileTripleWord', 'Tile-TripleLetter.png');
+
         this.load.audio('introMusic', ['assets/music/intro-music.mp3']);
         this.load.image('scrabbleBoard', 'assets/images/ScrabbleBoard5.png');
         this.load.image('player2Button', 'assets/images/2PlayersButton.png');

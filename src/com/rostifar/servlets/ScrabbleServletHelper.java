@@ -1,6 +1,8 @@
 package com.rostifar.servlets;
 
 //import com.google.gson.Gson;
+
+import com.google.gson.Gson;
 import com.rostifar.gamecontrol.ScrabbleGameException;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
 import com.rostifar.scrabbleproject.Player;
@@ -50,18 +52,28 @@ public class ScrabbleServletHelper  {
      * Convert instance of ScrabbleGameManager to it's JSON equivalent
      * @return a String containing the resulting JSON
      */
-    //protected static String getJSONforGameManager(ScrabbleGameManager gameManager) {
-        //Gson gson = new Gson();
-     ///   return gson.toJson(gameManager);
-   // }
+    protected static String getJSONforGameManager(ScrabbleGameManager gameManager) {
+        Gson gson = new Gson();
+        return gson.toJson(gameManager);
+    }
 
     /**
      * Convert instance of Player to it's JSON equivalent
      * @return a String containing the resulting JSON
      */
-    //protected static String getJSONforPlayer(Player aPlayer) {
-       // Gson gson = new Gson();
-      //  return gson.toJson(aPlayer);
-   // }
+    protected static String getJSONforCurrentPlayer(ScrabbleGameManager gameManager) {
+        Gson gson = new Gson();
+        return gson.toJson(gameManager.getCurrentPlayer());
+   }
+
+    /**
+     * Convert instance of Player to it's JSON equivalent
+     * @return a String containing the resulting JSON
+     */
+    protected static String getJSONforScrabbleBoard(ScrabbleGameManager gameManager) {
+        Gson gson = new Gson();
+        return gson.toJson(gameManager.getScrabbleBoard());
+    }
+
 
 }
