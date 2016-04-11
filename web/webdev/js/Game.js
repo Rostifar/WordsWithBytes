@@ -136,8 +136,8 @@ WordsWithBytes.Game.prototype =  {
         map.addTilesetImage("tileTripleWord");
         map.addTilesetImage("tileDoubleLetter");
         map.addTilesetImage("tileTripleLetter");
-
-        this.boardTileLayer = map.createLayer('Scrabble Board Layer 1');
+        this.boardTileLayer = map.create('level1', 15, 15, 32, 32);
+        //this.boardTileLayer = map.createLayer('Scrabble Board Layer 1');
         //this.boardTileLayer.resizeWorld();
 
         var me = this;
