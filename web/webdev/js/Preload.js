@@ -41,20 +41,17 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('yLetter', 'assets/images/LetterY.png');
         this.load.image('zLetter', 'assets/images/LetterZ.png');
 
-        this.load.image('tileRegular', 'Tile-Regular.png');
-        this.load.image('tileCenter', 'Tile-Center.png');
-        this.load.image('tileDoubleWord', 'Tile-DoubleWord.png');
-        this.load.image('tileTripleWord', 'Tile-TripleWord.png');
-        this.load.image('tileDoubleLetter', 'Tile-DoubleLetter.png');
-        this.load.image('tileTripleWord', 'Tile-TripleLetter.png');
-
         this.load.audio('introMusic', ['assets/music/intro-music.mp3']);
-        this.load.image('scrabbleBoard', 'assets/images/ScrabbleBoard5.png');
+       /* this.load.image('scrabbleBoard', 'assets/images/ScrabbleBoard5.png');
         this.load.image('player2Button', 'assets/images/2PlayersButton.png');
         this.load.image('player3Button', 'assets/images/3PlayersButton.png');
-        this.load.image('player4Button', 'assets/images/4PlayersButton.png');
+        this.load.image('player4Button', 'assets/images/4PlayersButton.png');*/
         this.load.image('scrabbleSample', 'assets/images/SampleScrabbleImage.jpg');
-        this.load.image('space-background', 'assets/images/space.jpg');
+      //  this.load.image('space-background', 'assets/images/space.jpg');
+
+        //Load the tile map of the scrabble board using JSON layout.
+        this.load.tilemap('ScrabbleBoardTileSet', 'assets/tilemaps/ScrabbleBoardTiles.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.image('tileImage', 'assets/images/ScrabbleBoardTilesetImage.png');
     },
 
     update: function() {

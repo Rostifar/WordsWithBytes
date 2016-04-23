@@ -9,7 +9,7 @@
     <script src="js/Preload.js" type="text/javascript"></script>
     <script src="js/MainMenu.js" type="text/javascript"></script>
     <script src="js/Game.js" type="text/javascript"></script>
-    <script src="js/Main.js" type="text/javascript"></script>
+
     <script src="js/jquery-1.12.2.js"></script>
 </head>
 <body>
@@ -18,8 +18,8 @@
 <div id="fb-root"></div>
 <script>
 
-        var gameHeight = 800;
-        var gameWidth = 900;
+        var gameHeight = 600;
+        var gameWidth = 600;
 
         var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'WordsWithBytes');
         game.state.add('Boot', WordsWithBytes.Boot);
