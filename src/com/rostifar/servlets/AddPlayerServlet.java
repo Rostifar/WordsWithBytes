@@ -13,13 +13,9 @@ import java.io.IOException;
 public class AddPlayerServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
-      //  String playerName  = request.getParameter("PlayerName");
         int numberOfPlayers = Integer.valueOf(request.getParameter("numberOfPlayers"));
         System.out.println(this.getClass().getName() + " - Adding " + numberOfPlayers + " players.");
 
-      /*  if (playerName == null)
-            playerName = "UnnamedPlayer-" + System.currentTimeMillis();
-*/
         ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
         gameManager.addPlayers(numberOfPlayers);
         String json = ScrabbleServletHelper.getJSONforGameManager(gameManager);

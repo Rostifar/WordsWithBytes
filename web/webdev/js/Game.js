@@ -20,6 +20,8 @@ WordsWithBytes.Game = function(game){
     this.scrabbleBoard = null;
     this.marker = null;
     this.cursors = null;
+    this.scrabbleBoard = [];
+    this.currentPlayer = null;
 };
 
 /**
@@ -30,6 +32,10 @@ WordsWithBytes.Game = function(game){
  * how the game is to operate(AKA. Main functionality)*/
 
 WordsWithBytes.Game.prototype = {
+
+    setupScrabbleBoard: function() {
+        while(this.scrabbleBoard.push([]) < 15);
+    },
 
     setupScrabbleGameDimensions: function () {
         this.excessPixelsX = (this.game.width - this.boardImage.width) / 2;
@@ -50,10 +56,6 @@ WordsWithBytes.Game.prototype = {
             ++counter2;
             this.rackLocations.push(1 - (50 * counter2));
         }
-    },
-
-    addLetterToRack: function () {
-
     },
 
     sortNumber: function (a, b) {
@@ -132,7 +134,6 @@ WordsWithBytes.Game.prototype = {
 
     initScrabbleBoardTiles: function () {
 
-        //  var test = game.load.tilemap("scrabbleBoardTileMap", 'C:/Users/D14048/Desktop/GitHub/WordsWithBytes/web/webdev/assets/tilemaps/ScrabbleBoard2.json', null, Phaser.Tilemap.TILED_JSON);
         this.boardTileMap = game.add.tilemap("ScrabbleBoardTileSet");
         this.boardTileMap.addTilesetImage('ScrabbleBoardTilesetImage', 'tileImage'); //first arg needs to match the image "name" from the JSON file
         this.scrabbleBoardLayer = this.boardTileMap.createLayer('ScrabbleBoardLayer');
@@ -141,38 +142,6 @@ WordsWithBytes.Game.prototype = {
         this.marker = game.add.graphics();
         this.marker.lineStyle(2, 0x000000, 1);
         this.marker.drawRect(0, 0, 40, 40);
-        //this.cursors = game.input.keyboard.createCursorKeys();
-
-
-        //this.game.add.sprite(0, 0, 'space-background');
-        this.boardImage = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'scrabbleBoard');
-        this.boardTileMap = game.add.tilemap("ScrabbleBoardTileSet");
-        this.boardTileMap.addTilesetImage('ScrabbleBoardTilesetImage', 'tileImage'); //first arg needs to match the image "name" from the JSON file
-        this.scrabbleBoardLayer = this.boardTileMap.createLayer('ScrabbleBoardLayer');
-        this.scrabbleBoardLayer.resizeWorld();
-
-        this.marker = game.add.graphics();
-        this.marker.lineStyle(2, 0x000000, 1);
-        this.marker.drawRect(0, 0, 40, 40);
-        //this.cursors = game.input.keyboard.createCursorKeys();
-        //this.game.add.sprite(0, 0, 'space-background');
-        this.boardImage = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'scrabbleBoard');
-        //this.getScrabbleBoard();
-        /*   //Loop through each column in the grid
-         for (var i = 0; i < me.tileGrid.length; i++){
-
-         //Loop through each position in a specific column, starting from the top
-         for(var j = 0; j < me.tileGrid.length; j++){
-
-         //Add the tile to the game at this grid position
-         var tile = me.addTile(i, j);
-
-         //Keep a track of the tiles position in our tileGrid
-         me.tileGrid[i][j] = tile;
-
-         }
-         }*/
-
     },
 
     //Make an AJAX call using JQuery to get the JSON for the current state of the scrabble board and convent it to a Java script object
@@ -184,16 +153,29 @@ WordsWithBytes.Game.prototype = {
         })
     },
 
+    playMove: function() {
+
+    },
+
     create: function () {
         this.initScrabbleBoardTiles();
-        //this.boardImage.anchor.setTo(0.5);
-        //this.initMechanicsCalculations();
-        //this.calculationsTestSuite();
+        this.setupScrabbleBoard();
+
+        var controlButtonHeight = this.game.world.height + 60;
+        var playWordButton = this.game.add.button(this.game.world.centerX, controlButtonHeight,'PlayWordButton');
+        var passTurnButton = this.game.add.button(this.game.world.centerX + playWordButton.width + 5, controlButtonHeight, 'PassTurnButton');
+        var swapWordsButton = this.game.add.button(this.game.world.centerX + (playWordButton.width + passTurnButton.width) + 10, controlButtonHeight, 'SwapWordsButton');
+        var quitGameButton = this.game.add.button(this.game.world.width - playWordButton.width, controlButtonHeight, 'QuitGameButton');
+        playWordButton.anchor.setTo(0.5, 0.5);
+        passTurnButton.anchor.setTo(0.5, 0.5);
+        swapWordsButton.anchor.setTo(0.5, 0.5);
+        quitGameButton.anchor.setTo(0.5, 0.5);
     },
 
     update: function () {
         this.marker.x = this.scrabbleBoardLayer.getTileX(game.input.activePointer.worldX) * 40;
         this.marker.y = this.scrabbleBoardLayer.getTileY(game.input.activePointer.worldY) * 40;
+
     },
 
     render: function() {
