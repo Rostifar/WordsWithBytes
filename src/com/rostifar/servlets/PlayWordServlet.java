@@ -14,16 +14,11 @@ import java.io.IOException;
 public class PlayWordServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
-        //  String playerName  = request.getParameter("PlayerName");
         String scrabbleWordInput = request.getParameter("wordToPlay");
         int wordRow = Integer.valueOf(request.getParameter("wordRow"));
         int wordCol = Integer.valueOf(request.getParameter("wordCol"));
         String orientation  = request.getParameter("orientation");
         System.out.println(this.getClass().getName() + " - Play word: " + "scrabbleWordInput");
-
-      /*if (scrabbleWordInput == null || scrabbleWordInput.isEmpty()) {
-          throw new ScrabbleGameInvalidWordException("Word is blank");
-      }*/
 
         ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
         gameManager.playWord(scrabbleWordInput, wordCol, wordRow, orientation);

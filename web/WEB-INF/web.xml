@@ -26,8 +26,19 @@
         <servlet-name>PlayWord</servlet-name>
         <servlet-class>com.rostifar.servlets.PlayWordServlet</servlet-class>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>PlayWord</servlet-name>
         <url-pattern>/PlayWord/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetLettersOnRack</servlet-name>
+        <servlet-class>com.rostifar.servlets.AddLettersToRackServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetLettersOnRack</servlet-name>
+        <url-pattern>/GetLettersOnRack/*</url-pattern>
     </servlet-mapping>
 </web-app>
