@@ -34,8 +34,6 @@ WordsWithBytes.Game = function(game){
 
 WordsWithBytes.Game.prototype = {
 
-
-
     initScrabbleBoardTiles: function () {
 
         this.boardTileMap = game.add.tilemap("ScrabbleBoardTileSet");
@@ -83,7 +81,6 @@ WordsWithBytes.Game.prototype = {
     update: function () {
         this.marker.x = this.scrabbleBoardLayer.getTileX(game.input.activePointer.worldX) * 40;
         this.marker.y = this.scrabbleBoardLayer.getTileY(game.input.activePointer.worldY) * 40;
-
     },
 
     render: function() {

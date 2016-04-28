@@ -11,13 +11,13 @@ import java.io.IOException;
 /**
  * Created by ross on 4/25/16.
  */
-public class AddLettersToRackServlet extends HttpServlet{
+public class GetPlayerRackServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
         ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
         Gson gson = new Gson();
 
-        String rackJson = gson.toJson(gameManager.getCurrentPlayer().getRack().getLettersOnRack());
+        String rackJson = gson.toJson(gameManager.getCurrentPlayer().getRack().getCharactersOnRack());
         response.getWriter().write(rackJson);
     }
 }
