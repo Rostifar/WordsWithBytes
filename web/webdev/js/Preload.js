@@ -13,33 +13,34 @@ WordsWithBytes.Preload.prototype = {
         this.splash = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'WordsWithBytes-logo');
         this.splash.anchor.setTo(0.5);
 
-        this.load.image('bl', 'assets/images/bl.png');
-        this.load.image('a', 'assets/images/a.png');
-        this.load.image('bLetter', 'assets/images/LetterB.png');
-        this.load.image('cLetter', 'assets/images/LetterC.png');
-        this.load.image('dLetter', 'assets/images/LetterD.png');
-        this.load.image('eLetter', 'assets/images/LetterE.png');
-        this.load.image('fLetter', 'assets/images/LetterF.png');
-        this.load.image('gLetter', 'assets/images/LetterG.png');
-        this.load.image('hLetter', 'assets/images/LetterH.png');
-        this.load.image('iLetter', 'assets/images/LetterI.png');
-        this.load.image('jLetter', 'assets/images/LetterJ.png');
-        this.load.image('kLetter', 'assets/images/LetterK.png');
-        this.load.image('lLetter', 'assets/images/LetterL.png');
-        this.load.image('mLetter', 'assets/images/LetterM.png');
-        this.load.image('nLetter', 'assets/images/LetterN.png');
-        this.load.image('oLetter', 'assets/images/LetterO.png');
-        this.load.image('pLetter', 'assets/images/LetterP.png');
-        this.load.image('qLetter', 'assets/images/LetterQ.png');
-        this.load.image('rLetter', 'assets/images/LetterR.png');
-        this.load.image('sLetter', 'assets/images/LetterS.png');
-        this.load.image('tLetter', 'assets/images/LetterT.png');
-        this.load.image('uLetter', 'assets/images/LetterU.png');
-        this.load.image('vLetter', 'assets/images/LetterV.png');
-        this.load.image('wLetter', 'assets/images/LetterW.png');
-        this.load.image('xLetter', 'assets/images/LetterX.png');
-        this.load.image('yLetter', 'assets/images/LetterY.png');
-        this.load.image('zLetter', 'assets/images/LetterZ.png');
+     //   this.load.image('bl', 'assets/images/bl.png');
+        this.load.image('_', 'assets/images/a.png'); //Blank letter
+        this.load.image('A', 'assets/images/A.png');
+        this.load.image('B', 'assets/images/B.png');
+        this.load.image('C', 'assets/images/C.png');
+        this.load.image('D', 'assets/images/D.png');
+        this.load.image('E', 'assets/images/E.png');
+        this.load.image('F', 'assets/images/F.png');
+        this.load.image('G', 'assets/images/G.png');
+        this.load.image('H', 'assets/images/H.png');
+        this.load.image('I', 'assets/images/I.png');
+        this.load.image('J', 'assets/images/J.png');
+        this.load.image('K', 'assets/images/K.png');
+        this.load.image('L', 'assets/images/L.png');
+        this.load.image('M', 'assets/images/M.png');
+        this.load.image('N', 'assets/images/N.png');
+        this.load.image('O', 'assets/images/O.png');
+        this.load.image('P', 'assets/images/P.png');
+        this.load.image('Q', 'assets/images/Q.png');
+        this.load.image('R', 'assets/images/R.png');
+        this.load.image('S', 'assets/images/S.png');
+        this.load.image('T', 'assets/images/T.png');
+        this.load.image('U', 'assets/images/U.png');
+        this.load.image('V', 'assets/images/V.png');
+        this.load.image('W', 'assets/images/W.png');
+        this.load.image('X', 'assets/images/X.png');
+        this.load.image('Y', 'assets/images/Y.png');
+        this.load.image('Z', 'assets/images/Z.png');
 
         this.load.audio('introMusic', ['assets/music/intro-music.mp3']);
         this.load.image('scrabbleBoard', 'assets/images/ScrabbleBoard5.png');
@@ -53,12 +54,12 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('PlayWordButton', 'assets/images/PlayWord.png');
         this.load.image('SwapWordsButton', 'assets/images/SwapWords.png');
         this.load.image('QuitGameButton', 'assets/images/QuitGame.png');
-
         this.load.image('ScoreTemplate', 'assets/images/ScoreImage.png');
 
         //Load the tile map of the scrabble board using JSON layout.
         this.load.tilemap('ScrabbleBoardTileSet', 'assets/tilemaps/ScrabbleBoardTiles.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tileImage', 'assets/images/ScrabbleBoardTilesetImage.png');
+        this.load.image('alphabetImage', 'assets/images/ScrabbleAlphabetOneRowImage.png');
     },
 
     update: function() {

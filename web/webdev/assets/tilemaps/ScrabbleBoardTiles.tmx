@@ -1,9 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="40" tileheight="40" nextobjectid="1">
- <tileset firstgid="1" name="ScrabbleBoardTilesetImage" tilewidth="40" tileheight="40" tilecount="6" columns="6">
-  <image source="../../../../../../../../../@tmp/boardtiles/board2-tiles/ScrabbleBoardTilesetImage.png" width="240" height="40"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="15" height="17" tilewidth="40" tileheight="40" nextobjectid="41">
+ <tileset firstgid="1" name="ScrabbleBoardTileset" tilewidth="40" tileheight="40" tilecount="6" columns="6">
+  <image source="../images/ScrabbleBoardTilesetImage.png" width="240" height="40"/>
  </tileset>
- <layer name="ScrabbleBoardLayer" width="15" height="15">
+ <tileset firstgid="7" name="ScrabbleAlphabetTileset" tilewidth="40" tileheight="40" tilecount="27" columns="27">
+  <image source="../images/ScrabbleAlphabetOneRowImage.png" trans="ff00ff" width="1080" height="40"/>
+  <tile id="0">
+   <properties>
+    <property name="Letter" value="A"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Letter" value="B"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="Letter" value="C"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="Letter" value="D"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="Letter" value="E"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="Letter" value="F"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="Letter" value="G"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="Letter" value="H"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="Letter" value="I"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="Letter" value="J"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="Letter" value="K"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="Letter" value="L"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="Letter" value="M"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="Letter" value="N"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="Letter" value="O"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="Letter" value="P"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="Letter" value="Q"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="Letter" value="R"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="Letter" value="S"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="Letter" value="T"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="Letter" value="U"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="Letter" value="V"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="Letter" value="W"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="Letter" value="X"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="Letter" value="Y"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="Letter" value="Z"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="Letter" value="_"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="ScrabbleBoardLayer" width="15" height="17" visible="0">
   <data encoding="csv">
 6,1,1,3,1,1,1,6,1,1,1,3,1,1,6,
 1,4,1,1,1,5,1,1,1,5,1,1,1,4,1,
@@ -19,7 +157,59 @@
 3,1,1,4,1,1,1,3,1,1,1,4,1,1,3,
 1,1,4,1,1,1,3,1,3,1,1,1,4,1,1,
 1,4,1,1,1,5,1,1,1,5,1,1,1,4,1,
-6,1,1,3,1,1,1,6,1,1,1,3,1,1,6
+6,1,1,3,1,1,1,6,1,1,1,3,1,1,6,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <layer name="ScrabbleRackLayer" width="15" height="17">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup name="AlphabetObjects">
+  <object id="12" name="A" gid="7" x="0" y="640" width="40" height="40"/>
+  <object id="13" name="B" gid="8" x="40" y="640" width="40" height="40"/>
+  <object id="14" name="C" gid="9" x="80" y="640" width="40" height="40"/>
+  <object id="15" name="D" gid="10" x="120" y="640" width="40" height="40"/>
+  <object id="16" name="E" gid="11" x="160" y="640" width="40" height="40"/>
+  <object id="17" name="F" gid="12" x="200" y="640" width="40" height="40"/>
+  <object id="18" name="G" gid="13" x="240" y="640" width="40" height="40"/>
+  <object id="19" name="H" gid="14" x="280" y="640" width="40" height="40"/>
+  <object id="20" name="I" gid="15" x="320" y="640" width="40" height="40"/>
+  <object id="21" name="J" gid="16" x="360" y="640" width="40" height="40"/>
+  <object id="22" name="K" gid="17" x="400" y="640" width="40" height="40"/>
+  <object id="23" name="L" gid="18" x="440" y="640" width="40" height="40"/>
+  <object id="24" name="M" gid="19" x="480" y="640" width="40" height="40"/>
+  <object id="25" name="N" gid="20" x="520" y="640" width="40" height="40"/>
+  <object id="26" name="O" gid="21" x="560" y="640" width="40" height="40"/>
+  <object id="27" name="P" gid="22" x="0" y="680" width="40" height="40"/>
+  <object id="28" name="Q" gid="23" x="40" y="680" width="40" height="40"/>
+  <object id="29" name="R" gid="24" x="80" y="680" width="40" height="40"/>
+  <object id="30" name="S" gid="25" x="120" y="680" width="40" height="40"/>
+  <object id="31" name="T" gid="26" x="160" y="680" width="40" height="40"/>
+  <object id="32" name="U" gid="27" x="200" y="680" width="40" height="40"/>
+  <object id="33" name="V" gid="28" x="240" y="680" width="40" height="40"/>
+  <object id="34" name="W" gid="29" x="280" y="680" width="40" height="40"/>
+  <object id="35" name="X" gid="30" x="320" y="680" width="40" height="40"/>
+  <object id="36" name="Y" gid="31" x="360" y="680" width="40" height="40" visible="0"/>
+  <object id="37" name="Z" gid="32" x="400" y="680" width="40" height="40" visible="0"/>
+  <object id="38" name="_" gid="33" x="440" y="680" width="40" height="40"/>
+ </objectgroup>
 </map>

@@ -5,25 +5,21 @@
 WordsWithBytes.Game = function(game){
     this.currentPlayer = null;
     this.players = [];
-    this.boardImage = null;
     this.currentLetter = null;
-    this.excessPixelsX = 0;
-    this.excessPixelsY = 0;
-    this.scaledBoardHeight = 0;
-    this.scaledBoardWidth = 0;
-    this.rackLocations = [];
-    this.centerSquaresX = [];
-    this.centerSquaresY = [];
     this.isPlayerGuessing = false;
-    this.boardTileMap = null;
+    this.scrabbleTileMap = null;
     this.scrabbleBoardLayer = null;
     this.scrabbleBoard = null;
     this.marker = null;
     this.cursors = null;
     this.scrabbleBoard = [];
     this.currentPlayer = null;
-    this.playerRack = null;
+
+    this.racklayer = null;
+    this.SQUARE_SIZE = 40;
 };
+
+var playerRack = null;
 
 /**
  * @WordsWithBytes.Game.Prototype
@@ -38,26 +34,56 @@ WordsWithBytes.Game.prototype = {
 
     initScrabbleBoardTiles: function () {
 
-        this.boardTileMap = game.add.tilemap("ScrabbleBoardTileSet");
-        this.boardTileMap.addTilesetImage('ScrabbleBoardTilesetImage', 'tileImage'); //first arg needs to match the image "name" from the JSON file
-        this.scrabbleBoardLayer = this.boardTileMap.createLayer('ScrabbleBoardLayer');
-        this.scrabbleBoardLayer.resizeWorld();
 
-        this.marker = game.add.graphics();
-        this.marker.lineStyle(2, 0x000000, 1);
-        this.marker.drawRect(0, 0, 40, 40);
+        this.scrabbleTileMap = game.add.tilemap("ScrabbleBoardTileSet");
+        this.scrabbleTileMap.addTilesetImage('ScrabbleBoardTileset', 'tileImage'); //first arg needs to match the image "name" from the JSON file
+        this.scrabbleTileMap.addTilesetImage('ScrabbleAlphabetTileset', 'alphabetImage'); //first arg needs to match the image "name" from the JSON file
+        //this.boardTileMap.addTilesetImage('ScrabbleAlphabetTilesetImage', 'alphabetImage'); //first arg needs to match the image "name" from the JSON file
+        this.scrabbleBoardLayer = this.scrabbleTileMap.createLayer('ScrabbleBoardLayer');
+
+        this.scrabbleBoardLayer.resizeWorld();
+        //this.scrabbleBoardLayer.debug = true;
+        var boardImageTileMap = this.scrabbleTileMap.tilesets[this.scrabbleTileMap.getTilesetIndex('ScrabbleBoardTilesetImage')];
+        var currentTile = this.scrabbleTileMap.getTile(this.scrabbleBoardLayer.getTileX(1) * this.SQUARE_SIZE, this.scrabbleBoardLayer.getTileY(1) * this.SQUARE_SIZE);
+    },
+
+    initScrabbleRack: function () {
+        //this.playerRack = this.getPlayerRack();
+
+        var tile;
+
+        var lettersGroup = this.game.add.group();
+
+       //for each tile to be on the rack find the correct image based on the populated rack from the backend
+        for (var rackCol = 0; rackCol < 7; rackCol++) {
+            var letterObject = this.playerRack[rackCol];
+            var letterToPlace = letterObject.letter;
+            //if (letterToPlace == '_')
+            var tile = this.scrabbleTileMap.getTile(rackCol, 17);
+            var sprite = this.game.add.sprite(rackCol * 41, 640, letterToPlace);
+            sprite.inputEnabled = true;
+            sprite.input.enableDrag(true);
+            sprite.name = letterToPlace;
+        }
     },
 
     getPlayerRack: function() {
-        $.get("/GetLettersOnRack", function (data, status) {
-             return JSON.parse(data);
-        })
+        var rack = null;
+        $.get("/GetLettersOnRack", function () {
+        }).success(function (data) {
+            rack = JSON.parse(data);
+        }).error(function (msg) {
+            console.log("Error on AJAX call to getLettersOnRack: " + msg);
+        });
+
+        return rack;
     },
 
     //Make an AJAX call using JQuery to get the JSON for the current state of the scrabble board and convent it to a Java script object
     getScrabbleBoard: function () {
+        var board = null;
         $.post("/GameInquiry", {inquiryType: "scrabbleBoard"}, function (data, status) {
-            return JSON.parse(data);
+            board =  JSON.parse(data);
         })
     },
 
@@ -67,6 +93,16 @@ WordsWithBytes.Game.prototype = {
 
     create: function () {
         this.initScrabbleBoardTiles();
+        var rack = null;
+        var defer = $.when(
+            rack = this.getPlayerRack()
+        );
+        defer.done(function() {
+            playerRack = rack;
+            this.initScrabbleRack();
+        })
+
+
 
         var controlButtonHeight = this.game.world.height + 60;
         var playWordButton = this.game.add.button(this.game.world.centerX, controlButtonHeight,'PlayWordButton');
@@ -77,17 +113,28 @@ WordsWithBytes.Game.prototype = {
         passTurnButton.anchor.setTo(0.5, 0.5);
         swapWordsButton.anchor.setTo(0.5, 0.5);
         quitGameButton.anchor.setTo(0.5, 0.5);
-        this.playerRack = this.getPlayerRack();
+
+        this.marker = game.add.graphics();
+        this.marker.lineStyle(2, 0x000000, 1);
+        this.marker.drawRect(0, 0, this.SQUARE_SIZE, this.SQUARE_SIZE);
+        this.cursors = game.input.keyboard.createCursorKeys();
+      //  this.scrabbleBoardLayer.resizeWorld();
+
+        //Create Sprites for letters
     },
 
     update: function () {
-        this.marker.x = this.scrabbleBoardLayer.getTileX(game.input.activePointer.worldX) * 40;
-        this.marker.y = this.scrabbleBoardLayer.getTileY(game.input.activePointer.worldY) * 40;
-
+        if (this.scrabbleBoardLayer != null) {
+            this.marker.x = this.scrabbleBoardLayer.getTileX(game.input.activePointer.worldX) * this.SQUARE_SIZE;
+            this.marker.y = this.scrabbleBoardLayer.getTileY(game.input.activePointer.worldY) * this.SQUARE_SIZE;
+        }
     },
 
     render: function() {
-        game.debug.text('Location: ' + this.marker.x + "," + this.marker.y, 10, 10, '#efefef');
+        if (this.scrabbleBoardLayer != null) {
+            game.debug.text('Location: ' + this.marker.x + "," + this.marker.y, 10, 10, '#efefef');
+        }
+    //  game.debug.text('Left-click to paint. Shift + Left-click to select tile. Arrows to scroll.', this.SQUARE_SIZE, this.SQUARE_SIZE, '#efefef');
     }
 };
 
