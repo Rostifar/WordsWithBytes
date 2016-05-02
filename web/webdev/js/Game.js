@@ -14,7 +14,7 @@ WordsWithBytes.Game = function(game){
     this.cursors = null;
     this.scrabbleBoard = [];
     this.currentPlayer = null;
-
+    this.playerRack = null;
     this.racklayer = null;
     this.SQUARE_SIZE = 40;
 };
@@ -48,16 +48,16 @@ WordsWithBytes.Game.prototype = {
     },
 
     initScrabbleRack: function () {
-        //this.playerRack = this.getPlayerRack();
-
+        this.playerRack = this.getPlayerRack();
+        console.log(this.playerRack);
         var tile;
 
         var lettersGroup = this.game.add.group();
 
        //for each tile to be on the rack find the correct image based on the populated rack from the backend
         for (var rackCol = 0; rackCol < 7; rackCol++) {
-            var letterObject = this.playerRack[rackCol];
-            var letterToPlace = letterObject.letter;
+            var letterToPlace = this.playerRack[rackCol];
+            //var letterToPlace = letterObject.letter;
             //if (letterToPlace == '_')
             var tile = this.scrabbleTileMap.getTile(rackCol, 17);
             var sprite = this.game.add.sprite(rackCol * 41, 640, letterToPlace);
@@ -93,16 +93,7 @@ WordsWithBytes.Game.prototype = {
 
     create: function () {
         this.initScrabbleBoardTiles();
-        var rack = null;
-        var defer = $.when(
-            rack = this.getPlayerRack()
-        );
-        defer.done(function() {
-            playerRack = rack;
             this.initScrabbleRack();
-        })
-
-
 
         var controlButtonHeight = this.game.world.height + 60;
         var playWordButton = this.game.add.button(this.game.world.centerX, controlButtonHeight,'PlayWordButton');

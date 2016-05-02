@@ -34,7 +34,7 @@
 
     <servlet>
         <servlet-name>GetLettersOnRack</servlet-name>
-        <servlet-class>com.rostifar.servlets.AddLettersToRackServlet</servlet-class>
+        <servlet-class>com.rostifar.servlets.GetPlayerRackServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
