@@ -1,4 +1,5 @@
 package com.rostifar.scrabbleproject;
+
 import com.rostifar.wordDistribution.ScrabbleAlphabet;
 import com.rostifar.wordDistribution.ScrabbleLetter;
 import com.rostifar.wordDistribution.ScrabbleWord;
@@ -12,6 +13,7 @@ import java.util.List;
  */
 public class Rack implements Serializable {
     private List<ScrabbleLetter> lettersOnRack;
+    private List<Character> letterCharacters;
 
     public Rack() {
         lettersOnRack = new ArrayList<>();
@@ -21,6 +23,14 @@ public class Rack implements Serializable {
         return lettersOnRack;
     }
 
+    public List<Character> getCharactersOnRack() {
+        letterCharacters = new ArrayList<>();
+
+        for (ScrabbleLetter letter : lettersOnRack) {
+            letterCharacters.add(letter.getLetter());
+        }
+        return letterCharacters;
+    }
 
     public void addLetters(List<ScrabbleLetter> scrabbleLetters) {
         lettersOnRack.addAll(scrabbleLetters);
@@ -38,7 +48,7 @@ public class Rack implements Serializable {
 
     protected boolean isValidWord(ScrabbleWord scrabbleWordToCheck) {
 
-        for (int i =0; i < scrabbleWordToCheck.getNumberOfLetters(); i++) {
+        for (int i = 0; i < scrabbleWordToCheck.getNumberOfLetters(); i++) {
             if (!lettersOnRack.contains(scrabbleWordToCheck.getLetterAt(i))) {
                 return false;
             }
@@ -71,14 +81,14 @@ public class Rack implements Serializable {
         stringBuilder.append("| ");
 
         for (ScrabbleLetter letter : lettersOnRack) {
-            stringBuilder.append(letter.getLetter()) .append("  |  ");
+            stringBuilder.append(letter.getLetter()).append("  |  ");
         }
         stringBuilder.append("\n");
 
         stringBuilder.append("| ");
 
         for (ScrabbleLetter letter : lettersOnRack) {
-            stringBuilder.append(letter.getPointValue().getValue()) .append("  |  ");
+            stringBuilder.append(letter.getPointValue().getValue()).append("  |  ");
         }
 
         return stringBuilder.toString();
