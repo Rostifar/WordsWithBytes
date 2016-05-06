@@ -19,7 +19,6 @@ WordsWithBytes.Game = function(game){
     this.SQUARE_SIZE = 40;
 };
 
-var playerRack = null;
 
 /**
  * @WordsWithBytes.Game.Prototype
@@ -29,8 +28,6 @@ var playerRack = null;
  * how the game is to operate(AKA. Main functionality)*/
 
 WordsWithBytes.Game.prototype = {
-
-
 
     initScrabbleBoardTiles: function () {
 
@@ -47,14 +44,14 @@ WordsWithBytes.Game.prototype = {
         var currentTile = this.scrabbleTileMap.getTile(this.scrabbleBoardLayer.getTileX(1) * this.SQUARE_SIZE, this.scrabbleBoardLayer.getTileY(1) * this.SQUARE_SIZE);
     },
 
+
     initScrabbleRack: function () {
-        this.playerRack = this.getPlayerRack();
         console.log(this.playerRack);
         var tile;
 
         var lettersGroup = this.game.add.group();
 
-       //for each tile to be on the rack find the correct image based on the populated rack from the backend
+        //for each tile to be on the rack find the correct image based on the populated rack from the backend
         for (var rackCol = 0; rackCol < 7; rackCol++) {
             var letterToPlace = this.playerRack[rackCol];
             //var letterToPlace = letterObject.letter;
@@ -67,17 +64,6 @@ WordsWithBytes.Game.prototype = {
         }
     },
 
-    getPlayerRack: function() {
-        var rack = null;
-        $.get("/GetLettersOnRack", function () {
-        }).success(function (data) {
-            rack = JSON.parse(data);
-        }).error(function (msg) {
-            console.log("Error on AJAX call to getLettersOnRack: " + msg);
-        });
-
-        return rack;
-    },
 
     //Make an AJAX call using JQuery to get the JSON for the current state of the scrabble board and convent it to a Java script object
     getScrabbleBoard: function () {
@@ -87,13 +73,28 @@ WordsWithBytes.Game.prototype = {
         })
     },
 
+    //Plays the current players move when player decides they are ready
     playMove: function() {
 
     },
 
+    successFunc: function(data) {
+        console.log(this);
+        console.log(data);
+        this.playerRack = JSON.parse(data);
+        this.initScrabbleRack();
+    },
+
+
+    failureFunc: function() {
+        console.log("Call to GetPlayRack failed");
+    },
+
     create: function () {
         this.initScrabbleBoardTiles();
-            this.initScrabbleRack();
+        var rack = null;
+        var promise = $.ajax("/GetLettersOnRack");
+        promise.done(this.successFunc.bind(this));
 
         var controlButtonHeight = this.game.world.height + 60;
         var playWordButton = this.game.add.button(this.game.world.centerX, controlButtonHeight,'PlayWordButton');
