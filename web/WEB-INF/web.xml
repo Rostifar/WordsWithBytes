@@ -41,4 +41,14 @@
         <servlet-name>GetLettersOnRack</servlet-name>
         <url-pattern>/GetLettersOnRack/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ExchangeLettersServlet</servlet-name>
+        <servlet-class>com.rostifar.servlets.ExchangeLettersServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ExchangeLettersServlet</servlet-name>
+        <url-pattern>/ExchangeLetters/*</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -12,15 +12,17 @@ import java.util.List;
  */
 public class Player implements Serializable {
     private Rack rack;
+    private int idNumber;
     private String name;
     private ScoreKeeper scoreKeeper;
     protected static final int RACK_MAX_CAPACITY = 7;
 
 
-    public Player(String aName) {
+    public Player(String aName, int id) {
         name = aName;
         rack = new Rack();
         scoreKeeper = new ScoreKeeper();
+        idNumber = id;
     }
 
     public String getName() {
@@ -39,6 +41,9 @@ public class Player implements Serializable {
         return scoreKeeper;
     }
 
+    public int getPlayerId() {
+        return idNumber;
+    }
 
     public Rack getRack() {
         return rack;

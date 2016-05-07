@@ -4,8 +4,6 @@
 
 WordsWithBytes.MainMenu = function(game) {};
 
-
-
 var button2;
 var button3;
 var button4;
@@ -14,7 +12,6 @@ WordsWithBytes.MainMenu.prototype = {
 
     create: function() {
 
-        this.music = this.add.audio('introMusic');
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 
         var backgroundImage = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'space-background');
@@ -33,7 +30,7 @@ WordsWithBytes.MainMenu.prototype = {
         button4 = this.game.add.button(this.game.world.centerX, this.game.world.centerY * (1.45), 'player4Button', playerFourActionOnClick, this, 2, 1, 0);
         button4.anchor.setTo(0.5, 0.5);
     }
-}
+};
 
 function playerTwoActionOnClick() {
     addPlayers(2);
@@ -52,9 +49,9 @@ function playerFourActionOnClick() {
 function addPlayers(numOfPlayers) {
    //alert("Calling AddPlayerServlet");
 
-    $.post("/AddPlayer", {numberOfPlayers: numOfPlayers}, function (data, status) {
+    $.when($.post("/AddPlayer", {numberOfPlayers: numOfPlayers}, function (data, status) {
         //console.log("Data: " + data + "\nStatus: " + status);
         var gameObj = JSON.parse(data);
-        console.log(gameObj);
-    })
+        console.log(gameObj)
+    }));
 }

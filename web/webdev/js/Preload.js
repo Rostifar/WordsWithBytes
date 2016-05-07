@@ -14,8 +14,8 @@ WordsWithBytes.Preload.prototype = {
         this.splash.anchor.setTo(0.5);
 
      //   this.load.image('bl', 'assets/images/bl.png');
-        this.load.image('_', 'assets/images/a.png'); //Blank letter
-        this.load.image('A', 'assets/images/A.png');
+        //this.load.image('_', 'assets/images/.png'); //Blank letter
+        this.load.image('A', 'assets/images/a.png');
         this.load.image('B', 'assets/images/B.png');
         this.load.image('C', 'assets/images/C.png');
         this.load.image('D', 'assets/images/D.png');
@@ -43,7 +43,6 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('Z', 'assets/images/Z.png');
 
         this.load.audio('introMusic', ['assets/music/intro-music.mp3']);
-        this.load.image('scrabbleBoard', 'assets/images/ScrabbleBoard5.png');
         this.load.image('player2Button', 'assets/images/2PlayersButton.png');
         this.load.image('player3Button', 'assets/images/3PlayersButton.png');
         this.load.image('player4Button', 'assets/images/4PlayersButton.png');

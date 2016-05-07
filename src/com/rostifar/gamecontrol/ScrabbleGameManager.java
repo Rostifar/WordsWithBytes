@@ -55,7 +55,7 @@ public class ScrabbleGameManager implements Serializable {
         players = new Player[numberOfPlayers];
 
         for (int playerIdx = 0; playerIdx < numberOfPlayers; playerIdx++) {
-            Player player = new Player("Player-" + playerIdx);
+            Player player = new Player("Player-" + playerIdx, playerIdx);
             setupPlayer(player);
             players[playerIdx] = player;
         }
@@ -215,6 +215,14 @@ public class ScrabbleGameManager implements Serializable {
         }
 
         return result != null ? result.isValidWord() : false;
+    }
+
+    private void skipTurn() {
+
+        if (currentPlayer.getPlayerId() < players.length - 1) {
+            currentPlayer = players[currentPlayer.getPlayerId() + 1];
+        }
+        currentPlayer = players[0];
     }
 
     @Deprecated

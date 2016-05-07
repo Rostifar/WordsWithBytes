@@ -7,17 +7,17 @@ WordsWithBytes.Boot.prototype = {
 
         if (this.game.device.desktop) {
 
-            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+            this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
             this.scale.minHeight = this.gameHeight;
             this.scale.minWidth = this.gameWidth / 2;
             this.scale.maxHeight = this.gameHeight;
             this.scale.maxWidth = this.gameWidth;
-
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
         } else {
 
-            this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
+            this.game.scale.pageAlignHorizontally = true;
+            this.game.scale.pageAlignVertically = true;
 
         }
 
