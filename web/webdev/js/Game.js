@@ -46,6 +46,12 @@ WordsWithBytes.Game.prototype = {
 
 
     initScrabbleRack: function () {
+
+
+        function selectedTile(sprite) {
+            sprite.x = this.marker.x;
+            sprite.y = this.marker.y;
+        }
         console.log(this.playerRack);
         var tile;
 
@@ -54,13 +60,13 @@ WordsWithBytes.Game.prototype = {
         //for each tile to be on the rack find the correct image based on the populated rack from the backend
         for (var rackCol = 0; rackCol < 7; rackCol++) {
             var letterToPlace = this.playerRack[rackCol];
-            //var letterToPlace = letterObject.letter;
-            //if (letterToPlace == '_')
+
             var tile = this.scrabbleTileMap.getTile(rackCol, 17);
             var sprite = this.game.add.sprite(rackCol * 41, 640, letterToPlace);
             sprite.inputEnabled = true;
             sprite.input.enableDrag(true);
             sprite.name = letterToPlace;
+            sprite.events.onInputUp.add(selectedTile, this);
         }
     },
 
@@ -110,9 +116,6 @@ WordsWithBytes.Game.prototype = {
         this.marker.lineStyle(2, 0x000000, 1);
         this.marker.drawRect(0, 0, this.SQUARE_SIZE, this.SQUARE_SIZE);
         this.cursors = game.input.keyboard.createCursorKeys();
-      //  this.scrabbleBoardLayer.resizeWorld();
-
-        //Create Sprites for letters
     },
 
     update: function () {
@@ -120,6 +123,7 @@ WordsWithBytes.Game.prototype = {
             this.marker.x = this.scrabbleBoardLayer.getTileX(game.input.activePointer.worldX) * this.SQUARE_SIZE;
             this.marker.y = this.scrabbleBoardLayer.getTileY(game.input.activePointer.worldY) * this.SQUARE_SIZE;
         }
+
     },
 
     render: function() {
