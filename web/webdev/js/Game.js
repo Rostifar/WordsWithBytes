@@ -5,7 +5,6 @@
 WordsWithBytes.Game = function(game){
     this.currentPlayer = null;
     this.players = [];
-    this.currentLetter = null;
     this.isPlayerGuessing = false;
     this.scrabbleTileMap = null;
     this.scrabbleBoardLayer = null;
@@ -17,6 +16,9 @@ WordsWithBytes.Game = function(game){
     this.playerRack = null;
     this.racklayer = null;
     this.SQUARE_SIZE = 40;
+    this.positionMap = {};
+    this.currentWord = [];
+    this.wordOrientation = null;
 };
 
 
@@ -29,8 +31,13 @@ WordsWithBytes.Game = function(game){
 
 WordsWithBytes.Game.prototype = {
 
-    initScrabbleBoardTiles: function () {
+    populatePositionMap: function () {
+        for (var i = 0; i < 15; i++) {
+            this.positionMap[this.SQUARE_SIZE * i] = i;
+        }
+    },
 
+    initScrabbleBoardTiles: function () {
 
         this.scrabbleTileMap = game.add.tilemap("ScrabbleBoardTileSet");
         this.scrabbleTileMap.addTilesetImage('ScrabbleBoardTileset', 'tileImage'); //first arg needs to match the image "name" from the JSON file
@@ -43,33 +50,42 @@ WordsWithBytes.Game.prototype = {
         var boardImageTileMap = this.scrabbleTileMap.tilesets[this.scrabbleTileMap.getTilesetIndex('ScrabbleBoardTilesetImage')];
         var currentTile = this.scrabbleTileMap.getTile(this.scrabbleBoardLayer.getTileX(1) * this.SQUARE_SIZE, this.scrabbleBoardLayer.getTileY(1) * this.SQUARE_SIZE);
     },
-
-
+    
     initScrabbleRack: function () {
-
-
-        function selectedTile(sprite) {
-            sprite.x = this.marker.x;
-            sprite.y = this.marker.y;
-        }
+        
         console.log(this.playerRack);
-        var tile;
 
         var lettersGroup = this.game.add.group();
 
         //for each tile to be on the rack find the correct image based on the populated rack from the backend
         for (var rackCol = 0; rackCol < 7; rackCol++) {
             var letterToPlace = this.playerRack[rackCol];
-
+            
             var tile = this.scrabbleTileMap.getTile(rackCol, 17);
             var sprite = this.game.add.sprite(rackCol * 41, 640, letterToPlace);
+            sprite.originalPosition = {
+                x: sprite.x,
+                y: sprite.y
+            };
             sprite.inputEnabled = true;
             sprite.input.enableDrag(true);
             sprite.name = letterToPlace;
-            sprite.events.onInputUp.add(selectedTile, this);
+            sprite.events.onInputUp.add(function(sprite) {
+                if (this.marker.y < 600) {
+                    sprite.x = this.marker.x;
+                    sprite.y = this.marker.y;
+                    sprite.locationCol = this.positionMap[sprite.x];
+                    sprite.locationRow = this.positionMap[sprite.y];
+                    this.currentWord.push(sprite);
+                } else {
+                    sprite.x = sprite.originalPosition.x;
+                    sprite.y = sprite.originalPosition.y;
+                    sprite.locationCol = null;
+                    sprite.locationRow = null;
+                }
+            }, this);
         }
     },
-
 
     //Make an AJAX call using JQuery to get the JSON for the current state of the scrabble board and convent it to a Java script object
     getScrabbleBoard: function () {
@@ -79,9 +95,30 @@ WordsWithBytes.Game.prototype = {
         })
     },
 
-    //Plays the current players move when player decides they are ready
-    playMove: function() {
+    determineWordOrientation: function(row1, row2, col1, col2) {
 
+        if (Math.abs(row1 - row2) == !0) {
+            this.wordOrientation = "vertical";
+        } else {
+            this.wordOrientation = "horizontal";
+        }
+    }
+    ,
+
+    //Plays the current players move when player decides they are ready
+    playWord: function() {
+        var letters = [];
+        var positionsCol = [];
+        var positionsRow = [];
+
+        for (var i = 0; i < this.currentWord.length; i++) {
+            letters[i] = this.currentWord[i].name;
+            positionsCol[i] = this.currentWord[i].locationCol;
+            positionsRow[i] = this.currentWord[i].locationRow;
+        }
+        
+        this.determineWordOrientation(positionsRow[0], positionsRow[1], positionsCol[0], positionsCol[1]);
+        $.post("PlayWord", {"wordPlayed": letters, "letterPositionsCol": positionsCol, "letterPositionsRow": positionsRow, "wordOrientation": this.wordOrientation});
     },
 
     successFunc: function(data) {
@@ -97,13 +134,13 @@ WordsWithBytes.Game.prototype = {
     },
 
     create: function () {
+        this.populatePositionMap();
         this.initScrabbleBoardTiles();
         var rack = null;
         var promise = $.ajax("/GetLettersOnRack");
         promise.done(this.successFunc.bind(this));
-
         var controlButtonHeight = this.game.world.height + 60;
-        var playWordButton = this.game.add.button(this.game.world.centerX, controlButtonHeight,'PlayWordButton');
+        var playWordButton = this.game.add.button(440, 640,'PlayWordButton', this.playWord(), this, 2, 1, 0);
         var passTurnButton = this.game.add.button(this.game.world.centerX + playWordButton.width + 5, controlButtonHeight, 'PassTurnButton');
         var swapWordsButton = this.game.add.button(this.game.world.centerX + (playWordButton.width + passTurnButton.width) + 10, controlButtonHeight, 'SwapWordsButton');
         var quitGameButton = this.game.add.button(this.game.world.width - playWordButton.width, controlButtonHeight, 'QuitGameButton');

@@ -13,8 +13,7 @@ WordsWithBytes.Preload.prototype = {
         this.splash = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'WordsWithBytes-logo');
         this.splash.anchor.setTo(0.5);
 
-     //   this.load.image('bl', 'assets/images/bl.png');
-        //this.load.image('_', 'assets/images/.png'); //Blank letter
+        this.load.image('_', 'assets/images/bl.png');
         this.load.image('A', 'assets/images/a.png');
         this.load.image('B', 'assets/images/B.png');
         this.load.image('C', 'assets/images/C.png');

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Array;
 
 /**
  * Created by Git:Lazy (Dad) on 3/21/2016.
@@ -14,14 +15,25 @@ import java.io.IOException;
 public class PlayWordServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
-        String scrabbleWordInput = request.getParameter("wordToPlay");
+        String[] wordPlayed = request.getParameterValues("wordPlayed");
+        String[] playedWordRows = request.getParameterValues("letterPositionsRow");
+        String[] playedWordCols = request.getParameterValues("letterPositionsCol");
+        String orientation = request.getParameter("wordOrientation");
+
+        int[] wordCols = new int[playedWordCols.length];
+        int[] wordRows = new int[playedWordRows.length];
+
         int wordRow = Integer.valueOf(request.getParameter("wordRow"));
         int wordCol = Integer.valueOf(request.getParameter("wordCol"));
-        String orientation  = request.getParameter("orientation");
+
+        for (int i = 0; i < request.getParameterValues("letterPositionsRow").length; i++) {
+            wordCols[i] = Integer.valueOf(playedWordCols[i]);
+            wordRows[i] = Integer.valueOf(playedWordRows[i]);
+        }
+
         System.out.println(this.getClass().getName() + " - Play word: " + "scrabbleWordInput");
 
         ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
-        gameManager.playWord(scrabbleWordInput, wordCol, wordRow, orientation);
         String json = ScrabbleServletHelper.getJSONforGameManager(gameManager);
         ScrabbleServletHelper.storeGameManagerOnSession(request, gameManager);
         System.out.println(this.getClass().getName() + "Returning JSON\n" + json);
