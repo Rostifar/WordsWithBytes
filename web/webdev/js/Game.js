@@ -8,7 +8,6 @@ WordsWithBytes.Game = function(game){
     this.isPlayerGuessing = false;
     this.scrabbleTileMap = null;
     this.scrabbleBoardLayer = null;
-    this.scrabbleBoard = null;
     this.marker = null;
     this.cursors = null;
     this.scrabbleBoard = [];
@@ -18,7 +17,7 @@ WordsWithBytes.Game = function(game){
     this.SQUARE_SIZE = 40;
     this.positionMap = {};
     this.currentWord = [];
-    this.wordOrientation = null;
+    this.wordOrientation = [[]];
 };
 
 
@@ -34,6 +33,14 @@ WordsWithBytes.Game.prototype = {
     populatePositionMap: function () {
         for (var i = 0; i < 15; i++) {
             this.positionMap[this.SQUARE_SIZE * i] = i;
+        }
+    },
+
+    populateScrabbleBoard: function() {
+        for(var f = 0; f < 14; f++) {
+            for(var y = 0; y < 14; y++) {
+                this.wordOrientation[[f, y]] = null;
+            }
         }
     },
 
@@ -62,8 +69,8 @@ WordsWithBytes.Game.prototype = {
                 this.wordOrientation = "horizontal";
             }
 
-            $.post("PlayWord", {"wordPlayed": letters, "letterPositionsCol": positionsCol, "letterPositionsRow": positionsRow, "wordOrientation": this.wordOrientation}, function(data, status) {
-            });
+            ///$.post("PlayWord", {"wordPlayed": letters, "letterPositionsCol": positionsCol, "letterPositionsRow": positionsRow, "wordOrientation": this.wordOrientation}, function(data, status) {
+           // });
         }, this, 2, 1, 0);
         var passTurnButton = this.game.add.button(this.game.world.centerX + playWordButton.width + 5, controlButtonHeight, 'PassTurnButton');
         var swapWordsButton = this.game.add.button(this.game.world.centerX + (playWordButton.width + passTurnButton.width) + 10, controlButtonHeight, 'SwapWordsButton');
@@ -78,15 +85,16 @@ WordsWithBytes.Game.prototype = {
 //ensures that the letter is correctly interpreted so that the players order of placement can be neglected
     structurePlayedWord: function(letters, valuesToCompare) {
         var sortedLetters = [];
+        var letterObjects = {};
         for(var i = 0; i < letters.length; i++) {
-            valuesToCompare[i].originalPosition = i;
+            letterObjects[valuesToCompare[i]] = letters[i];
         }
         valuesToCompare.sort(function(a, b) {
             return a - b;
         });
 
         for (var k = 0; k < letters.length; k++) {
-            sortedLetters[k] = letters[valuesToCompare[k].originalPosition];
+            sortedLetters[k] = letterObjects[valuesToCompare[k]];
         }
         return sortedLetters;
     },
@@ -175,6 +183,7 @@ WordsWithBytes.Game.prototype = {
         this.populatePositionMap();
         this.initScrabbleBoardTiles();
         this.initButtons();
+        this.populateScrabbleBoard();
         var rack = null;
         var promise = $.ajax("/GetLettersOnRack");
         promise.done(this.successFunc.bind(this));

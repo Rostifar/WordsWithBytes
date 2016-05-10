@@ -241,7 +241,7 @@ public class ScrabbleGameManager implements Serializable {
             switch (moveSelected) {
 
                 case ("p"):
-                    playWord("test", 1, 2, "v");
+                    //playWord("test", 1, 2, "v");
 
                     takingTurn = false;
                     isFirstRound = false;
