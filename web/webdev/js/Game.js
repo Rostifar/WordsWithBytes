@@ -40,29 +40,29 @@ WordsWithBytes.Game.prototype = {
     initButtons: function() {
         var controlButtonHeight = this.game.world.height + 60;
         var playWordButton = this.game.add.button(440, 640,'PlayWordButton', function() {
-            var letters = [];
             var positionsCol = [];
             var positionsRow = [];
+            var letters = "";
 
             for (var i = 0; i < this.currentWord.length; i++) {
-                letters[i] = this.currentWord[i].name;
-                positionsCol[i] = this.currentWord[i].locationCol;
-                positionsRow[i] = this.currentWord[i].locationRow;
+                letters += this.currentWord[i].name;
+                /*positionsCol[i] = this.currentWord[i].locationCol;
+                positionsRow[i] = this.currentWord[i].locationRow;*/
             }
 
             //Checks to make sure NullPointerException isn't called[only one letter being called; while trying to check orientation with two]
-            if (letters.length > 1) {
+            /*if (letters.length > 1) {
                 this.determineWordOrientation(positionsRow[0], positionsRow[1]);
                 if (this.wordOrientation == "horizontal") {
                     letters = this.structurePlayedWord(letters, positionsCol);
                 } else {
                     letters = this.structurePlayedWord(letters, positionsRow);
                 }
-            } else {
+            } else {*/
                 this.wordOrientation = "horizontal";
-            }
+            //}
 
-            $.post("PlayWord", {"wordPlayed": letters, "letterPositionsCol": positionsCol, "letterPositionsRow": positionsRow, "wordOrientation": this.wordOrientation}, function(data, status) {
+            $.post("/PlayWord", {"wordPlayed": letters, "letterPositionsCol": this.currentWord[0].locationCol, "letterPositionsRow": this.currentWord[0].locationRow, "wordOrientation": this.wordOrientation}, function(data, status) {
             });
         }, this, 2, 1, 0);
         var passTurnButton = this.game.add.button(this.game.world.centerX + playWordButton.width + 5, controlButtonHeight, 'PassTurnButton');
@@ -78,8 +78,11 @@ WordsWithBytes.Game.prototype = {
 //ensures that the letter is correctly interpreted so that the players order of placement can be neglected
     structurePlayedWord: function(letters, valuesToCompare) {
         var sortedLetters = [];
+        var originalPosition = [];
+
         for(var i = 0; i < letters.length; i++) {
             valuesToCompare[i].originalPosition = i;
+            originalPosition[i] = i;
         }
         valuesToCompare.sort(function(a, b) {
             return a - b;
@@ -151,15 +154,10 @@ WordsWithBytes.Game.prototype = {
     },
 
     determineWordOrientation: function(row1, row2) {
-
-        if ((Math.abs(row1 - row2) == !0)) {
-            this.wordOrientation = "vertical";
-        } else {
-            this.wordOrientation = "horizontal";
-        }
+        this.wordOrientation  = ((Math.abs(row1 - row2) == !0)) ? "vertical" : "horizontal";
     },
 
-    successFunc: function(data) {
+    getRackSuccess: function(data) {
         console.log(this);
         console.log(data);
         this.playerRack = JSON.parse(data);
@@ -167,7 +165,7 @@ WordsWithBytes.Game.prototype = {
     },
 
 
-    failureFunc: function() {
+    getRackFailure: function() {
         console.log("Call to GetPlayRack failed");
     },
 
@@ -175,9 +173,10 @@ WordsWithBytes.Game.prototype = {
         this.populatePositionMap();
         this.initScrabbleBoardTiles();
         this.initButtons();
-        var rack = null;
+
+        //Make call to back end to get the letters on the players rack
         var promise = $.ajax("/GetLettersOnRack");
-        promise.done(this.successFunc.bind(this));
+        promise.done(this.getRackSuccess.bind(this));
 
         this.marker = game.add.graphics();
         this.marker.lineStyle(2, 0x000000, 1);
