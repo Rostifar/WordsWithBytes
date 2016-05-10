@@ -37,6 +37,14 @@ WordsWithBytes.Game.prototype = {
         }
     },
 
+    populateScrabbleBoard: function() {
+        for(var f = 0; f < 14; f++) {
+            for(var y = 0; y < 14; y++) {
+                this.wordOrientation[[f, y]] = null;
+            }
+        }
+    },
+
     initButtons: function() {
         var controlButtonHeight = this.game.world.height + 60;
         var playWordButton = this.game.add.button(440, 640,'PlayWordButton', function() {
