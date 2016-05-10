@@ -17,7 +17,12 @@ public class ScrabbleWord implements Serializable {
         word = new ArrayList<>();
         wordAsString = rawWord;
         parseWord(rawWord.toUpperCase());
+    }
 
+    public ScrabbleWord(char[] rawWord) {
+        word = new ArrayList<>();
+        wordAsString = String.valueOf(rawWord);
+        parseWord(wordAsString.toUpperCase());
     }
 
     public ScrabbleWord(List<ScrabbleLetter> rawListOfLetters) {

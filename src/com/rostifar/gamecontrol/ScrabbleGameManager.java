@@ -17,14 +17,11 @@ import java.util.List;
 public class ScrabbleGameManager implements Serializable {
     private ScrabbleBoard scrabbleBoard;
     private Player players[];
-    //private UserInput userInput;
     private ScrabbleAlphabet scrabbleAlphabet = new ScrabbleAlphabet();
     private Player currentPlayer;
-    //private Rack playerRack;
     private ScrabbleWord scrabbleWord;
     private boolean isFirstRound = true;
     private ScrabbleWord currentWord;
-    //private ScrabbleLetter currentLetter;
 
 
     public ScrabbleGameManager() throws ScrabbleGameException {
@@ -74,6 +71,9 @@ public class ScrabbleGameManager implements Serializable {
         return scrabbleBoard;
     }
 
+    public Player[] getPlayers() {
+        return this.players;
+    }
 
     protected void setupPlayer(Player player) {
         if (player.needsLetters()) {
@@ -111,7 +111,7 @@ public class ScrabbleGameManager implements Serializable {
         scrabbleWord.replaceLetter(newWord, position);
     }
 
-    public void playWord(String word, int col, int row, String orientation) {
+    public void playWord(char[] word, int col, int row, String orientation) {
 
         scrabbleWord = new ScrabbleWord(word);
         currentWord = scrabbleWord;
@@ -124,9 +124,6 @@ public class ScrabbleGameManager implements Serializable {
         isWordOnRack(scrabbleWord);
 //        validateWord(scrabbleWord);
         System.out.println(scrabbleBoard);
-        /*int col = Integer.parseInt(userInput.getInputFromUser("At what column would you like to place your selected word ? "));
-        int row = Integer.parseInt(userInput.getInputFromUser("At what row would you like to place your selected word ? "));*/
-       // String orientation = userInput.getInputFromUser("Would you like your selected word to go horizontal or vertical ? (ie. v or h)");
 
         if (scrabbleBoard.squareContainsLetter(col, row)) {
             System.out.println("Error the location you have selected has been already used. ");
