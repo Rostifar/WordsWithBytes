@@ -38,14 +38,14 @@ public class ScrabbleBoardMechanicsTest {
         scrabbleLetter5 = new ScrabbleLetter('Z');
         scrabbleLetter6 = new ScrabbleLetter('P');
         scrabbleLetter7 = new ScrabbleLetter('Y');
-        scrabbleBoard.addLetterToSquare(scrabbleLetter, 7, 7);
-        scrabbleBoard.addLetterToSquare(scrabbleLetter1, 10, 7);
-        scrabbleBoard.addLetterToSquare(scrabbleLetter2, 8, 7);
-        scrabbleBoard.addLetterToSquare(scrabbleLetter3, 9, 7);
-        scrabbleBoard.addLetterToSquare(scrabbleLetter4, 6, 8);
-        scrabbleBoard.addLetterToSquare(scrabbleLetter5, 5, 7);
-        scrabbleBoard.addLetterToSquare(scrabbleLetter6, 6, 6);
-        scrabbleBoard.addLetterToSquare(scrabbleLetter7, 6, 5);
+        scrabbleBoard.addLetterToSquareForUnitTest(scrabbleLetter, 7, 7);
+        scrabbleBoard.addLetterToSquareForUnitTest(scrabbleLetter1, 10, 7);
+        scrabbleBoard.addLetterToSquareForUnitTest(scrabbleLetter2, 8, 7);
+        scrabbleBoard.addLetterToSquareForUnitTest(scrabbleLetter3, 9, 7);
+        scrabbleBoard.addLetterToSquareForUnitTest(scrabbleLetter4, 6, 8);
+        scrabbleBoard.addLetterToSquareForUnitTest(scrabbleLetter5, 5, 7);
+        scrabbleBoard.addLetterToSquareForUnitTest(scrabbleLetter6, 6, 6);
+        scrabbleBoard.addLetterToSquareForUnitTest(scrabbleLetter7, 6, 5);
     }
 
     @Test

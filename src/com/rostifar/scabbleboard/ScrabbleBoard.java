@@ -279,7 +279,11 @@ public class ScrabbleBoard implements Serializable {
     }
 
 
-    public void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
+    public void addLetterToSquareForUnitTest(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
+        addLetterToSquare(letterToAdd, col, row);
+    }
+
+    private void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
         board[col][row].setLetter(letterToAdd);
     }
 

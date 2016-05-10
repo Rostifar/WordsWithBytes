@@ -8,6 +8,7 @@ WordsWithBytes.Game = function(game){
     this.isPlayerGuessing = false;
     this.scrabbleTileMap = null;
     this.scrabbleBoardLayer = null;
+    this.scrabbleBoard = null;
     this.marker = null;
     this.cursors = null;
     this.scrabbleBoard = [];
@@ -36,14 +37,6 @@ WordsWithBytes.Game.prototype = {
         }
     },
 
-    populateScrabbleBoard: function() {
-        for(var f = 0; f < 14; f++) {
-            for(var y = 0; y < 14; y++) {
-                this.wordOrientation[[f, y]] = null;
-            }
-        }
-    },
-
     initButtons: function() {
         var controlButtonHeight = this.game.world.height + 60;
         var playWordButton = this.game.add.button(440, 640,'PlayWordButton', function() {
@@ -69,8 +62,8 @@ WordsWithBytes.Game.prototype = {
                 this.wordOrientation = "horizontal";
             }
 
-            ///$.post("PlayWord", {"wordPlayed": letters, "letterPositionsCol": positionsCol, "letterPositionsRow": positionsRow, "wordOrientation": this.wordOrientation}, function(data, status) {
-           // });
+            $.post("/PlayWord", {"wordPlayed": letters, "letterPositionsCol": this.currentWord[0].locationCol, "letterPositionsRow": this.currentWord[0].locationRow, "wordOrientation": this.wordOrientation}, function(data, status) {
+            });
         }, this, 2, 1, 0);
         var passTurnButton = this.game.add.button(this.game.world.centerX + playWordButton.width + 5, controlButtonHeight, 'PassTurnButton');
         var swapWordsButton = this.game.add.button(this.game.world.centerX + (playWordButton.width + passTurnButton.width) + 10, controlButtonHeight, 'SwapWordsButton');
@@ -159,15 +152,10 @@ WordsWithBytes.Game.prototype = {
     },
 
     determineWordOrientation: function(row1, row2) {
-
-        if ((Math.abs(row1 - row2) == !0)) {
-            this.wordOrientation = "vertical";
-        } else {
-            this.wordOrientation = "horizontal";
-        }
+        this.wordOrientation  = ((Math.abs(row1 - row2) == !0)) ? "vertical" : "horizontal";
     },
 
-    successFunc: function(data) {
+    getRackSuccess: function(data) {
         console.log(this);
         console.log(data);
         this.playerRack = JSON.parse(data);
@@ -175,7 +163,7 @@ WordsWithBytes.Game.prototype = {
     },
 
 
-    failureFunc: function() {
+    getRackFailure: function() {
         console.log("Call to GetPlayRack failed");
     },
 
@@ -183,10 +171,9 @@ WordsWithBytes.Game.prototype = {
         this.populatePositionMap();
         this.initScrabbleBoardTiles();
         this.initButtons();
-        this.populateScrabbleBoard();
         var rack = null;
         var promise = $.ajax("/GetLettersOnRack");
-        promise.done(this.successFunc.bind(this));
+        promise.done(this.getRackSuccess.bind(this));
 
         this.marker = game.add.graphics();
         this.marker.lineStyle(2, 0x000000, 1);
