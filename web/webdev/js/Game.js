@@ -9,6 +9,7 @@ WordsWithBytes.Game = function(game){
     this.scrabbleTileMap = null;
     this.scrabbleBoardLayer = null;
     this.scrabbleBoard = null;
+    this.wordOrientation = null;
     this.marker = null;
     this.cursors = null;
     this.scrabbleBoard = [];
@@ -18,7 +19,7 @@ WordsWithBytes.Game = function(game){
     this.SQUARE_SIZE = 40;
     this.positionMap = {};
     this.currentWord = [];
-    this.wordOrientation = [[]];
+    this.scrabbleBoardMap = [[]];
 };
 
 
@@ -31,48 +32,86 @@ WordsWithBytes.Game = function(game){
 
 WordsWithBytes.Game.prototype = {
 
+    create: function () {
+        this.populatePositionMap();
+        this.initScrabbleBoardTiles();
+        this.initButtons();
+        this.populateScrabbleBoard();
+        var rack = null;
+        var promise = $.ajax("/GetLettersOnRack");
+        promise.done(this.getRackSuccess.bind(this));
+
+        this.marker = game.add.graphics();
+        this.marker.lineStyle(2, 0x000000, 1);
+        this.marker.drawRect(0, 0, this.SQUARE_SIZE, this.SQUARE_SIZE);
+        this.cursors = game.input.keyboard.createCursorKeys();
+    },
+
+//adds ability to convert between canvas coordinates and scrabbleBoard positions
     populatePositionMap: function () {
         for (var i = 0; i < 15; i++) {
             this.positionMap[this.SQUARE_SIZE * i] = i;
         }
     },
-
+//creates blank scrabbleBoard
     populateScrabbleBoard: function() {
         for(var f = 0; f < 14; f++) {
             for(var y = 0; y < 14; y++) {
-                this.wordOrientation[[f, y]] = null;
+                this.scrabbleBoardMap[[f, y]] = "noLetter";
             }
         }
     },
 
+    playWord: function() {
+        var letterObjects = [];
+        var wordOrientation = null;
+        var that = this;
+
+        function initLetterObjects() {
+            for (var i = 0; i < that.currentWord.length; i++) {
+                letterObjects = [{
+                    letterName: that.currentWord[i].name,
+                    columnLocation: that.currentWord[i].locationCol,
+                    rowLocation: that.currentWord[i].locationRow
+                }];
+            }
+        }
+
+        function exchangeBlankLetter() {
+            for (var letterObj of letterObjects) {
+                if (letterObj.letterName == "_") {
+                    //exchangeLetterServlet
+                }
+            }
+        }
+        function findWordOrientation() {
+            wordOrientation = (Math.abs(letterObjects[0].rowLocation - letterObjects[0].rowLocation) == !0) ? "vertical" : "horizontal";
+        }
+        function structurePlayedWord() {
+            var sortedLettersCol = letterObjects.slice(0);
+            sortedLettersCol.sort(function (a, b) {
+                return a.columnLocation - b.columnLocation;
+            });
+            var sortedLettersRow = letterObjects.splice(0);
+            sortedLettersRow.sort(function(a, b) {
+                return a.rowLocation - b.rowLocation;
+            });
+            letterObjects = (wordOrientation == "horizontal") ? sortedLettersCol : sortedLettersRow;
+        }
+        initLetterObjects();
+        exchangeBlankLetter();
+        findWordOrientation();
+        structurePlayedWord();
+        console.log(this);
+        $.post("/PlayWord", {"wordPlayed": 1, "letterPositionsCol": letterObjects[0].columnLocation, "letterPositionsRow": letterObjects[0].rowLocation, "wordOrientation": wordOrientation}, function(data, status){});
+    },
+
+    skipTurn: function() {},
+
     initButtons: function() {
         var controlButtonHeight = this.game.world.height + 60;
-        var playWordButton = this.game.add.button(440, 640,'PlayWordButton', function() {
-            var letters = [];
-            var positionsCol = [];
-            var positionsRow = [];
-
-            for (var i = 0; i < this.currentWord.length; i++) {
-                letters[i] = this.currentWord[i].name;
-                positionsCol[i] = this.currentWord[i].locationCol;
-                positionsRow[i] = this.currentWord[i].locationRow;
-            }
-
-            //Checks to make sure NullPointerException isn't called[only one letter being called; while trying to check orientation with two]
-            if (letters.length > 1) {
-                this.determineWordOrientation(positionsRow[0], positionsRow[1]);
-                if (this.wordOrientation == "horizontal") {
-                    letters = this.structurePlayedWord(letters, positionsCol);
-                } else {
-                    letters = this.structurePlayedWord(letters, positionsRow);
-                }
-            } else {
-                this.wordOrientation = "horizontal";
-            }
-
-            $.post("/PlayWord", {"wordPlayed": letters, "letterPositionsCol": this.currentWord[0].locationCol, "letterPositionsRow": this.currentWord[0].locationRow, "wordOrientation": this.wordOrientation}, function(data, status) {
-            });
-        }, this, 2, 1, 0);
+        var that = this;
+        var playWordButton = this.game.add.button(440, 640,'PlayWordButton', function() {that.playWord();}, this, 2, 1, 0);
         var passTurnButton = this.game.add.button(this.game.world.centerX + playWordButton.width + 5, controlButtonHeight, 'PassTurnButton');
         var swapWordsButton = this.game.add.button(this.game.world.centerX + (playWordButton.width + passTurnButton.width) + 10, controlButtonHeight, 'SwapWordsButton');
         var quitGameButton = this.game.add.button(this.game.world.width - playWordButton.width, controlButtonHeight, 'QuitGameButton');
@@ -83,50 +122,56 @@ WordsWithBytes.Game.prototype = {
 
     },
 
-//ensures that the letter is correctly interpreted so that the players order of placement can be neglected
-    structurePlayedWord: function(letters, valuesToCompare) {
-        var sortedLetters = [];
-        var letterObjects = {};
-        for(var i = 0; i < letters.length; i++) {
-            letterObjects[valuesToCompare[i]] = letters[i];
-        }
-        valuesToCompare.sort(function(a, b) {
-            return a - b;
-        });
+    structurePlayedWord: function(lettersObjects) {
 
-        for (var k = 0; k < letters.length; k++) {
-            sortedLetters[k] = letterObjects[valuesToCompare[k]];
-        }
-        return sortedLetters;
     },
-
 
     initScrabbleBoardTiles: function () {
 
         this.scrabbleTileMap = game.add.tilemap("ScrabbleBoardTileSet");
         this.scrabbleTileMap.addTilesetImage('ScrabbleBoardTileset', 'tileImage'); //first arg needs to match the image "name" from the JSON file
         this.scrabbleTileMap.addTilesetImage('ScrabbleAlphabetTileset', 'alphabetImage'); //first arg needs to match the image "name" from the JSON file
-        //this.boardTileMap.addTilesetImage('ScrabbleAlphabetTilesetImage', 'alphabetImage'); //first arg needs to match the image "name" from the JSON file
         this.scrabbleBoardLayer = this.scrabbleTileMap.createLayer('ScrabbleBoardLayer');
-
         this.scrabbleBoardLayer.resizeWorld();
-        //this.scrabbleBoardLayer.debug = true;
         var boardImageTileMap = this.scrabbleTileMap.tilesets[this.scrabbleTileMap.getTilesetIndex('ScrabbleBoardTilesetImage')];
         var currentTile = this.scrabbleTileMap.getTile(this.scrabbleBoardLayer.getTileX(1) * this.SQUARE_SIZE, this.scrabbleBoardLayer.getTileY(1) * this.SQUARE_SIZE);
     },
-    
+
+    validateWordPosition: function(letters, col, row) {
+
+    },
+
+    placeLetterOnBoard: function(sprite) {
+        var letterImage = sprite;
+        var that = this;
+
+        function setUpLetter() {
+            if(that.marker.y < 600) {
+                letterImage.x = that.marker.x;
+                letterImage.y = that.marker.y;
+                letterImage.locationCol = that.positionMap[letterImage.x];
+                letterImage.locationRow = that.positionMap[letterImage.y];
+                that.currentWord.push(letterImage)
+            } else {
+                letterImage.x = letterImage.originalPosition.x;
+                letterImage.y = letterImage.originalPosition.y;
+                letterImage.locationCol = null;
+                letterImage.locationRow = null;
+            }
+        }
+        setUpLetter();
+    },
+
     initScrabbleRack: function () {
-        
         console.log(this.playerRack);
-
         var lettersGroup = this.game.add.group();
+        var that = this;
 
-        //for each tile to be on the rack find the correct image based on the populated rack from the backend
         for (var rackCol = 0; rackCol < 7; rackCol++) {
             var letterToPlace = this.playerRack[rackCol];
-            
             var tile = this.scrabbleTileMap.getTile(rackCol, 17);
             var sprite = this.game.add.sprite(rackCol * 41, 640, letterToPlace);
+
             sprite.originalPosition = {
                 x: sprite.x,
                 y: sprite.y
@@ -134,20 +179,7 @@ WordsWithBytes.Game.prototype = {
             sprite.inputEnabled = true;
             sprite.input.enableDrag(true);
             sprite.name = letterToPlace;
-            sprite.events.onInputUp.add(function(sprite) {
-                if (this.marker.y < 600) {
-                    sprite.x = this.marker.x;
-                    sprite.y = this.marker.y;
-                    sprite.locationCol = this.positionMap[sprite.x];
-                    sprite.locationRow = this.positionMap[sprite.y];
-                    this.currentWord.push(sprite);
-                } else {
-                    sprite.x = sprite.originalPosition.x;
-                    sprite.y = sprite.originalPosition.y;
-                    sprite.locationCol = null;
-                    sprite.locationRow = null;
-                }
-            }, this);
+            sprite.events.onInputUp.add(function(sprite) {this.placeLetterOnBoard(sprite);}, this);
         }
     },
 
@@ -157,10 +189,6 @@ WordsWithBytes.Game.prototype = {
         $.post("/GameInquiry", {inquiryType: "scrabbleBoard"}, function (data, status) {
             board = JSON.parse(data);
         })
-    },
-
-    determineWordOrientation: function(row1, row2) {
-        this.wordOrientation  = ((Math.abs(row1 - row2) == !0)) ? "vertical" : "horizontal";
     },
 
     getRackSuccess: function(data) {
@@ -175,33 +203,18 @@ WordsWithBytes.Game.prototype = {
         console.log("Call to GetPlayRack failed");
     },
 
-    create: function () {
-        this.populatePositionMap();
-        this.initScrabbleBoardTiles();
-        this.initButtons();
-        var rack = null;
-        var promise = $.ajax("/GetLettersOnRack");
-        promise.done(this.getRackSuccess.bind(this));
-
-        this.marker = game.add.graphics();
-        this.marker.lineStyle(2, 0x000000, 1);
-        this.marker.drawRect(0, 0, this.SQUARE_SIZE, this.SQUARE_SIZE);
-        this.cursors = game.input.keyboard.createCursorKeys();
-    },
 
     update: function () {
         if (this.scrabbleBoardLayer != null) {
             this.marker.x = this.scrabbleBoardLayer.getTileX(game.input.activePointer.worldX) * this.SQUARE_SIZE;
             this.marker.y = this.scrabbleBoardLayer.getTileY(game.input.activePointer.worldY) * this.SQUARE_SIZE;
         }
-
     },
 
     render: function() {
         if (this.scrabbleBoardLayer != null) {
             game.debug.text('Location: ' + this.marker.x + "," + this.marker.y, 10, 10, '#efefef');
         }
-    //  game.debug.text('Left-click to paint. Shift + Left-click to select tile. Arrows to scroll.', this.SQUARE_SIZE, this.SQUARE_SIZE, '#efefef');
     }
 };
 
