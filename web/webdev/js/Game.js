@@ -53,6 +53,10 @@ WordsWithBytes.Game.prototype = {
             this.positionMap[this.SQUARE_SIZE * i] = i;
         }
     },
+
+    setupLetterExchangeSystem: function() {
+
+    },
 //creates blank scrabbleBoard
     populateScrabbleBoard: function() {
         for(var f = 0; f < 14; f++) {
@@ -69,11 +73,11 @@ WordsWithBytes.Game.prototype = {
 
         function initLetterObjects() {
             for (var i = 0; i < that.currentWord.length; i++) {
-                letterObjects = [{
+                letterObjects[i] = {
                     letterName: that.currentWord[i].name,
                     columnLocation: that.currentWord[i].locationCol,
                     rowLocation: that.currentWord[i].locationRow
-                }];
+                };
             }
         }
 
@@ -84,9 +88,11 @@ WordsWithBytes.Game.prototype = {
                 }
             }
         }
+
         function findWordOrientation() {
             wordOrientation = (Math.abs(letterObjects[0].rowLocation - letterObjects[0].rowLocation) == !0) ? "vertical" : "horizontal";
         }
+
         function structurePlayedWord() {
             var sortedLettersCol = letterObjects.slice(0);
             sortedLettersCol.sort(function (a, b) {
@@ -98,11 +104,11 @@ WordsWithBytes.Game.prototype = {
             });
             letterObjects = (wordOrientation == "horizontal") ? sortedLettersCol : sortedLettersRow;
         }
+
         initLetterObjects();
         exchangeBlankLetter();
         findWordOrientation();
         structurePlayedWord();
-        console.log(this);
         $.post("/PlayWord", {"wordPlayed": 1, "letterPositionsCol": letterObjects[0].columnLocation, "letterPositionsRow": letterObjects[0].rowLocation, "wordOrientation": wordOrientation}, function(data, status){});
     },
 
@@ -151,13 +157,20 @@ WordsWithBytes.Game.prototype = {
                 letterImage.y = that.marker.y;
                 letterImage.locationCol = that.positionMap[letterImage.x];
                 letterImage.locationRow = that.positionMap[letterImage.y];
-                that.currentWord.push(letterImage)
+                that.currentWord.push(letterImage);
+                if (letterImage.isBlankLetter == true) {
+                    exchangeBlackLetter();
+                }
             } else {
                 letterImage.x = letterImage.originalPosition.x;
                 letterImage.y = letterImage.originalPosition.y;
                 letterImage.locationCol = null;
                 letterImage.locationRow = null;
             }
+        }
+        function exchangeBlackLetter() {
+            var coordinatesX = [];
+            letterImage.image()
         }
         setUpLetter();
     },
@@ -179,6 +192,7 @@ WordsWithBytes.Game.prototype = {
             sprite.inputEnabled = true;
             sprite.input.enableDrag(true);
             sprite.name = letterToPlace;
+            sprite.isBlankLetter = (sprite.name == "_");
             sprite.events.onInputUp.add(function(sprite) {this.placeLetterOnBoard(sprite);}, this);
         }
     },
@@ -203,12 +217,15 @@ WordsWithBytes.Game.prototype = {
         console.log("Call to GetPlayRack failed");
     },
 
+    isWordPlacementValid: function() {},
+
 
     update: function () {
         if (this.scrabbleBoardLayer != null) {
             this.marker.x = this.scrabbleBoardLayer.getTileX(game.input.activePointer.worldX) * this.SQUARE_SIZE;
             this.marker.y = this.scrabbleBoardLayer.getTileY(game.input.activePointer.worldY) * this.SQUARE_SIZE;
         }
+        this.isWordPlacementValid();
     },
 
     render: function() {
