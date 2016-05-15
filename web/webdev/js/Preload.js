@@ -47,12 +47,13 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('player4Button', 'assets/images/4PlayersButton.png');
         this.load.image('scrabbleSample', 'assets/images/SampleScrabbleImage.jpg');
         this.load.image('space-background', 'assets/images/space.jpg');
+        this.load.image('square', 'assets/images/exchangeLetterSquare.png');
 
         this.load.image('PassTurnButton', 'assets/images/PassTurn.png');
         this.load.image('PlayWordButton', 'assets/images/PlayWord.png');
         this.load.image('SwapWordsButton', 'assets/images/SwapWords.png');
         this.load.image('QuitGameButton', 'assets/images/QuitGame.png');
-        this.load.image('ScoreTemplate', 'assets/images/ScoreImage.png');
+        //this.load.image('ScoreTemplate', 'assets/images/ScoreImage.png');
 
         //Load the tile map of the scrabble board using JSON layout.
         this.load.tilemap('ScrabbleBoardTileSet', 'assets/tilemaps/ScrabbleBoardTiles.json', null, Phaser.Tilemap.TILED_JSON);

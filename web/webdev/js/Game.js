@@ -20,6 +20,7 @@ WordsWithBytes.Game = function(game){
     this.positionMap = {};
     this.currentWord = [];
     this.scrabbleBoardMap = [[]];
+    this.exchangableLetters = null;
 };
 
 
@@ -32,19 +33,6 @@ WordsWithBytes.Game = function(game){
 
 WordsWithBytes.Game.prototype = {
 
-    create: function () {
-        this.populatePositionMap();
-        this.initScrabbleBoardTiles();
-        this.initButtons();
-        this.populateScrabbleBoard();
-        var promise = $.ajax("/GetLettersOnRack");
-        promise.done(this.getRackSuccess.bind(this));
-
-        this.marker = game.add.graphics();
-        this.marker.lineStyle(2, 0x000000, 1);
-        this.marker.drawRect(0, 0, this.SQUARE_SIZE, this.SQUARE_SIZE);
-    },
-
 //adds ability to convert between canvas coordinates and scrabbleBoard positions
     populatePositionMap: function () {
         for (var i = 0; i < 15; i++) {
@@ -53,7 +41,27 @@ WordsWithBytes.Game.prototype = {
     },
 
     setupLetterExchangeSystem: function() {
+        var letterKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+        var positionIndex = 0;
+        var letterIndex = 0;
+        var background = this.game.add.sprite(160, 160, "square");
+        var placementCoordinates = [200, 240, 280, 320, 360];
+        this.exchangableLetters = this.game.add.group();
+        this.exchangableLetters.add(background);
 
+        while (positionIndex < placementCoordinates.length) {
+            var currentX = 200;
+            for (var i = 0; currentX <= placementCoordinates[placementCoordinates.length - 1]; i++) {
+                var sprite = this.game.add.sprite(currentX, placementCoordinates[positionIndex], letterKeys[letterIndex]);
+                this.exchangableLetters.add(sprite);
+                currentX = placementCoordinates[i + 1];
+                letterIndex++;
+            }
+            positionIndex++;
+        }
+        var zSprite = this.game.add.sprite(280, 400, "Z");
+        this.exchangableLetters.add(zSprite);
+        this.exchangableLetters.visible = false;
     },
 //creates blank scrabbleBoard
     populateScrabbleBoard: function() {
@@ -144,7 +152,7 @@ WordsWithBytes.Game.prototype = {
 
     initScrabbleBoardTiles: function () {
 
-        this.scrabbleTileMap = game.add.tilemap("ScrabbleBoardTileSet");
+        this.scrabbleTileMap = this.game.add.tilemap("ScrabbleBoardTileSet");
         this.scrabbleTileMap.addTilesetImage('ScrabbleBoardTileset', 'tileImage'); //first arg needs to match the image "name" from the JSON file
         this.scrabbleTileMap.addTilesetImage('ScrabbleAlphabetTileset', 'alphabetImage'); //first arg needs to match the image "name" from the JSON file
         this.scrabbleBoardLayer = this.scrabbleTileMap.createLayer('ScrabbleBoardLayer');
@@ -229,6 +237,22 @@ WordsWithBytes.Game.prototype = {
 
     isWordPlacementValid: function() {},
 
+    create: function () {
+        this.populatePositionMap();
+        this.initScrabbleBoardTiles();
+        this.initButtons();
+        this.populateScrabbleBoard();
+
+        var promise = $.ajax("/GetLettersOnRack");
+        promise.done(this.getRackSuccess.bind(this));
+
+        this.setupLetterExchangeSystem();
+
+
+        this.marker = this.game.add.graphics();
+        this.marker.lineStyle(2, 0x000000, 1);
+        this.marker.drawRect(0, 0, this.SQUARE_SIZE, this.SQUARE_SIZE);
+    },
 
     update: function () {
         if (this.scrabbleBoardLayer != null) {
