@@ -37,14 +37,12 @@ WordsWithBytes.Game.prototype = {
         this.initScrabbleBoardTiles();
         this.initButtons();
         this.populateScrabbleBoard();
-        var rack = null;
         var promise = $.ajax("/GetLettersOnRack");
         promise.done(this.getRackSuccess.bind(this));
 
         this.marker = game.add.graphics();
         this.marker.lineStyle(2, 0x000000, 1);
         this.marker.drawRect(0, 0, this.SQUARE_SIZE, this.SQUARE_SIZE);
-        this.cursors = game.input.keyboard.createCursorKeys();
     },
 
 //adds ability to convert between canvas coordinates and scrabbleBoard positions
@@ -70,6 +68,7 @@ WordsWithBytes.Game.prototype = {
         var letterObjects = [];
         var wordOrientation = null;
         var that = this;
+
 
         function initLetterObjects() {
             for (var i = 0; i < that.currentWord.length; i++) {
@@ -105,11 +104,22 @@ WordsWithBytes.Game.prototype = {
             letterObjects = (wordOrientation == "horizontal") ? sortedLettersCol : sortedLettersRow;
         }
 
+        function getWordAsString() {
+            var word = "";
+
+            for (var letterObj of letterObjects) {
+                word += letterObj.letterName;
+            }
+            return word;
+        }
+
         initLetterObjects();
         exchangeBlankLetter();
         findWordOrientation();
         structurePlayedWord();
-        $.post("/PlayWord", {"wordPlayed": 1, "letterPositionsCol": letterObjects[0].columnLocation, "letterPositionsRow": letterObjects[0].rowLocation, "wordOrientation": wordOrientation}, function(data, status){});
+        $.post("/PlayWord",
+            {"wordPlayed":getWordAsString(), "letterPositionsCol": letterObjects[0].columnLocation, "letterPositionsRow": letterObjects[0].rowLocation, "wordOrientation": wordOrientation},
+            function(data, status){});
     },
 
     skipTurn: function() {},

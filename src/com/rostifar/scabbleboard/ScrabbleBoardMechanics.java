@@ -123,14 +123,14 @@ public class ScrabbleBoardMechanics implements Serializable {
         }
 
         while (!up && !forward) {
-            if (scrabbleBoard.getSquarePosition(column, rowNumber - 1).containsLetter() && (orientation.equals("v") || scrabbleBoard.getSquarePosition(column, rowNumber) == initalPosition)) {
+            if (scrabbleBoard.getSquarePosition(column, rowNumber).containsLetter() && (orientation.equals("v") || scrabbleBoard.getSquarePosition(column, rowNumber) == initalPosition)) {
                 rowNumber = rowNumber - 1;
                 horzSubtractiveConnectedWord.add(scrabbleBoard.getSquarePosition(column, rowNumber).getLetter());
                 expandWordSearch(column, rowNumber, false, horzSubtractiveConnectedWord);
                 rowNumber = row;
             }
 
-            if (scrabbleBoard.getSquarePosition(column - 1, rowNumber).containsLetter() && (orientation.equals("h") || scrabbleBoard.getSquarePosition(column, rowNumber) == initalPosition)) {
+            if (scrabbleBoard.getSquarePosition(column, rowNumber).containsLetter() && (orientation.equals("h") || scrabbleBoard.getSquarePosition(column, rowNumber) == initalPosition)) {
                 column = column - 1;
                 vertSubtractiveConnectedWord.add(scrabbleBoard.getSquarePosition(column, rowNumber).getLetter());
                 expandWordSearch(column, rowNumber, false, vertSubtractiveConnectedWord);
