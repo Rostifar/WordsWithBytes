@@ -22,7 +22,6 @@ WordsWithBytes.Game = function(game){
     this.scrabbleBoardMap = [[]];
     this.exchangableLetters = null;
     this.currentBlankLetter = null;
-    this.letterToExchange = null;
 };
 
 
@@ -42,7 +41,7 @@ WordsWithBytes.Game.prototype = {
         }
     },
 
-    setupLetterExchangeSystem: function() {
+    setupBlankLetterExchangeSystem: function() {
         var letterKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
         var positionIndex = 0;
         var that = this;
@@ -52,25 +51,26 @@ WordsWithBytes.Game.prototype = {
         this.exchangableLetters = this.game.add.group();
         this.exchangableLetters.add(background);
 
-        function setLetterToExchange(key) {
-            this.isPlayerSelecting = true;
-            that.letterToExchange = key;
+        function actionOnPress(sprite) {
+            sprite.inputEnabled = true;
+            sprite.events.onInputUp.add(function() {that.exchangeBlankLetter(sprite);}, this);
         }
 
         while (positionIndex < placementCoordinates.length) {
             var currentX = 200;
             for (var i = 0; currentX <= placementCoordinates[placementCoordinates.length - 1]; i++) {
                 var sprite = this.game.add.sprite(currentX, placementCoordinates[positionIndex], letterKeys[letterIndex]);
-                sprite.inputEnabled = true;
-                sprite.events.onInputUp.add(setLetterToExchange(sprite.key));
                 this.exchangableLetters.add(sprite);
+                actionOnPress(sprite);
                 currentX = placementCoordinates[i + 1];
                 letterIndex++;
             }
             positionIndex++;
         }
         var zSprite = this.game.add.sprite(280, 400, "Z");
+        actionOnPress(zSprite);
         this.exchangableLetters.add(zSprite);
+        this.exchangableLetters.visible = false;
     },
 //creates blank scrabbleBoard
     populateScrabbleBoard: function() {
@@ -95,10 +95,6 @@ WordsWithBytes.Game.prototype = {
                     rowLocation: that.currentWord[i].locationRow
                 };
             }
-        }
-
-        function exchangeBlankLetter(sprite) {
-
         }
 
         function findWordOrientation() {
@@ -127,7 +123,6 @@ WordsWithBytes.Game.prototype = {
         }
 
         initLetterObjects();
-        exchangeBlankLetter();
         findWordOrientation();
         structurePlayedWord();
         $.post("/PlayWord",
@@ -172,7 +167,7 @@ WordsWithBytes.Game.prototype = {
 
         function setUpLetter() {
 
-            if(that.marker.y < 600) {
+            if (that.marker.y < 600) {
                 letterImage.x = that.marker.x;
                 letterImage.y = that.marker.y;
                 letterImage.locationCol = that.positionMap[letterImage.x];
@@ -181,7 +176,7 @@ WordsWithBytes.Game.prototype = {
 
                 if (letterImage.isBlankLetter == true) {
                     that.exchangableLetters.visible = true;
-                    exchangeBlackLetter();
+                    that.currentBlankLetter = letterImage;
                 }
             } else {
                 letterImage.x = letterImage.originalPosition.x;
@@ -193,9 +188,6 @@ WordsWithBytes.Game.prototype = {
                     letterImage.loadTexture("_");
                 }
             }
-        }
-        function exchangeBlackLetter() {
-            while()
         }
         setUpLetter();
     },
@@ -220,6 +212,11 @@ WordsWithBytes.Game.prototype = {
             sprite.isBlankLetter = (sprite.name == "_");
             sprite.events.onInputUp.add(function(sprite) {this.placeLetterOnBoard(sprite);}, this);
         }
+    },
+
+    exchangeBlankLetter: function(sprite) {
+        this.currentBlankLetter.loadTexture(sprite.key);
+        this.exchangableLetters.visible = false;
     },
 
     //Make an AJAX call using JQuery to get the JSON for the current state of the scrabble board and convent it to a Java script object
@@ -252,9 +249,7 @@ WordsWithBytes.Game.prototype = {
 
         var promise = $.ajax("/GetLettersOnRack");
         promise.done(this.getRackSuccess.bind(this));
-
-        this.setupLetterExchangeSystem();
-
+        this.setupBlankLetterExchangeSystem();
 
         this.marker = this.game.add.graphics();
         this.marker.lineStyle(2, 0x000000, 1);
