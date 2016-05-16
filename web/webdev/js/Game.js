@@ -5,7 +5,7 @@
 WordsWithBytes.Game = function(game){
     this.currentPlayer = null;
     this.players = [];
-    this.isPlayerGuessing = false;
+    this.isPlayerSelecting = false;
     this.scrabbleTileMap = null;
     this.scrabbleBoardLayer = null;
     this.scrabbleBoard = null;
@@ -21,6 +21,8 @@ WordsWithBytes.Game = function(game){
     this.currentWord = [];
     this.scrabbleBoardMap = [[]];
     this.exchangableLetters = null;
+    this.currentBlankLetter = null;
+    this.letterToExchange = null;
 };
 
 
@@ -43,16 +45,24 @@ WordsWithBytes.Game.prototype = {
     setupLetterExchangeSystem: function() {
         var letterKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
         var positionIndex = 0;
+        var that = this;
         var letterIndex = 0;
         var background = this.game.add.sprite(160, 160, "square");
         var placementCoordinates = [200, 240, 280, 320, 360];
         this.exchangableLetters = this.game.add.group();
         this.exchangableLetters.add(background);
 
+        function setLetterToExchange(key) {
+            this.isPlayerSelecting = true;
+            that.letterToExchange = key;
+        }
+
         while (positionIndex < placementCoordinates.length) {
             var currentX = 200;
             for (var i = 0; currentX <= placementCoordinates[placementCoordinates.length - 1]; i++) {
                 var sprite = this.game.add.sprite(currentX, placementCoordinates[positionIndex], letterKeys[letterIndex]);
+                sprite.inputEnabled = true;
+                sprite.events.onInputUp.add(setLetterToExchange(sprite.key));
                 this.exchangableLetters.add(sprite);
                 currentX = placementCoordinates[i + 1];
                 letterIndex++;
@@ -61,7 +71,6 @@ WordsWithBytes.Game.prototype = {
         }
         var zSprite = this.game.add.sprite(280, 400, "Z");
         this.exchangableLetters.add(zSprite);
-        this.exchangableLetters.visible = false;
     },
 //creates blank scrabbleBoard
     populateScrabbleBoard: function() {
@@ -88,12 +97,8 @@ WordsWithBytes.Game.prototype = {
             }
         }
 
-        function exchangeBlankLetter() {
-            for (var letterObj of letterObjects) {
-                if (letterObj.letterName == "_") {
-                    //exchangeLetterServlet
-                }
-            }
+        function exchangeBlankLetter(sprite) {
+
         }
 
         function findWordOrientation() {
@@ -146,10 +151,6 @@ WordsWithBytes.Game.prototype = {
 
     },
 
-    structurePlayedWord: function(lettersObjects) {
-
-    },
-
     initScrabbleBoardTiles: function () {
 
         this.scrabbleTileMap = this.game.add.tilemap("ScrabbleBoardTileSet");
@@ -170,13 +171,16 @@ WordsWithBytes.Game.prototype = {
         var that = this;
 
         function setUpLetter() {
+
             if(that.marker.y < 600) {
                 letterImage.x = that.marker.x;
                 letterImage.y = that.marker.y;
                 letterImage.locationCol = that.positionMap[letterImage.x];
                 letterImage.locationRow = that.positionMap[letterImage.y];
                 that.currentWord.push(letterImage);
+
                 if (letterImage.isBlankLetter == true) {
+                    that.exchangableLetters.visible = true;
                     exchangeBlackLetter();
                 }
             } else {
@@ -184,11 +188,14 @@ WordsWithBytes.Game.prototype = {
                 letterImage.y = letterImage.originalPosition.y;
                 letterImage.locationCol = null;
                 letterImage.locationRow = null;
+
+                if ((letterImage.name != letterImage.key) && (letterImage.isBlankLetter)) {
+                    letterImage.loadTexture("_");
+                }
             }
         }
         function exchangeBlackLetter() {
-            var coordinatesX = [];
-            letterImage.image()
+            while()
         }
         setUpLetter();
     },
