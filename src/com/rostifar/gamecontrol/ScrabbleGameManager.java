@@ -8,6 +8,9 @@ import com.rostifar.scrabbleproject.Player;
 import com.rostifar.wordDistribution.*;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -22,6 +25,7 @@ public class ScrabbleGameManager implements Serializable {
     private ScrabbleWord scrabbleWord;
     private boolean isFirstRound = true;
     private ScrabbleWord currentWord;
+    private char[] word;
 
 
     public ScrabbleGameManager() throws ScrabbleGameException {
@@ -81,48 +85,18 @@ public class ScrabbleGameManager implements Serializable {
         }
     }
 
-    private void isWordOnRack(ScrabbleWord scrabbleWord) {
-        if (!currentPlayer.isValidWord(scrabbleWord)) {
-            System.out.println("Error! You do not have the letters you have selected on your Rack. Please play another word.");
-            //FIXME: return error to user
-            //makeMove("p");
-        }
-    }
 
-    private void evaluateBlankLetters() {
-        List<ScrabbleLetter> blankLetters = currentWord.getBlankScrabbleLetters();
-        List<Integer> positions = currentWord.getBlankScrabbleLetterPostion();
-
-        for (ScrabbleLetter blankLetter: blankLetters) {
-            exchangeBlankLetter(blankLetter, positions.get(blankLetters.indexOf(blankLetter)));
-        }
-    }
-
-    public void exchangeBlankLetter(ScrabbleLetter blankLetter, int position) {
-        System.out.println(scrabbleAlphabet.getListOfLetters());
-        char selectedLetter = ' '; //userInput.getInputFromUser("The word you have played contains a blank letter. Please select the letter you would like to exchange it for: ").toUpperCase().charAt(0);
-        ScrabbleLetter newScrabbleLetter = new BlankScrabbleLetter(selectedLetter);
-        currentPlayer.getRack().replaceBlankLetter(newScrabbleLetter, blankLetter);
-        addReplacedLetterToWord(newScrabbleLetter, position);
-
-    }
 
     public void addReplacedLetterToWord(ScrabbleLetter newWord, int position) {
         scrabbleWord.replaceLetter(newWord, position);
     }
 
-    public void playWord(char[] word, int col, int row, String orientation) {
+    public void playWord(char[] word, int col, int row, String orientation, char[] blankLetters) {
 
         scrabbleWord = new ScrabbleWord(word);
+        exchangeBlankLetters(blankLetters, scrabbleWord.lettersInWord());
         currentWord = scrabbleWord;
-        scrabbleWord.searchForBlankLetter();
 
-        if (!scrabbleWord.getBlankScrabbleLetters().isEmpty()) {
-            evaluateBlankLetters();
-        }
-
-        isWordOnRack(scrabbleWord);
-//        validateWord(scrabbleWord);
         System.out.println(scrabbleBoard);
 
         if (scrabbleBoard.squareContainsLetter(col, row)) {
@@ -194,6 +168,15 @@ public class ScrabbleGameManager implements Serializable {
         }
     }
 
+    private void exchangeBlankLetters(char[] listOfBlankLetters, List<ScrabbleLetter> scrabbleLetterList) {
+        for (ScrabbleLetter scrabbleLetter: scrabbleLetterList) {
+            if (scrabbleLetter.getLetter() == '_') {
+                scrabbleLetter.setLetter(listOfBlankLetters[scrabbleLetterList.indexOf(scrabbleLetter)]);
+            }
+            System.out.println(scrabbleLetter);
+        }
+    }
+
     public void exchangeLetters(char[] lettersToExchange) {
         currentPlayer.getLettersToExchange(lettersToExchange); //userInput.getInputFromUser("Which letters would you like to exchange? ").toUpperCase().toCharArray());
         getLetters();
@@ -241,7 +224,6 @@ public class ScrabbleGameManager implements Serializable {
             switch (moveSelected) {
 
                 case ("p"):
-                    playWord("test".toCharArray(), 1, 2, "v");
 
                     takingTurn = false;
                     isFirstRound = false;

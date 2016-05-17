@@ -22,12 +22,13 @@ public class ScrabbleLetter implements Serializable{
         return letter;
     }
 
+    public void setLetter(char newLetter) {
+        letter = newLetter;
+    }
+
     public PointValue getPointValue () {
         return pointValue;
     }
-
-
-
 
     @Override
     public boolean equals(Object letter) {

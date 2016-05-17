@@ -5,23 +5,21 @@
 WordsWithBytes.Game = function(game){
     this.currentPlayer = null;
     this.players = [];
-    this.isPlayerSelecting = false;
     this.scrabbleTileMap = null;
     this.scrabbleBoardLayer = null;
     this.scrabbleBoard = null;
     this.wordOrientation = null;
     this.marker = null;
-    this.cursors = null;
     this.scrabbleBoard = [];
     this.currentPlayer = null;
     this.playerRack = null;
-    this.racklayer = null;
     this.SQUARE_SIZE = 40;
     this.positionMap = {};
     this.currentWord = [];
     this.scrabbleBoardMap = [[]];
     this.exchangableLetters = null;
     this.currentBlankLetter = null;
+    this.isFirstRound = true;
 };
 
 
@@ -85,7 +83,8 @@ WordsWithBytes.Game.prototype = {
         var letterObjects = [];
         var wordOrientation = null;
         var that = this;
-
+        var blankLetters = [this.currentWord.length];
+        var strBlankLetters;
 
         function initLetterObjects() {
             for (var i = 0; i < that.currentWord.length; i++) {
@@ -122,11 +121,23 @@ WordsWithBytes.Game.prototype = {
             return word;
         }
 
+        function convertBlankLetters() {
+            for (var i = 0; i < that.currentWord.length; i++) {
+                if (that.currentWord[i].isBlankLetter) {
+                    blankLetters[i] = that.currentWord[i].key;
+                } else {
+                    blankLetters[i] = "#";
+                }
+            }
+            strBlankLetters = blankLetters.join("");
+        }
+
         initLetterObjects();
         findWordOrientation();
         structurePlayedWord();
+        convertBlankLetters();
         $.post("/PlayWord",
-            {"wordPlayed":getWordAsString(), "letterPositionsCol": letterObjects[0].columnLocation, "letterPositionsRow": letterObjects[0].rowLocation, "wordOrientation": wordOrientation},
+            {"wordPlayed":getWordAsString(), "letterPositionsCol": letterObjects[0].columnLocation, "letterPositionsRow": letterObjects[0].rowLocation, "wordOrientation": wordOrientation, "blankLetters": strBlankLetters},
             function(data, status){});
     },
 
@@ -174,8 +185,13 @@ WordsWithBytes.Game.prototype = {
                 letterImage.locationRow = that.positionMap[letterImage.y];
                 that.currentWord.push(letterImage);
 
+                if (that.currentWord.length > 1 && !that.isFirstRound) {
+                    //that.checkWordPlacement(letterImage);
+                }
+
                 if (letterImage.isBlankLetter == true) {
                     that.exchangableLetters.visible = true;
+                    letterImage.visible = false;
                     that.currentBlankLetter = letterImage;
                 }
             } else {
@@ -216,6 +232,7 @@ WordsWithBytes.Game.prototype = {
 
     exchangeBlankLetter: function(sprite) {
         this.currentBlankLetter.loadTexture(sprite.key);
+        this.currentBlankLetter.visible = true;
         this.exchangableLetters.visible = false;
     },
 
@@ -239,7 +256,8 @@ WordsWithBytes.Game.prototype = {
         console.log("Call to GetPlayRack failed");
     },
 
-    isWordPlacementValid: function() {},
+    checkWordPlacement: function(sprite) {
+    },
 
     create: function () {
         this.populatePositionMap();
@@ -261,7 +279,6 @@ WordsWithBytes.Game.prototype = {
             this.marker.x = this.scrabbleBoardLayer.getTileX(game.input.activePointer.worldX) * this.SQUARE_SIZE;
             this.marker.y = this.scrabbleBoardLayer.getTileY(game.input.activePointer.worldY) * this.SQUARE_SIZE;
         }
-        this.isWordPlacementValid();
     },
 
     render: function() {

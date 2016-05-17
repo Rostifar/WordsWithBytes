@@ -19,18 +19,12 @@ public class PlayWordServlet extends HttpServlet {
         String playedWordRows = request.getParameter("letterPositionsRow");
         String playedWordCols = request.getParameter("letterPositionsCol");
         String orientation = request.getParameter("wordOrientation");
-        /*int[] wordCols = new int[playedWordCols.length];
-        int[] wordRows = new int[playedWordRows.length];
-
-        for (int i = 0; i < request.getParameterValues("letterPositionsRow").length; i++) {
-            wordCols[i] = Integer.valueOf(playedWordCols[i]);
-            wordRows[i] = Integer.valueOf(playedWordRows[i]);
-        }*/
+        String blankLetters = request.getParameter("blankLetters");
 
         System.out.println(this.getClass().getName() + " - Play word: " + wordPlayed);
 
         ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
-        gameManager.playWord(wordPlayed.toCharArray(), Integer.valueOf(playedWordRows), Integer.valueOf(playedWordCols), orientation);
+        gameManager.playWord(wordPlayed.toCharArray(), Integer.valueOf(playedWordRows), Integer.valueOf(playedWordCols), orientation, blankLetters.toCharArray());
         String json = ScrabbleServletHelper.getJSONforGameManager(gameManager);
         ScrabbleServletHelper.storeGameManagerOnSession(request, gameManager);
         System.out.println(this.getClass().getName() + "Returning JSON\n" + json);
