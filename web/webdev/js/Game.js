@@ -8,7 +8,6 @@ WordsWithBytes.Game = function(game){
     this.scrabbleTileMap = null;
     this.scrabbleBoardLayer = null;
     this.scrabbleBoard = null;
-    this.wordOrientation = null;
     this.marker = null;
     this.scrabbleBoard = [];
     this.currentPlayer = null;
@@ -37,6 +36,15 @@ WordsWithBytes.Game.prototype = {
         for (var i = 0; i < 15; i++) {
             this.positionMap[this.SQUARE_SIZE * i] = i;
         }
+    },
+
+    populateScrabbleBoard: function() {
+      for(var i = 0; i < 15; i++) {
+          this.scrabbleBoardMap[i] = [];
+          for (var g = 0; g < 15; g++) {
+              this.scrabbleBoardMap[i][g] = "noLetter";
+          }
+      }
     },
 
     setupBlankLetterExchangeSystem: function() {
@@ -71,13 +79,6 @@ WordsWithBytes.Game.prototype = {
         this.exchangableLetters.visible = false;
     },
 //creates blank scrabbleBoard
-    populateScrabbleBoard: function() {
-        for(var f = 0; f < 14; f++) {
-            for(var y = 0; y < 14; y++) {
-                this.scrabbleBoardMap[[f, y]] = "noLetter";
-            }
-        }
-    },
 
     playWord: function() {
         var letterObjects = [];
@@ -97,19 +98,33 @@ WordsWithBytes.Game.prototype = {
         }
 
         function findWordOrientation() {
-            wordOrientation = (Math.abs(letterObjects[0].rowLocation - letterObjects[0].rowLocation) == !0) ? "vertical" : "horizontal";
+            wordOrientation = (Math.abs(letterObjects[0].rowLocation - letterObjects[1].rowLocation) != 0 && (letterObjects.length > 1)) ? "vertical" : "horizontal";
+            console.log(wordOrientation);
+            for (var letter of letterObjects) {
+                letter.positionToCheck = (wordOrientation == "horizontal") ? letter.columnLocation : letter.rowLocation;
+                letter.constantPosition = (wordOrientation == "horizontal") ? letter.rowLocation : letter.columnLocation;
+                letter.mapToCheck = (letterObject, board, add, subtract)=> {
+                    if (add !== undefined) {
+                        return wordOrientation == "horizontal" ? board[letterObject.positionToCheck + add][letterObject.constantPosition] :
+                           board[letterObject.constantPosition][letterObject.positionToCheck + add];
+                    }
+                    if (subtract !== undefined) {
+                        return wordOrientation == "horizontal" ? board[letterObject.positionToCheck - subtract][letterObject.constantPosition] :
+                            board[letterObject.constantPosition][letterObject.positionToCheck - subtract];
+                    }
+                }
+            }
         }
 
         function structurePlayedWord() {
-            var sortedLettersCol = letterObjects.slice(0);
-            sortedLettersCol.sort(function (a, b) {
-                return a.columnLocation - b.columnLocation;
+            var sortedLetters = letterObjects.slice(0);
+            console.log(sortedLetters);
+            console.log(letterObjects);
+            sortedLetters.sort(function (a, b) {
+                return a.positionToCheck - b.positionToCheck;
             });
-            var sortedLettersRow = letterObjects.splice(0);
-            sortedLettersRow.sort(function(a, b) {
-                return a.rowLocation - b.rowLocation;
-            });
-            letterObjects = (wordOrientation == "horizontal") ? sortedLettersCol : sortedLettersRow;
+            console.log(sortedLetters);
+            letterObjects = sortedLetters;
         }
 
         function getWordAsString() {
@@ -119,6 +134,58 @@ WordsWithBytes.Game.prototype = {
                 word += letterObj.letterName;
             }
             return word;
+        }
+
+        function isValidWord() {
+
+            function isWordConnectedToItself() {
+                var lettersToCompare = letterObjects.slice(0);
+
+                for (var letter of lettersToCompare) {
+                    var letterIndex = lettersToCompare.indexOf(letter);
+                    if (letter != lettersToCompare[lettersToCompare.length - 1]) {
+                        letter.subtractedPosition = Math.abs(letter.positionToCheck - lettersToCompare[letterIndex + 1].positionToCheck);
+                    } else {
+                        letter.subtractedPosition = 0;
+                    }
+                }
+
+                var invalidPositions = lettersToCompare
+                    .filter((val) => {
+                        return val.subtractedPosition > 1
+                    });
+
+                if (invalidPositions.length == 0) {
+                    return true;
+                } else {
+                    for (var letterToCheck of invalidPositions) {
+                        if (letterToCheck.mapToCheck(letterToCheck, that.scrabbleBoardMap, 1) !== "noLetter") {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            function isWordConnectedToLetterMass() {
+                for (var letterObject of letterObjects) {
+                    var objPositionToCheck = letterObject.positionToCheck;
+                    var board = that.scrabbleBoardMap;
+
+                    if (objPositionToCheck == 0 || objPositionToCheck == 14) {
+                        if (letterObject.positionToCheck == 0 && letterObject.mapToCheck(letterObject, board, 1) !== "noLetter") {
+                            return true;
+                        } else if (letterObject.positionToCheck == 14 && letterObject.mapToCheck(letterObject, board, undefined, 1) !== "noLetter") {
+                            return true;
+                        }
+                    } else if (letterObject.mapToCheck(letterObject, board, 1) !== "noLetter" || letterObject.mapToCheck(letterObject, board, undefined, 1) !== "noLetter" ) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            if (!isWordConnectedToItself() || !isWordConnectedToLetterMass()) {
+                alert("your letter placement in invalid, please try again");
+            }
         }
 
         function convertBlankLetters() {
@@ -135,7 +202,10 @@ WordsWithBytes.Game.prototype = {
         initLetterObjects();
         findWordOrientation();
         structurePlayedWord();
+        isValidWord();
         convertBlankLetters();
+
+        //TODO: if Word checks out, servlet return true & add letters to front end board
         $.post("/PlayWord",
             {"wordPlayed":getWordAsString(), "letterPositionsCol": letterObjects[0].columnLocation, "letterPositionsRow": letterObjects[0].rowLocation, "wordOrientation": wordOrientation, "blankLetters": strBlankLetters},
             function(data, status){});
@@ -176,18 +246,19 @@ WordsWithBytes.Game.prototype = {
         var letterImage = sprite;
         var that = this;
 
-        function setUpLetter() {
+        function isSpaceUsed() {
+            var xPos = that.marker.x;
+            var yPos = that.marker.y;
+            return (that.scrabbleBoardMap[that.positionMap[xPos]][that.positionMap[yPos]] = !"noLetter");
+        }
 
-            if (that.marker.y < 600) {
+        function setUpLetter() {
+            if (that.marker.y < 600 && !isSpaceUsed()) {
                 letterImage.x = that.marker.x;
                 letterImage.y = that.marker.y;
                 letterImage.locationCol = that.positionMap[letterImage.x];
                 letterImage.locationRow = that.positionMap[letterImage.y];
                 that.currentWord.push(letterImage);
-
-                if (that.currentWord.length > 1 && !that.isFirstRound) {
-                    //that.checkWordPlacement(letterImage);
-                }
 
                 if (letterImage.isBlankLetter == true) {
                     that.exchangableLetters.visible = true;
@@ -256,14 +327,11 @@ WordsWithBytes.Game.prototype = {
         console.log("Call to GetPlayRack failed");
     },
 
-    checkWordPlacement: function(sprite) {
-    },
-
     create: function () {
         this.populatePositionMap();
+        this.populateScrabbleBoard();
         this.initScrabbleBoardTiles();
         this.initButtons();
-        this.populateScrabbleBoard();
 
         var promise = $.ajax("/GetLettersOnRack");
         promise.done(this.getRackSuccess.bind(this));
