@@ -34,24 +34,31 @@ WordsWithBytes.MainMenu.prototype = {
 
 function playerTwoActionOnClick() {
     addPlayers(2);
-    this.state.start("Game");
 }
+
 function playerThreeActionOnClick() {
     addPlayers(3);
-    this.state.start("Game");
 }
+
 function playerFourActionOnClick() {
     addPlayers(4);
-    this.state.start("Game");
 }
 
 
 function addPlayers(numOfPlayers) {
    //alert("Calling AddPlayerServlet");
+    var that = this;
 
-    $.when($.post("/AddPlayer", {numberOfPlayers: numOfPlayers}, function (data, status) {
-        //console.log("Data: " + data + "\nStatus: " + status);
-        var gameObj = JSON.parse(data);
-        console.log(gameObj)
-    }));
-}
+    $.post("/AddPlayer", {numberOfPlayers: numOfPlayers})
+        .success(function (data) {
+            //Game cannot be started until we return from this servlet call...otherwise user session will be empty
+            console.log("AddPlayer - Data: " + data + "\nStatus: " + status);
+            that.game.state.start("Game");
+
+        })
+        .complete(function (status) {
+            console.log("AddPlayer complete:" + status);
+            //TODO: add error handling
+        })
+    }
+

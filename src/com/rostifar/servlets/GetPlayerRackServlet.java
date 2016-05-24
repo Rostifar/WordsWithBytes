@@ -14,10 +14,12 @@ import java.io.IOException;
 public class GetPlayerRackServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
+        System.out.println(this.getClass().getName() + " Called\n" + request);
         ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
         Gson gson = new Gson();
 
         String rackJson = gson.toJson(gameManager.getCurrentPlayer().getRack().getCharactersOnRack());
         response.getWriter().write(rackJson);
+        System.out.println(this.getClass().getName() + "Returning JSON\n" + rackJson);
     }
 }

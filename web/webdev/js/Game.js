@@ -127,6 +127,7 @@ WordsWithBytes.Game.prototype = {
             letterObjects = sortedLetters;
         }
 
+        //Extract a string containing the current word being played from collection of letter objects
         function getWordAsString() {
             var word = "";
 
@@ -233,9 +234,7 @@ WordsWithBytes.Game.prototype = {
         this.scrabbleTileMap.addTilesetImage('ScrabbleBoardTileset', 'tileImage'); //first arg needs to match the image "name" from the JSON file
         this.scrabbleTileMap.addTilesetImage('ScrabbleAlphabetTileset', 'alphabetImage'); //first arg needs to match the image "name" from the JSON file
         this.scrabbleBoardLayer = this.scrabbleTileMap.createLayer('ScrabbleBoardLayer');
-        this.scrabbleBoardLayer.resizeWorld();
-        var boardImageTileMap = this.scrabbleTileMap.tilesets[this.scrabbleTileMap.getTilesetIndex('ScrabbleBoardTilesetImage')];
-        var currentTile = this.scrabbleTileMap.getTile(this.scrabbleBoardLayer.getTileX(1) * this.SQUARE_SIZE, this.scrabbleBoardLayer.getTileY(1) * this.SQUARE_SIZE);
+      //  this.scrabbleBoardLayer.resizeWorld();
     },
 
     validateWordPosition: function(letters, col, row) {
@@ -298,7 +297,9 @@ WordsWithBytes.Game.prototype = {
             sprite.name = letterToPlace;
             sprite.isBlankLetter = (sprite.name == "_");
             sprite.events.onInputUp.add(function(sprite) {this.placeLetterOnBoard(sprite);}, this);
+            sprite.update();
         }
+      //  this.game.layer.resizeWorld();
     },
 
     exchangeBlankLetter: function(sprite) {
@@ -315,38 +316,65 @@ WordsWithBytes.Game.prototype = {
         })
     },
 
-    getRackSuccess: function(data) {
+    /*getRackSuccess: function(data) {
         console.log(this);
         console.log(data);
         this.playerRack = JSON.parse(data);
         this.initScrabbleRack();
+        this.postCreate();
     },
 
 
     getRackFailure: function() {
         console.log("Call to GetPlayRack failed");
+    },*/
+
+    loadScrabbleRackLetters: function() {
+        var that = this;
+
+        $.ajax("/GetLettersOnRack", {async: false})
+            .success(
+                function(data) {
+                    alert("RACK DATA:" + data);
+                    //console.log("RACK DATA:" + data);
+                    that.playerRack = JSON.parse(data);
+                    that.initScrabbleRack();
+        })
+            .complete(
+                function(status, errorThrown) {
+                    //alert("RACK DATA Status:" + errorThrown);
+                    console.log("GET RACK DATA FAILED!:" + status);
+                })
+
+       // var promise = $.ajax("/GetLettersOnRack");
+       // promise.done(this.getRackSuccess.bind(this), this.getRackFailure);
     },
 
     create: function () {
+        this.initScrabbleBoardTiles();
         this.populatePositionMap();
         this.populateScrabbleBoard();
-        this.initScrabbleBoardTiles();
         this.initButtons();
-
-        var promise = $.ajax("/GetLettersOnRack");
-        promise.done(this.getRackSuccess.bind(this));
-        this.setupBlankLetterExchangeSystem();
+        //this.setupBlankLetterExchangeSystem();
+        this.loadScrabbleRackLetters();
 
         this.marker = this.game.add.graphics();
         this.marker.lineStyle(2, 0x000000, 1);
         this.marker.drawRect(0, 0, this.SQUARE_SIZE, this.SQUARE_SIZE);
+        this.scrabbleBoardLayer.resizeWorld();
     },
 
     update: function () {
-        if (this.scrabbleBoardLayer != null) {
+        if (this.scrabbleBoardLayer != null && this.marker != null) {
             this.marker.x = this.scrabbleBoardLayer.getTileX(game.input.activePointer.worldX) * this.SQUARE_SIZE;
             this.marker.y = this.scrabbleBoardLayer.getTileY(game.input.activePointer.worldY) * this.SQUARE_SIZE;
         }
+
+       /* if (this.playerRack != null) {
+            this.scrabbleBoardLayer.resizeWorld();
+        }*/
+
+
     },
 
     render: function() {
