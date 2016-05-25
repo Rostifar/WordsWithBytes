@@ -9,20 +9,21 @@
     <script src="js/Preload.js" type="text/javascript"></script>
     <script src="js/MainMenu.js" type="text/javascript"></script>
     <script src="js/Game.js" type="text/javascript"></script>
-
+    <script src="js/Register.js" type="text/javascript"></script>
     <script src="js/jquery-1.12.2.js"></script>
+    <script src="js/GameLobby.js" type="text/javascript"></script>
 </head>
 <body>
 <div id="WordsWithBytes"></div>
 <script>
-
         var gameHeight = 680;
         var gameWidth = 600;
 
         var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'WordsWithBytes');
         game.state.add('Boot', WordsWithBytes.Boot);
         game.state.add('Preload', WordsWithBytes.Preload);
-        game.state.add('Login', WordsWithBytes.Login);
+        game.state.add('Register', WordsWithBytes.Register);
+        game.state.add('GameLobby', WordsWithBytes.GameLobby);
         game.state.add('MainMenu', WordsWithBytes.MainMenu);
         game.state.add('Game', WordsWithBytes.Game);
         game.state.start('Boot');

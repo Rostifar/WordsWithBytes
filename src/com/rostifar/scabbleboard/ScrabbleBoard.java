@@ -2,6 +2,7 @@ package com.rostifar.scabbleboard;
 
 import com.rostifar.gamecontrol.ScrabbleGameException;
 import com.rostifar.wordDistribution.ScrabbleLetter;
+import org.atmosphere.cpr.AtmosphereHandler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -240,6 +241,9 @@ public class ScrabbleBoard implements Serializable {
         }
     }
 
+    public void isWordValid() {
+
+    }
     public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, boolean isFirstRound) {
 
         for (ScrabbleLetter currentLetter : lettersToAdd) {

@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-
     <servlet>
         <servlet-name>GameInquiry</servlet-name>
         <servlet-class>com.rostifar.servlets.ScrabbleInquiryServlet</servlet-class>
@@ -30,6 +29,16 @@
     <servlet-mapping>
         <servlet-name>PlayWord</servlet-name>
         <url-pattern>/PlayWord/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StartScrabbleGame</servlet-name>
+        <servlet-class>com.rostifar.servlets.StartScrabbleGameServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StartScrabbleGame</servlet-name>
+        <url-pattern>/StartGame/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

@@ -37,5 +37,9 @@
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="library" name="jquery-ui" level="application" />
+    <orderEntry type="library" name="SocketIo.js" level="project" />
+    <orderEntry type="library" name="socket.io-1.4.5" level="application" />
+    <orderEntry type="library" name="Java EE" level="project" />
+    <orderEntry type="library" name="org.atmosphere:atmosphere-runtime:2.3.0" level="project" />
   </component>
 </module>

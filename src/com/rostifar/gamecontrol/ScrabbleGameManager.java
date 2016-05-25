@@ -56,7 +56,7 @@ public class ScrabbleGameManager implements Serializable {
         players = new Player[numberOfPlayers];
 
         for (int playerIdx = 0; playerIdx < numberOfPlayers; playerIdx++) {
-            Player player = new Player("Player-" + playerIdx, playerIdx);
+            Player player = new Player("Player-" + playerIdx);
             setupPlayer(player);
             players[playerIdx] = player;
         }
@@ -119,6 +119,7 @@ public class ScrabbleGameManager implements Serializable {
             System.out.println(scrabbleBoard);
             System.out.println(currentPlayer.getCurrentPlayerScore());
         }
+
         currentPlayer.removeLetters(scrabbleWord);
         getLetters();
     }

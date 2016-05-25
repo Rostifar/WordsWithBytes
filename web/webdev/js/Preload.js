@@ -53,6 +53,8 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('PlayWordButton', 'assets/images/PlayWord.png');
         this.load.image('SwapWordsButton', 'assets/images/SwapWords.png');
         this.load.image('QuitGameButton', 'assets/images/QuitGame.png');
+        this.load.image('JoinGameButton', 'assets/images/JoinExistingGame.png');
+        this.load.image('StartGameButton', 'assets/images/CreateNewGame.png');
         //this.load.image('ScoreTemplate', 'assets/images/ScoreImage.png');
 
         //Load the tile map of the scrabble board using JSON layout.
