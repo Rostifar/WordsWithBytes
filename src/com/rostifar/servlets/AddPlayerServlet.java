@@ -20,7 +20,7 @@ public class AddPlayerServlet extends javax.servlet.http.HttpServlet {
         gameManager.addPlayers(numberOfPlayers);
         String json = ScrabbleServletHelper.getJSONforGameManager(gameManager);
         ScrabbleServletHelper.storeGameManagerOnSession(request, gameManager);
-        System.out.println(this.getClass().getName() + "Returning JSON\n" + json);
+     //   System.out.println(this.getClass().getName() + "Returning JSON\n" + json);
         response.getWriter().write(json);
     }
 }

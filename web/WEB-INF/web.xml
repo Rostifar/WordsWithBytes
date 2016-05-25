@@ -15,6 +15,7 @@
     <servlet>
         <servlet-name>AddPlayer</servlet-name>
         <servlet-class>com.rostifar.servlets.AddPlayerServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddPlayer</servlet-name>
@@ -44,11 +45,13 @@
     <servlet>
         <servlet-name>GetLettersOnRack</servlet-name>
         <servlet-class>com.rostifar.servlets.GetPlayerRackServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>GetLettersOnRack</servlet-name>
         <url-pattern>/GetLettersOnRack/*</url-pattern>
+
     </servlet-mapping>
 
     <servlet>

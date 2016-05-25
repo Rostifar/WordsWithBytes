@@ -19,7 +19,6 @@ WordsWithBytes.Game = function(game){
     this.exchangableLetters = null;
     this.currentBlankLetter = null;
     this.isFirstRound = true;
-    this.isValidWord = true;
 };
 
 
@@ -121,7 +120,6 @@ WordsWithBytes.Game.prototype = {
                     letterObject.positionToCheck = letterObject.columnLocation;
                 }
             }
-            console.log(letterObjects);
         }
 
         function structurePlayedWord() {
@@ -213,20 +211,13 @@ WordsWithBytes.Game.prototype = {
         initLetterObjects();
         findWordOrientation();
         structurePlayedWord();
-        console.log(letterObjects);
-        
-        if (!isValidWord()) {
-            alert("your letter placement in invalid, please try again");
-        } else {
-            convertBlankLetters();
-            $.post("/PlayWord",
-                {"wordPlayed":getWordAsString(), "letterPositionsCol": letterObjects[0].columnLocation, "letterPositionsRow":
-                letterObjects[0].rowLocation, "wordOrientation": wordOrientation, "blankLetters": strBlankLetters},
-                function(data, status){});
-        }
-
+        isValidWord();
+        convertBlankLetters();
 
         //TODO: if Word checks out, servlet return true & add letters to front end board
+        $.post("/PlayWord",
+            {"wordPlayed":getWordAsString(), "letterPositionsCol": letterObjects[0].columnLocation, "letterPositionsRow": letterObjects[0].rowLocation, "wordOrientation": wordOrientation, "blankLetters": strBlankLetters},
+            function(data, status){});
     },
 
     skipTurn: function() {},
@@ -342,7 +333,6 @@ WordsWithBytes.Game.prototype = {
             sprite.name = letterToPlace;
             sprite.isBlankLetter = (sprite.name == "_");
             sprite.events.onInputUp.add(function(sprite) {this.placeLetterOnBoard(sprite);}, this);
-            sprite.events.onInputDown.add(function (sprite) {this.removeLetterFromWord(sprite);}, this)
         }
     },
 
