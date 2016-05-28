@@ -29,23 +29,13 @@ public class ScrabbleGameManager implements Serializable {
 
 
     public ScrabbleGameManager() throws ScrabbleGameException {
-       // userInput = new UserInput();
         setupGame();
-    }
-
-    @Deprecated
-    public void runGame() {
-        startGame();
-        endGame();
     }
 
     private void setupGame() throws ScrabbleGameException {
         System.out.println("Setting up Scrabble game...");
         loadConfig();
         scrabbleBoard = new ScrabbleBoard();
-        System.out.println(scrabbleBoard);
-        //addPlayers(2);
-       // runGame();
     }
 
     /**
@@ -85,8 +75,6 @@ public class ScrabbleGameManager implements Serializable {
         }
     }
 
-
-
     public void addReplacedLetterToWord(ScrabbleLetter newWord, int position) {
         scrabbleWord.replaceLetter(newWord, position);
     }
@@ -98,14 +86,7 @@ public class ScrabbleGameManager implements Serializable {
         currentWord = scrabbleWord;
 
         System.out.println(scrabbleBoard);
-
-        if (scrabbleBoard.squareContainsLetter(col, row)) {
-            System.out.println("Error the location you have selected has been already used. ");
-            //FIXME: return error to user
-            //makeMove("p");
-            currentPlayer.getRack();
-        } else {
-            scrabbleBoard.setWordCol(col);
+         scrabbleBoard.setWordCol(col);
             scrabbleBoard.setWordRow(row);
             scrabbleBoard.setUserSelectedOrientation(orientation);
             scrabbleBoard.getScrabbleBoardInstance(scrabbleBoard);
@@ -115,11 +96,6 @@ public class ScrabbleGameManager implements Serializable {
                 scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord(), isFirstRound);
                 getWordPointValue();
             }
-            //isPlacementValid();
-            System.out.println(scrabbleBoard);
-            System.out.println(currentPlayer.getCurrentPlayerScore());
-        }
-
         currentPlayer.removeLetters(scrabbleWord);
         getLetters();
     }
@@ -137,8 +113,6 @@ public class ScrabbleGameManager implements Serializable {
 
             try {
                if (!isWordInDictionary(wordPlayed.toString())) {
-                   //FIXME: return error to user
-                 //  makeMove("p");
                    return false;
                }
 
@@ -251,28 +225,8 @@ public class ScrabbleGameManager implements Serializable {
     }
 
 
-   /* @Deprecated
-    private void runGame() {
-
-        for (int currntIdx = 0; currntIdx < players.length; currntIdx++) {
-
-            currentPlayer = players[currntIdx];
-            playerRack = currentPlayer.getRack();
-
-            System.out.println("\n");
-            System.out.println(currentPlayer);
-            makeMove("p");
-            if (currntIdx == players.length - 1) {
-                currntIdx = -1;
-            }
-        }
-
-    }*/
-
-
     protected void startGame() {
     }
-
 
     protected void endGame() {
 

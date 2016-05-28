@@ -15,10 +15,15 @@ WordsWithBytes.Game = function(game){
     this.SQUARE_SIZE = 40;
     this.positionMap = {};
     this.currentWord = [];
+    this.lettersOnRack = [];
     this.scrabbleBoardMap = [[]];
     this.exchangableLetters = null;
     this.currentBlankLetter = null;
     this.isFirstRound = true;
+    this.dropLetter = null;
+    this.letterKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    this.isExchangingLetters = false;
+
 };
 
 
@@ -31,13 +36,22 @@ WordsWithBytes.Game = function(game){
 
 WordsWithBytes.Game.prototype = {
 
-//adds ability to convert between canvas coordinates and scrabbleBoard positions
+/**
+ * @populatePositionMap
+ * -populates array to convert between between game canvas coordinates to ScrabbleBoard positions
+ * -Example = convert x[640], y[320] -> [12][4]
+ * */
     populatePositionMap: function () {
         for (var i = 0; i < 15; i++) {
             this.positionMap[this.SQUARE_SIZE * i] = i;
         }
     },
 
+    /**
+     * @populateScrabbleBoard
+     * #purpose -> sets up a blank scrabbleBoard.
+     * Allows the frontend to check whether a played word is valid or not
+     * */
     populateScrabbleBoard: function() {
       for(var i = 0; i < 15; i++) {
           this.scrabbleBoardMap[i] = [];
@@ -47,12 +61,21 @@ WordsWithBytes.Game.prototype = {
       }
     },
 
+    /**
+     * @isSpaceTaken
+     * param-> col = user selected column on ScrabbleBoard; row = user selected row on ScrabbleBoard
+     * purpose-> enables quick functionality for checking whether a selected position already has been used
+     * */
     isSpaceTaken: function(col, row) {
         return this.scrabbleBoardMap[col][row] !== "noLetter";
     },
 
+    /**
+     * @setupBlankLetterExchangeSystem
+     * purpose-> creates animations and functionality which aid in exchanging blank letters for real letters.
+     * Used enacted when a player puts a blank tile on the ScrabbleBoard
+     * */
     setupBlankLetterExchangeSystem: function() {
-        var letterKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
         var positionIndex = 0;
         var that = this;
         var letterIndex = 0;
@@ -69,7 +92,7 @@ WordsWithBytes.Game.prototype = {
         while (positionIndex < placementCoordinates.length) {
             var currentX = 200;
             for (var i = 0; currentX <= placementCoordinates[placementCoordinates.length - 1]; i++) {
-                var sprite = this.game.add.sprite(currentX, placementCoordinates[positionIndex], letterKeys[letterIndex]);
+                var sprite = this.game.add.sprite(currentX, placementCoordinates[positionIndex], this.letterKeys[letterIndex]);
                 this.exchangableLetters.add(sprite);
                 actionOnPress(sprite);
                 currentX = placementCoordinates[i + 1];
@@ -82,8 +105,31 @@ WordsWithBytes.Game.prototype = {
         this.exchangableLetters.add(zSprite);
         this.exchangableLetters.visible = false;
     },
-//creates blank scrabbleBoard
 
+    /**
+     * @playWord
+     * purpose-> setup the system for playing a word.
+     * subset ->
+     *  @initLetterObjects
+     *  purpose-> creates letter objects from sprites in order to manage sprite locations and names
+     *  @isCenterSquareUsed
+     *  purpose-> checks whether or not a played word uses the center square during the first round of the game
+     *  @findWordOrientation
+     *  purpose-> finds the orientation of selected words in order to more easily interpret letter positions
+     *  @structurePlayedWord
+     *  purpose-> structures a played word based on letter location in order to ensure that the word is in the correct order
+     *  @getWordAsString
+     *  purpose-> converts array of letter objects to string in order to validate word in the backend
+     *  @isValidWord
+     *  purpose-> shell of position checking functionality
+     *      subset->
+     *      @isWordConnectedToItself
+     *      purpose-> ensures that the played word is connected is a single row, and not spread out throughout the board
+     *      @isWordConnectedToLetterMass
+     *      purpose-> ensures that the played word is connected to previously played words
+     *  @convertBlankLetters
+     *  purpose-> finds all blank letters and flags them in order to correctly compute letter values in the backend
+     *  */
     playWord: function() {
         var letterObjects = [];
         var wordOrientation = null;
@@ -102,9 +148,12 @@ WordsWithBytes.Game.prototype = {
         }
         //@note -> needs to be called after word is reordered, else letterObjects[0] may produce incorrect values.
         function isCenterSquareUsed() {
-            if ((letterObjects[0].columnLocation !== 7 || letterObjects[0].rowLocation !== 7) && that.isFirstRound == true) {
-                return false;
+            for (var letterObject of letterObjects) {
+                if (letterObject.columnLocation === 7 && letterObject.rowLocation === 7 && that.isFirstRound == true){
+                    return true;
+                }
             }
+            return false;
         }
 
         function findWordOrientation() {
@@ -193,7 +242,7 @@ WordsWithBytes.Game.prototype = {
             if (that.isFirstRound) {
                 return isWordConnectedToItself() && isCenterSquareUsed()
             } else {
-                return isWordConnectedToItself() && isCenterSquareUsed() && isWordConnectedToLetterMass();
+                return isWordConnectedToItself() && isWordConnectedToLetterMass();
             }
         }
 
@@ -208,20 +257,38 @@ WordsWithBytes.Game.prototype = {
             strBlankLetters = blankLetters.join("");
         }
 
+        if (that.currentWord === 0) {
+            alert("The word you have entered is empty. Please try again.")
+            return;
+        }
+
         initLetterObjects();
         findWordOrientation();
         structurePlayedWord();
-        isValidWord();
-        convertBlankLetters();
+        console.log(letterObjects);
+
+        if (isValidWord() === false) {
+            alert("your letter placement in invalid, please try again");
+        } else {
+            convertBlankLetters();
+            $.post("/PlayWord",
+                {"wordPlayed":getWordAsString(), "letterPositionsCol": letterObjects[0].columnLocation, "letterPositionsRow":
+                letterObjects[0].rowLocation, "wordOrientation": wordOrientation, "blankLetters": strBlankLetters},
+                function(data, status){});
+        }
+
 
         //TODO: if Word checks out, servlet return true & add letters to front end board
-        $.post("/PlayWord",
-            {"wordPlayed":getWordAsString(), "letterPositionsCol": letterObjects[0].columnLocation, "letterPositionsRow": letterObjects[0].rowLocation, "wordOrientation": wordOrientation, "blankLetters": strBlankLetters},
-            function(data, status){});
     },
 
+    /**
+     * @skipTurn
+     * purpose-> skips the turn of the current player*/
     skipTurn: function() {},
 
+    /**
+     * @findWordConnectionPoints
+     * purpose-> checks ScrabbleBoard to find previous words in order to check whether a played word is valid*/
     findWordConnectionPoints: function(letterToCheck, canSubtract, canAdd) {
         var col = letterToCheck.columnLocation;
         var row = letterToCheck.rowLocation;
@@ -235,6 +302,9 @@ WordsWithBytes.Game.prototype = {
         }
     },
 
+    /**
+     * @initButtons
+     * purpose-> initializes the buttons used for skipping player turns, playing words, and exchanging letters*/
     initButtons: function() {
         var controlButtonHeight = this.game.world.height + 60;
         var that = this;
@@ -246,15 +316,19 @@ WordsWithBytes.Game.prototype = {
 
         }, this, 2, 1, 0);
         var passTurnButton = this.game.add.button(this.game.world.centerX + playWordButton.width + 5, controlButtonHeight, 'PassTurnButton');
-        var swapWordsButton = this.game.add.button(this.game.world.centerX + (playWordButton.width + passTurnButton.width) + 10, controlButtonHeight, 'SwapWordsButton');
+        var exchangeLettersButton = this.game.add.button(440 + 30, 640, 'SwapWordsButton', function() {
+            that.exchangeLetters();
+        });
         var quitGameButton = this.game.add.button(this.game.world.width - playWordButton.width, controlButtonHeight, 'QuitGameButton');
         playWordButton.anchor.setTo(0.5, 0.5);
         passTurnButton.anchor.setTo(0.5, 0.5);
-        swapWordsButton.anchor.setTo(0.5, 0.5);
+        exchangeLettersButton.anchor.setTo(0.5, 0.5);
         quitGameButton.anchor.setTo(0.5, 0.5);
-
     },
 
+    /**
+     * @initScrabbleBoardTiles
+     * purpose-> initializes the tilemap for the interface*/
     initScrabbleBoardTiles: function () {
 
         this.scrabbleTileMap = this.game.add.tilemap("ScrabbleBoardTileSet");
@@ -266,6 +340,76 @@ WordsWithBytes.Game.prototype = {
         var currentTile = this.scrabbleTileMap.getTile(this.scrabbleBoardLayer.getTileX(1) * this.SQUARE_SIZE, this.scrabbleBoardLayer.getTileY(1) * this.SQUARE_SIZE); 
     },
 
+    /**
+     * @exchangeLetters
+     * purpose-> allows the player to exchange letters
+     * Adds interface functionality for doing so
+     * */
+    exchangeLetters: function() {
+        var that = this;
+        var lettersToExchange = [];
+
+        (function() {
+            alert("click on the letters you would like to exchange");
+            for (var letter of that.lettersOnRack) {
+                that.isExchangingLetters = true;
+                letter.originalKey = letter.key;
+                letter.input.disableDrag(true);
+                letter.input.disableSnap(true);
+                letter.x = letter.originalPosition.x;
+                letter.y = letter.originalPosition.y;
+                letter.isSelectedToBeExchanged = false;
+                letter.events.onInputDown.add(function(letter) {
+                    if (that.letterKeys.indexOf(letter.key) !== -1){
+                        letter.loadTexture(letter.key.concat("Selected"));
+                        lettersToExchange.push(letter.name);
+                    } else if(that.letterKeys.indexOf(letter.key) === -1) {
+                        letter.loadTexture(letter.originalKey);
+                        lettersToExchange.splice(lettersToExchange.indexOf(letter.name), 1);
+                    }
+                    console.log(lettersToExchange);
+                }, this);
+                }
+        })();
+
+    },
+
+    /**
+     * @managePlacedLetter
+     * purpose-> ensures that that a user cannot put two letters on top of one another*/
+    managePlacedLetter: function(sprite) {
+        var posX = sprite.locationCol;
+        var posY = sprite.locationRow;
+        var that = this;
+
+        function findLetterIntersections() {
+            if(that.currentWord.length > 0) {
+                for (var letter of that.currentWord) {
+                    if (letter.locationCol === posX && letter.locationRow === posY) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        function findPreviousWordIntersections() {
+            return that.isSpaceTaken(posX, posY);
+        }
+
+        if (!findLetterIntersections() || !findPreviousWordIntersections()) {
+            alert("invalid move, please try again");
+            sprite.x = sprite.originalPosition.x;
+            sprite.y = sprite.originalPosition.y;
+            return false;
+        }
+        return true;
+    },
+
+    /**
+     * @placeLetterOnBoard
+     * purpose-> sets up letters to correctly manage their behavior, How the letter is placed on the board and is behavior on the board
+     * */
     placeLetterOnBoard: function(sprite) {
         var letterImage = sprite;
         var that = this;
@@ -277,12 +421,18 @@ WordsWithBytes.Game.prototype = {
         }
 
         function setUpLetter() {
+            that.dropLetter.play();
 
             if (that.marker.y < 600 && !isSpaceUsed()) {
                 letterImage.x = that.marker.x;
                 letterImage.y = that.marker.y;
                 letterImage.locationCol = that.positionMap[letterImage.x];
                 letterImage.locationRow = that.positionMap[letterImage.y];
+
+                if (that.managePlacedLetter(letterImage) === false) {
+                    return;
+                }
+
                 that.currentWord.push(letterImage);
 
                 if (letterImage.isBlankLetter == true) {
@@ -290,13 +440,14 @@ WordsWithBytes.Game.prototype = {
                     letterImage.visible = false;
                     that.currentBlankLetter = letterImage;
                 }
+
             } else {
                 letterImage.x = letterImage.originalPosition.x;
                 letterImage.y = letterImage.originalPosition.y;
                 letterImage.locationCol = null;
                 letterImage.locationRow = null;
 
-                if ((letterImage.name != letterImage.key) && (letterImage.isBlankLetter)) {
+                if ((letterImage.name != letterImage.key) && (letterImage.isBlankLetter) && that.isExchangingLetters === false) {
                     letterImage.loadTexture("_");
                 }
 
@@ -308,12 +459,27 @@ WordsWithBytes.Game.prototype = {
         setUpLetter();
     },
 
+    /**
+     *@removeLetterFromWord
+     * purpose-> adds functionality to remove letters from word when removed from its position on the scrabbleboard
+     * */
     removeLetterFromWord: function (sprite) {
         if (this.currentWord.indexOf(sprite) !== -1) {
             this.currentWord.splice(this.currentWord.indexOf(sprite), 1);
         }
     },
 
+    /**
+     * @deactivateButtons
+     * purpose-> deactivates buttons when a player selects to exchange, play word, or skip turn
+     * */
+    deactivateButtons: function () {
+
+    },
+
+    /**
+     * @initScrabbleRack
+     * purpose-> initializes sprite images placed on rack*/
     initScrabbleRack: function () {
         console.log(this.playerRack);
         var lettersGroup = this.game.add.group();
@@ -323,6 +489,7 @@ WordsWithBytes.Game.prototype = {
             var letterToPlace = this.playerRack[rackCol];
             var tile = this.scrabbleTileMap.getTile(rackCol, 17);
             var sprite = this.game.add.sprite(rackCol * 41, 640, letterToPlace);
+            this.lettersOnRack.push(sprite);
 
             sprite.originalPosition = {
                 x: sprite.x,
@@ -333,9 +500,14 @@ WordsWithBytes.Game.prototype = {
             sprite.name = letterToPlace;
             sprite.isBlankLetter = (sprite.name == "_");
             sprite.events.onInputUp.add(function(sprite) {this.placeLetterOnBoard(sprite);}, this);
+            sprite.events.onInputDown.add(function (sprite) {this.removeLetterFromWord(sprite);}, this)
         }
     },
 
+    /**
+     * @exchangeBlankLetter
+     * purpose-> sets up interface functionality to exchange blank letters
+     * */
     exchangeBlankLetter: function(sprite) {
         this.currentBlankLetter.loadTexture(sprite.key);
         this.currentBlankLetter.visible = true;
@@ -343,6 +515,9 @@ WordsWithBytes.Game.prototype = {
     },
 
     //Make an AJAX call using JQuery to get the JSON for the current state of the scrabble board and convent it to a Java script object
+    /**
+     *@getScrabbleBoard
+     * purpose-> adds ajax call to get the current state of the scrabbleboard, converting it to js object*/
     getScrabbleBoard: function () {
         var board = null;
         $.post("/GameInquiry", {inquiryType: "scrabbleBoard"}, function (data, status) {
@@ -350,6 +525,9 @@ WordsWithBytes.Game.prototype = {
         })
     },
 
+    /**
+     * @getRackSuccess
+     * purpose-> gets JSON for rack from the backend*/
     getRackSuccess: function(data) {
         console.log(this);
         console.log(data);
@@ -357,11 +535,16 @@ WordsWithBytes.Game.prototype = {
         this.initScrabbleRack();
     },
 
-
+    /**
+     * @getRackFailure
+     * purpose-> called when backend fails to send rack JSON*/
     getRackFailure: function() {
         console.log("Call to GetPlayRack failed");
     },
 
+    /**
+     * @finishTurn
+     * purpose-> resets constructs used on the front end, for the next player's turn*/
     finishTurn: function() {
         this.currentWord = [];
         this.exchangableLetters = null;
@@ -372,6 +555,7 @@ WordsWithBytes.Game.prototype = {
     },
 
     create: function () {
+        this.dropLetter = this.game.add.audio('letterPlace');
         this.populatePositionMap();
         this.populateScrabbleBoard();
         this.initScrabbleBoardTiles();
