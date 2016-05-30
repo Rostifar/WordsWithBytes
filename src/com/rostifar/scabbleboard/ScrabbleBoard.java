@@ -2,10 +2,12 @@ package com.rostifar.scabbleboard;
 
 import com.rostifar.gamecontrol.ScrabbleGameException;
 import com.rostifar.wordDistribution.ScrabbleLetter;
+import com.rostifar.wordDistribution.ScrabbleWord;
 import org.atmosphere.cpr.AtmosphereHandler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,16 +37,15 @@ import java.util.List;
  * @see  /
  */
 public class ScrabbleBoard implements Serializable {
-    public static final int ROW_LENGTH = 15;
-    public static final int COLUMN_LENGTH = 15;
-    public static final int CENTER_SQUARE = 7;
-    private int col;
-    private int row;
+    private static final int ROW_LENGTH = 15;
+    private static final int COLUMN_LENGTH = 15;
+    private static final int CENTER_SQUARE = 7;
+    private List<ScrabbleWord> playedWords;
+    private List<ScrabbleLetter> currentMainWord;
+    private List<ScrabbleLetter> currentSecondaryWord;
+    private boolean isFirstLetter = true;
     private String orientation;
-    private ScrabbleBoardMechanics scrabbleBoardMechanics;
-    private int wordScoreMultiplier;
-    private boolean isValidWordPlacement;
-    private List<List<ScrabbleLetter>> wordsToBeChecked = new ArrayList<>();
+    private ScrabbleWord currentWord;
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
@@ -102,19 +103,16 @@ public class ScrabbleBoard implements Serializable {
     }
 
     private void setupDoubleLetters() {
-        //Row 0, 7 and 14 are the same
         for (int row = 0; row <= ROW_LENGTH - 1; row += 7) {
             board[row][3] = new Square(SquareEnum.DOUBLE_LETTER);
             board[row][11] = new Square(SquareEnum.DOUBLE_LETTER);
         }
 
-        //Row 2 and row 12 are the same
         for (int row = 2; row <= 12; row += 10) {
             board[row][6] = new Square(SquareEnum.DOUBLE_LETTER);
             board[row][8] = new Square(SquareEnum.DOUBLE_LETTER);
         }
 
-        //Row 3 and row 11 are the same
         for (int row = 3; row <= 12; row += 8) {
             for (int col = 0; col < COLUMN_LENGTH; col += 7) {
                 board[row][col] = new Square(SquareEnum.DOUBLE_LETTER);
@@ -147,41 +145,10 @@ public class ScrabbleBoard implements Serializable {
 
     }
 
-    /**
-     * @return true if the square located at col,row on the board contains a letter, otherwise false
-     */
-
-    public void getScrabbleBoardInstance(ScrabbleBoard scrabbleBoard) {
-        scrabbleBoardMechanics = new ScrabbleBoardMechanics(scrabbleBoard);
-    }
-
     public boolean squareContainsLetter(int col, int row) {
         return board[col][row].containsLetter();
     }
 
-    public void setUserSelectedOrientation(String orientation) {
-        this.orientation = orientation;
-    }
-
-    public int setWordRow(int row) {
-        return this.row = row;
-    }
-
-    public int setWordCol(int col) {
-        return this.col = col;
-    }
-
-    public int getWordColumn() {
-        return col;
-    }
-
-    public int getWordRow() {
-        return row;
-    }
-
-    public String getWordOrientation() {
-        return orientation;
-    }
 
     public Square getSquarePosition(int col, int row){
         return board[col][row];
@@ -189,61 +156,107 @@ public class ScrabbleBoard implements Serializable {
 
 
     /**
-     * Add a letter to an empty square on the scrabble board.
-     * @throws ScrabbleGameException if square is not empty. This should not happen if the caller utilizes
-     * the squareContainsLetter() as a prerequisite to calling this  method.
-     */
-
-    private void isIntersectingWord(boolean isFirstRound) { 
-        if (!scrabbleBoardMechanics.isConnectedToPreviousWord(isFirstRound)) {
-            isValidWordPlacement = false;
-        }
+     * @foundLetter
+     * purpose-> calculates whether or not the board holds a letter at a certain position
+     * */
+    private boolean foundLetter(int orgPos, int constPos) {
+        return orientation.equals("horizontal") ? board[orgPos][constPos].containsLetter() : board[constPos][orgPos].containsLetter();
     }
 
-    public void validateWordPlacement(List<ScrabbleLetter> selectedLetters) {
-        wordScoreMultiplier = 0;
-        scrabbleBoardMechanics.getInitalPostion(getSquarePosition(col, row));
-
-        for (ScrabbleLetter scrabbleLetter : selectedLetters) {
-            determinePreviouslyPlacedLetters();
-            checkForNearbyWords(scrabbleLetter);
-            getSecondaryWord();
-            getLetterCoordinates(scrabbleLetter);
-          //  scrabbleBoardMechanics.clearSecondaryWord();
-        }
-        getPrimaryWord();
+    /**
+     * @getLetter
+     * purpose-> gets the letter a certain coordinate on the board, if there is one available
+     * */
+    private ScrabbleLetter getLetter(int orgPos, int constPos) {
+        return orientation.equals("horizontal") ? board[orgPos][constPos].getLetter() : board[constPos][orgPos].getLetter();
     }
 
-    private void getLetterCoordinates(ScrabbleLetter currentLetter) {
+    /**
+     * @searchForMainWord
+     * purpose-> finds the letters which connect the main word together, the main word consists of all of the letters which
+     * reside in a selected orientation
+     * */
+    private void searchForMainWord(int orgPosition, int constPosition, boolean isFirstLetter, ScrabbleLetter letter) throws ArrayIndexOutOfBoundsException {
+        List<ScrabbleLetter> backLetter = new ArrayList<>();
+        List<ScrabbleLetter> frontLetter = new ArrayList<>();
+        currentMainWord = new ArrayList<>();
+        int posToTest = orgPosition;
 
-        switch (getWordOrientation()) {
 
-            case "v":
-                currentLetter.setDesiredPositionCol(col++);
-                currentLetter.setDesiredPositionRow(row);
-                break;
-            case "h":
-                currentLetter.setDesiredPositionCol(col);
-                currentLetter.setDesiredPositionRow(row++);
-                break;
-        }
-    }
-
-    public void calculateMovePointValue() {
-        for (List<ScrabbleLetter> word : wordsToBeChecked) {
-
-            for (ScrabbleLetter currentLetter : word) {
-
-                if (board[currentLetter.getDesiredPositionCol()][currentLetter.getDesiredPositionRow()].isSpecialSquare()) {
-                    calculateSpecialPointValue(currentLetter, board[currentLetter.getDesiredPositionCol()][currentLetter.getDesiredPositionRow()].getSquareType());
-                }
+        if (isFirstLetter) {
+            while (foundLetter(posToTest--, constPosition)) {
+                try {
+                    backLetter.add(getLetter(posToTest, constPosition));
+                } catch(IndexOutOfBoundsException e){}
             }
+            Collections.reverse(backLetter);
+            currentMainWord.addAll(backLetter);
         }
+        posToTest = orgPosition;
+
+        while (foundLetter(posToTest++, constPosition)) {
+            try {
+                frontLetter.add(getLetter(posToTest, constPosition));
+            } catch (IndexOutOfBoundsException e) {}
+        }
+        currentMainWord.add(letter);
+        currentMainWord.addAll(frontLetter);
+    }
+    /**
+     * @searchForSecondaryWord
+     * purpose-> finds words which may exist opposite of the selected word orientation
+     * */
+    private void searchForSecondaryWord(int orgPosition, int constPosition, ScrabbleLetter letter) throws ArrayIndexOutOfBoundsException {
+        List<ScrabbleLetter> backLetters = new ArrayList<>();
+        List<ScrabbleLetter> frontLetters = new ArrayList<>();
+        currentSecondaryWord = new ArrayList<>();
+        int posToTest = constPosition;
+
+        while(foundLetter(orgPosition, posToTest--)) {
+            try {
+                backLetters.add(getLetter(orgPosition, posToTest));
+            } catch (IndexOutOfBoundsException e) {}
+        }
+        posToTest = constPosition;
+
+        while(foundLetter(orgPosition, posToTest++)) {
+            try {
+                frontLetters.add(getLetter(orgPosition, posToTest));
+            } catch (IndexOutOfBoundsException e) {}
+        }
+            Collections.reverse(backLetters);
+            currentSecondaryWord.addAll(backLetters);
+            currentSecondaryWord.add(letter);
+            currentSecondaryWord.addAll(frontLetters);
+            ScrabbleWord secondaryWord = new ScrabbleWord(currentSecondaryWord);
+            playedWords.add(secondaryWord);
     }
 
-    public void isWordValid() {
-
+    private void searchForWords(ScrabbleLetter currentLetter, boolean isFirstLetter) {
+        int orgPosition = (orientation.equals( "horizontal") ? currentLetter.getDesiredPositionCol() : currentLetter.getDesiredPositionRow());
+        int constPosition = (orientation.equals("horizontal") ? currentLetter.getDesiredPositionRow() : currentLetter.getDesiredPositionCol());
+        searchForMainWord(orgPosition, constPosition, isFirstLetter, currentLetter);
+        searchForSecondaryWord(orgPosition, constPosition, currentLetter);
     }
+
+    /**
+     * @getPlayedWords
+     * purpose-> connects all of the words which are made through the playing of a word, residing of both
+     * previously played letters and current letters*/
+    public List<ScrabbleWord> getPlayedWords(ScrabbleWord word, String wordOrientation) {
+        playedWords = new ArrayList<>();
+        orientation = wordOrientation;
+        currentWord = word;
+
+        for (ScrabbleLetter letter : word.lettersInWord()) {
+            searchForWords(letter, isFirstLetter);
+            isFirstLetter = false;
+        }
+        ScrabbleWord currentWord = new ScrabbleWord(currentMainWord);
+        playedWords.add(currentWord);
+        return playedWords;
+    }
+
     public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, boolean isFirstRound) {
 
         for (ScrabbleLetter currentLetter : lettersToAdd) {
@@ -253,74 +266,11 @@ public class ScrabbleBoard implements Serializable {
                 e.getMessage();
             }
         }
-        //isIntersectingWord(isFirstRound);
-    }
-
-    public int getWordPointValueScaleFactor() {
-        return wordScoreMultiplier;
-    }
-
-    private void checkForNearbyWords(ScrabbleLetter scrabbleLetter) {
-        scrabbleBoardMechanics.getCurrentLetter(scrabbleLetter);
-        scrabbleBoardMechanics.checkForConnectingWords();
-    }
-
-    private void getSecondaryWord() {
-
-        if (!scrabbleBoardMechanics.getSecondaryWord().isEmpty()) {
-            wordsToBeChecked.add(scrabbleBoardMechanics.getSecondaryWord());
-        }
-    }
-
-    private void getPrimaryWord() {
-        if (!scrabbleBoardMechanics.getMainWord().isEmpty()) {
-            wordsToBeChecked.add(scrabbleBoardMechanics.getMainWord());
-        }
-    }
-
-    public List<List<ScrabbleLetter>> getWordsToBeChecked() {
-        return wordsToBeChecked;
-    }
-
-
-    public void addLetterToSquareForUnitTest(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
-        addLetterToSquare(letterToAdd, col, row);
     }
 
     private void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
         board[col][row].setLetter(letterToAdd);
     }
-
-    public void calculateSpecialPointValue(ScrabbleLetter scrabbleLetter, SquareEnum squareType) {
-
-        switch (squareType) {
-
-        case DOUBLE_LETTER:
-            scrabbleLetter.getPointValue().setNewPointValue(2);
-            break;
-        case TRIPLE_LETTER:
-            scrabbleLetter.getPointValue().setNewPointValue(3);
-            break;
-        case DOUBLE_WORD:
-            wordScoreMultiplier += 2;
-            break;
-        case TRIPLE_WORD:
-            wordScoreMultiplier += 3;
-        default:
-            break;
-        }
-    }
-
-
-    public void determinePreviouslyPlacedLetters() {
-
-        if (squareContainsLetter(col,row) && orientation.equals("v")) {
-            col = col + 1;
-        } else if (squareContainsLetter(col,row) && orientation.equals("h")){
-            row = row + 1;
-        }
-    }
-
 
     @Override
     /**
@@ -344,10 +294,6 @@ public class ScrabbleBoard implements Serializable {
         stringBuilder.append("\t----------------------------------------------\n");
 
         return stringBuilder.toString();
-    }
-
-    public boolean getIsValidWordPlacement() {
-        return isValidWordPlacement;
     }
 
 }

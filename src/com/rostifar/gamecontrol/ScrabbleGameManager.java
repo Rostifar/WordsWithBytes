@@ -87,11 +87,9 @@ public class ScrabbleGameManager implements Serializable {
 
         System.out.println(scrabbleBoard);
          scrabbleBoard.setWordCol(col);
-            scrabbleBoard.setWordRow(row);
+        scrabbleBoard.setWordRow(row);
             scrabbleBoard.setUserSelectedOrientation(orientation);
-            scrabbleBoard.getScrabbleBoardInstance(scrabbleBoard);
-            scrabbleBoard.calculateMovePointValue();
-            scrabbleBoard.validateWordPlacement(scrabbleWord.lettersInWord());
+            scrabbleBoard.getPlayedWords(scrabbleWord, orientation)
             if (playedWordsAreValid()) {
                 scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord(), isFirstRound);
                 getWordPointValue();
@@ -179,51 +177,6 @@ public class ScrabbleGameManager implements Serializable {
         }
         currentPlayer = players[0];
     }
-
-    @Deprecated
-    private void makeMove(String moveSelected) {
-
-        //String moveSelected;
-        boolean takingTurn = true;
-
-        while (takingTurn) {
-
-         /*   String input = userInput.getInputFromUser("Make a move(s = skip turn, p = play word, e = exchange letters): ");
-            moveSelected = String.valueOf(input);
-*/
-            if (!isValidInput(moveSelected)) {
-                System.out.println("invalid entry, try again");
-                continue;
-            }
-
-            switch (moveSelected) {
-
-                case ("p"):
-
-                    takingTurn = false;
-                    isFirstRound = false;
-                    break;
-                case ("s"):
-
-                    takingTurn = false;
-                    break;
-                case ("e"):
-                    char[] ex = {'a', 'c'};
-                    exchangeLetters(ex);
-                    takingTurn = false;
-                    break;
-                case ("quit"):
-
-                    makeMove("p");
-                    break;
-                default:
-                    break;
-            }
-
-
-        }
-    }
-
 
     protected void startGame() {
     }

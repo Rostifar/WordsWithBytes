@@ -63,28 +63,6 @@ public class ScrabbleWord implements Serializable {
         }
     }
 
-    public void searchForBlankLetter() {
-        blankLetters = new ArrayList<>();
-        positionOnRack = new ArrayList<>();
-
-        for (ScrabbleLetter scrabbleLetter : word) {
-
-            if (scrabbleLetter.letter == '_') {
-                blankLetters.add(scrabbleLetter);
-                positionOnRack.add(word.indexOf(scrabbleLetter));
-            }
-        }
-    }
-
-
-    public List<ScrabbleLetter> getBlankScrabbleLetters() {
-        return blankLetters;
-    }
-
-    public List<Integer> getBlankScrabbleLetterPostion() {
-        return positionOnRack;
-    }
-
     @Override
     public String toString() {
         return wordAsString;
@@ -93,9 +71,5 @@ public class ScrabbleWord implements Serializable {
     public void replaceLetter(ScrabbleLetter letterToAdd, int letterLocation) {
         word.add(letterLocation, letterToAdd);
         word.remove(letterLocation + 1);
-    }
-
-    public void clearFoundBlankLetters() {
-        blankLetters.clear();
     }
 }
