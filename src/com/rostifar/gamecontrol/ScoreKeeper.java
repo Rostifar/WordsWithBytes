@@ -10,21 +10,16 @@ import java.util.List;
  */
 public class ScoreKeeper implements Serializable {
     private int totalPoints;
-    private int totalPointValueForWord;
 
     public ScoreKeeper() {
-        getplayerScore();
+        totalPoints = 0;
     }
 
-    public void getWordPointValue(List<ScrabbleLetter> wordToBeScored, int wordPointValueScaleFactor) {
-
-        for (ScrabbleLetter letter : wordToBeScored) {
-            totalPointValueForWord += letter.getPointValue().getValue();
-        }
-        totalPoints += (totalPointValueForWord * wordPointValueScaleFactor);
+    public void addPoints(int pointValue) {
+        totalPoints += pointValue;
     }
-    public int getplayerScore() {
+
+    public int getPlayerScore() {
         return totalPoints;
     }
-
 }

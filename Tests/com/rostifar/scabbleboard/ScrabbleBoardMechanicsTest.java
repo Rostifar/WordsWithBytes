@@ -1,6 +1,5 @@
 package com.rostifar.scabbleboard;
 
-import com.rostifar.ScrabbleBoardMechanics;
 import com.rostifar.wordDistribution.ScrabbleLetter;
 import org.junit.Test;
 

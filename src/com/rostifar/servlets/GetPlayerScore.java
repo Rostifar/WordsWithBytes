@@ -22,8 +22,7 @@ public class GetPlayerScore extends HttpServlet {
         String[] playerScoreJSON = new String[numberOfPlayers];
 
         for (int i = 0; i < numberOfPlayers; i++) {
-            playerScoreJSON[i] = String.valueOf(gameManager.getPlayers()[i].getCurrentPlayerScore());
-            response.getWriter().write(playerScoreJSON[i]);
+
         }
     }
 }

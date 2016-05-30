@@ -4,6 +4,8 @@ import com.rostifar.dictionary.Dictionary;
 import com.rostifar.dictionary.DictionaryFactory;
 import com.rostifar.dictionary.DictionaryLookupResult;
 import com.rostifar.scabbleboard.ScrabbleBoard;
+import com.rostifar.scabbleboard.Square;
+import com.rostifar.scabbleboard.SquareEnum;
 import com.rostifar.scrabbleproject.Player;
 import com.rostifar.wordDistribution.*;
 
@@ -25,6 +27,7 @@ public class ScrabbleGameManager implements Serializable {
     private ScrabbleWord scrabbleWord;
     private boolean isFirstRound = true;
     private ScrabbleWord currentWord;
+    private int pointValueMultiplier;
 
     /**
      * @ScrabbleGameManager
@@ -103,12 +106,16 @@ public class ScrabbleGameManager implements Serializable {
      * purpose-> when activated by the servlet, manages the processes which involve playing a word
      * */
     public void playWord(char[] word, int col[], int row[], String orientation, char[] blankLetters) {
+        List<ScrabbleWord> playedWords;
         scrabbleWord = new ScrabbleWord(word);
         exchangeBlankLetters(blankLetters, scrabbleWord.lettersInWord());
         currentWord = scrabbleWord;
         setUpLettersInWord(scrabbleWord, col, row);
-        if (playedWordsAreValid(scrabbleBoard.getPlayedWords(scrabbleWord, orientation))) {
+        playedWords = scrabbleBoard.getPlayedWords(scrabbleWord, orientation);
+
+        if (playedWordsAreValid(playedWords)) {
             scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord(), isFirstRound);
+            currentPlayer.addPointsToPlayerScore(getMovePointValue(playedWords));
             currentPlayer.removeLetters(scrabbleWord);
             refillRack();
             moveToNextPlayer();
@@ -155,6 +162,44 @@ public class ScrabbleGameManager implements Serializable {
         }
     }
 
+    private int getMovePointValue(List<ScrabbleWord> playedWords) {
+        int totalWordPointValue = 0;
+        int wordPointValue = 0;
+
+        for (ScrabbleWord word: playedWords) {
+            pointValueMultiplier = 0;
+            for (ScrabbleLetter letter : word.lettersInWord()) {
+                if (scrabbleBoard.getSquarePosition(letter.getDesiredPositionCol(), letter.getDesiredPositionRow()).isSpecialSquare()) {
+                    specialSquarePointValue(scrabbleBoard.getSquarePosition(letter.getDesiredPositionCol(), letter.getDesiredPositionRow()).getSquareType(), letter);
+                }
+                wordPointValue += letter.getPointValue().getValue();
+            }
+            if (pointValueMultiplier != 0) {
+                wordPointValue += wordPointValue * pointValueMultiplier;
+            }
+            totalWordPointValue += wordPointValue;
+            wordPointValue = 0;
+        }
+        return totalWordPointValue;
+    }
+
+    private void specialSquarePointValue(SquareEnum squareType, ScrabbleLetter letter) {
+        switch (squareType) {
+            case DOUBLE_LETTER:
+                letter.setNewPointValue(letter.getPointValue().getValue() * 2);
+                break;
+            case TRIPLE_LETTER:
+                letter.setNewPointValue(letter.getPointValue().getValue() * 3);
+                break;
+            case DOUBLE_WORD:
+                pointValueMultiplier += 2;
+                break;
+            case TRIPLE_WORD:
+                pointValueMultiplier += 3;
+                break;
+        }
+    }
+
     private void refillRack() {
         if (currentPlayer.needsLetters()) {
             currentPlayer.addLetters(scrabbleAlphabet.getLetters(currentPlayer.getNumberOfLettersNeeded()));
@@ -185,7 +230,7 @@ public class ScrabbleGameManager implements Serializable {
         return result != null ? result.isValidWord() : false;
     }
 
-    private void exchangeLetters() {
+    private void exchangeLetters(char[] lettersToExchange) {
 
         moveToNextPlayer();
     }
@@ -203,7 +248,6 @@ public class ScrabbleGameManager implements Serializable {
             System.out.println("The Game Has Ended.");
 
             for (Player currentPlayer : players) {
-                System.out.println(currentPlayer.getCurrentPlayerScore());
             }
         }
     }

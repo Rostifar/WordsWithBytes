@@ -12,9 +12,7 @@ import java.util.List;
  */
 public class Player implements Serializable {
     private Rack rack;
-    private int idNumber;
     private String name;
-    private String sessionID;
     private ScoreKeeper scoreKeeper;
     protected static final int RACK_MAX_CAPACITY = 7;
 
@@ -33,24 +31,16 @@ public class Player implements Serializable {
         return rack != null;
     }
 
-    public int getCurrentPlayerScore(){
-        return scoreKeeper.getplayerScore();
+    public void addPointsToPlayerScore(int val) {
+        scoreKeeper.addPoints(val);
     }
 
-    public ScoreKeeper getScoreKeeper(){
-        return scoreKeeper;
-    }
-
-    public int getPlayerId() {
-        return idNumber;
+    public int getPlayerScore() {
+        return scoreKeeper.getPlayerScore();
     }
 
     public Rack getRack() {
         return rack;
-    }
-
-    public boolean isValidWord(ScrabbleWord scrabbleWord) {
-        return rack.isValidWord(scrabbleWord);
     }
 
     public String toString() {

@@ -17,7 +17,6 @@ public class Main {
 
     public void startGame() throws ScrabbleGameException{
        ScrabbleGameManager gameManager = new ScrabbleGameManager();
-       gameManager.runGame();
     }
 
 }

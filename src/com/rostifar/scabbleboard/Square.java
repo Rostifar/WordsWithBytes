@@ -48,23 +48,23 @@ public class Square implements Serializable {
     }
 
 
-    public boolean isDoubleWord() {
+    private boolean isDoubleWord() {
         return squareType.equals(SquareEnum.DOUBLE_WORD);
     }
 
-    public boolean isTripleWord() {
+    private boolean isTripleWord() {
         return squareType.equals(SquareEnum.TRIPLE_WORD);
     }
 
-    public boolean isDoubleLetter() {
+    private boolean isDoubleLetter() {
         return squareType.equals(SquareEnum.DOUBLE_LETTER);
     }
 
-    public boolean isTripleLetter() {
+    private boolean isTripleLetter() {
         return squareType.equals(SquareEnum.TRIPLE_LETTER);
     }
 
-    public boolean isCenterSquare() {
+    private boolean isCenterSquare() {
         return squareType.equals(SquareEnum.CENTER_STAR);
     }
 

@@ -6,20 +6,27 @@ import java.util.*;
 public class ScrabbleAlphabet implements Serializable {
     private Map<Character, List<ScrabbleLetter>> letterMap = new HashMap<>();
     private static ScrabbleAlphabet alphabetInstance;
+
     /**
-     * Constructor is private. Use Factory class to create instances.
+     *@ScrabbleAlphabet[constructor]
+     * when instantiated loads all of the letters within a game instance, to be used for moves
      */
     public ScrabbleAlphabet() {
         alphabetInstance = this;
         loadLetters();
     }
 
+    /**
+     * @getInstance
+     * purpose-> gets the instance of the alphabet bag
+     * */
     public static ScrabbleAlphabet getInstance() {
         return alphabetInstance;
     }
 
     /**
-     * Load Scrabble letters for the various point values
+     *@loadLetters
+     * purpose-> loads letters into tile bag
      */
     private void loadLetters() {
         letterMap.put ('_', createDuplicateLetters('_', 2));

@@ -17,10 +17,6 @@ public class PointValue implements Serializable {
         value = pointValue;
     }
 
-    public void setNewPointValue(int scaleFactor) {
-        value = value * scaleFactor;
-    }
-
     @Override
     public String toString() {
         return "PointValue: " + value;
