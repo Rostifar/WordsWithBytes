@@ -1,4 +1,7 @@
-package com.rostifar.scabbleboard;
+package com.rostifar;
+import com.rostifar.scabbleboard.NonConnectingPlayException;
+import com.rostifar.scabbleboard.ScrabbleBoard;
+import com.rostifar.scabbleboard.Square;
 import com.rostifar.wordDistribution.ScrabbleLetter;
 
 import java.io.Serializable;

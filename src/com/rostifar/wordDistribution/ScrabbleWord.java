@@ -10,9 +10,11 @@ import java.util.List;
 public class ScrabbleWord implements Serializable {
     private List<ScrabbleLetter> word;
     private String wordAsString;
-    List<ScrabbleLetter> blankLetters;
-    List<Integer> positionOnRack;
 
+    /**
+     * @ScrabbleWord[constructor]
+     * purpose-> constructor which takes in a String, char[], or list and converts it to a ScrabbleWord
+     * */
     public ScrabbleWord(String rawWord) {
         word = new ArrayList<>();
         wordAsString = rawWord;
@@ -29,11 +31,18 @@ public class ScrabbleWord implements Serializable {
         wordAsString = String.valueOf(listToCharArray(rawListOfLetters));
     }
 
-
+    /**
+     * @lettersInWord
+     * purpose-> returns the ScrabbleLetters in a word in a List format
+     * */
     public List<ScrabbleLetter> lettersInWord() {
         return word;
     }
 
+    /**
+     *@listToCharArray
+     * purpose-> converts a list of ScrabbleLetters to a char[]
+     *  */
     public char[] listToCharArray(List<ScrabbleLetter> letterList) {
         char[] arrayOfLetters = new char[letterList.size()];
 
@@ -43,17 +52,25 @@ public class ScrabbleWord implements Serializable {
         return arrayOfLetters;
     }
 
+    /**
+     * @getLetterAt
+     * purpose-> using an index, gets the designated ScrabbleLetter in a word
+     * */
     public ScrabbleLetter getLetterAt(int index) {
         return word.get(index);
     }
 
+    /**
+     * @getNumberOfLetters
+     * purpose-> returns the size of a word
+     * */
     public int getNumberOfLetters() {
         return word.size();
     }
 
     /**
-     *Takes apart userinputed word and converts each Character to a ScrabbleLetter, In order to validate the user actually has these letters in their Rack.
-     *Places each instance of a ScrabbleLetter into an array list
+     *@parseWord
+     * purpose-> for each provided character in a word, converts that character to a ScrabbleLetter object
      */
     private void parseWord(String rawWord) {
         char[] lettersUsed = rawWord.toCharArray();
@@ -66,10 +83,5 @@ public class ScrabbleWord implements Serializable {
     @Override
     public String toString() {
         return wordAsString;
-    }
-
-    public void replaceLetter(ScrabbleLetter letterToAdd, int letterLocation) {
-        word.add(letterLocation, letterToAdd);
-        word.remove(letterLocation + 1);
     }
 }

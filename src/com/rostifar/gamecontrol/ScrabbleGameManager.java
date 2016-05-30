@@ -25,13 +25,19 @@ public class ScrabbleGameManager implements Serializable {
     private ScrabbleWord scrabbleWord;
     private boolean isFirstRound = true;
     private ScrabbleWord currentWord;
-    private char[] word;
 
-
+    /**
+     * @ScrabbleGameManager
+     * purpose-> setups the ScrabbleGameManager when instantiated
+     * */
     public ScrabbleGameManager() throws ScrabbleGameException {
         setupGame();
     }
 
+    /**
+     * @setupGame
+     * purpose-> begins the setup process by creating the ScrabbleBoard and setting up game infrastructure
+     * */
     private void setupGame() throws ScrabbleGameException {
         System.out.println("Setting up Scrabble game...");
         loadConfig();
@@ -39,7 +45,8 @@ public class ScrabbleGameManager implements Serializable {
     }
 
     /**
-     * Prompt the user for how many players to add
+     * @addPlayers
+     * purpose-> adds the appropriate amount of players based on the game lobby size
      */
     public void addPlayers(int numberOfPlayers) {
 
@@ -57,55 +64,79 @@ public class ScrabbleGameManager implements Serializable {
         printPlayers();
     }
 
+    /**
+     * @getCurrentPlayer
+     * purpose-> returns the current player
+     * */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     *@getScrabbleBoard
+     * purpose-> gets the current instance of the game ScrabbleBoard
+     * */
     public ScrabbleBoard getScrabbleBoard() {
         return scrabbleBoard;
     }
 
+    /**
+     * @getPlayers
+     * purpose-> returns an array of all the current players in a game instance
+     * */
     public Player[] getPlayers() {
         return this.players;
     }
 
+    /**
+     * @setupPlayer
+     * purpose-> checks whether or not a player needs more letters, refills a player's rack
+     * */
     protected void setupPlayer(Player player) {
         if (player.needsLetters()) {
             player.addLetters(scrabbleAlphabet.getLetters(player.getNumberOfLettersNeeded()));
         }
     }
 
-    public void addReplacedLetterToWord(ScrabbleLetter newWord, int position) {
-        scrabbleWord.replaceLetter(newWord, position);
-    }
-
-    public void playWord(char[] word, int col, int row, String orientation, char[] blankLetters) {
-
+    /**
+     *@playWord
+     * purpose-> when activated by the servlet, manages the processes which involve playing a word
+     * */
+    public void playWord(char[] word, int col[], int row[], String orientation, char[] blankLetters) {
         scrabbleWord = new ScrabbleWord(word);
         exchangeBlankLetters(blankLetters, scrabbleWord.lettersInWord());
         currentWord = scrabbleWord;
-
-        System.out.println(scrabbleBoard);
-        scrabbleBoard.getPlayedWords(scrabbleWord, orientation);
-        if (playedWordsAreValid()) {
+        setUpLettersInWord(scrabbleWord, col, row);
+        if (playedWordsAreValid(scrabbleBoard.getPlayedWords(scrabbleWord, orientation))) {
             scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord(), isFirstRound);
+            currentPlayer.removeLetters(scrabbleWord);
+            refillRack();
+            moveToNextPlayer();
         }
-        currentPlayer.removeLetters(scrabbleWord);
-        getLetters();
     }
 
-    private boolean playedWordsAreValid() {
-        for (List<ScrabbleLetter> scrabbleLetterList : scrabbleBoard){
-            ScrabbleWord wordPlayed = new ScrabbleWord(scrabbleLetterList);
+    /**
+     * @setUpLettersInWord
+     * purpose-> for each letter in a word the method assigns the appropriate row and column
+     * */
+    private void setUpLettersInWord(ScrabbleWord word, int[] col, int[] row) {
+        for (int i = 0; i < word.getNumberOfLetters(); i++) {
+            word.getLetterAt(i).setDesiredPositionCol(col[i]);
+            word.getLetterAt(i).setDesiredPositionRow(row[i]);
+        }
+    }
 
+    /**
+     * @playedWordsAreValid
+     * purpose-> checks whether or not all of the words created by a move are valid
+     * */
+    private boolean playedWordsAreValid(List<ScrabbleWord> playedWords) {
+        for (ScrabbleWord word : playedWords) {
             try {
-               if (!isWordInDictionary(wordPlayed.toString())) {
-                   return false;
-               }
-
-            } catch (ScrabbleGameInvalidWordException e) {
-                e.getMessage();
-            }
+                if (!isWordInDictionary(word.toString())) {
+                    return false;
+                }
+            } catch (ScrabbleGameInvalidWordException e) {}
         }
         return true;
     }
@@ -116,15 +147,15 @@ public class ScrabbleGameManager implements Serializable {
         }
     }
 
-
-    private boolean isValidInput(String input) {
-        final int MAX_INPUT_LENGTH = 1;
-
-        return (input.length() == MAX_INPUT_LENGTH);
+    private void moveToNextPlayer() {
+        if(players[players.length - 1] == currentPlayer) {
+            currentPlayer = players[0];
+        } else {
+            currentPlayer = players[Arrays.asList(players).indexOf(currentPlayer) + 1];
+        }
     }
 
-
-    private void getLetters() {
+    private void refillRack() {
         if (currentPlayer.needsLetters()) {
             currentPlayer.addLetters(scrabbleAlphabet.getLetters(currentPlayer.getNumberOfLettersNeeded()));
         }
@@ -137,11 +168,6 @@ public class ScrabbleGameManager implements Serializable {
             }
             System.out.println(scrabbleLetter);
         }
-    }
-
-    public void exchangeLetters(char[] lettersToExchange) {
-        currentPlayer.getLettersToExchange(lettersToExchange); //userInput.getInputFromUser("Which letters would you like to exchange? ").toUpperCase().toCharArray());
-        getLetters();
     }
 
     private boolean isWordInDictionary(String word) throws ScrabbleGameInvalidWordException {
@@ -159,12 +185,13 @@ public class ScrabbleGameManager implements Serializable {
         return result != null ? result.isValidWord() : false;
     }
 
-    private void skipTurn() {
+    private void exchangeLetters() {
 
-        if (currentPlayer.getPlayerId() < players.length - 1) {
-            currentPlayer = players[currentPlayer.getPlayerId() + 1];
-        }
-        currentPlayer = players[0];
+        moveToNextPlayer();
+    }
+
+    private void skipTurn() {
+        moveToNextPlayer();
     }
 
     protected void startGame() {
