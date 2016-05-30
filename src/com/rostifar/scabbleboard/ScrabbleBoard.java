@@ -257,8 +257,7 @@ public class ScrabbleBoard implements Serializable {
         return playedWords;
     }
 
-    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd, boolean isFirstRound) {
-
+    public void addWordToBoard(List<ScrabbleLetter> lettersToAdd) {
         for (ScrabbleLetter currentLetter : lettersToAdd) {
             try {
                 addLetterToSquare(currentLetter, currentLetter.getDesiredPositionCol(), currentLetter.getDesiredPositionRow());

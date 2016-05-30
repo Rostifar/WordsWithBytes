@@ -101,10 +101,6 @@ public class ScrabbleAlphabet implements Serializable {
         return listOfAvaiableLetters;
     }
 
-    public Set<Character> getListOfLetters(){
-        return letterMap.keySet();
-    }
-
     private char randomlySelectedLetterKey(){
         List<Character> availableKeys = getAvailableLetters();
         Random random = new Random();

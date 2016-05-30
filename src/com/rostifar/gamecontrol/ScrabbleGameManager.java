@@ -114,7 +114,7 @@ public class ScrabbleGameManager implements Serializable {
         playedWords = scrabbleBoard.getPlayedWords(scrabbleWord, orientation);
 
         if (playedWordsAreValid(playedWords)) {
-            scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord(), isFirstRound);
+            scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord());
             currentPlayer.addPointsToPlayerScore(getMovePointValue(playedWords));
             currentPlayer.removeLetters(scrabbleWord);
             refillRack();
@@ -201,8 +201,14 @@ public class ScrabbleGameManager implements Serializable {
     }
 
     private void refillRack() {
-        if (currentPlayer.needsLetters()) {
+        if (currentPlayer.needsLetters() && scrabbleAlphabet.getNumberOfLettersLeft() > 6) {
             currentPlayer.addLetters(scrabbleAlphabet.getLetters(currentPlayer.getNumberOfLettersNeeded()));
+        }
+        else if(currentPlayer.needsLetters() && scrabbleAlphabet.getNumberOfLettersLeft() < 7) {
+            currentPlayer.addLetters(scrabbleAlphabet.getLetters(scrabbleAlphabet.getNumberOfLettersLeft()));
+        }
+        if (currentPlayer.getRack().getLettersOnRack().size() == 0) {
+            endGame();
         }
     }
 
@@ -231,25 +237,13 @@ public class ScrabbleGameManager implements Serializable {
     }
 
     private void exchangeLetters(char[] lettersToExchange) {
-
+        currentPlayer.getRack().exchangeLetters(lettersToExchange);
+        refillRack();
         moveToNextPlayer();
     }
 
     private void skipTurn() {
         moveToNextPlayer();
-    }
-
-    protected void startGame() {
-    }
-
-    protected void endGame() {
-
-        if (scrabbleAlphabet.getNumberOfLettersLeft() == 0 && currentPlayer.getRack().getLettersOnRack().size() == 0) {
-            System.out.println("The Game Has Ended.");
-
-            for (Player currentPlayer : players) {
-            }
-        }
     }
 
     /**
@@ -259,4 +253,6 @@ public class ScrabbleGameManager implements Serializable {
     private void loadConfig() throws ScrabbleGameException {
         ScrabbleGameConfiguration.initialize();
     }
+
+    private void endGame() {}
 }
