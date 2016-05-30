@@ -86,27 +86,16 @@ public class ScrabbleGameManager implements Serializable {
         currentWord = scrabbleWord;
 
         System.out.println(scrabbleBoard);
-         scrabbleBoard.setWordCol(col);
-        scrabbleBoard.setWordRow(row);
-            scrabbleBoard.setUserSelectedOrientation(orientation);
-            scrabbleBoard.getPlayedWords(scrabbleWord, orientation)
-            if (playedWordsAreValid()) {
-                scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord(), isFirstRound);
-                getWordPointValue();
-            }
+        scrabbleBoard.getPlayedWords(scrabbleWord, orientation);
+        if (playedWordsAreValid()) {
+            scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord(), isFirstRound);
+        }
         currentPlayer.removeLetters(scrabbleWord);
         getLetters();
     }
 
-    private void getWordPointValue() {
-
-        for (List<ScrabbleLetter> word : scrabbleBoard.getWordsToBeChecked()) {
-            currentPlayer.getScoreKeeper().getWordPointValue(word, scrabbleBoard.getWordPointValueScaleFactor());
-        }
-    }
-
     private boolean playedWordsAreValid() {
-        for (List<ScrabbleLetter> scrabbleLetterList : scrabbleBoard.getWordsToBeChecked()) {
+        for (List<ScrabbleLetter> scrabbleLetterList : scrabbleBoard){
             ScrabbleWord wordPlayed = new ScrabbleWord(scrabbleLetterList);
 
             try {
