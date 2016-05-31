@@ -105,13 +105,19 @@ public class ScrabbleGameManager implements Serializable {
      *@playWord
      * purpose-> when activated by the servlet, manages the processes which involve playing a word
      * */
-    public void playWord(char[] word, int col[], int row[], String orientation, char[] blankLetters) {
+    public void playWord(char[] word, List<Integer> col, List<Integer> row, String orientation, char[] blankLetters) {
         List<ScrabbleWord> playedWords;
         scrabbleWord = new ScrabbleWord(word);
         exchangeBlankLetters(blankLetters, scrabbleWord.lettersInWord());
         currentWord = scrabbleWord;
         setUpLettersInWord(scrabbleWord, col, row);
-        playedWords = scrabbleBoard.getPlayedWords(scrabbleWord, orientation);
+
+        if (!isFirstRound) {
+            playedWords = scrabbleBoard.getPlayedWords(scrabbleWord, orientation);
+        } else {
+            playedWords = new ArrayList<>();
+            playedWords.add(scrabbleWord);
+        }
 
         if (playedWordsAreValid(playedWords)) {
             scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord());
@@ -126,10 +132,10 @@ public class ScrabbleGameManager implements Serializable {
      * @setUpLettersInWord
      * purpose-> for each letter in a word the method assigns the appropriate row and column
      * */
-    private void setUpLettersInWord(ScrabbleWord word, int[] col, int[] row) {
+    private void setUpLettersInWord(ScrabbleWord word, List<Integer> col, List<Integer> row) {
         for (int i = 0; i < word.getNumberOfLetters(); i++) {
-            word.getLetterAt(i).setDesiredPositionCol(col[i]);
-            word.getLetterAt(i).setDesiredPositionRow(row[i]);
+            word.getLetterAt(i).setDesiredPositionCol(col.get(i));
+            word.getLetterAt(i).setDesiredPositionRow(row.get(i));
         }
     }
 

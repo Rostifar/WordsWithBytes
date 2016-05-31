@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Git:Lazy (Dad) on 3/21/2016.
@@ -13,17 +16,35 @@ import java.io.IOException;
  * playWord(char[] word, int col, int row, String orientation)
  */
 public class PlayWordServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
+    private List<Integer> convertStringToIntArray(String numString) {
+        List<Integer> positions = new ArrayList<>();
+        String number = "";
+
+        for (char num : numString.toCharArray()) {
+            if (num == ',') {
+                positions.add(Integer.valueOf(number));
+                number = "";
+            } else {
+                number = number + num;
+                System.out.println(number);
+            }
+        }
+        positions.add(Integer.valueOf(number));
+        return positions;
+    }
+
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         String wordPlayed = request.getParameter("wordPlayed");
         String playedWordRows = request.getParameter("letterPositionsRow");
         String playedWordCols = request.getParameter("letterPositionsCol");
         String orientation = request.getParameter("wordOrientation");
         String blankLetters = request.getParameter("blankLetters");
-
         System.out.println(this.getClass().getName() + " - Play word: " + wordPlayed);
 
         ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
+        gameManager.playWord(wordPlayed.toCharArray(), convertStringToIntArray(playedWordCols), convertStringToIntArray(    playedWordRows), orientation, blankLetters.toCharArray());
         String json = ScrabbleServletHelper.getJSONforGameManager(gameManager);
         ScrabbleServletHelper.storeGameManagerOnSession(request, gameManager);
         System.out.println(this.getClass().getName() + "Returning JSON\n" + json);

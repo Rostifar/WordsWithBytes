@@ -136,6 +136,8 @@ WordsWithBytes.Game.prototype = {
         var that = this;
         var blankLetters = [this.currentWord.length];
         var strBlankLetters;
+        var stringRow;
+        var stringCol;
 
         function initLetterObjects() {
             for (var i = 0; i < that.currentWord.length; i++) {
@@ -261,20 +263,37 @@ WordsWithBytes.Game.prototype = {
             alert("The word you have entered is empty. Please try again.")
             return;
         }
+        
+        function getIndividualPositions() {
+            var positionsRow = [];
+            var positionsCol = [];
+            
+            for (var letterObject of letterObjects) {
+                positionsCol.push(letterObject.columnLocation.toString());
+                positionsRow.push(letterObject.rowLocation.toString());
+            }
+            stringCol = positionsCol.join();
+            stringRow = positionsRow.join();
+        }
 
         initLetterObjects();
         findWordOrientation();
         structurePlayedWord();
-        console.log(letterObjects);
 
         if (isValidWord() === false) {
             alert("your letter placement in invalid, please try again");
         } else {
             convertBlankLetters();
+            getIndividualPositions();
+
             $.post("/PlayWord",
-                {"wordPlayed":getWordAsString(), "letterPositionsCol": letterObjects[0].columnLocation, "letterPositionsRow":
-                letterObjects[0].rowLocation, "wordOrientation": wordOrientation, "blankLetters": strBlankLetters},
-                function(data, status){});
+                {"wordPlayed":getWordAsString(), "letterPositionsCol": stringCol, "letterPositionsRow":
+                stringRow, "wordOrientation": wordOrientation, "blankLetters": strBlankLetters},
+                function(data, status){
+                    while (!data.finish) {
+                        that.deactivateButtons();
+                    }
+                });
         }
 
 
@@ -308,22 +327,22 @@ WordsWithBytes.Game.prototype = {
     initButtons: function() {
         var controlButtonHeight = this.game.world.height + 60;
         var that = this;
-        var playWordButton = this.game.add.button(440, 640,'PlayWordButton', function() {
+        this.playWordButton = this.game.add.button(440, 640,'PlayWordButton', function() {
             if (confirm("Are you sure you want to play this word?")) {
                 that.playWord();
             } else {
             }
 
         }, this, 2, 1, 0);
-        var passTurnButton = this.game.add.button(this.game.world.centerX + playWordButton.width + 5, controlButtonHeight, 'PassTurnButton');
-        var exchangeLettersButton = this.game.add.button(440 + 30, 640, 'SwapWordsButton', function() {
+        this.passTurnButton = this.game.add.button(this.game.world.centerX + this.playWordButton.width + 5, controlButtonHeight, 'PassTurnButton');
+        this.exchangeLettersButton = this.game.add.button(440 + 30, 640, 'SwapWordsButton', function() {
             that.exchangeLetters();
         });
-        var quitGameButton = this.game.add.button(this.game.world.width - playWordButton.width, controlButtonHeight, 'QuitGameButton');
-        playWordButton.anchor.setTo(0.5, 0.5);
-        passTurnButton.anchor.setTo(0.5, 0.5);
-        exchangeLettersButton.anchor.setTo(0.5, 0.5);
-        quitGameButton.anchor.setTo(0.5, 0.5);
+        this.quitGameButton = this.game.add.button(this.game.world.width - this.playWordButton.width, controlButtonHeight, 'QuitGameButton');
+        this.playWordButton.anchor.setTo(0.5, 0.5);
+        this.passTurnButton.anchor.setTo(0.5, 0.5);
+        this.exchangeLettersButton.anchor.setTo(0.5, 0.5);
+        this.quitGameButton.anchor.setTo(0.5, 0.5);
     },
 
     /**
@@ -474,7 +493,9 @@ WordsWithBytes.Game.prototype = {
      * purpose-> deactivates buttons when a player selects to exchange, play word, or skip turn
      * */
     deactivateButtons: function () {
-
+        this.exchangeLettersButton.inputEnabled = false;
+        this.playWordButton.inputEnabled = false;
+        this.passTurnButton.inputEnabled = false;
     },
 
     /**
