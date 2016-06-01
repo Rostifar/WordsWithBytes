@@ -24,6 +24,10 @@ public class ScrabbleGameConfiguration {
     }
 
     private static void loadProperties() throws ScrabbleGameException {
+
+        if (gameProperties != null)
+            return;
+
         gameProperties = new Properties();
 
         try {

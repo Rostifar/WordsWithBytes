@@ -58,6 +58,15 @@ public class ScrabbleServletHelper  {
     }
 
     /**
+     * Convert instance of ScrabbleGameManager's game code to it's JSON equivalent
+     * @return a String containing the resulting JSON
+     */
+    protected static String getJSONforGameCode(ScrabbleGameManager gameManager) {
+        Gson gson = new Gson();
+        return gson.toJson(gameManager.getGameCode());
+    }
+
+    /**
      * Convert instance of Player to it's JSON equivalent
      * @return a String containing the resulting JSON
      */

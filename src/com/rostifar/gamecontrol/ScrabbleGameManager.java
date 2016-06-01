@@ -4,13 +4,14 @@ import com.rostifar.dictionary.Dictionary;
 import com.rostifar.dictionary.DictionaryFactory;
 import com.rostifar.dictionary.DictionaryLookupResult;
 import com.rostifar.scabbleboard.ScrabbleBoard;
-import com.rostifar.scabbleboard.Square;
 import com.rostifar.scabbleboard.SquareEnum;
 import com.rostifar.scrabbleproject.Player;
-import com.rostifar.wordDistribution.*;
+import com.rostifar.wordDistribution.ScrabbleAlphabet;
+import com.rostifar.wordDistribution.ScrabbleGameInvalidWordException;
+import com.rostifar.wordDistribution.ScrabbleLetter;
+import com.rostifar.wordDistribution.ScrabbleWord;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +29,7 @@ public class ScrabbleGameManager implements Serializable {
     private boolean isFirstRound = true;
     private ScrabbleWord currentWord;
     private int pointValueMultiplier;
+    private String gameCode;
 
     /**
      * @ScrabbleGameManager
@@ -44,26 +46,43 @@ public class ScrabbleGameManager implements Serializable {
     private void setupGame() throws ScrabbleGameException {
         System.out.println("Setting up Scrabble game...");
         loadConfig();
+        createGameCode();
         scrabbleBoard = new ScrabbleBoard();
+        System.out.println(scrabbleBoard);
+    }
+
+    /**
+     * Create the unique game code that will be used to tie together the players with a particular game
+     * @return the generated game code
+     */
+    private String createGameCode() {
+        int randomGameCode = (int)(Math.random()*9000)+1000;
+        gameCode = String.valueOf(randomGameCode);
+        return gameCode;
+    }
+
+    /**
+     * Create the unique game code that will be used to tie together the players with a particular game
+     * @return the generated game code
+     */
+    public String getGameCode() {
+       return gameCode;
     }
 
     /**
      * @addPlayers
      * purpose-> adds the appropriate amount of players based on the game lobby size
      */
-    public void addPlayers(int numberOfPlayers) {
+    public void addPlayer(String playerName, String email) {
 
-        players = new Player[numberOfPlayers];
+        if (playerName == null)
+            playerName = "Player-" + System.currentTimeMillis();
 
-        for (int playerIdx = 0; playerIdx < numberOfPlayers; playerIdx++) {
-            Player player = new Player("Player-" + playerIdx);
-            setupPlayer(player);
-            players[playerIdx] = player;
-        }
+        Player player = new Player(playerName);
+        setupPlayer(player);
 
         //Default to first player for now
         currentPlayer = players[0];
-
         printPlayers();
     }
 

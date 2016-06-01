@@ -17,10 +17,34 @@
         <servlet-class>com.rostifar.servlets.AddPlayerServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>AddPlayer</servlet-name>
         <url-pattern>/AddPlayer/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StartNewGameServlet</servlet-name>
+        <servlet-class>com.rostifar.servlets.StartNewGameServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StartNewGameServlet</servlet-name>
+        <url-pattern>/StartNewGame/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ResumeGameServlet</servlet-name>
+        <servlet-class>com.rostifar.servlets.ResumeGameServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ResumeGameServlet</servlet-name>
+        <url-pattern>/ResumeGame/*</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>PlayWord</servlet-name>
@@ -54,7 +78,7 @@
 
     </servlet-mapping>
 
-    <servlet>
+   <!-- <servlet>
         <servlet-name>ExchangeLettersServlet</servlet-name>
         <servlet-class>com.rostifar.servlets.ExchangeLettersServlet</servlet-class>
     </servlet>
@@ -62,5 +86,17 @@
     <servlet-mapping>
         <servlet-name>ExchangeLettersServlet</servlet-name>
         <url-pattern>/ExchangeLetters/*</url-pattern>
+    </servlet-mapping>-->
+
+    <servlet>
+        <description>AtmosphereServlet</description>
+        <servlet-name>AtmosphereServlet</servlet-name>
+        <servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AtmosphereServlet</servlet-name>
+        <url-pattern>/takeTurn/*</url-pattern>
     </servlet-mapping>
 </web-app>

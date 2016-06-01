@@ -6,7 +6,8 @@
       <root url="jar://$PROJECT_DIR$/lib/jdom-2.0.6.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/gson-2.6.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/atmosphere-runtime-2.4.4.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.7.jar!/" />
+      <root url="jar://C:/JDev/slf4j-1.7.21/slf4j-api-1.7.21.jar!/" />
+      <root url="jar://C:/JDev/slf4j-1.7.21/slf4j-jdk14-1.7.21.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
