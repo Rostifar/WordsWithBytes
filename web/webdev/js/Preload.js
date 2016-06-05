@@ -41,6 +41,8 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('Y', 'assets/images/Y.png');
         this.load.image('Z', 'assets/images/Z.png');
         this.load.image('cancel', 'assets/images/cancel.png');
+        this.load.image('submitButton', 'assets/images/submit.png');
+        this.load.image('startGameButton', 'assets/images/StartGameButton.png');
 
         this.load.image('_Selected', 'assets/images/LettersForExchange/BlSelected.png');
         this.load.image('ASelected', 'assets/images/LettersForExchange/ASelected.png');

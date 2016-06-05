@@ -44,7 +44,7 @@ public class PlayWordServlet extends HttpServlet {
         System.out.println(this.getClass().getName() + " - Play word: " + wordPlayed);
 
         ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
-        gameManager.playWord(wordPlayed.toCharArray(), convertStringToIntArray(playedWordCols), convertStringToIntArray(    playedWordRows), orientation, blankLetters.toCharArray());
+        gameManager.playWord(wordPlayed.toCharArray(), convertStringToIntArray(playedWordCols), convertStringToIntArray(playedWordRows), orientation, blankLetters.toCharArray());
         String json = ScrabbleServletHelper.getJSONforGameManager(gameManager);
         ScrabbleServletHelper.storeGameManagerOnSession(request, gameManager);
         System.out.println(this.getClass().getName() + "Returning JSON\n" + json);

@@ -13,16 +13,7 @@ import java.io.IOException;
  */
 public class AddPlayerServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-
-        String gameCode = request.getParameter("gameCode");
-        String playerName = request.getParameter("playerName");
-        System.out.println(this.getClass().getName() + " - Adding a Player: " + playerName);
-
-        ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(gameCode);
-        gameManager.addPlayer(playerName, null);
-        String json = ScrabbleServletHelper.getJSONforGameManager(gameManager);
-        ScrabbleServletHelper.storeGameManagerOnSession(request, gameManager);
-     //   System.out.println(this.getClass().getName() + "Returning JSON\n" + json);
-        response.getWriter().write(json);
+        String player = getInitParameter("username");
+        ScrabbleGameManager scrabbleGameManager;
     }
 }

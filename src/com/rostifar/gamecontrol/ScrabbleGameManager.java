@@ -10,17 +10,23 @@ import com.rostifar.wordDistribution.ScrabbleAlphabet;
 import com.rostifar.wordDistribution.ScrabbleGameInvalidWordException;
 import com.rostifar.wordDistribution.ScrabbleLetter;
 import com.rostifar.wordDistribution.ScrabbleWord;
+import handlers.ScrabbleGameAtmosphereHandler;
+import org.atmosphere.cpr.AtmosphereResource;
+import org.atmosphere.cpr.Broadcaster;
+import org.atmosphere.cpr.BroadcasterFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Future;
 
 
 /**
  * Created by Dad on 10/4/2015.
  */
 public class ScrabbleGameManager implements Serializable {
+
     private ScrabbleBoard scrabbleBoard;
     private Player players[];
     private ScrabbleAlphabet scrabbleAlphabet = new ScrabbleAlphabet();
@@ -30,6 +36,11 @@ public class ScrabbleGameManager implements Serializable {
     private ScrabbleWord currentWord;
     private int pointValueMultiplier;
     private String gameCode;
+    private Broadcaster gameBroadcaster;
+    private String gameState;
+    private boolean newPlayerJoined;
+    private boolean gameStateHasChanged;
+    private ScrabbleGameAtmosphereHandler scrabbleGameAtmosphereHandler;
 
     /**
      * @ScrabbleGameManager
@@ -48,6 +59,8 @@ public class ScrabbleGameManager implements Serializable {
         loadConfig();
         createGameCode();
         scrabbleBoard = new ScrabbleBoard();
+        scrabbleGameAtmosphereHandler = new ScrabbleGameAtmosphereHandler();
+        scrabbleGameAtmosphereHandler.setGameCode(gameCode);
         System.out.println(scrabbleBoard);
     }
 
@@ -59,6 +72,14 @@ public class ScrabbleGameManager implements Serializable {
         int randomGameCode = (int)(Math.random()*9000)+1000;
         gameCode = String.valueOf(randomGameCode);
         return gameCode;
+    }
+
+    public Broadcaster getGameBroadcaster() {
+        return gameBroadcaster;
+    }
+
+    public void setUpBroadcaster() {
+        //gameBroadcaster = broadcasterFactory.get(gameCode);
     }
 
     /**
@@ -84,6 +105,10 @@ public class ScrabbleGameManager implements Serializable {
         //Default to first player for now
         currentPlayer = players[0];
         printPlayers();
+    }
+
+    public void setNewGameState(String newGameState) {
+        gameState = newGameState;
     }
 
     /**
@@ -142,6 +167,8 @@ public class ScrabbleGameManager implements Serializable {
             scrabbleBoard.addWordToBoard(scrabbleWord.lettersInWord());
             currentPlayer.addPointsToPlayerScore(getMovePointValue(playedWords));
             currentPlayer.removeLetters(scrabbleWord);
+            System.out.println(currentPlayer.getPlayerScore());
+            isFirstRound = false;
             refillRack();
             moveToNextPlayer();
         }
@@ -171,6 +198,10 @@ public class ScrabbleGameManager implements Serializable {
             } catch (ScrabbleGameInvalidWordException e) {}
         }
         return true;
+    }
+
+    private String getResponse() {
+        return "The Word you have selected is invalid. please try again.";
     }
 
     private void printPlayers() {
@@ -263,11 +294,13 @@ public class ScrabbleGameManager implements Serializable {
 
     private void exchangeLetters(char[] lettersToExchange) {
         currentPlayer.getRack().exchangeLetters(lettersToExchange);
+        isFirstRound = false;
         refillRack();
         moveToNextPlayer();
     }
 
     private void skipTurn() {
+        isFirstRound = false;
         moveToNextPlayer();
     }
 

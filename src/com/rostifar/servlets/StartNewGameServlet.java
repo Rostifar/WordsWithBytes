@@ -4,6 +4,7 @@ import com.rostifar.gamecontrol.ScrabbleGameCache;
 import com.rostifar.gamecontrol.ScrabbleGameException;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ public class StartNewGameServlet extends javax.servlet.http.HttpServlet {
         ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
         try {
             ScrabbleGameCache.addGame(gameManager);
+            //gameManager.setUpBroadcaster();
         } catch (ScrabbleGameException exp) {
             exp.printStackTrace();
             throw new ServletException(exp);

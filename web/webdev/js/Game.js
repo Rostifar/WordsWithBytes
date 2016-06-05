@@ -1,10 +1,11 @@
+import * as WordsWithBytes from "./phaser";
 /**
  * Created by ross on 1/31/16.
  */
 "use strict";
 WordsWithBytes.Game = function(game){
     this.currentPlayer = null;
-    this.players = [];
+    this.user = null;
     this.scrabbleTileMap = null;
     this.scrabbleBoardLayer = null;
     this.scrabbleBoard = null;
@@ -24,6 +25,23 @@ WordsWithBytes.Game = function(game){
     this.letterKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
     this.isExchangingLetters = false;
 
+};
+
+WordsWithBytes.Game.getMessage = function(gameJson) {
+    var proto = WordsWithBytes.Game.prototype;
+    var that = WordsWithBytes.Game;
+    
+    if (that.user !== gameJson.currentPlayer) {
+        proto.deactivateButtons();
+    } else {
+        alert("its your turn! please select a move");
+        proto.activateButtons();
+    }
+
+    if (gameJson.gameStateHasChanged === true) {
+        that.game.state.start("EndGame");
+    }
+    that.scrabbleBoardMap = gameJson.scrabbleBoard;
 };
 
 
@@ -391,6 +409,7 @@ WordsWithBytes.Game.prototype = {
                 }
         })();
 
+        $.post("/ExchangeLetters", {"lettersToExchange" : lettersToExchange});
     },
 
     /**
@@ -496,6 +515,12 @@ WordsWithBytes.Game.prototype = {
         this.exchangeLettersButton.inputEnabled = false;
         this.playWordButton.inputEnabled = false;
         this.passTurnButton.inputEnabled = false;
+    },
+    
+    activateButtons: function() {
+        this.exchangeLettersButton.inputEnabled = true;
+        this.playWordButton.inputEnabled = true;
+        this.passTurnButton.inputEnabled = true;
     },
 
     /**

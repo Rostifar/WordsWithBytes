@@ -80,7 +80,7 @@
 
    <!-- <servlet>
         <servlet-name>ExchangeLettersServlet</servlet-name>
-        <servlet-class>com.rostifar.servlets.ExchangeLettersServlet</servlet-class>
+        <servlet-class>com.rostifar.servlets.ExchangeLetterServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -88,15 +88,4 @@
         <url-pattern>/ExchangeLetters/*</url-pattern>
     </servlet-mapping>-->
 
-    <servlet>
-        <description>AtmosphereServlet</description>
-        <servlet-name>AtmosphereServlet</servlet-name>
-        <servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-        <async-supported>true</async-supported>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AtmosphereServlet</servlet-name>
-        <url-pattern>/takeTurn/*</url-pattern>
-    </servlet-mapping>
 </web-app>
