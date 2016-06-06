@@ -11,15 +11,12 @@ import com.rostifar.wordDistribution.ScrabbleGameInvalidWordException;
 import com.rostifar.wordDistribution.ScrabbleLetter;
 import com.rostifar.wordDistribution.ScrabbleWord;
 import handlers.ScrabbleGameAtmosphereHandler;
-import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.Broadcaster;
-import org.atmosphere.cpr.BroadcasterFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Future;
 
 
 /**

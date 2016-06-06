@@ -72,7 +72,7 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('YSelected', 'assets/images/LettersForExchange/YSelected.png');
         this.load.image('ZSelected', 'assets/images/LettersForExchange/ZSelected.png');
 
-        this.load.audio('introMusic', ['assets/music/intro-music.mp3']);
+      //  this.load.audio('introMusic', ['assets/music/intro-music.mp3']);
         this.load.image('player2Button', 'assets/images/2PlayersButton.png');
         this.load.image('player3Button', 'assets/images/3PlayersButton.png');
         this.load.image('player4Button', 'assets/images/4PlayersButton.png');
@@ -85,9 +85,9 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('QuitGameButton', 'assets/images/QuitGame.png');
         this.load.image('JoinGameButton', 'assets/images/JoinExistingGame.png');
         this.load.image('StartGameButton', 'assets/images/CreateNewGame.png');
-        this.load.audio('letterDrop', 'assets/music/placeLetter.mp3');
+        /*this.load.audio('letterDrop', 'assets/music/placeLetter.mp3');
         this.load.audio('letterPlace', 'assets/music/putLetter.mp3');
-        
+        */
         //this.load.image('ScoreTemplate', 'assets/images/ScoreImage.png');
 
         //Load the tile map of the scrabble board using JSON layout.
@@ -97,7 +97,7 @@ WordsWithBytes.Preload.prototype = {
     },
 
     update: function() {
-        if (this.cache.isSoundDecoded('introMusic') && this.ready == false)
+        if (/*this.cache.isSoundDecoded('introMusic') && */this.ready == false)
         {
             this.ready = true;
             this.state.start('MainMenu');

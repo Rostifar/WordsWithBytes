@@ -37,7 +37,7 @@ WordsWithBytes.WaitForPlayers.prototype = {
         {font: bannerFont, fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
         playerList.anchor.setTo(0.5);
 
-        this.startGame = this.game.add.button(this.game.world.centerX, this.game.world.centerY * 1.5, 'startGameButton', startGame, this, 2, 1, 0);
+        this.startGame = this.game.add.button(this.game.world.centerX, this.game.world.centerY * 1.5, 'startGameButton', this.startGame, this, 2, 1, 0);
         this.startGame.anchor.setTo(0.5);
         this.startGame.visible = false;
     },
