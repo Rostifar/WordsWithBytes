@@ -35,14 +35,14 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ResumeGameServlet</servlet-name>
-        <servlet-class>com.rostifar.servlets.ResumeGameServlet</servlet-class>
+        <servlet-name>JoinExistingGameServlet</servlet-name>
+        <servlet-class>com.rostifar.servlets.JoinExistingGameServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>ResumeGameServlet</servlet-name>
-        <url-pattern>/ResumeGame/*</url-pattern>
+        <servlet-name>JoinExistingGameServlet</servlet-name>
+        <url-pattern>/JoinExistingGame/*</url-pattern>
     </servlet-mapping>
 
 
@@ -77,15 +77,5 @@
         <url-pattern>/GetLettersOnRack/*</url-pattern>
 
     </servlet-mapping>
-
-   <!-- <servlet>
-        <servlet-name>ExchangeLettersServlet</servlet-name>
-        <servlet-class>com.rostifar.servlets.ExchangeLetterServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ExchangeLettersServlet</servlet-name>
-        <url-pattern>/ExchangeLetters/*</url-pattern>
-    </servlet-mapping>-->
 
 </web-app>

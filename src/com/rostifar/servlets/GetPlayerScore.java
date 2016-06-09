@@ -3,7 +3,6 @@ package com.rostifar.servlets;
 
 import com.google.gson.Gson;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
-import com.rostifar.scrabbleproject.Player;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,7 @@ public class GetPlayerScore extends HttpServlet {
 
         ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
         Gson gson = new Gson();
-        int numberOfPlayers = gameManager.getPlayers().length;
+        int numberOfPlayers = gameManager.getPlayers().size();
         String[] playerScoreJSON = new String[numberOfPlayers];
 
         for (int i = 0; i < numberOfPlayers; i++) {

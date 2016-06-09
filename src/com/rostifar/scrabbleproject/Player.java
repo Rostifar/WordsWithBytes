@@ -65,4 +65,9 @@ public class Player implements Serializable {
     }
 
     public void removeLetters(ScrabbleWord scrabbleWord) {rack.removeLetters(scrabbleWord);}
+
+    public boolean equals(Object otherPlayer) {
+        Player playerToCompare = (Player) otherPlayer;
+       return this.getName().equals(playerToCompare.getName());
+    }
 }

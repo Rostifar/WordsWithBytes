@@ -17,6 +17,9 @@ import javax.servlet.http.HttpSession;
  */
 public class ScrabbleServletHelper  {
 
+    /**
+     *  @deprecated
+     */
     protected static ScrabbleGameManager getGameManagerFromSession(HttpServletRequest request) throws ServletException {
         HttpSession session = request.getSession();
         ScrabbleGameManager scrabbleGameManager = (ScrabbleGameManager) session.getAttribute("ScrabbleGameManager");
@@ -33,6 +36,7 @@ public class ScrabbleServletHelper  {
 
     /**
      * Store the instance of the GameManager relevant to the game in context on the user session
+     * @deprecated
      */
    protected static void storeGameManagerOnSession(HttpServletRequest request, ScrabbleGameManager scrabbleGameManager) {
         HttpSession session = request.getSession();
@@ -42,6 +46,7 @@ public class ScrabbleServletHelper  {
     /**
      * Store the instance of the current player (player whose turn we are processing) on the user session.
      * TODO: Is there needed since current player is already in ScrabbleGameManager?
+     * @deprecated
      */
     protected static void storeCurrentPlayerOnSession(HttpServletRequest request, Player currentPlayer) {
         HttpSession session = request.getSession();

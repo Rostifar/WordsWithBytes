@@ -23,7 +23,7 @@ WordsWithBytes.MainMenu.prototype = {
         newGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY / 2, 'startNewGameButton', startNewGameOnClick, this, 2, 1, 0);
         newGameButton.anchor.setTo(0.5, 0.5);
 
-        resumeGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'resumeExistingGameButton', resumeGameOnClick, this, 2, 1, 0);
+        resumeGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'joinExistingGameButton', joinExistingGameOnClick, this, 2, 1, 0);
         resumeGameButton.anchor.setTo(0.5, 0.5);
 
         submitButton = this.game.add.button(this.game.world.width / 3 + 150, 490, 'submitButton', joinExistingGameOnClick, this, 2, 1, 0);
@@ -63,11 +63,6 @@ function startNewGameOnClick() {
             console.log("Error occurred when attempting to start a new Game:" + status);
             //TODO: add proper error handling
         })
-}
-
-function resumeGameOnClick() {
-    theGameID.visible = true;
-    submitButton.visible = true;
 }
 
 function joinExistingGameOnClick() {

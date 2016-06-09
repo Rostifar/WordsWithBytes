@@ -15,7 +15,7 @@ import org.atmosphere.cpr.Broadcaster;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -25,7 +25,8 @@ import java.util.List;
 public class ScrabbleGameManager implements Serializable {
 
     private ScrabbleBoard scrabbleBoard;
-    private Player players[];
+    private List<Player> players = new ArrayList<>();
+    private Iterator<Player> currentPlayerinInterator = players.iterator();
     private ScrabbleAlphabet scrabbleAlphabet = new ScrabbleAlphabet();
     private Player currentPlayer;
     private ScrabbleWord scrabbleWord;
@@ -98,9 +99,10 @@ public class ScrabbleGameManager implements Serializable {
 
         Player player = new Player(playerName);
         setupPlayer(player);
+        players.add(player);
 
         //Default to first player for now
-        currentPlayer = players[0];
+        currentPlayer = players.get(0);
         printPlayers();
     }
 
@@ -128,7 +130,7 @@ public class ScrabbleGameManager implements Serializable {
      * @getPlayers
      * purpose-> returns an array of all the current players in a game instance
      * */
-    public Player[] getPlayers() {
+    public List getPlayers() {
         return this.players;
     }
 
@@ -208,10 +210,10 @@ public class ScrabbleGameManager implements Serializable {
     }
 
     private void moveToNextPlayer() {
-        if(players[players.length - 1] == currentPlayer) {
-            currentPlayer = players[0];
+        if(players.iterator().hasNext()) {
+            currentPlayer = players.get(0);
         } else {
-            currentPlayer = players[Arrays.asList(players).indexOf(currentPlayer) + 1];
+            currentPlayer = players.iterator().next();
         }
     }
 
