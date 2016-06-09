@@ -21,7 +21,6 @@ public class StartNewGameServlet extends javax.servlet.http.HttpServlet {
         ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
         try {
             ScrabbleGameCache.addGame(gameManager);
-            //gameManager.setUpBroadcaster();
         } catch (ScrabbleGameException exp) {
             exp.printStackTrace();
             throw new ServletException(exp);

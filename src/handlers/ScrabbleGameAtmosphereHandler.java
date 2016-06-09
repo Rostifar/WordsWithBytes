@@ -12,7 +12,6 @@ import java.io.Serializable;
 @AtmosphereHandlerService(path = "/scrabbleGame", interceptors = org.atmosphere.interceptor.AtmosphereResourceLifecycleInterceptor.class)
 public class ScrabbleGameAtmosphereHandler implements AtmosphereHandler, Serializable {
     private String gameCode;
-    // @Inject
     BroadcasterFactory broadcasterFactory;
 
     /**

@@ -25,7 +25,6 @@ public class ScrabbleGameCache {
         if (gameManager.getGameCode() == null) {
             throw new ScrabbleGameException("Cannot add a GameManager that does not have a game code!");
         }
-
         getGameCache().put(gameManager.getGameCode(), gameManager);
     }
 

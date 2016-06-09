@@ -23,7 +23,7 @@ WordsWithBytes.MainMenu.prototype = {
         newGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY / 2, 'startNewGameButton', startNewGameOnClick, this, 2, 1, 0);
         newGameButton.anchor.setTo(0.5, 0.5);
 
-        resumeGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'joinExistingGameButton', joinExistingGameOnClick, this, 2, 1, 0);
+        resumeGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'joinExistingGameButton', resumeGameOnClick, this, 2, 1, 0);
         resumeGameButton.anchor.setTo(0.5, 0.5);
 
         submitButton = this.game.add.button(this.game.world.width / 3 + 150, 490, 'submitButton', joinExistingGameOnClick, this, 2, 1, 0);
@@ -52,9 +52,8 @@ function startNewGameOnClick() {
 
     $.post("/StartNewGame")
         .success(function (data) {
-            //Game cannot be started until we return from this servlet call...otherwise user session will be empty
             console.log("Game Started - Game Code: " + data + "\nStatus: " + status);
-            var gameCodeDisplay = that.game.add.text(that.game.world.centerX, that.game.world.centerY / 3, "Your game code is:" + data, {font: "24px Arial", fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
+            var gameCodeDisplay = that.game.add.text(game.world.centerX, game.world.centerY / 3, "Your game code is:" + data, {font: "24px Arial", fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
             WordsWithBytes.gameCode = data;
             gameCodeDisplay.anchor.set(0.5, 0.5);
             addPlayerToLobby();
@@ -65,11 +64,20 @@ function startNewGameOnClick() {
         })
 }
 
+function resumeGameOnClick() {
+    theGameID.visible = true;
+    submitButton.visible = true;
+}
+
 function joinExistingGameOnClick() {
-    $.post("/ResumeGame", {gameID: this.theGameID})
+    $.post("/JoinExistingGame", {"gameCode": theGameID.value})
         .success(function (data) {
-            console.log("Game Resumed - Game Code: " + data + "\nStatus: " + status);
-            addPlayerToLobby();
+            if (data !== "Error, Game doesn't exist") {
+                console.log("Game Resumed - Game Code: " + data + "\nStatus: " + status);
+                addPlayerToLobby();
+            } else {    
+                alert("the game you have selected does not exist please try again")
+            }
         })
         .error(function (status) {
             alert("the game you have selected does no exist, please try again");
