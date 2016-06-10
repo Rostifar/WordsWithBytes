@@ -73,10 +73,12 @@ function resumeGameOnClick() {
 }
 
 function joinExistingGameOnClick() {
-    $.post("/JoinExistingGame", {"gameCode": theGameID.value})
+    var gameCode = theGameID.value;
+    $.post("/JoinExistingGame", {"gameCode": gameCode})
         .success(function (data) {
             if (data !== "Error, Game doesn't exist" && data !== "Error, Game lobby is full") {
                 console.log("Game Resumed - Game Code: " + data + "\nStatus: " + status);
+                WordsWithBytes.gameCode = gameCode;
                 addPlayerToLobby();
             } else {    
                 alert("the game you have selected does not exist or is full, please try again")

@@ -4,6 +4,7 @@ import com.rostifar.gamecontrol.ScrabbleGameCache;
 import com.rostifar.gamecontrol.ScrabbleGameException;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
 import com.rostifar.gamecontrol.ScrabbleGameResources;
+import handlers.ScrabbleGameAtmosphereHandler;
 
 
 import javax.servlet.ServletException;

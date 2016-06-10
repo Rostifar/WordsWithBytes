@@ -56,8 +56,6 @@ public class ScrabbleGameManager implements Serializable {
         System.out.println("Setting up Scrabble game...");
         loadConfig();
         scrabbleBoard = new ScrabbleBoard();
-        scrabbleGameAtmosphereHandler = new ScrabbleGameAtmosphereHandler();
-        scrabbleGameAtmosphereHandler.setGameCode(gameCode);
         System.out.println(scrabbleBoard);
     }
 

@@ -587,10 +587,6 @@ WordsWithBytes.Game.prototype = {
     getRackFailure: function() {
         console.log("Call to GetPlayRack failed");
     },
-    
-    showScores: function () {
-        
-    }
 
     /**
      * @finishTurn
