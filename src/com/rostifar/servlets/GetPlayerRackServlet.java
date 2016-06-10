@@ -1,6 +1,7 @@
 package com.rostifar.servlets;
 
 import com.google.gson.Gson;
+import com.rostifar.gamecontrol.ScrabbleGameCache;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
 
 import javax.servlet.http.HttpServlet;
@@ -15,7 +16,7 @@ public class GetPlayerRackServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
         System.out.println(this.getClass().getName() + " Called\n" + request);
-        ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
+        ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request));
         Gson gson = new Gson();
 
         String rackJson = gson.toJson(gameManager.getCurrentPlayer().getRack().getCharactersOnRack());

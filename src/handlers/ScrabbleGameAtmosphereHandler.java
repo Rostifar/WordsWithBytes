@@ -1,8 +1,11 @@
 package handlers;
 
 import com.rostifar.gamecontrol.ScrabbleGameCache;
+import com.rostifar.servlets.ScrabbleServletHelper;
 import org.atmosphere.config.service.AtmosphereHandlerService;
 import org.atmosphere.cpr.*;
+
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -12,15 +15,24 @@ import java.io.Serializable;
 @AtmosphereHandlerService(path = "/scrabbleGame", interceptors = org.atmosphere.interceptor.AtmosphereResourceLifecycleInterceptor.class)
 public class ScrabbleGameAtmosphereHandler implements AtmosphereHandler, Serializable {
     private String gameCode;
-    // @Inject
     BroadcasterFactory broadcasterFactory;
+    Broadcaster gameBroadCaster;
 
     /**
      * This method broadcasts state changes to other scrabble clients who are listening (participating in the game)?
      */
     @Override
     public void onRequest(AtmosphereResource atmosphereResource) throws IOException {
-        ScrabbleGameCache.lookupGame(gameCode).getGameBroadcaster().addAtmosphereResource(atmosphereResource);
+        AtmosphereRequest request = atmosphereResource.getRequest();
+        HttpSession httpSession = request.getSession();
+        BroadcasterFactory broadcasterFactory = atmosphereResource.getAtmosphereConfig().getBroadcasterFactory();
+        gameCode = (String)httpSession.getAttribute("GameCode");
+
+        if(broadcasterFactory.lookup(gameCode) == null) {
+            gameBroadCaster = broadcasterFactory.lookup(gameCode, true);
+        }
+        gameBroadCaster.addAtmosphereResource(atmosphereResource);
+        httpSession.setAttribute("GameBroadcaster", gameBroadCaster);
     }
 
     @Override
@@ -28,13 +40,13 @@ public class ScrabbleGameAtmosphereHandler implements AtmosphereHandler, Seriali
 
     }
 
+    public Broadcaster getGameBroadcaster() {
+        return gameBroadCaster;
+    }
+
     @Override
     public void destroy() {
 
-    }
-
-    public void setGameCode(String code) {
-        gameCode = code;
     }
 }
 

@@ -14,18 +14,17 @@ import java.io.IOException;
 public class JoinExistingGameServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         String gameCode = request.getParameter("gameCode");
-        String playerName = request.getParameter("playerID");
         ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(gameCode);
         String json;
 
-        //if (gameManager.getPlayers().contains())
-
-        if (gameCode == null) //Could not find the Game Code in the cache
-            json = "{Error - Game Code cannot be found}";
-        else {
+        if (ScrabbleGameCache.lookupGame(gameCode) == null) //Could not find the Game Code in the cache
+            json = "Error, Game doesn't exist";
+        else if(ScrabbleGameCache.lookupGame(gameCode).getPlayers().size() == 4){
+            json = "Error, Game lobby is full";
+        } else {
+            ScrabbleServletHelper.storeGameCodeOnSession(request, gameCode);
             json = ScrabbleServletHelper.getJSONforGameManager(gameManager);
         }
-
         System.out.println(this.getClass().getName() + "Returning JSON\n" + json);
         response.getWriter().write(json);
     }

@@ -55,21 +55,8 @@ public class ScrabbleGameManager implements Serializable {
     private void setupGame() throws ScrabbleGameException {
         System.out.println("Setting up Scrabble game...");
         loadConfig();
-        createGameCode();
         scrabbleBoard = new ScrabbleBoard();
-        scrabbleGameAtmosphereHandler = new ScrabbleGameAtmosphereHandler();
-        scrabbleGameAtmosphereHandler.setGameCode(gameCode);
         System.out.println(scrabbleBoard);
-    }
-
-    /**
-     * Create the unique game code that will be used to tie together the players with a particular game
-     * @return the generated game code
-     */
-    private String createGameCode() {
-        int randomGameCode = (int)(Math.random()*9000)+1000;
-        gameCode = String.valueOf(randomGameCode);
-        return gameCode;
     }
 
     public Broadcaster getGameBroadcaster() {
@@ -80,13 +67,6 @@ public class ScrabbleGameManager implements Serializable {
         //gameBroadcaster = broadcasterFactory.get(gameCode);
     }
 
-    /**
-     * Create the unique game code that will be used to tie together the players with a particular game
-     * @return the generated game code
-     */
-    public String getGameCode() {
-       return gameCode;
-    }
 
     /**
      * @addPlayers
@@ -94,8 +74,9 @@ public class ScrabbleGameManager implements Serializable {
      */
     public void addPlayer(String playerName, String email) {
 
-        if (playerName == null)
+        if (playerName == null) {
             playerName = "Player-" + System.currentTimeMillis();
+        }
 
         Player player = new Player(playerName);
         setupPlayer(player);
@@ -210,11 +191,9 @@ public class ScrabbleGameManager implements Serializable {
     }
 
     private void moveToNextPlayer() {
-        if(players.iterator().hasNext()) {
-            currentPlayer = players.get(0);
-        } else {
-            currentPlayer = players.iterator().next();
-        }
+        Player lastPlayerInList = players.get(players.size() - 1);
+        int currentPlayerIndex = players.indexOf(currentPlayer);
+        currentPlayer = (lastPlayerInList == currentPlayer) ? players.get(0) : players.get(currentPlayerIndex + 1);
     }
 
     private int getMovePointValue(List<ScrabbleWord> playedWords) {

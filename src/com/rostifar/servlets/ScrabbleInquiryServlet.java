@@ -1,5 +1,7 @@
 package com.rostifar.servlets;
 
+import com.rostifar.gamecontrol.ScrabbleGameCache;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +21,7 @@ public class ScrabbleInquiryServlet extends HttpServlet {
     }
 
     private void getJSONforCurrentScrabbleBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException , IOException{
-        String json = ScrabbleServletHelper.getJSONforScrabbleBoard(ScrabbleServletHelper.getGameManagerFromSession(request));
+        String json = ScrabbleServletHelper.getJSONforScrabbleBoard(ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request)));
         System.out.println(this.getClass().getName() + "Returning JSON\n" + json);
         response.getWriter().write(json);
     }

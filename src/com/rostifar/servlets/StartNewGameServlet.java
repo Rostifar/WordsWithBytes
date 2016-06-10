@@ -3,6 +3,8 @@ package com.rostifar.servlets;
 import com.rostifar.gamecontrol.ScrabbleGameCache;
 import com.rostifar.gamecontrol.ScrabbleGameException;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
+import com.rostifar.gamecontrol.ScrabbleGameResources;
+import handlers.ScrabbleGameAtmosphereHandler;
 
 
 import javax.servlet.ServletException;
@@ -17,19 +19,15 @@ import java.io.IOException;
 public class StartNewGameServlet extends javax.servlet.http.HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-
-        ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
+        ScrabbleGameResources scrabbleGameResources = new ScrabbleGameResources();
         try {
-            ScrabbleGameCache.addGame(gameManager);
-            //gameManager.setUpBroadcaster();
+            ScrabbleGameCache.addGame(scrabbleGameResources.getGameCode());
         } catch (ScrabbleGameException exp) {
             exp.printStackTrace();
             throw new ServletException(exp);
         }
-        //  gameManager.addPlayers(numberOfPlayers);
-        String json = ScrabbleServletHelper.getJSONforGameCode(gameManager);
-        ScrabbleServletHelper.storeGameManagerOnSession(request, gameManager);
-     //   System.out.println(this.getClass().getName() + "Returning JSON\n" + json);
+        ScrabbleServletHelper.storeGameCodeOnSession(request, scrabbleGameResources.getGameCode());
+        String json = ScrabbleServletHelper.getJSONforGameCode(scrabbleGameResources.getGameCode());
         response.getWriter().write(json);
     }
 }

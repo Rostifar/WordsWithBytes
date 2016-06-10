@@ -1,5 +1,6 @@
 package com.rostifar.servlets;
 
+import com.rostifar.gamecontrol.ScrabbleGameCache;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
 
 import javax.servlet.http.HttpServlet;
@@ -43,7 +44,7 @@ public class PlayWordServlet extends HttpServlet {
         String blankLetters = request.getParameter("blankLetters");
         System.out.println(this.getClass().getName() + " - Play word: " + wordPlayed);
 
-        ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
+        ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request));
         gameManager.playWord(wordPlayed.toCharArray(), convertStringToIntArray(playedWordCols), convertStringToIntArray(playedWordRows), orientation, blankLetters.toCharArray());
         String json = ScrabbleServletHelper.getJSONforGameManager(gameManager);
         ScrabbleServletHelper.storeGameManagerOnSession(request, gameManager);
