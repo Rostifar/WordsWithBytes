@@ -1,5 +1,6 @@
 package com.rostifar.servlets;
 
+import com.rostifar.gamecontrol.ScrabbleGameCache;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
 import com.sun.deploy.net.HttpRequest;
 import com.sun.deploy.net.HttpResponse;
@@ -16,7 +17,7 @@ public class SkipTurnServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
-        ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
+        ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request));
     }
 
 }

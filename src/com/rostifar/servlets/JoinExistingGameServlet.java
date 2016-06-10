@@ -19,10 +19,12 @@ public class JoinExistingGameServlet extends javax.servlet.http.HttpServlet {
 
         if (ScrabbleGameCache.lookupGame(gameCode) == null) //Could not find the Game Code in the cache
             json = "Error, Game doesn't exist";
-        else {
+        else if(ScrabbleGameCache.lookupGame(gameCode).getPlayers().size() == 4){
+            json = "Error, Game lobby is full";
+        } else {
+            ScrabbleServletHelper.storeGameCodeOnSession(request, gameCode);
             json = ScrabbleServletHelper.getJSONforGameManager(gameManager);
         }
-
         System.out.println(this.getClass().getName() + "Returning JSON\n" + json);
         response.getWriter().write(json);
     }

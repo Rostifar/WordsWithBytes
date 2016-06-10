@@ -5,6 +5,7 @@ package com.rostifar.servlets;
 import com.google.gson.Gson;
 import com.rostifar.gamecontrol.ScrabbleGameException;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
+import com.rostifar.gamecontrol.ScrabbleGameResources;
 import com.rostifar.scrabbleproject.Player;
 
 import javax.servlet.ServletException;
@@ -17,21 +18,14 @@ import javax.servlet.http.HttpSession;
  */
 public class ScrabbleServletHelper  {
 
-    /**
-     *  @deprecated
-     */
-    protected static ScrabbleGameManager getGameManagerFromSession(HttpServletRequest request) throws ServletException {
+    protected static void storeGameCodeOnSession(HttpServletRequest request, String gameCode) throws ServletException {
         HttpSession session = request.getSession();
-        ScrabbleGameManager scrabbleGameManager = (ScrabbleGameManager) session.getAttribute("ScrabbleGameManager");
+        session.setAttribute("GameCode", gameCode);
+    }
 
-        if (scrabbleGameManager == null) {
-            try {
-                scrabbleGameManager = new ScrabbleGameManager();
-            } catch (ScrabbleGameException exp) {
-                throw new ServletException(exp.getMessage());
-            }
-        }
-        return scrabbleGameManager;
+    protected static String getGameCodeFromSession(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return (String)session.getAttribute("GameCode");
     }
 
     /**
@@ -66,9 +60,9 @@ public class ScrabbleServletHelper  {
      * Convert instance of ScrabbleGameManager's game code to it's JSON equivalent
      * @return a String containing the resulting JSON
      */
-    protected static String getJSONforGameCode(ScrabbleGameManager gameManager) {
+    protected static String getJSONforGameCode(String gameCode) {
         Gson gson = new Gson();
-        return gson.toJson(gameManager.getGameCode());
+        return gson.toJson(gameCode);
     }
 
     /**

@@ -14,6 +14,9 @@ WordsWithBytes.MainMenu.prototype = {
 
     create: function() {
 
+        var backgroundImage = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'space-background');
+        backgroundImage.anchor.setTo(0.5, 0.5);
+
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 
         var bannerFont = "24px Arial";
@@ -72,11 +75,11 @@ function resumeGameOnClick() {
 function joinExistingGameOnClick() {
     $.post("/JoinExistingGame", {"gameCode": theGameID.value})
         .success(function (data) {
-            if (data !== "Error, Game doesn't exist") {
+            if (data !== "Error, Game doesn't exist" && data !== "Error, Game lobby is full") {
                 console.log("Game Resumed - Game Code: " + data + "\nStatus: " + status);
                 addPlayerToLobby();
             } else {    
-                alert("the game you have selected does not exist please try again")
+                alert("the game you have selected does not exist or is full, please try again")
             }
         })
         .error(function (status) {

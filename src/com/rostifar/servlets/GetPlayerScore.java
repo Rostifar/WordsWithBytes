@@ -2,6 +2,7 @@ package com.rostifar.servlets;
 
 
 import com.google.gson.Gson;
+import com.rostifar.gamecontrol.ScrabbleGameCache;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
 
 import javax.servlet.http.HttpServlet;
@@ -15,7 +16,7 @@ import java.io.IOException;
 public class GetPlayerScore extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
-        ScrabbleGameManager gameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
+        ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request));
         Gson gson = new Gson();
         int numberOfPlayers = gameManager.getPlayers().size();
         String[] playerScoreJSON = new String[numberOfPlayers];

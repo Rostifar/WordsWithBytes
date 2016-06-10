@@ -1,6 +1,7 @@
 package com.rostifar.servlets;
 
 import com.google.gson.Gson;
+import com.rostifar.gamecontrol.ScrabbleGameCache;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
 
 import javax.servlet.http.HttpServlet;
@@ -16,7 +17,7 @@ public class ChangeGameStateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         Gson gson = new Gson();
         String newGameState = request.getParameter("newGameState");
-        ScrabbleGameManager scrabbleGameManager = ScrabbleServletHelper.getGameManagerFromSession(request);
+        ScrabbleGameManager scrabbleGameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request));
 
         scrabbleGameManager.setNewGameState(newGameState);
         scrabbleGameManager.getGameBroadcaster().broadcast(ScrabbleServletHelper.getJSONforGameManager(scrabbleGameManager));

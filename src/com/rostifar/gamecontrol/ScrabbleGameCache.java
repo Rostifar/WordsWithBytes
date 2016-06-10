@@ -21,11 +21,17 @@ public class ScrabbleGameCache {
     /**
      * Add an instance of the GameManager as the value and  the GameID as the key.
      */
-    public static void addGame(ScrabbleGameManager gameManager) throws ScrabbleGameException {
-        if (gameManager.getGameCode() == null) {
+    public static void addGame(String gameCode) throws ScrabbleGameException {
+        ScrabbleGameManager scrabbleGameManager = new ScrabbleGameManager();
+        if (gameCode == null) {
             throw new ScrabbleGameException("Cannot add a GameManager that does not have a game code!");
         }
-        getGameCache().put(gameManager.getGameCode(), gameManager);
+        getGameCache().put(gameCode, scrabbleGameManager);
+    }
+
+    //for testing purposes only
+    public static void clearAllEntries() {
+        gameCache.clear();
     }
 
     /**

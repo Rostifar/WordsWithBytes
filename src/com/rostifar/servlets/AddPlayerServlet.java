@@ -13,7 +13,8 @@ import java.io.IOException;
  */
 public class AddPlayerServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        String player = getInitParameter("username");
-        ScrabbleGameManager scrabbleGameManager;
+        String playerUsername = request.getParameter("username");
+        ScrabbleGameManager scrabbleGameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request));
+        scrabbleGameManager.addPlayer(playerUsername, null);
     }
 }
