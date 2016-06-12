@@ -15,11 +15,10 @@ import java.io.IOException;
  */
 public class AddPlayerServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        String gameCode = (String)request.getSession().getAttribute("GameCode");
+        Gson gson = new Gson();
         String playerUsername = request.getParameter("username");
-        Broadcaster broadcaster = (Broadcaster)request.getSession().getAttribute("GameBroadcaster");
-        System.out.println(broadcaster);
-        ScrabbleGameManager scrabbleGameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request)).getGameManager();
         scrabbleGameManager.addPlayer(playerUsername, null);
+        String playersJson = gson.toJson(scrabbleGameManager.getPlayers());
+        response.getWriter().write(playersJson);
     }
 }
