@@ -1,9 +1,7 @@
 package com.rostifar.servlets;
 
+import com.google.gson.Gson;
 import com.rostifar.gamecontrol.ScrabbleGameCache;
-import com.rostifar.gamecontrol.ScrabbleGameManager;
-import org.atmosphere.cpr.Broadcaster;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +14,10 @@ import java.io.IOException;
 public class AddPlayerServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         Gson gson = new Gson();
+        String gameCode = (String)request.getSession().getAttribute("GameCode");
         String playerUsername = request.getParameter("username");
-        scrabbleGameManager.addPlayer(playerUsername, null);
-        String playersJson = gson.toJson(scrabbleGameManager.getPlayers());
+        ScrabbleGameCache.lookupGame(gameCode).getGameManager().addPlayer(playerUsername, null);
+        String playersJson = gson.toJson(ScrabbleGameCache.lookupGame(gameCode).getGameManager().getPlayers());
         response.getWriter().write(playersJson);
     }
 }
