@@ -29,12 +29,12 @@ WordsWithBytes.Register.prototype = {
         var newGame = this.game.add.button(this.game.world.centerX, this.game.world.centerY - 100, 'StartGameButton', function() {
             that.startNewGame();
         });
-        var existingGame = this.game.add.button(this.game.world.centerX, this.game.world.centerY + 100, 'JoinGameButton', function () {
+      /*  var existingGame = this.game.add.button(this.game.world.centerX, this.game.world.centerY + 100, 'JoinGameButton', function () {
             that.getGameCode();
-        });
+        });*/
 
         newGame.anchor.setTo(0.5, 0.5);
-        existingGame.anchor.setTo(0.5, 0.5);
+    //    existingGame.anchor.setTo(0.5, 0.5);
         backgroundImage.anchor.setTo(0.5, 0.5);
     }
 };

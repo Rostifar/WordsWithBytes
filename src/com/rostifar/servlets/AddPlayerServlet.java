@@ -19,7 +19,7 @@ public class AddPlayerServlet extends javax.servlet.http.HttpServlet {
         String playerUsername = request.getParameter("username");
         Broadcaster broadcaster = (Broadcaster)request.getSession().getAttribute("GameBroadcaster");
         System.out.println(broadcaster);
-        ScrabbleGameManager scrabbleGameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request));
+        ScrabbleGameManager scrabbleGameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request)).getGameManager();
         scrabbleGameManager.addPlayer(playerUsername, null);
     }
 }

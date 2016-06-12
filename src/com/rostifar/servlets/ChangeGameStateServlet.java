@@ -17,7 +17,7 @@ public class ChangeGameStateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         Gson gson = new Gson();
         String newGameState = request.getParameter("newGameState");
-        ScrabbleGameManager scrabbleGameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request));
+        ScrabbleGameManager scrabbleGameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request)).getGameManager();
 
         scrabbleGameManager.setNewGameState(newGameState);
         scrabbleGameManager.getGameBroadcaster().broadcast(ScrabbleServletHelper.getJSONforGameManager(scrabbleGameManager));

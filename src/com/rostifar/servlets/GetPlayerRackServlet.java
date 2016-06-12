@@ -16,7 +16,7 @@ public class GetPlayerRackServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
         System.out.println(this.getClass().getName() + " Called\n" + request);
-        ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request));
+        ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request)).getGameManager();
         Gson gson = new Gson();
 
         String rackJson = gson.toJson(gameManager.getCurrentPlayer().getRack().getCharactersOnRack());

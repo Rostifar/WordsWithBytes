@@ -23,14 +23,14 @@ WordsWithBytes.MainMenu.prototype = {
         var gameSelection = this.game.add.text(this.game.world.centerX, this.game.world.centerY / 6, "Words with Bytes - A Virtual Scrabble Experience", {font: bannerFont, fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
         gameSelection.anchor.set(0.5);
 
-        newGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY / 2, 'startNewGameButton', startNewGameOnClick, this, 2, 1, 0);
+        newGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY / 2, 'StartGameButton', startNewGameOnClick, this, 2, 1, 0);
         newGameButton.anchor.setTo(0.5, 0.5);
 
-        resumeGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'joinExistingGameButton', resumeGameOnClick, this, 2, 1, 0);
+        resumeGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'JoinGameButton', joinExistingGameOnClick, this, 2, 1, 0);
         resumeGameButton.anchor.setTo(0.5, 0.5);
 
-        submitButton = this.game.add.button(this.game.world.width / 3 + 150, 490, 'submitButton', joinExistingGameOnClick, this, 2, 1, 0);
-        submitButton.visible = false;
+      /*  submitButton = this.game.add.button(this.game.world.width / 3 + 150, 490, 'submitButton', joinExistingGameOnClick, this, 2, 1, 0);
+        submitButton.visible = false;*/
 
         theGameID = game.add.inputField(this.game.world.width / 3, 500, {
             font: '18px Arial',

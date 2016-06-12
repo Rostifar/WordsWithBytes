@@ -16,7 +16,7 @@ import java.io.IOException;
 public class GetPlayerScore extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
-        ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request));
+        ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request)).getGameManager();
         Gson gson = new Gson();
         int numberOfPlayers = gameManager.getPlayers().size();
         String[] playerScoreJSON = new String[numberOfPlayers];

@@ -21,12 +21,11 @@ public class ScrabbleGameCache {
     /**
      * Add an instance of the GameManager as the value and  the GameID as the key.
      */
-    public static void addGame(String gameCode) throws ScrabbleGameException {
-        ScrabbleGameManager scrabbleGameManager = new ScrabbleGameManager();
+    public static void addGame(String gameCode, GameCacheValues value) throws ScrabbleGameException {
         if (gameCode == null) {
             throw new ScrabbleGameException("Cannot add a GameManager that does not have a game code!");
         }
-        getGameCache().put(gameCode, scrabbleGameManager);
+        getGameCache().put(gameCode, value);
     }
 
     //for testing purposes only
@@ -50,9 +49,7 @@ public class ScrabbleGameCache {
      * @return the instance of the GameManager or null if it did not exist
      *
      */
-    public static ScrabbleGameManager lookupGame(String gameCode) {
-        return (ScrabbleGameManager) getGameCache().get(gameCode);
+    public static GameCacheValues lookupGame(String gameCode) {
+        return (GameCacheValues) getGameCache().get(gameCode);
     }
-
-
 }
