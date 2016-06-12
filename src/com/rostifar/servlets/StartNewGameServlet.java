@@ -1,9 +1,9 @@
 package com.rostifar.servlets;
 
 import com.rostifar.gamecontrol.*;
-import org.atmosphere.cpr.Broadcaster;
-import org.atmosphere.cpr.DefaultBroadcasterFactory;
+import org.atmosphere.cpr.*;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +18,7 @@ public class StartNewGameServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         ScrabbleGameResources scrabbleGameResources = new ScrabbleGameResources();
         String gameCode = scrabbleGameResources.getGameCode();
-        Broadcaster broadcaster = (new DefaultBroadcasterFactory()).lookup(gameCode, true);
+        Broadcaster broadcaster = (new DefaultBroadcasterFactory()).get(DefaultBroadcaster.class, gameCode);
         ScrabbleGameManager gameManager;
 
         try {
