@@ -10,7 +10,6 @@ import com.rostifar.wordDistribution.ScrabbleAlphabet;
 import com.rostifar.wordDistribution.ScrabbleGameInvalidWordException;
 import com.rostifar.wordDistribution.ScrabbleLetter;
 import com.rostifar.wordDistribution.ScrabbleWord;
-import handlers.ScrabbleGameAtmosphereHandler;
 import org.atmosphere.cpr.Broadcaster;
 
 import java.io.Serializable;
@@ -38,7 +37,6 @@ public class ScrabbleGameManager implements Serializable {
     private String gameState;
     private boolean newPlayerJoined;
     private boolean gameStateHasChanged;
-    private ScrabbleGameAtmosphereHandler scrabbleGameAtmosphereHandler;
 
     /**
      * @ScrabbleGameManager

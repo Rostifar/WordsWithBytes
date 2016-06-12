@@ -2,7 +2,9 @@ package com.rostifar.servlets;
 
 import com.rostifar.gamecontrol.ScrabbleGameCache;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
+import org.atmosphere.cpr.BroadcasterFactory;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.io.IOException;
  * Created by GitLazy on 3/21/2016.
  */
 public class JoinExistingGameServlet extends javax.servlet.http.HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         String gameCode = request.getParameter("gameCode");
         ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(gameCode);

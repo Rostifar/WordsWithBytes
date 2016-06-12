@@ -7,6 +7,10 @@
       <root url="jar://$PROJECT_DIR$/lib/gson-2.6.2.jar!/" />
       <root url="jar://$USER_HOME$/Atmosphere/lib/atmosphere-runtime-2.4.4.jar!/" />
       <root url="jar://$USER_HOME$/Atmosphere/lib/slf4j-api-1.7.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-jdk14-1.7.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/atmosphere-runtime-2.4.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javax.inject-1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

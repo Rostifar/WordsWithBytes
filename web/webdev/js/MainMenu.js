@@ -59,7 +59,8 @@ function startNewGameOnClick() {
             var gameCodeDisplay = that.game.add.text(game.world.centerX, game.world.centerY / 3, "Your game code is:" + data, {font: "24px Arial", fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
             WordsWithBytes.gameCode = data;
             gameCodeDisplay.anchor.set(0.5, 0.5);
-            addPlayerToLobby();
+            WordsWithBytes.setUpSockets();
+            game.state.start("WaitForPlayers"); //, false, false, data);
         })
         .error(function (status) {
             console.log("Error occurred when attempting to start a new Game:" + status);
@@ -79,8 +80,9 @@ function joinExistingGameOnClick() {
             if (data !== "Error, Game doesn't exist" && data !== "Error, Game lobby is full") {
                 console.log("Game Resumed - Game Code: " + data + "\nStatus: " + status);
                 WordsWithBytes.gameCode = gameCode;
-                addPlayerToLobby();
-            } else {    
+                WordsWithBytes.setUpSockets();
+                game.state.start("WaitForPlayers"); //, false, false, data);
+            } else {
                 alert("the game you have selected does not exist or is full, please try again")
             }
         })
@@ -90,14 +92,4 @@ function joinExistingGameOnClick() {
         })
 }
 
-function addPlayerToLobby() {
-    var userName = prompt("Please enter a username");
-    $.post("/AddPlayer", {"username": userName})
-        .success(function(data) {
-            game.state.start("WaitForPlayers"); //, false, false, data);
-        })
-        .error(function(status) {
-            alert("You cannot join this lobby, please try again")
-        })
-}
 

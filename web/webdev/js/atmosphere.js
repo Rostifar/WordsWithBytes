@@ -1,6 +1,3 @@
-/**
- * Created by rostifar on 6/3/16.
- */
 /*
  * Copyright 2015 Async-IO.org
  *
@@ -3487,3 +3484,4 @@
 
     return atmosphere;
 }));
+/* jshint eqnull:true, noarg:true, noempty:true, eqeqeq:true, evil:true, laxbreak:true, undef:true, browser:true, indent:false, maxerr:50 */
