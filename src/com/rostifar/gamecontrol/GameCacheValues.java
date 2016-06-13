@@ -10,6 +10,10 @@ public class GameCacheValues {
     ScrabbleGameManager gameManager;
     Broadcaster broadcaster;
 
+    public GameCacheValues(ScrabbleGameManager gameManager) {
+        this.gameManager = gameManager;
+    }
+
     public GameCacheValues(ScrabbleGameManager gameManager, Broadcaster broadcaster) {
         this.gameManager = gameManager;
         this.broadcaster = broadcaster;

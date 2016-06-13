@@ -23,7 +23,6 @@ public class JoinExistingGameServlet extends javax.servlet.http.HttpServlet {
         else if(ScrabbleGameCache.lookupGame(gameCode).getGameManager().getPlayers().size() == 4){
             json = "Error, Game lobby is full";
         } else {
-
             ScrabbleServletHelper.storeGameCodeOnSession(request, gameCode);
             json = ScrabbleServletHelper.getJSONforGameManager(gameValue.getGameManager());
         }

@@ -40,9 +40,9 @@ public class ScrabbleGameManagedService {
     public void onReady() {
         AtmosphereRequest request = atmosphereResource.getRequest();
         HttpSession session = request.getSession();
-        gameCode = (String)session.getAttribute("GameCode");
+      //  gameCode = (String)session.getAttribute("GameCode");
         broadcaster = ScrabbleGameCache.lookupGame(gameCode).getGameManager().getGameBroadcaster().addAtmosphereResource(atmosphereResource);
-        session.setAttribute("GameBroadcaster", broadcaster);
+        //session.setAttribute("GameBroadcaster", broadcaster);
         atmosphereResource.setBroadcaster(broadcaster);
     }
 

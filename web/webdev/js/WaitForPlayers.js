@@ -75,7 +75,8 @@ function addPlayerToLobby() {
     $.post("/AddPlayer", {"username": userName})
         .success(function(data) {
             WordsWithBytes.WaitForPlayers.players = WordsWithBytes.WaitForPlayers.addPlayers(data);
-            console.log(WordsWithBytes.WaitForPlayers.players.length)
+            console.log(WordsWithBytes.WaitForPlayers.players.length);
+            WordsWithBytes.setUpSockets();
         })
         .error(function(status) {
             alert("You cannot join this lobby, please try again");
