@@ -9,7 +9,7 @@ WordsWithBytes.setUpSockets = function() {
     var socket = atmosphere;
     var subSocket;
     var request = {
-        url: document.location.toString() + "/scrabbleGame",
+        url: document.location.toString() + "scrabbleGame",
         contentType : "application/json",
         logLevel : 'debug',
         transport : 'websockets' ,
