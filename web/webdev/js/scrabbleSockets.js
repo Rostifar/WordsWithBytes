@@ -10,8 +10,8 @@ WordsWithBytes.setUpSockets = function() {
     var subSocket;
     var request = {
         url: document.location.toString() + "scrabbleGame",
-        contentType : "application/json",
         logLevel : 'debug',
+        contentType : "application/json",
         transport : 'websockets' ,
         trackMessageLength : true,
         reconnectInterval : 5000 };
