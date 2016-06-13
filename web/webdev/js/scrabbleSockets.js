@@ -7,9 +7,9 @@
 
 WordsWithBytes.setUpSockets = function() {
     var socket = atmosphere;
-    var subSocket;
+
     var request = {
-        url: document.location.toString() + "scrabbleGame",
+        url: document.location.toString(),
         logLevel : 'debug',
         contentType : "application/json",
         transport : 'websockets' ,
@@ -50,5 +50,6 @@ WordsWithBytes.setUpSockets = function() {
     request.onError = function(response) {
         alert("onError: Server problem: " + response.toString());
     };
-    var subsocket = socket.subscribe(request);
+
+    WordsWithBytes.socket = socket.subscribe(request);
 };
