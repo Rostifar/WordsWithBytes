@@ -6,7 +6,7 @@ WordsWithBytes.MainMenu = function(game) {
 };
 
 var newGameButton;
-var resumeGameButton;
+var joinGameButton;
 var theGameID;
 var submitButton;
 
@@ -26,8 +26,8 @@ WordsWithBytes.MainMenu.prototype = {
         newGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY / 2, 'StartGameButton', startNewGameOnClick, this, 2, 1, 0);
         newGameButton.anchor.setTo(0.5, 0.5);
 
-        resumeGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'JoinGameButton', joinExistingGameOnClick, this, 2, 1, 0);
-        resumeGameButton.anchor.setTo(0.5, 0.5);
+        joinGameButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'JoinGameButton', joinExistingGameOnClick, this, 2, 1, 0);
+        joinGameButton.anchor.setTo(0.5, 0.5);
 
       /*  submitButton = this.game.add.button(this.game.world.width / 3 + 150, 490, 'submitButton', joinExistingGameOnClick, this, 2, 1, 0);
         submitButton.visible = false;*/
@@ -68,13 +68,12 @@ function startNewGameOnClick() {
         })
 }
 
-function resumeGameOnClick() {
-    theGameID.visible = true;
-    submitButton.visible = true;
-}
-
 function joinExistingGameOnClick() {
-    var gameCode = theGameID.value;
+
+    /*theGameID.visible = true;
+    submitButton.visible = true;*/
+    var gameCode = prompt("Please enter the Game ID: ");
+
     $.post("/JoinExistingGame", {"gameCode": gameCode})
         .success(function (data) {
             if (data !== "Error, Game doesn't exist" && data !== "Error, Game lobby is full") {
