@@ -5,16 +5,18 @@
 
 
 
-WordsWithBytes.setUpSockets = function() {
+WordsWithBytes.setUpSockets = (function() {
     var socket = atmosphere;
     var subSocket;
     var request = {
-        url: document.location.toString() + "scrabbleGame",
+        url: document.location.toString() + "AtmosphereServlet",
         logLevel : 'debug',
         contentType : "application/json",
         transport : 'websockets' ,
         trackMessageLength : true,
         reconnectInterval : 5000 };
+
+    alert("hi");
 
 
     function manageMessage(gameJson) {
@@ -51,4 +53,4 @@ WordsWithBytes.setUpSockets = function() {
         alert("onError: Server problem: " + response.toString());
     };
     var subsocket = socket.subscribe(request);
-};
+    });

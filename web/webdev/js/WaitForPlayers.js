@@ -37,7 +37,8 @@ WordsWithBytes.WaitForPlayers.getMessage = function(gameJson) {
 WordsWithBytes.WaitForPlayers.prototype = {
     
     create: function() {
-        addPlayerToLobby();
+        var userName = prompt("Please enter a username ");
+        addPlayerToLobby(userName);
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 
         var backgroundImage = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'space-background');
@@ -70,13 +71,12 @@ WordsWithBytes.WaitForPlayers.prototype = {
  };
 
 
-function addPlayerToLobby() {
-    var userName = prompt("Please enter a username ");
+function addPlayerToLobby(userName) {
     $.post("/AddPlayer", {"username": userName})
         .success(function(data) {
             WordsWithBytes.WaitForPlayers.players = WordsWithBytes.WaitForPlayers.addPlayers(data);
             console.log(WordsWithBytes.WaitForPlayers.players.length);
-            WordsWithBytes.setUpSockets();
+            WordsWithBytes.setUpSockets;
         })
         .error(function(status) {
             alert("You cannot join this lobby, please try again");

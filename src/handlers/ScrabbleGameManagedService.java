@@ -22,9 +22,8 @@ import static org.atmosphere.cpr.ApplicationConfig.MAX_INACTIVE;
  * Created by rostifar on 6/11/16.
  */
 
-@ManagedService(path="/scrabbleGame", atmosphereConfig = MAX_INACTIVE + "=120000")
+@ManagedService(path = "/AtmosphereServlet/")
 public class ScrabbleGameManagedService {
-    private final Logger logger = LoggerFactory.getLogger(ScrabbleGameManagedService.class);
     private String gameCode;
 
     @Inject
@@ -48,14 +47,15 @@ public class ScrabbleGameManagedService {
     @Disconnect
     public void onDisconnect() {
         if (event.isCancelled()) {
-            logger.info("Browser {} unexpectedly disconnected", event.getResource().uuid());
         } else if (event.isClosedByClient()) {
-            logger.info("Browser {} closed the connection", event.getResource().uuid());
         }
     }
 
     public Message onMessage(Message message) throws IOException{
-        logger.info("hi");
         return message;
+    }
+
+    public void notifyUsers() {
+
     }
 }
