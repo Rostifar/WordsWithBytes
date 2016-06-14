@@ -9,7 +9,7 @@ WordsWithBytes.setUpSockets = (function() {
     var socket = atmosphere;
     var subSocket;
     var request = {
-        url: document.location.toString() + "AtmosphereServlet",
+        url: document.location.toString(),
         logLevel : 'debug',
         contentType : "application/json",
         transport : 'websockets' ,

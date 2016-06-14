@@ -22,20 +22,20 @@ import static org.atmosphere.cpr.ApplicationConfig.MAX_INACTIVE;
  * Created by rostifar on 6/11/16.
  */
 
-@ManagedService(path = "/AtmosphereServlet/")
+//@ManagedService(path = "/scrabbleGame")
 public class ScrabbleGameManagedService {
     private String gameCode;
 
-    @Inject
+   // @Inject
     private AtmosphereResource atmosphereResource;
 
-    @Inject
+   // @Inject
     private Broadcaster broadcaster;
 
-    @Inject
+   // @Inject
     private AtmosphereResourceEvent event;
 
-    @Ready
+//    @Ready
     public void onReady() {
         AtmosphereRequest request = atmosphereResource.getRequest();
         System.out.println("hu");
@@ -44,7 +44,7 @@ public class ScrabbleGameManagedService {
         atmosphereResource.setBroadcaster(broadcaster);
     }
 
-    @Disconnect
+  //  @Disconnect
     public void onDisconnect() {
         if (event.isCancelled()) {
         } else if (event.isClosedByClient()) {

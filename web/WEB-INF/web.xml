@@ -65,8 +65,8 @@
 </servlet>
 
     <servlet-mapping>
-        <servlet-name>AtmosphereServlet</servlet-name>
-        <url-pattern>/AtmosphereServlet/*</url-pattern>
+        <servlet-name>AtmosphereServlet </servlet-name>
+        <url-pattern>/ScrabbleAtmosphereServlet/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
