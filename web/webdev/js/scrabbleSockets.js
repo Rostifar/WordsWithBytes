@@ -5,19 +5,17 @@
 
 
 
+
 WordsWithBytes.setUpSockets = (function() {
     var socket = atmosphere;
     var subSocket;
     var request = {
-        url: document.location.toString(),
+        url: document.location.toString()+"/ScrabbleGame",
         logLevel : 'debug',
         contentType : "application/json",
-        transport : 'websockets' ,
+        transport : 'websocket' ,
         trackMessageLength : true,
         reconnectInterval : 5000 };
-
-    alert("hi");
-
 
     function manageMessage(gameJson) {
         
@@ -36,7 +34,7 @@ WordsWithBytes.setUpSockets = (function() {
 
     request.onMessage = function (response) {
         var newMessage = response.responseBody;
-        
+        console.log(newMessage);
         try {
             var gameJson = JSON.parse(newMessage);
             manageMessage(gameJson);

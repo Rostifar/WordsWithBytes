@@ -1,6 +1,52 @@
 /**
  * Created by ross on 1/31/16.
  */
+var setupSockets = (function () {
+    var socket = atmosphere;
+    var subSocket;
+    var request = {
+        url: document.location.toString(),
+        logLevel : 'debug',
+        contentType : "application/json",
+        transport : 'streaming' ,
+        trackMessageLength : true,
+        reconnectInterval : 5000 };
+
+    function manageMessage(gameJson) {
+
+        if(game.state.key() === "WaitForPlayers") {
+            WordsWithBytes.WaitForPlayers.getMessage(gameJson);
+        }
+
+        if (game.state.key() === "Game") {
+            WordsWithBytes.Game.getMessage(gameJson);
+        }
+    }
+
+    request.onOpen = function(response) {
+        alert("connected to game lobby");
+    };
+
+    request.onMessage = function (response) {
+        var newMessage = response.responseBody;
+        console.log(newMessage);
+        try {
+            var gameJson = JSON.parse(newMessage);
+            manageMessage(gameJson);
+        } catch(e) {
+            console.log("invalid JSON");
+        }
+    };
+
+    request.onReconnect = function() {
+        //alert("Player returning to game")
+    };
+
+    request.onError = function(response) {
+        alert("onError: Server problem: " + response.toString());
+    };
+    var subsocket = socket.subscribe(request);
+});
 
 WordsWithBytes.MainMenu = function(game) {
 };
@@ -59,7 +105,6 @@ function startNewGameOnClick() {
             var gameCodeDisplay = that.game.add.text(game.world.centerX, game.world.centerY / 3, "Your game code is:" + data, {font: "24px Arial", fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
             WordsWithBytes.gameCode = data;
             gameCodeDisplay.anchor.set(0.5, 0.5);
-            WordsWithBytes.setUpSockets();
             game.state.start("WaitForPlayers"); //, false, false, data);
         })
         .error(function (status) {
@@ -79,7 +124,7 @@ function joinExistingGameOnClick() {
             if (data !== "Error, Game doesn't exist" && data !== "Error, Game lobby is full") {
                 console.log("Game Resumed - Game Code: " + data + "\nStatus: " + status);
                 WordsWithBytes.gameCode = gameCode;
-                WordsWithBytes.setUpSockets();
+                setupSockets();
                 game.state.start("WaitForPlayers"); //, false, false, data);
             } else {
                 alert("the game you have selected does not exist or is full, please try again")

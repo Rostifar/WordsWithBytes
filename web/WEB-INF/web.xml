@@ -4,6 +4,8 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <display-name>WordsWithBytes</display-name>
+
     <servlet>
         <servlet-name>AddPlayer</servlet-name>
         <servlet-class>com.rostifar.servlets.AddPlayerServlet</servlet-class>
@@ -49,25 +51,33 @@
     </servlet-mapping>
 
     <servlet>
-    <description>AtmosphereServlet</description>
-    <servlet-name>AtmosphereServlet</servlet-name>
-    <servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>
-    <init-param>
-        <param-name>org.atmosphere.cpr.packages</param-name>
-        <param-value>org.atmosphere.samples</param-value>
-    </init-param>
-    <init-param>
-        <param-name>org.atmosphere.interceptor.HeartbeatInterceptor.clientHeartbeatFrequencyInSeconds</param-name>
-        <param-value>10</param-value>
-    </init-param>
-    <load-on-startup>0</load-on-startup>
-    <async-supported>true</async-supported>
-</servlet>
+        <description>AtmosphereServlet</description>
+        <servlet-name>AtmosphereServlet</servlet-name>
+        <servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>
+        <init-param>
+            <param-name>WordsWithBytes-transport</param-name>
+            <param-value>websocket, xhr-polling, jsonp-polling</param-value>
+        </init-param>
+        <init-param>
+            <param-name>WordsWithBytes-heartbeat</param-name>
+            <param-value>150000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>WordsWithBytes-suspendTime</param-name>
+            <param-value>300000</param-value>
+        </init-param>
+        <load-on-startup>0</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>AtmosphereServlet </servlet-name>
-        <url-pattern>/ScrabbleAtmosphereServlet/*</url-pattern>
+        <url-pattern>/WordsWithBytes/*</url-pattern>
     </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>Index.html</welcome-file>
+    </welcome-file-list>
 
     <servlet>
         <servlet-name>GetLettersOnRack</servlet-name>
@@ -78,7 +88,5 @@
     <servlet-mapping>
         <servlet-name>GetLettersOnRack</servlet-name>
         <url-pattern>/GetLettersOnRack/*</url-pattern>
-
     </servlet-mapping>
-
 </web-app>

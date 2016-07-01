@@ -14,6 +14,8 @@ import java.io.IOException;
 @AtmosphereHandlerService
 public class ScrabbleGameHandler implements AtmosphereHandler {
 
+    //action when connection is made to the backend
+
     @Override
     public void onRequest(AtmosphereResource atmosphereResource) throws IOException {
 
@@ -22,6 +24,7 @@ public class ScrabbleGameHandler implements AtmosphereHandler {
         System.out.println("hi");
     }
 
+    //called when Broadcaster broadcasts an event
     @Override
     public void onStateChange(AtmosphereResourceEvent atmosphereResourceEvent) throws IOException {
 

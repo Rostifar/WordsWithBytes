@@ -1,6 +1,7 @@
 package com.rostifar.servlets;
 
 import com.rostifar.gamecontrol.*;
+import handlers.ScrabbleGameHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
