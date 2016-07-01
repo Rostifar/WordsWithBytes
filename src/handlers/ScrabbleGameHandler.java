@@ -1,11 +1,10 @@
 package handlers;
 
 import org.atmosphere.config.service.AtmosphereHandlerService;
-import org.atmosphere.cpr.AtmosphereHandler;
-import org.atmosphere.cpr.AtmosphereRequest;
-import org.atmosphere.cpr.AtmosphereResource;
-import org.atmosphere.cpr.AtmosphereResourceEvent;
+import org.atmosphere.cpr.*;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import java.io.IOException;
 
 /**
@@ -20,8 +19,16 @@ public class ScrabbleGameHandler implements AtmosphereHandler {
     public void onRequest(AtmosphereResource atmosphereResource) throws IOException {
 
         AtmosphereRequest request = atmosphereResource.getRequest();
+        AtmosphereResponse response = atmosphereResource.getResponse();
 
-        System.out.println("hi");
+        System.out.println("Called:" + this.getClass().getName());
+//        request.get
+        RequestDispatcher reqDispatcher = request.getRequestDispatcher("/Index.html");
+        try {
+            reqDispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
 
     //called when Broadcaster broadcasts an event
