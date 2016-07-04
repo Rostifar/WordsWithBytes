@@ -5,7 +5,7 @@ var setupSockets = (function () {
     var socket = atmosphere;
     var subSocket;
     var request = {
-        url: document.location.toString(),
+        url: "/WordsWithBytes",
         logLevel : 'debug',
         contentType : "application/json",
         transport : 'streaming' ,
@@ -29,10 +29,11 @@ var setupSockets = (function () {
 
     request.onMessage = function (response) {
         var newMessage = response.responseBody;
+        alert("new message");
         console.log(newMessage);
         try {
             var gameJson = JSON.parse(newMessage);
-            manageMessage(gameJson);
+            console.log(gameJson);
         } catch(e) {
             console.log("invalid JSON");
         }
