@@ -1,10 +1,13 @@
 package com.rostifar.servlets;
 
+import com.google.gson.Gson;
 import com.rostifar.gamecontrol.GameCacheValues;
 import com.rostifar.gamecontrol.ScrabbleGameCache;
+import com.rostifar.gamecontrol.ScrabbleGameManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -15,19 +18,20 @@ public class JoinExistingGameServlet extends javax.servlet.http.HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         String gameCode = request.getParameter("gameCode");
-        GameCacheValues gameValue = ScrabbleGameCache.lookupGame(gameCode);
+        Gson gson = new Gson();
+        ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(gameCode).getGameManager();
         String json;
 
-        if (ScrabbleGameCache.lookupGame(gameCode) == null) //Could not find the Game Code in the cache
+        if (ScrabbleGameCache.lookupGame(gameCode) == null) { //Could not find the Game Code in the cache
             json = "Error, Game doesn't exist";
-        else if(ScrabbleGameCache.lookupGame(gameCode).getGameManager().getPlayers().size() == 4){
+        }else if(gameManager.getPlayers().size() == 4){
             json = "Error, Game lobby is full";
         } else {
             ScrabbleServletHelper.storeGameCodeOnSession(request, gameCode);
-            json = ScrabbleServletHelper.getJSONforGameManager(gameValue.getGameManager());
+            json = gson.toJson(gameManager);
         }
-
         System.out.println(this.getClass().getName() + "Returning JSON\n" + json);
         response.getWriter().write(json);
     }
 }
+

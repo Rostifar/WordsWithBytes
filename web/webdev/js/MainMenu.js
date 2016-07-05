@@ -8,17 +8,18 @@ var setupSockets = (function () {
         url: "/WordsWithBytes",
         logLevel : 'debug',
         contentType : "application/json",
-        transport : 'streaming' ,
+        transport : 'websocket' ,
         trackMessageLength : true,
         reconnectInterval : 5000 };
-
+    
     function manageMessage(gameJson) {
+        alert("hi");
 
-        if(game.state.key() === "WaitForPlayers") {
+        if(game.state.current === "WaitForPlayers") {
             WordsWithBytes.WaitForPlayers.getMessage(gameJson);
         }
 
-        if (game.state.key() === "Game") {
+        if (game.state.current === "Game"){
             WordsWithBytes.Game.getMessage(gameJson);
         }
     }
@@ -28,19 +29,15 @@ var setupSockets = (function () {
     };
 
     request.onMessage = function (response) {
-        var newMessage = response.responseBody;
-        alert("new message");
-        console.log(newMessage);
-        try {
-            var gameJson = JSON.parse(newMessage);
-            console.log(gameJson);
-        } catch(e) {
-            console.log("invalid JSON");
-        }
+        var parsedMessage = JSON.parse(response.responseBody);
+        console.log(parsedMessage);
+        manageMessage(parsedMessage);
     };
 
+
+
     request.onReconnect = function() {
-        //alert("Player returning to game")
+        alert("Player returning to game")
     };
 
     request.onError = function(response) {
@@ -99,25 +96,25 @@ WordsWithBytes.MainMenu.prototype = {
 
 function startNewGameOnClick() {
     var that = this;
+    var confirmation = confirm("are you sure you would like to start a new game?");
 
-    $.post("/StartNewGame")
-        .success(function (data) {
-            console.log("Game Started - Game Code: " + data + "\nStatus: " + status);
-            var gameCodeDisplay = that.game.add.text(game.world.centerX, game.world.centerY / 3, "Your game code is:" + data, {font: "24px Arial", fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
-            WordsWithBytes.gameCode = data;
-            gameCodeDisplay.anchor.set(0.5, 0.5);
-            game.state.start("WaitForPlayers"); //, false, false, data);
-        })
-        .error(function (status) {
-            console.log("Error occurred when attempting to start a new Game:" + status);
-            //TODO: add proper error handling
-        })
+    if(confirmation == true) {
+        $.post("/StartNewGame")
+            .success(function (data) {
+                console.log("Game Started - Game Code: " + data + "\nStatus: " + status);
+                var gameCodeDisplay = that.game.add.text(game.world.centerX, game.world.centerY / 3, "Your game code is:" + data, {font: "24px Arial", fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
+                WordsWithBytes.gameCode = data;
+                gameCodeDisplay.anchor.set(0.5, 0.5);
+                game.state.start("WaitForPlayers"); //, false, false, data);
+            })
+            .error(function (status) {
+                console.log("Error occurred when attempting to start a new Game:" + status);
+                //TODO: add proper error handling
+            })
+    }
 }
 
 function joinExistingGameOnClick() {
-
-    /*theGameID.visible = true;
-    submitButton.visible = true;*/
     var gameCode = prompt("Please enter the Game ID: ");
 
     $.post("/JoinExistingGame", {"gameCode": gameCode})

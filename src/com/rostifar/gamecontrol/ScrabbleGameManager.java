@@ -57,10 +57,6 @@ public class ScrabbleGameManager implements Serializable {
         System.out.println(scrabbleBoard);
     }
 
-    public Broadcaster getGameBroadcaster() {
-        return gameBroadcaster;
-    }
-
     /**
      * @addPlayers
      * purpose-> adds the appropriate amount of players based on the game lobby size

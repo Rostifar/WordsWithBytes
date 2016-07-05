@@ -7,8 +7,8 @@ import org.atmosphere.cpr.Broadcaster;
  * This will hold whatever it is we would like to store as the value in the GameCache
  */
 public class GameCacheValues {
-    ScrabbleGameManager gameManager;
-    Broadcaster broadcaster;
+    private ScrabbleGameManager gameManager;
+    private Broadcaster broadcaster;
 
     public GameCacheValues(ScrabbleGameManager gameManager) {
         this.gameManager = gameManager;
@@ -21,6 +21,10 @@ public class GameCacheValues {
 
     public ScrabbleGameManager getGameManager() {
         return gameManager;
+    }
+
+    public void setGameManager(ScrabbleGameManager gameManager) {
+        this.gameManager = gameManager;
     }
 
     public Broadcaster getBroadcaster() {

@@ -11,27 +11,27 @@ WordsWithBytes.WaitForPlayers = function(game) {
 WordsWithBytes.WaitForPlayers.addPlayers = function(players) {
     var orgPos = game.world.centerY / 1.5;
     var yLocations = [orgPos, orgPos + 90, orgPos + 180, orgPos + 270];
-    var playerList = JSON.parse(players);
-    console.log(playerList);
 
-    for (var i = 0; i < playerList.length; i++) {
-        var addPlayer = game.add.text(game.world.centerX, yLocations[i], playerList[i].name,
+    for (var i = 0; i < players.length; i++) {
+        var addPlayer = game.add.text(game.world.centerX, yLocations[i], players[i].name,
             {font: "30px Arial", fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
         addPlayer.anchor.setTo(0.5);
     }
-    return playerList;
 };
+
 
 WordsWithBytes.WaitForPlayers.getMessage = function(gameJson) {
     var proto = WordsWithBytes.WaitForPlayers.prototype;
-    
-    if (gameJson.newPlayerJoined === true) {
-         proto.addPlayer(gameJson.newPlayer);   
+    console.log(gameJson.players);
+    console.log(WordsWithBytes.WaitForPlayers.players);
+
+    if(gameJson.players.length > WordsWithBytes.WaitForPlayers.players.length) {
+        WordsWithBytes.WaitForPlayers.players = gameJson.players;
+        WordsWithBytes.WaitForPlayers.addPlayers(gameJson.players);
     }
-    
-    if (gameJson.gameStateHasChanged === true) {
-         proto.startGame();
-    }
+
+
+    WordsWithBytes.WaitForPlayers.players = gameJson.players;
 };
 
 WordsWithBytes.WaitForPlayers.prototype = {
@@ -74,8 +74,7 @@ WordsWithBytes.WaitForPlayers.prototype = {
 function addPlayerToLobby(userName) {
     $.post("/AddPlayer", {"username": userName})
         .success(function(data) {
-            WordsWithBytes.WaitForPlayers.players = WordsWithBytes.WaitForPlayers.addPlayers(data);
-            console.log(WordsWithBytes.WaitForPlayers.players.length);
+            WordsWithBytes.WaitForPlayers.players = [];
             setupSockets();
         })
         .error(function(status) {

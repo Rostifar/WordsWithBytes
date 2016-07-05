@@ -20,6 +20,5 @@ public class ChangeGameStateServlet extends HttpServlet {
         ScrabbleGameManager scrabbleGameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request)).getGameManager();
 
         scrabbleGameManager.setNewGameState(newGameState);
-        scrabbleGameManager.getGameBroadcaster().broadcast(ScrabbleServletHelper.getJSONforGameManager(scrabbleGameManager));
     }
 }
