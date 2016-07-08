@@ -3,7 +3,6 @@
  */
 var setupSockets = (function () {
     var socket = atmosphere;
-    var subSocket;
     var request = {
         url: "/WordsWithBytes",
         logLevel : 'debug',
@@ -13,7 +12,6 @@ var setupSockets = (function () {
         reconnectInterval : 5000 };
     
     function manageMessage(gameJson) {
-        alert("hi");
 
         if(game.state.current === "WaitForPlayers") {
             WordsWithBytes.WaitForPlayers.getMessage(gameJson);
@@ -33,9 +31,7 @@ var setupSockets = (function () {
         console.log(parsedMessage);
         manageMessage(parsedMessage);
     };
-
-
-
+    
     request.onReconnect = function() {
         alert("Player returning to game")
     };
@@ -43,7 +39,7 @@ var setupSockets = (function () {
     request.onError = function(response) {
         alert("onError: Server problem: " + response.toString());
     };
-    var subsocket = socket.subscribe(request);
+    WordsWithBytes.subSocket = socket.subscribe(request);
 });
 
 WordsWithBytes.MainMenu = function(game) {

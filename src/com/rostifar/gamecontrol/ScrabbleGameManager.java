@@ -36,7 +36,8 @@ public class ScrabbleGameManager implements Serializable {
     private Broadcaster gameBroadcaster;
     private String gameState;
     private boolean newPlayerJoined;
-    private boolean gameStateHasChanged;
+    private boolean gameStateChanged;
+
 
     /**
      * @ScrabbleGameManager
@@ -67,17 +68,19 @@ public class ScrabbleGameManager implements Serializable {
             playerName = "Player-" + System.currentTimeMillis();
         }
 
-        Player player = new Player(playerName);
-        setupPlayer(player);
-        players.add(player);
+        int playerIndx = (players.isEmpty()) ? 0 : players.size();
+        Player player = new Player(playerName, playerIndx);
 
-        //Default to first player for now
+        setupPlayer(player);
+
+        players.add(player);
         currentPlayer = players.get(0);
         printPlayers();
     }
 
     public void setNewGameState(String newGameState) {
         gameState = newGameState;
+        gameStateChanged = true;
     }
 
     /**
@@ -119,6 +122,7 @@ public class ScrabbleGameManager implements Serializable {
      * purpose-> when activated by the servlet, manages the processes which involve playing a word
      * */
     public void playWord(char[] word, List<Integer> col, List<Integer> row, String orientation, char[] blankLetters) {
+        gameStateChanged = false;
         List<ScrabbleWord> playedWords;
         scrabbleWord = new ScrabbleWord(word);
         exchangeBlankLetters(blankLetters, scrabbleWord.lettersInWord());
@@ -260,6 +264,7 @@ public class ScrabbleGameManager implements Serializable {
     }
 
     private void exchangeLetters(char[] lettersToExchange) {
+        gameStateChanged = false;
         currentPlayer.getRack().exchangeLetters(lettersToExchange);
         isFirstRound = false;
         refillRack();
@@ -267,6 +272,7 @@ public class ScrabbleGameManager implements Serializable {
     }
 
     private void skipTurn() {
+        gameStateChanged = false;
         isFirstRound = false;
         moveToNextPlayer();
     }

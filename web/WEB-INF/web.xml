@@ -51,6 +51,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ChangeGameStateServlet</servlet-name>
+        <servlet-class>com.rostifar.servlets.ChangeGameStateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ChangeGameStateServlet</servlet-name>
+        <url-pattern>/ChangeGameState/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <description>AtmosphereServlet</description>
         <servlet-name>AtmosphereServlet</servlet-name>
         <servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>

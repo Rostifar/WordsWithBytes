@@ -1,4 +1,3 @@
-import * as WordsWithBytes from "./phaser";
 /**
  * Created by ross on 1/31/16.
  */
@@ -30,17 +29,20 @@ WordsWithBytes.Game = function(game){
 WordsWithBytes.Game.getMessage = function(gameJson) {
     var proto = WordsWithBytes.Game.prototype;
     var that = WordsWithBytes.Game;
-    
-    if (that.user !== gameJson.currentPlayer) {
+    WordsWithBytes.Player = gameJson.players[WordsWithBytes.Player.indx];
+
+    console.log(that);
+
+
+    if (WordsWithBytes.Player.name !== gameJson.currentPlayer.name) {
+        alert("Its not your turn yet. Please wait for other players to finish");
         proto.deactivateButtons();
     } else {
         alert("its your turn! please select a move");
         proto.activateButtons();
     }
 
-    if (gameJson.gameStateHasChanged === true) {
-        that.game.state.start("EndGame");
-    }
+    
     that.scrabbleBoardMap = gameJson.scrabbleBoard;
 };
 
@@ -512,15 +514,15 @@ WordsWithBytes.Game.prototype = {
      * purpose-> deactivates buttons when a player selects to exchange, play word, or skip turn
      * */
     deactivateButtons: function () {
-        this.exchangeLettersButton.inputEnabled = false;
-        this.playWordButton.inputEnabled = false;
-        this.passTurnButton.inputEnabled = false;
+        this.exchangeLettersButton.input.enabled = false;
+        this.playWordButton.input.enabled = false;
+        this.passTurnButton.input.enabled = false;
     },
     
     activateButtons: function() {
-        this.exchangeLettersButton.inputEnabled = true;
-        this.playWordButton.inputEnabled = true;
-        this.passTurnButton.inputEnabled = true;
+        this.exchangeLettersButton.input.enabled = true;
+        this.playWordButton.input.enabled = true;
+        this.passTurnButton.input.enabled = true;
     },
 
     /**

@@ -15,12 +15,14 @@ public class Player implements Serializable {
     private String name;
     private ScoreKeeper scoreKeeper;
     protected static final int RACK_MAX_CAPACITY = 7;
+    private int indx;
 
 
-    public Player(String aName) {
+    public Player(String aName, int indx) {
         name = aName;
         rack = new Rack();
         scoreKeeper = new ScoreKeeper();
+        this.indx = indx;
     }
 
     public String getName() {

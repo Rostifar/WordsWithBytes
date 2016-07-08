@@ -21,16 +21,27 @@ WordsWithBytes.WaitForPlayers.addPlayers = function(players) {
 
 
 WordsWithBytes.WaitForPlayers.getMessage = function(gameJson) {
-    var proto = WordsWithBytes.WaitForPlayers.prototype;
-    console.log(gameJson.players);
-    console.log(WordsWithBytes.WaitForPlayers.players);
 
     if(gameJson.players.length > WordsWithBytes.WaitForPlayers.players.length) {
         WordsWithBytes.WaitForPlayers.players = gameJson.players;
         WordsWithBytes.WaitForPlayers.addPlayers(gameJson.players);
     }
 
+    if(gameJson.gameState === "Game") {
+        game.state.start("Game");
+    }
 
+    if(WordsWithBytes.WaitForPlayers.players.length > 1) {
+        this.startGame = game.add.button(game.world.centerX, game.world.centerY * 1.5, 'startGameButton', function() {
+            game.state.start("Game");
+            let gameState = "Game";
+            $.post("/ChangeGameState", {"newGameState":gameState})
+                .success(function(data) {
+                    WordsWithBytes.subSocket.push("game changed");
+                });
+        }, this, 2, 1, 0);
+        this.startGame.anchor.setTo(0.5);
+    }
     WordsWithBytes.WaitForPlayers.players = gameJson.players;
 };
 
@@ -53,20 +64,6 @@ WordsWithBytes.WaitForPlayers.prototype = {
         {font: bannerFont, fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
         playerList.anchor.setTo(0.5);
 
-        this.startGame = this.game.add.button(this.game.world.centerX, this.game.world.centerY * 1.5, 'startGameButton', this.startGame, this, 2, 1, 0);
-        this.startGame.anchor.setTo(0.5);
-        this.startGame.visible = false;
-    },
-
-    update: function() {
-
-        if (this.players.length > 1) {
-            this.startGame.visible = true;
-        }
-    },
-    
-    startGame: function() {
-        this.game.state.start("Game");
     }
  };
 
@@ -74,6 +71,7 @@ WordsWithBytes.WaitForPlayers.prototype = {
 function addPlayerToLobby(userName) {
     $.post("/AddPlayer", {"username": userName})
         .success(function(data) {
+            WordsWithBytes.Player = JSON.parse(data);
             WordsWithBytes.WaitForPlayers.players = [];
             setupSockets();
         })

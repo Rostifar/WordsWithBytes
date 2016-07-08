@@ -3,10 +3,12 @@ package com.rostifar.servlets;
 import com.google.gson.Gson;
 import com.rostifar.gamecontrol.ScrabbleGameCache;
 import com.rostifar.gamecontrol.ScrabbleGameManager;
+import com.rostifar.scrabbleproject.Player;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Servlet to add players to the Scrabble game.
@@ -20,7 +22,8 @@ public class AddPlayerServlet extends javax.servlet.http.HttpServlet {
         String playerUsername = request.getParameter("username");
 
         ScrabbleGameCache.lookupGame(gameCode).getGameManager().addPlayer(playerUsername, null);
-        String playersJson = gson.toJson(ScrabbleGameCache.lookupGame(gameCode).getGameManager().getPlayers());
+        List<Player> gamePlayers = ScrabbleGameCache.lookupGame(gameCode).getGameManager().getPlayers();
+        String playersJson = gson.toJson(gamePlayers.get(gamePlayers.size() - 1));
         response.getWriter().write(playersJson);
     }
 }
