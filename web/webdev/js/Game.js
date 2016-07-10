@@ -4,7 +4,6 @@
 "use strict";
 WordsWithBytes.Game = function(game){
     this.currentPlayer = null;
-    this.user = null;
     this.scrabbleTileMap = null;
     this.scrabbleBoardLayer = null;
     this.scrabbleBoard = null;
@@ -23,15 +22,19 @@ WordsWithBytes.Game = function(game){
     this.dropLetter = null;
     this.letterKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
     this.isExchangingLetters = false;
-
+    this.exchangeLettersButton = null;
+    this.quitGameButton = null;
+    this.passTurnButton = null;
+    this.playWordButton = null;
 };
+
 
 WordsWithBytes.Game.getMessage = function(gameJson) {
     var proto = WordsWithBytes.Game.prototype;
     var that = WordsWithBytes.Game;
     WordsWithBytes.Player = gameJson.players[WordsWithBytes.Player.indx];
 
-    console.log(that);
+    console.log(this);
 
 
     if (WordsWithBytes.Player.name !== gameJson.currentPlayer.name) {
@@ -311,7 +314,7 @@ WordsWithBytes.Game.prototype = {
                 stringRow, "wordOrientation": wordOrientation, "blankLetters": strBlankLetters},
                 function(data, status){
                     while (!data.finish) {
-                        that.deactivateButtons();
+                        that.deactivateButtons().bind(that);
                     }
                 });
         }
@@ -347,22 +350,22 @@ WordsWithBytes.Game.prototype = {
     initButtons: function() {
         var controlButtonHeight = this.game.world.height + 60;
         var that = this;
-        this.playWordButton = this.game.add.button(440, 640,'PlayWordButton', function() {
+        WordsWithBytes.Game.playWordButton = this.game.add.button(440, 640,'PlayWordButton', function() {
             if (confirm("Are you sure you want to play this word?")) {
                 that.playWord();
             } else {
             }
 
         }, this, 2, 1, 0);
-        this.passTurnButton = this.game.add.button(this.game.world.centerX + this.playWordButton.width + 5, controlButtonHeight, 'PassTurnButton');
-        this.exchangeLettersButton = this.game.add.button(440 + 30, 640, 'SwapWordsButton', function() {
+        WordsWithBytes.Game.passTurnButton = this.game.add.button(this.game.world.centerX + WordsWithBytes.Game.playWordButton.width + 5, controlButtonHeight, 'PassTurnButton');
+        WordsWithBytes.Game.exchangeLettersButton = this.game.add.button(440 + 30, 640, 'SwapWordsButton', function() {
             that.exchangeLetters();
         });
-        this.quitGameButton = this.game.add.button(this.game.world.width - this.playWordButton.width, controlButtonHeight, 'QuitGameButton');
-        this.playWordButton.anchor.setTo(0.5, 0.5);
-        this.passTurnButton.anchor.setTo(0.5, 0.5);
-        this.exchangeLettersButton.anchor.setTo(0.5, 0.5);
-        this.quitGameButton.anchor.setTo(0.5, 0.5);
+        WordsWithBytes.Game.quitGameButton = this.game.add.button(this.game.world.width - WordsWithBytes.Game.playWordButton.width, controlButtonHeight, 'QuitGameButton');
+        WordsWithBytes.Game.playWordButton.anchor.setTo(0.5, 0.5);
+        WordsWithBytes.Game.passTurnButton.anchor.setTo(0.5, 0.5);
+        WordsWithBytes.Game.exchangeLettersButton.anchor.setTo(0.5, 0.5);
+        WordsWithBytes.Game.quitGameButton.anchor.setTo(0.5, 0.5);
     },
 
     /**
@@ -514,15 +517,16 @@ WordsWithBytes.Game.prototype = {
      * purpose-> deactivates buttons when a player selects to exchange, play word, or skip turn
      * */
     deactivateButtons: function () {
-        this.exchangeLettersButton.input.enabled = false;
-        this.playWordButton.input.enabled = false;
-        this.passTurnButton.input.enabled = false;
+        //game.
+        WordsWithBytes.Game.exchangeLettersButton.input.enabled = false;
+        WordsWithBytes.Game.playWordButton.input.enabled = false;
+        WordsWithBytes.Game.passTurnButton.input.enabled = false;
     },
     
     activateButtons: function() {
-        this.exchangeLettersButton.input.enabled = true;
-        this.playWordButton.input.enabled = true;
-        this.passTurnButton.input.enabled = true;
+        WordsWithBytes.Game.exchangeLettersButton.input.enabled = true;
+        WordsWithBytes.Game.playWordButton.input.enabled = true;
+        WordsWithBytes.Game.passTurnButton.input.enabled = true;
     },
 
     /**
