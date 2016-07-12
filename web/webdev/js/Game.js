@@ -3,41 +3,32 @@
  */
 "use strict";
 WordsWithBytes.Game = function(game){
-    this.currentPlayer = null;
-    this.scrabbleTileMap = null;
-    this.scrabbleBoardLayer = null;
-    this.scrabbleBoard = null;
-    this.marker = null;
-    this.scrabbleBoard = [];
-    this.currentPlayer = null;
-    this.playerRack = null;
-    this.SQUARE_SIZE = 40;
-    this.positionMap = {};
-    this.currentWord = [];
-    this.lettersOnRack = [];
-    this.scrabbleBoardMap = [[]];
-    this.exchangableLetters = null;
-    this.currentBlankLetter = null;
-    this.isFirstRound = true;
-    this.dropLetter = null;
-    this.letterKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-    this.isExchangingLetters = false;
-    this.exchangeLettersButton = null;
-    this.quitGameButton = null;
-    this.passTurnButton = null;
-    this.playWordButton = null;
+    var wg = WordsWithBytes.Game;
+
+    wg.scrabbleBoardLayer = null;
+    wg.marker = null;
+    wg.SQUARE_SIZE = 40;
+    wg.positionMap = {};
+    wg.currentWord = [];
+    wg.lettersOnRack = [];
+    wg.scrabbleBoardMap = [[]];
+    wg.exchangableLetters = null;
+    wg.currentBlankLetter = null;
+    wg.isFirstRound = true;
+    wg.dropLetter = null;
+    wg.letterKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    wg.isExchangingLetters = false;
 };
 
 
 WordsWithBytes.Game.getMessage = function(gameJson) {
     var proto = WordsWithBytes.Game.prototype;
-    var that = WordsWithBytes.Game;
+    var wg = WordsWithBytes.Game;
     WordsWithBytes.Player = gameJson.players[WordsWithBytes.Player.indx];
+    proto.initScrabbleRack(WordsWithBytes.Player.rack);
 
-    console.log(this);
 
-
-    if (WordsWithBytes.Player.name !== gameJson.currentPlayer.name) {
+    if (WordsWithBytes.Player !== gameJson.currentPlayer) {
         alert("Its not your turn yet. Please wait for other players to finish");
         proto.deactivateButtons();
     } else {
@@ -46,7 +37,7 @@ WordsWithBytes.Game.getMessage = function(gameJson) {
     }
 
     
-    that.scrabbleBoardMap = gameJson.scrabbleBoard;
+    wg.scrabbleBoardMap = gameJson.scrabbleBoard.board;//TODO: get letter pictures for each letters
 };
 
 
@@ -65,8 +56,10 @@ WordsWithBytes.Game.prototype = {
  * -Example = convert x[640], y[320] -> [12][4]
  * */
     populatePositionMap: function () {
+        var wg = WordsWithBytes.Game;
+
         for (var i = 0; i < 15; i++) {
-            this.positionMap[this.SQUARE_SIZE * i] = i;
+            wg.positionMap[wg.SQUARE_SIZE * i] = i;
         }
     },
 
@@ -76,12 +69,13 @@ WordsWithBytes.Game.prototype = {
      * Allows the frontend to check whether a played word is valid or not
      * */
     populateScrabbleBoard: function() {
-      for(var i = 0; i < 15; i++) {
-          this.scrabbleBoardMap[i] = [];
-          for (var g = 0; g < 15; g++) {
-              this.scrabbleBoardMap[i][g] = "noLetter";
+        var wg = WordsWithBytes.Game;
+        for(var i = 0; i < 15; i++) {
+           wg.scrabbleBoardMap[i] = [];
+           for (var g = 0; g < 15; g++) {
+              wg.scrabbleBoardMap[i][g] = "noLetter";
           }
-      }
+       }
     },
 
     /**
@@ -90,7 +84,8 @@ WordsWithBytes.Game.prototype = {
      * purpose-> enables quick functionality for checking whether a selected position already has been used
      * */
     isSpaceTaken: function(col, row) {
-        return this.scrabbleBoardMap[col][row] !== "noLetter";
+        var wg = WordsWithBytes.Game;
+        return wg.scrabbleBoardMap[col][row] !== "noLetter";
     },
 
     /**
@@ -102,10 +97,11 @@ WordsWithBytes.Game.prototype = {
         var positionIndex = 0;
         var that = this;
         var letterIndex = 0;
-        var background = this.game.add.sprite(160, 160, "square");
+        var background = game.add.sprite(160, 160, "square");
         var placementCoordinates = [200, 240, 280, 320, 360];
-        this.exchangableLetters = this.game.add.group();
-        this.exchangableLetters.add(background);
+        var wg = WordsWithBytes.Game;
+        wg.exchangableLetters = game.add.group();
+        wg.exchangableLetters.add(background);
 
         function actionOnPress(sprite) {
             sprite.inputEnabled = true;
@@ -115,18 +111,18 @@ WordsWithBytes.Game.prototype = {
         while (positionIndex < placementCoordinates.length) {
             var currentX = 200;
             for (var i = 0; currentX <= placementCoordinates[placementCoordinates.length - 1]; i++) {
-                var sprite = this.game.add.sprite(currentX, placementCoordinates[positionIndex], this.letterKeys[letterIndex]);
-                this.exchangableLetters.add(sprite);
+                var sprite = game.add.sprite(currentX, placementCoordinates[positionIndex], wg.letterKeys[letterIndex]);
+                wg.exchangableLetters.add(sprite);
                 actionOnPress(sprite);
                 currentX = placementCoordinates[i + 1];
                 letterIndex++;
             }
             positionIndex++;
         }
-        var zSprite = this.game.add.sprite(280, 400, "Z");
+        var zSprite = game.add.sprite(280, 400, "Z");
         actionOnPress(zSprite);
-        this.exchangableLetters.add(zSprite);
-        this.exchangableLetters.visible = false;
+        wg.exchangableLetters.add(zSprite);
+        wg.exchangableLetters.visible = false;
     },
 
     /**
@@ -157,24 +153,25 @@ WordsWithBytes.Game.prototype = {
         var letterObjects = [];
         var wordOrientation = null;
         var that = this;
-        var blankLetters = [this.currentWord.length];
+        var wg = WordsWithBytes.Game;
+        var blankLetters = [wg.currentWord.length];
         var strBlankLetters;
         var stringRow;
         var stringCol;
 
         function initLetterObjects() {
-            for (var i = 0; i < that.currentWord.length; i++) {
+            for (var i = 0; i < wg.currentWord.length; i++) {
                 letterObjects[i] = {
-                    letterName: that.currentWord[i].name,
-                    columnLocation: that.currentWord[i].locationCol,
-                    rowLocation: that.currentWord[i].locationRow
+                    letterName: wg.currentWord[i].name,
+                    columnLocation: wg.currentWord[i].locationCol,
+                    rowLocation: wg.currentWord[i].locationRow
                 };
             }
         }
         //@note -> needs to be called after word is reordered, else letterObjects[0] may produce incorrect values.
         function isCenterSquareUsed() {
             for (var letterObject of letterObjects) {
-                if (letterObject.columnLocation === 7 && letterObject.rowLocation === 7 && that.isFirstRound == true){
+                if (letterObject.columnLocation === 7 && letterObject.rowLocation === 7 && wg.isFirstRound == true){
                     return true;
                 }
             }
@@ -252,6 +249,7 @@ WordsWithBytes.Game.prototype = {
                 var initialLetterRow = letterObjects[0].rowLocation;
                 var finalLetterColumn = letterObjects[0].columnLocation;
                 var finalLetterRow = letterObjects[0].rowLocation;
+                var wg = WordsWithBytes.Game;
 
                 for (var letter of letterObjects) {
                     if (initialLetterColumn == 0 || initialLetterRow == 0 || finalLetterColumn == 0 || finalLetterRow == 0) {
@@ -264,7 +262,7 @@ WordsWithBytes.Game.prototype = {
                 }
             }
 
-            if (that.isFirstRound) {
+            if (wg.isFirstRound) {
                 return isWordConnectedToItself() && isCenterSquareUsed()
             } else {
                 return isWordConnectedToItself() && isWordConnectedToLetterMass();
@@ -272,9 +270,9 @@ WordsWithBytes.Game.prototype = {
         }
 
         function convertBlankLetters() {
-            for (var i = 0; i < that.currentWord.length; i++) {
-                if (that.currentWord[i].isBlankLetter) {
-                    blankLetters[i] = that.currentWord[i].key;
+            for (var i = 0; i < wg.currentWord.length; i++) {
+                if (wg.currentWord[i].isBlankLetter) {
+                    blankLetters[i] = wg.currentWord[i].key;
                 } else {
                     blankLetters[i] = "#";
                 }
@@ -282,7 +280,7 @@ WordsWithBytes.Game.prototype = {
             strBlankLetters = blankLetters.join("");
         }
 
-        if (that.currentWord === 0) {
+        if (wg.currentWord === 0) {
             alert("The word you have entered is empty. Please try again.")
             return;
         }
@@ -348,20 +346,19 @@ WordsWithBytes.Game.prototype = {
      * @initButtons
      * purpose-> initializes the buttons used for skipping player turns, playing words, and exchanging letters*/
     initButtons: function() {
-        var controlButtonHeight = this.game.world.height + 60;
         var that = this;
-        WordsWithBytes.Game.playWordButton = this.game.add.button(440, 640,'PlayWordButton', function() {
+        WordsWithBytes.Game.playWordButton = game.add.button(400, 620,'PlayWordButton', function() {
             if (confirm("Are you sure you want to play this word?")) {
                 that.playWord();
-            } else {
             }
 
         }, this, 2, 1, 0);
-        WordsWithBytes.Game.passTurnButton = this.game.add.button(this.game.world.centerX + WordsWithBytes.Game.playWordButton.width + 5, controlButtonHeight, 'PassTurnButton');
-        WordsWithBytes.Game.exchangeLettersButton = this.game.add.button(440 + 30, 640, 'SwapWordsButton', function() {
+        WordsWithBytes.Game.passTurnButton = game.add.button(500, 620, 'PassTurnButton');
+        WordsWithBytes.Game.exchangeLettersButton = game.add.button(400, 660, 'SwapWordsButton', function() {
             that.exchangeLetters();
         });
-        WordsWithBytes.Game.quitGameButton = this.game.add.button(this.game.world.width - WordsWithBytes.Game.playWordButton.width, controlButtonHeight, 'QuitGameButton');
+        WordsWithBytes.Game.quitGameButton = game.add.button(500, 660, 'QuitGameButton');
+
         WordsWithBytes.Game.playWordButton.anchor.setTo(0.5, 0.5);
         WordsWithBytes.Game.passTurnButton.anchor.setTo(0.5, 0.5);
         WordsWithBytes.Game.exchangeLettersButton.anchor.setTo(0.5, 0.5);
@@ -372,14 +369,15 @@ WordsWithBytes.Game.prototype = {
      * @initScrabbleBoardTiles
      * purpose-> initializes the tilemap for the interface*/
     initScrabbleBoardTiles: function () {
+        var wg = WordsWithBytes.Game;
 
-        this.scrabbleTileMap = this.game.add.tilemap("ScrabbleBoardTileSet");
-        this.scrabbleTileMap.addTilesetImage('ScrabbleBoardTileset', 'tileImage'); //first arg needs to match the image "name" from the JSON file
-        this.scrabbleTileMap.addTilesetImage('ScrabbleAlphabetTileset', 'alphabetImage'); //first arg needs to match the image "name" from the JSON file
-        this.scrabbleBoardLayer = this.scrabbleTileMap.createLayer('ScrabbleBoardLayer');
-        this.scrabbleBoardLayer.resizeWorld();
-        var boardImageTileMap = this.scrabbleTileMap.tilesets[this.scrabbleTileMap.getTilesetIndex('ScrabbleBoardTilesetImage')];
-        var currentTile = this.scrabbleTileMap.getTile(this.scrabbleBoardLayer.getTileX(1) * this.SQUARE_SIZE, this.scrabbleBoardLayer.getTileY(1) * this.SQUARE_SIZE); 
+        wg.scrabbleTileMap = game.add.tilemap("ScrabbleBoardTileSet");
+        wg.scrabbleTileMap.addTilesetImage('ScrabbleBoardTileset', 'tileImage'); //first arg needs to match the image "name" from the JSON file
+        wg.scrabbleTileMap.addTilesetImage('ScrabbleAlphabetTileset', 'alphabetImage'); //first arg needs to match the image "name" from the JSON file
+        wg.scrabbleBoardLayer = wg.scrabbleTileMap.createLayer('ScrabbleBoardLayer');
+        wg.scrabbleBoardLayer.resizeWorld();
+        var boardImageTileMap = wg.scrabbleTileMap.tilesets[wg.scrabbleTileMap.getTilesetIndex('ScrabbleBoardTilesetImage')];
+        var currentTile = wg.scrabbleTileMap.getTile(wg.scrabbleBoardLayer.getTileX(1) * wg.SQUARE_SIZE, wg.scrabbleBoardLayer.getTileY(1) * wg.SQUARE_SIZE);
     },
 
     /**
@@ -390,11 +388,12 @@ WordsWithBytes.Game.prototype = {
     exchangeLetters: function() {
         var that = this;
         var lettersToExchange = [];
+        var wg = WordsWithBytes.Game;
 
         (function() {
             alert("click on the letters you would like to exchange");
-            for (var letter of that.lettersOnRack) {
-                that.isExchangingLetters = true;
+            for (var letter of wg.lettersOnRack) {
+                wg.isExchangingLetters = true;
                 letter.originalKey = letter.key;
                 letter.input.disableDrag(true);
                 letter.input.disableSnap(true);
@@ -402,10 +401,10 @@ WordsWithBytes.Game.prototype = {
                 letter.y = letter.originalPosition.y;
                 letter.isSelectedToBeExchanged = false;
                 letter.events.onInputDown.add(function(letter) {
-                    if (that.letterKeys.indexOf(letter.key) !== -1){
+                    if (wg.letterKeys.indexOf(letter.key) !== -1){
                         letter.loadTexture(letter.key.concat("Selected"));
                         lettersToExchange.push(letter.name);
-                    } else if(that.letterKeys.indexOf(letter.key) === -1) {
+                    } else if(wg.letterKeys.indexOf(letter.key) === -1) {
                         letter.loadTexture(letter.originalKey);
                         lettersToExchange.splice(lettersToExchange.indexOf(letter.name), 1);
                     }
@@ -424,10 +423,11 @@ WordsWithBytes.Game.prototype = {
         var posX = sprite.locationCol;
         var posY = sprite.locationRow;
         var that = this;
+        var wg = WordsWithBytes.Game;
 
         function findLetterIntersections() {
-            if(that.currentWord.length > 0) {
-                for (var letter of that.currentWord) {
+            if(wg.currentWord.length > 0) {
+                for (var letter of wg.currentWord) {
                     if (letter.locationCol === posX && letter.locationRow === posY) {
                         return false;
                     }
@@ -456,32 +456,34 @@ WordsWithBytes.Game.prototype = {
     placeLetterOnBoard: function(sprite) {
         var letterImage = sprite;
         var that = this;
+        var wg = WordsWithBytes.Game;
 
         function isSpaceUsed() {
-            var xPos = that.marker.x;
-            var yPos = that.marker.y;
-            return (that.scrabbleBoardMap[that.positionMap[xPos]][that.positionMap[yPos]] = !"noLetter");
+            var xPos = wg.marker.x;
+            var yPos = wg.marker.y;
+            return (wg.scrabbleBoardMap[wg.positionMap[xPos]][wg.positionMap[yPos]] = !"noLetter");
         }
 
         function setUpLetter() {
-            that.dropLetter.play();
+            var wg = WordsWithBytes.Game;
+            wg.dropLetter.play();
 
-            if (that.marker.y < 600 && !isSpaceUsed()) {
-                letterImage.x = that.marker.x;
-                letterImage.y = that.marker.y;
-                letterImage.locationCol = that.positionMap[letterImage.x];
-                letterImage.locationRow = that.positionMap[letterImage.y];
+            if (wg.marker.y < 600 && !isSpaceUsed()) {
+                letterImage.x = wg.marker.x;
+                letterImage.y = wg.marker.y;
+                letterImage.locationCol = wg.positionMap[letterImage.x];
+                letterImage.locationRow = wg.positionMap[letterImage.y];
 
                 if (that.managePlacedLetter(letterImage) === false) {
                     return;
                 }
 
-                that.currentWord.push(letterImage);
+                wg.currentWord.push(letterImage);
 
                 if (letterImage.isBlankLetter == true) {
-                    that.exchangableLetters.visible = true;
+                    wg.exchangableLetters.visible = true;
                     letterImage.visible = false;
-                    that.currentBlankLetter = letterImage;
+                    wg.currentBlankLetter = letterImage;
                 }
 
             } else {
@@ -490,12 +492,12 @@ WordsWithBytes.Game.prototype = {
                 letterImage.locationCol = null;
                 letterImage.locationRow = null;
 
-                if ((letterImage.name != letterImage.key) && (letterImage.isBlankLetter) && that.isExchangingLetters === false) {
+                if ((letterImage.name != letterImage.key) && (letterImage.isBlankLetter) && wg.isExchangingLetters === false) {
                     letterImage.loadTexture("_");
                 }
 
-                if (that.currentWord.indexOf(letterImage) !== -1) {
-                    that.currentWord.splice(that.currentWord.indexOf(letterImage), 1);
+                if (wg.currentWord.indexOf(letterImage) !== -1) {
+                    wg.currentWord.splice(wg.currentWord.indexOf(letterImage), 1);
                 }
             }
         }
@@ -507,8 +509,9 @@ WordsWithBytes.Game.prototype = {
      * purpose-> adds functionality to remove letters from word when removed from its position on the scrabbleboard
      * */
     removeLetterFromWord: function (sprite) {
-        if (this.currentWord.indexOf(sprite) !== -1) {
-            this.currentWord.splice(this.currentWord.indexOf(sprite), 1);
+        var wg = WordsWithBytes.Game;
+        if (wg.currentWord.indexOf(sprite) !== -1) {
+            wg.currentWord.splice(wg.currentWord.indexOf(sprite), 1);
         }
     },
 
@@ -532,16 +535,15 @@ WordsWithBytes.Game.prototype = {
     /**
      * @initScrabbleRack
      * purpose-> initializes sprite images placed on rack*/
-    initScrabbleRack: function () {
-        console.log(this.playerRack);
-        var lettersGroup = this.game.add.group();
-        var that = this;
+    initScrabbleRack: function (playerRack) {
+        var wg = WordsWithBytes.Game;
 
         for (var rackCol = 0; rackCol < 7; rackCol++) {
-            var letterToPlace = this.playerRack[rackCol];
-            var tile = this.scrabbleTileMap.getTile(rackCol, 17);
-            var sprite = this.game.add.sprite(rackCol * 41, 640, letterToPlace);
-            this.lettersOnRack.push(sprite);
+            var letterToPlace = playerRack[rackCol];
+            var tile = wg.scrabbleTileMap.getTile(rackCol, 17);
+            var sprite = game.add.sprite(rackCol * 41, 640, letterToPlace);
+
+            wg.lettersOnRack.push(sprite);
 
             sprite.originalPosition = {
                 x: sprite.x,
@@ -561,9 +563,10 @@ WordsWithBytes.Game.prototype = {
      * purpose-> sets up interface functionality to exchange blank letters
      * */
     exchangeBlankLetter: function(sprite) {
-        this.currentBlankLetter.loadTexture(sprite.key);
-        this.currentBlankLetter.visible = true;
-        this.exchangableLetters.visible = false;
+        var wg = WordsWithBytes.Game;
+        wg.currentBlankLetter.loadTexture(sprite.key);
+        wg.currentBlankLetter.visible = true;
+        wg.exchangableLetters.visible = false;
     },
 
     //Make an AJAX call using JQuery to get the JSON for the current state of the scrabble board and convent it to a Java script object
@@ -576,23 +579,7 @@ WordsWithBytes.Game.prototype = {
             board = JSON.parse(data);
         })
     },
-
-    /**
-     * @getRackSuccess
-     * purpose-> gets JSON for rack from the backend*/
-    getRackSuccess: function(data) {
-        console.log(this);
-        console.log(data);
-        this.playerRack = JSON.parse(data);
-        this.initScrabbleRack();
-    },
-
-    /**
-     * @getRackFailure
-     * purpose-> called when backend fails to send rack JSON*/
-    getRackFailure: function() {
-        console.log("Call to GetPlayRack failed");
-    },
+    
 
     /**
      * @finishTurn
@@ -607,31 +594,31 @@ WordsWithBytes.Game.prototype = {
     },
 
     create: function () {
-        this.dropLetter = this.game.add.audio('letterPlace');
+        var wg = WordsWithBytes.Game;
+        wg.dropLetter = game.add.audio('letterPlace');
         this.populatePositionMap();
         this.populateScrabbleBoard();
         this.initScrabbleBoardTiles();
         this.initButtons();
-
-        var promise = $.ajax("/GetLettersOnRack");
-        promise.done(this.getRackSuccess.bind(this));
         this.setupBlankLetterExchangeSystem();
 
-        this.marker = this.game.add.graphics();
-        this.marker.lineStyle(2, 0x000000, 1);
-        this.marker.drawRect(0, 0, this.SQUARE_SIZE, this.SQUARE_SIZE);
+        wg.marker = game.add.graphics();
+        wg.marker.lineStyle(2, 0x000000, 1);
+        wg.marker.drawRect(0, 0, wg.SQUARE_SIZE, wg.SQUARE_SIZE);
     },
 
     update: function () {
-        if (this.scrabbleBoardLayer != null) {
-            this.marker.x = this.scrabbleBoardLayer.getTileX(game.input.activePointer.worldX) * this.SQUARE_SIZE;
-            this.marker.y = this.scrabbleBoardLayer.getTileY(game.input.activePointer.worldY) * this.SQUARE_SIZE;
+        var wg = WordsWithBytes.Game;
+        if (wg.scrabbleBoardLayer != null) {
+            wg.marker.x = wg.scrabbleBoardLayer.getTileX(game.input.activePointer.worldX) * wg.SQUARE_SIZE;
+            wg.marker.y = wg.scrabbleBoardLayer.getTileY(game.input.activePointer.worldY) * wg.SQUARE_SIZE;
         }
     },
 
     render: function() {
-        if (this.scrabbleBoardLayer != null) {
-            game.debug.text('Location: ' + this.marker.x + "," + this.marker.y, 10, 10, '#efefef');
+        var wg = WordsWithBytes.Game;
+        if (wg.scrabbleBoardLayer != null) {
+            game.debug.text('Location: ' + wg.marker.x + "," + wg.marker.y, 10, 10, '#efefef');
         }
     }
 };

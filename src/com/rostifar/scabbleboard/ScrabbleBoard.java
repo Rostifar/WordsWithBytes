@@ -46,6 +46,7 @@ public class ScrabbleBoard implements Serializable {
     private boolean isFirstLetter = true;
     private String orientation;
     private ScrabbleWord currentWord;
+    private List<ScrabbleLetter> playedLetters;
 
     private Square[][] board = new Square[COLUMN_LENGTH][ROW_LENGTH];
 
@@ -268,7 +269,10 @@ public class ScrabbleBoard implements Serializable {
     }
 
     private void addLetterToSquare(ScrabbleLetter letterToAdd, int col, int row) throws ScrabbleGameException {
+        playedLetters = new ArrayList<>();
+
         board[col][row].setLetter(letterToAdd);
+        playedLetters.add(letterToAdd);
     }
 
     @Override
