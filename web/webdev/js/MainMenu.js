@@ -12,6 +12,10 @@ var setupSockets = (function () {
         reconnectInterval : 5000 };
     
     function manageMessage(gameJson) {
+        
+        if(game.state.current !== gameJson.gameState) {
+            game.state.start(gameJson.gameState);
+        }
 
         if(game.state.current === "WaitForPlayers") {
             WordsWithBytes.WaitForPlayers.getMessage(gameJson);

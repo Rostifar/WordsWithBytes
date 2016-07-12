@@ -24,11 +24,11 @@ WordsWithBytes.Game = function(game){
 WordsWithBytes.Game.getMessage = function(gameJson) {
     var proto = WordsWithBytes.Game.prototype;
     var wg = WordsWithBytes.Game;
-    WordsWithBytes.Player = gameJson.players[WordsWithBytes.Player.indx];
-    proto.initScrabbleRack(WordsWithBytes.Player.rack);
+    var player = WordsWithBytes.Player;
 
+    player = gameJson.players[player.indx];
 
-    if (WordsWithBytes.Player !== gameJson.currentPlayer) {
+    if (player !== gameJson.currentPlayer) {
         alert("Its not your turn yet. Please wait for other players to finish");
         proto.deactivateButtons();
     } else {
@@ -36,7 +36,10 @@ WordsWithBytes.Game.getMessage = function(gameJson) {
         proto.activateButtons();
     }
 
-    
+    if (wg.lettersOnRack !== player.rack.lettersOnRack || wg.lettersOnRack.length === 0) {
+        proto.initScrabbleRack(player.rack.lettersOnRack);
+    }
+
     wg.scrabbleBoardMap = gameJson.scrabbleBoard.board;//TODO: get letter pictures for each letters
 };
 
@@ -539,6 +542,7 @@ WordsWithBytes.Game.prototype = {
         var wg = WordsWithBytes.Game;
 
         for (var rackCol = 0; rackCol < 7; rackCol++) {
+            console.log(playerRack);
             var letterToPlace = playerRack[rackCol];
             var tile = wg.scrabbleTileMap.getTile(rackCol, 17);
             var sprite = game.add.sprite(rackCol * 41, 640, letterToPlace);

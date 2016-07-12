@@ -27,10 +27,6 @@ WordsWithBytes.WaitForPlayers.getMessage = function(gameJson) {
         WordsWithBytes.WaitForPlayers.addPlayers(gameJson.players);
     }
 
-    if(gameJson.gameState === "Game") {
-        game.state.start("Game");
-    }
-
     if(WordsWithBytes.WaitForPlayers.players.length > 1) {
         this.startGame = game.add.button(game.world.centerX, game.world.centerY * 1.5, 'startGameButton', function() {
             game.state.start("Game");
