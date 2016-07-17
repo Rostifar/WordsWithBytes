@@ -10,21 +10,6 @@ var setupSockets = (function () {
         transport : 'websocket' ,
         trackMessageLength : true,
         reconnectInterval : 5000 };
-    
-    function manageMessage(gameJson) {
-        
-        if(game.state.current !== gameJson.gameState) {
-            game.state.start(gameJson.gameState);
-        }
-
-        if(game.state.current === "WaitForPlayers") {
-            WordsWithBytes.WaitForPlayers.getMessage(gameJson);
-        }
-
-        if (game.state.current === "Game"){
-            WordsWithBytes.Game.getMessage(gameJson);
-        }
-    }
 
     request.onOpen = function(response) {
         alert("connected to game lobby");
@@ -33,7 +18,9 @@ var setupSockets = (function () {
     request.onMessage = function (response) {
         var parsedMessage = JSON.parse(response.responseBody);
         console.log(parsedMessage);
-        manageMessage(parsedMessage);
+        console.log(WordsWithBytes);
+        WordsWithBytes.GameJson = parsedMessage;
+        WordsWithBytes.ManageMessages(parsedMessage);
     };
     
     request.onReconnect = function() {
@@ -46,8 +33,11 @@ var setupSockets = (function () {
     WordsWithBytes.subSocket = socket.subscribe(request);
 });
 
+
 WordsWithBytes.MainMenu = function(game) {
 };
+
+
 
 var newGameButton;
 var joinGameButton;

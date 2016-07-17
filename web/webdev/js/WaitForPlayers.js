@@ -2,7 +2,6 @@
  * Created by Dad and Ross on 5/28/2016.
  */
 
-
 WordsWithBytes.WaitForPlayers = function(game) {
     this.players = [];
     this.yLocations = [];
@@ -19,27 +18,6 @@ WordsWithBytes.WaitForPlayers.addPlayers = function(players) {
     }
 };
 
-
-WordsWithBytes.WaitForPlayers.getMessage = function(gameJson) {
-
-    if(gameJson.players.length > WordsWithBytes.WaitForPlayers.players.length) {
-        WordsWithBytes.WaitForPlayers.players = gameJson.players;
-        WordsWithBytes.WaitForPlayers.addPlayers(gameJson.players);
-    }
-
-    if(WordsWithBytes.WaitForPlayers.players.length > 1) {
-        this.startGame = game.add.button(game.world.centerX, game.world.centerY * 1.5, 'startGameButton', function() {
-            game.state.start("Game");
-            let gameState = "Game";
-            $.post("/ChangeGameState", {"newGameState":gameState})
-                .success(function(data) {
-                    WordsWithBytes.subSocket.push("game changed");
-                });
-        }, this, 2, 1, 0);
-        this.startGame.anchor.setTo(0.5);
-    }
-    WordsWithBytes.WaitForPlayers.players = gameJson.players;
-};
 
 WordsWithBytes.WaitForPlayers.prototype = {
     
@@ -59,7 +37,6 @@ WordsWithBytes.WaitForPlayers.prototype = {
         var playerList = this.game.add.text(this.game.world.centerX, this.game.world.centerY / 3, "Players in lobby",
         {font: bannerFont, fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
         playerList.anchor.setTo(0.5);
-
     }
  };
 

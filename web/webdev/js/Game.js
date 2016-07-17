@@ -4,7 +4,6 @@
 "use strict";
 WordsWithBytes.Game = function(game){
     var wg = WordsWithBytes.Game;
-
     wg.scrabbleBoardLayer = null;
     wg.marker = null;
     wg.SQUARE_SIZE = 40;
@@ -20,30 +19,6 @@ WordsWithBytes.Game = function(game){
     wg.isExchangingLetters = false;
 };
 
-
-WordsWithBytes.Game.getMessage = function(gameJson) {
-    var proto = WordsWithBytes.Game.prototype;
-    var wg = WordsWithBytes.Game;
-    var player = WordsWithBytes.Player;
-
-    player = gameJson.players[player.indx];
-
-    if (player !== gameJson.currentPlayer) {
-        alert("Its not your turn yet. Please wait for other players to finish");
-        proto.deactivateButtons();
-    } else {
-        alert("its your turn! please select a move");
-        proto.activateButtons();
-    }
-
-    if (wg.lettersOnRack !== player.rack.lettersOnRack || wg.lettersOnRack.length === 0) {
-        proto.initScrabbleRack(player.rack.lettersOnRack);
-    }
-
-    wg.scrabbleBoardMap = gameJson.scrabbleBoard.board;//TODO: get letter pictures for each letters
-};
-
-
 /**
  * @WordsWithBytes.Game.Prototype
  * #purpose -> holds the main functionality for the whole scrabble game. Especially in the gui department.
@@ -58,6 +33,7 @@ WordsWithBytes.Game.prototype = {
  * -populates array to convert between between game canvas coordinates to ScrabbleBoard positions
  * -Example = convert x[640], y[320] -> [12][4]
  * */
+
     populatePositionMap: function () {
         var wg = WordsWithBytes.Game;
 
@@ -545,7 +521,7 @@ WordsWithBytes.Game.prototype = {
             console.log(playerRack);
             var letterToPlace = playerRack[rackCol];
             var tile = wg.scrabbleTileMap.getTile(rackCol, 17);
-            var sprite = game.add.sprite(rackCol * 41, 640, letterToPlace);
+            var sprite = game.add.sprite(rackCol * 41, 640, letterToPlace.letter);
 
             wg.lettersOnRack.push(sprite);
 
@@ -609,6 +585,8 @@ WordsWithBytes.Game.prototype = {
         wg.marker = game.add.graphics();
         wg.marker.lineStyle(2, 0x000000, 1);
         wg.marker.drawRect(0, 0, wg.SQUARE_SIZE, wg.SQUARE_SIZE);
+        game.state.onInitCallback(WordsWithBytes.ManageMessages(WordsWithBytes.GameJson));
+        
     },
 
     update: function () {

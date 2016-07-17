@@ -85,10 +85,7 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('QuitGameButton', 'assets/images/QuitGame.png');
         this.load.image('JoinGameButton', 'assets/images/JoinExistingGame.png');
         this.load.image('StartGameButton', 'assets/images/CreateNewGame.png');
-        /*this.load.audio('letterDrop', 'assets/music/placeLetter.mp3');
         this.load.audio('letterPlace', 'assets/music/putLetter.mp3');
-        */
-        //this.load.image('ScoreTemplate', 'assets/images/ScoreImage.png');
 
         //Load the tile map of the scrabble board using JSON layout.
         this.load.tilemap('ScrabbleBoardTileSet', 'assets/tilemaps/ScrabbleBoardTiles.json', null, Phaser.Tilemap.TILED_JSON);

@@ -23,13 +23,7 @@ WordsWithBytes.Boot.prototype = {
 
     },
 
-    init: function () {
-
-        this.scale.pageAlignVertically = true;
-        this.scale.pageAlignHorizontally = true;
-        this.scale.refresh();
-
-    },
+   
 
     preload: function () {
         this.load.image('WordsWithBytes-logo', 'assets/images/WordWithBytesLogo.png');
