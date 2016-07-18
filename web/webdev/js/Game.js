@@ -147,10 +147,11 @@ WordsWithBytes.Game.prototype = {
                 };
             }
         }
+
         //@note -> needs to be called after word is reordered, else letterObjects[0] may produce incorrect values.
         function isCenterSquareUsed() {
             for (var letterObject of letterObjects) {
-                if (letterObject.columnLocation === 7 && letterObject.rowLocation === 7 && wg.isFirstRound == true){
+                if (letterObject.columnLocation === 7 && letterObject.rowLocation === 7 && wg.isFirstRound == true) {
                     return true;
                 }
             }
@@ -186,7 +187,7 @@ WordsWithBytes.Game.prototype = {
             var word = "";
 
             for (var letterObj of letterObjects) {
-                word += letterObj.letterName;
+                word += letterObj.letterName.letter;
             }
             return word;
         }
@@ -197,20 +198,20 @@ WordsWithBytes.Game.prototype = {
             function isWordConnectedToItself() {
                 if (letters.length === 1) {
                     return true;
-                }else{
+                } else {
                     for (var f = 0; f < letters.length - 1; f++) {
                         var rowCalculations = Math.abs(letters[f].rowLocation - letters[f + 1].rowLocation);
                         var colCalculations = Math.abs(letters[f].columnLocation - letters[f + 1].columnLocation);
 
                         if (rowCalculations !== 0 && colCalculations !== 0) {
                             return false;
-                        } else if(rowCalculations > 1) {
+                        } else if (rowCalculations > 1) {
                             for (var j = 1; j < rowCalculations; j++) {
                                 if (!that.isSpaceTaken(letters[f].columnLocation, letters[f].rowLocation + j)) {
                                     return false;
                                 }
                             }
-                        } else if(colCalculations > 1) {
+                        } else if (colCalculations > 1) {
                             for (var k = 1; k < colCalculations; k++) {
                                 if (!that.isSpaceTaken(letters[f].columnLocation + k, letters[f].rowLocation)) {
                                     return false;
@@ -233,7 +234,7 @@ WordsWithBytes.Game.prototype = {
                 for (var letter of letterObjects) {
                     if (initialLetterColumn == 0 || initialLetterRow == 0 || finalLetterColumn == 0 || finalLetterRow == 0) {
                         that.findWordConnectionPoints(letter, undefined, true);
-                    } else if(initialLetterColumn == 14 || initialLetterRow == 14 || finalLetterColumn == 0 || finalLetterRow == 0) {
+                    } else if (initialLetterColumn == 14 || initialLetterRow == 14 || finalLetterColumn == 0 || finalLetterRow == 0) {
                         that.findWordConnectionPoints(letter, true, undefined);
                     } else {
                         that.findWordConnectionPoints(letter, true, true);
@@ -263,17 +264,23 @@ WordsWithBytes.Game.prototype = {
             alert("The word you have entered is empty. Please try again.")
             return;
         }
-        
+
         function getIndividualPositions() {
             var positionsRow = [];
             var positionsCol = [];
-            
+
             for (var letterObject of letterObjects) {
                 positionsCol.push(letterObject.columnLocation.toString());
                 positionsRow.push(letterObject.rowLocation.toString());
             }
             stringCol = positionsCol.join();
             stringRow = positionsRow.join();
+        }
+
+        function analyzeResponse(data) {
+            if (data !== "invalid") {
+                WordsWithBytes.subSocket.push("game changed");
+            }
         }
 
         initLetterObjects();
@@ -286,24 +293,33 @@ WordsWithBytes.Game.prototype = {
             convertBlankLetters();
             getIndividualPositions();
 
-            $.post("/PlayWord",
-                {"wordPlayed":getWordAsString(), "letterPositionsCol": stringCol, "letterPositionsRow":
-                stringRow, "wordOrientation": wordOrientation, "blankLetters": strBlankLetters},
-                function(data, status){
+            $.post("/PlayWord", 
+                {
+                    "wordPlayed": getWordAsString(),
+                    "letterPositionsCol": stringCol,
+                    "letterPositionsRow": stringRow,
+                    "wordOrientation": wordOrientation,
+                    "blankLetters": strBlankLetters
+                },
+                function (data, status) {
                     while (!data.finish) {
-                        that.deactivateButtons().bind(that);
+                        that.deactivateButtons();
                     }
-                });
+                    analyzeResponse(data);
+                }
+            );
         }
-
-
-        //TODO: if Word checks out, servlet return true & add letters to front end board
     },
 
     /**
      * @skipTurn
      * purpose-> skips the turn of the current player*/
-    skipTurn: function() {},
+    skipTurn: function() {
+        $.post("/SkipTurn")
+            .success(function(data) {
+                WordsWithBytes.subSocket.push("game updated");
+            });
+    },
 
     /**
      * @findWordConnectionPoints
@@ -332,7 +348,11 @@ WordsWithBytes.Game.prototype = {
             }
 
         }, this, 2, 1, 0);
-        WordsWithBytes.Game.passTurnButton = game.add.button(500, 620, 'PassTurnButton');
+        WordsWithBytes.Game.passTurnButton = game.add.button(500, 620, 'PassTurnButton', function() {
+            if (confirm("Are you sure you want to skip your turn?")) {
+                that.skipTurn();
+            }
+        });
         WordsWithBytes.Game.exchangeLettersButton = game.add.button(400, 660, 'SwapWordsButton', function() {
             that.exchangeLetters();
         });
@@ -499,7 +519,6 @@ WordsWithBytes.Game.prototype = {
      * purpose-> deactivates buttons when a player selects to exchange, play word, or skip turn
      * */
     deactivateButtons: function () {
-        //game.
         WordsWithBytes.Game.exchangeLettersButton.input.enabled = false;
         WordsWithBytes.Game.playWordButton.input.enabled = false;
         WordsWithBytes.Game.passTurnButton.input.enabled = false;
@@ -585,8 +604,15 @@ WordsWithBytes.Game.prototype = {
         wg.marker = game.add.graphics();
         wg.marker.lineStyle(2, 0x000000, 1);
         wg.marker.drawRect(0, 0, wg.SQUARE_SIZE, wg.SQUARE_SIZE);
+        wg.playerScore = this.game.add.text(50, 620, "Your score:",
+            {font: "16px Arial", fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
+        wg.playerScore.anchor.setTo(0.5);
         game.state.onInitCallback(WordsWithBytes.ManageMessages(WordsWithBytes.GameJson));
-        
+    },
+
+    updatePlayerScores: function(score) {
+        let prevText = "Your score: ";
+        WordsWithBytes.Game.playerScore.setText(prevText + score)
     },
 
     update: function () {

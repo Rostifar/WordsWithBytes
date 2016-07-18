@@ -5,6 +5,7 @@
 WordsWithBytes.WaitForPlayers = function(game) {
     this.players = [];
     this.yLocations = [];
+    let startGame = null;
 };
 
 WordsWithBytes.WaitForPlayers.addPlayers = function(players) {
@@ -22,6 +23,9 @@ WordsWithBytes.WaitForPlayers.addPlayers = function(players) {
 WordsWithBytes.WaitForPlayers.prototype = {
     
     create: function() {
+        let gameState = "Game";
+        let ww = WordsWithBytes.WaitForPlayers;
+
         var userName = prompt("Please enter a username ");
         addPlayerToLobby(userName);
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
@@ -37,8 +41,22 @@ WordsWithBytes.WaitForPlayers.prototype = {
         var playerList = this.game.add.text(this.game.world.centerX, this.game.world.centerY / 3, "Players in lobby",
         {font: bannerFont, fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
         playerList.anchor.setTo(0.5);
+        ww.startGame = game.add.button(game.world.centerX, game.world.centerY * 1.5, 'startGameButton', function() {
+            game.state.start("Game");
+            $.post("/ChangeGameState", {"newGameState":gameState})
+                .success(function(data) {
+                    WordsWithBytes.subSocket.push("game changed");
+                });
+        }, this, 2, 1, 0);
+        ww.startGame.anchor.setTo(0.5);
+        ww.startGame.visible = false;
+    },
+
+    makeButtonVisible: function() {
+        WordsWithBytes.WaitForPlayers.startGame.visible = true;
     }
- };
+};
+
 
 
 function addPlayerToLobby(userName) {

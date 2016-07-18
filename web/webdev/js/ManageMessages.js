@@ -9,6 +9,7 @@ WordsWithBytes.ManageMessages = function(gameJson) {
     }
 
     function updateWaitForPlayers() {
+        let proto = WordsWithBytes.WaitForPlayers.prototype;
 
         if(gameJson.players.length > WordsWithBytes.WaitForPlayers.players.length) {
             WordsWithBytes.WaitForPlayers.players = gameJson.players;
@@ -16,17 +17,7 @@ WordsWithBytes.ManageMessages = function(gameJson) {
         }
 
         if(WordsWithBytes.WaitForPlayers.players.length > 1) {
-            let gameState = "Game";
-            let startGame = game.add.button(game.world.centerX, game.world.centerY * 1.5, 'startGameButton', function() {
-
-                game.state.start("Game");
-                $.post("/ChangeGameState", {"newGameState":gameState})
-                    .success(function(data) {
-                        startGame.destroy();
-                        WordsWithBytes.subSocket.push("game changed");
-                    });
-            }, this, 2, 1, 0);
-            startGame.anchor.setTo(0.5);
+            proto.makeButtonVisible();
         }
         WordsWithBytes.WaitForPlayers.players = gameJson.players;
     }
@@ -36,12 +27,13 @@ WordsWithBytes.ManageMessages = function(gameJson) {
         let wg = WordsWithBytes.Game;
         let proto = WordsWithBytes.Game.prototype;
         let isInGameSession = game.state.current === gameJson.gameState;
-
+  
         if (!isInGameSession) {
             game.state.start("Game");
         } else {
             updateConstructs();
-            if (player === gameJson.currentPlayer) {
+            console.log(player);
+            if (player.indx === gameJson.currentPlayer.indx) {
                 alert("its your turn! Please select a move.");
                 proto.activateButtons();
             } else {
@@ -53,11 +45,25 @@ WordsWithBytes.ManageMessages = function(gameJson) {
         function updateConstructs() {
             let playerRack = player.rack.lettersOnRack;
             let jsonRack = gameJson.players[player.indx].rack.lettersOnRack;
+            let wg = WordsWithBytes.Game;
+            let jsonScore = gameJson.players[player.indx].scoreKeeper.totalPoints;
 
-            proto.initScrabbleRack(jsonRack);
+            function removePreviousLetters() {
+                for (let j = 0; j < wg.lettersOnRack.length; j++) {
+                    wg.lettersOnRack[j].destroy();
+                }
+                wg.lettersOnRack.length = 0;
+                playerRack.length = 0;
+            }
 
-            playerRack.length = 0;
+            if (WordsWithBytes.length !== 0) {
+                removePreviousLetters();
+                proto.initScrabbleRack(jsonRack);
+            } else {
+                proto.initScrabbleRack(jsonRack);
+            }
             playerRack = jsonRack;
+            proto.updatePlayerScores(jsonScore);
         }
     }
 };

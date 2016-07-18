@@ -263,7 +263,7 @@ public class ScrabbleGameManager implements Serializable {
         return result != null ? result.isValidWord() : false;
     }
 
-    private void exchangeLetters(char[] lettersToExchange) {
+    public void exchangeLetters(char[] lettersToExchange) {
         gameStateChanged = false;
         currentPlayer.getRack().exchangeLetters(lettersToExchange);
         isFirstRound = false;
@@ -271,7 +271,7 @@ public class ScrabbleGameManager implements Serializable {
         moveToNextPlayer();
     }
 
-    private void skipTurn() {
+    public void skipTurn() {
         gameStateChanged = false;
         isFirstRound = false;
         moveToNextPlayer();

@@ -99,4 +99,14 @@
         <servlet-name>GetLettersOnRack</servlet-name>
         <url-pattern>/GetLettersOnRack/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SkipTurn</servlet-name>
+        <servlet-class>com.rostifar.servlets.SkipTurnServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SkipTurn</servlet-name>
+        <url-pattern>/SkipTurn/*</url-pattern>
+    </servlet-mapping>
 </web-app>
