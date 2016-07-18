@@ -41,7 +41,7 @@ WordsWithBytes.WaitForPlayers.prototype = {
         var playerList = this.game.add.text(this.game.world.centerX, this.game.world.centerY / 3, "Players in lobby",
         {font: bannerFont, fill: "#eeeeee", stroke: "#535353", strokeThickness: 15});
         playerList.anchor.setTo(0.5);
-        ww.startGame = game.add.button(game.world.centerX, game.world.centerY * 1.5, 'startGameButton', function() {
+        ww.startGame = game.add.button(game.world.centerX, game.world.centerY * 1.75, 'startGameButton', function() {
             game.state.start("Game");
             $.post("/ChangeGameState", {"newGameState":gameState})
                 .success(function(data) {

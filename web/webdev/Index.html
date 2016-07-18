@@ -16,6 +16,8 @@
     <script src="js/atmosphere.js" type="text/javascript"></script>
     <script src="js/ManageMessages.js" type="text/javascript"></script>
     <script src="js/scrabbleSockets.js" type="text/javascript"></script>
+    <script src="js/EndGame.js" type="text/javascript"></script>
+
 
 </head>
 <body>
@@ -36,6 +38,7 @@
         game.state.add('MainMenu', WordsWithBytes.MainMenu);
         game.state.add('WaitForPlayers', WordsWithBytes.WaitForPlayers);
         game.state.add('Game', WordsWithBytes.Game);
+        game.state.add('EndGame', WordsWithBytes.Game);
         game.state.start('Boot');
 </script>
 

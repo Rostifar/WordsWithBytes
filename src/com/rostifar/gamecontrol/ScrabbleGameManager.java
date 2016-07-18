@@ -37,6 +37,7 @@ public class ScrabbleGameManager implements Serializable {
     private String gameState;
     private boolean newPlayerJoined;
     private boolean gameStateChanged;
+    private boolean wordsAreValid;
 
 
     /**
@@ -121,7 +122,7 @@ public class ScrabbleGameManager implements Serializable {
      *@playWord
      * purpose-> when activated by the servlet, manages the processes which involve playing a word
      * */
-    public void playWord(char[] word, List<Integer> col, List<Integer> row, String orientation, char[] blankLetters) {
+    public boolean playWord(char[] word, List<Integer> col, List<Integer> row, String orientation, char[] blankLetters) {
         gameStateChanged = false;
         List<ScrabbleWord> playedWords;
         scrabbleWord = new ScrabbleWord(word);
@@ -144,7 +145,10 @@ public class ScrabbleGameManager implements Serializable {
             isFirstRound = false;
             refillRack();
             moveToNextPlayer();
+        } else {
+            return false;
         }
+        return true;
     }
 
     /**
