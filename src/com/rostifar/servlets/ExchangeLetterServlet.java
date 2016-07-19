@@ -16,7 +16,7 @@ public class ExchangeLetterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         String lettersToExchange = request.getParameter("lettersToExchange");
         ScrabbleGameManager gameManager = ScrabbleGameCache.lookupGame(ScrabbleServletHelper.getGameCodeFromSession(request)).getGameManager();
-
+        System.out.println(lettersToExchange);
         gameManager.exchangeLetters(lettersToExchange.toCharArray());
         String json = ScrabbleServletHelper.getJSONforGameManager(gameManager);
         response.getWriter().write(json);

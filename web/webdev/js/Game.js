@@ -379,6 +379,15 @@ WordsWithBytes.Game.prototype = {
         var currentTile = wg.scrabbleTileMap.getTile(wg.scrabbleBoardLayer.getTileX(1) * wg.SQUARE_SIZE, wg.scrabbleBoardLayer.getTileY(1) * wg.SQUARE_SIZE);
     },
 
+    convertToString: function(arr) {
+        console.log(arr);
+        let str = "";
+        for(let i = 0; i < arr.length; i++) {
+            str = str + arr[i].letter;
+        }
+        return str;
+    },
+
     /**
      * @exchangeLetters
      * purpose-> allows the player to exchange letters
@@ -390,11 +399,11 @@ WordsWithBytes.Game.prototype = {
         var wg = WordsWithBytes.Game;
         let proto = wg.prototype;
         let confirmButton = game.add.button(game.world.centerX / 2, game.world.centerY, 'submitLetters', function () {
-            $.post("/ExchangeLetters", {"lettersToExchange": lettersToExchange}, function(data, status) {
-                while(!data.finish) {
-                    proto.deactivateButtons();
-                }
+            $.post("/ExchangeLetters", {"lettersToExchange": proto.convertToString(lettersToExchange)}, function(data, status) {
+                proto.deactivateButtons();
                 if (data !== "failed") {
+                    confirmButton.destroy();
+                    cancelButton.destroy();
                     WordsWithBytes.subSocket.push("game changed");
                 }
             })
