@@ -71,8 +71,8 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('XSelected', 'assets/images/LettersForExchange/XSelected.png');
         this.load.image('YSelected', 'assets/images/LettersForExchange/YSelected.png');
         this.load.image('ZSelected', 'assets/images/LettersForExchange/ZSelected.png');
+        this.load.image('submitLetters', 'assets/images/submitLetters.png');
 
-      //  this.load.audio('introMusic', ['assets/music/intro-music.mp3']);
         this.load.image('player2Button', 'assets/images/2PlayersButton.png');
         this.load.image('player3Button', 'assets/images/3PlayersButton.png');
         this.load.image('player4Button', 'assets/images/4PlayersButton.png');
@@ -87,7 +87,6 @@ WordsWithBytes.Preload.prototype = {
         this.load.image('StartGameButton', 'assets/images/CreateNewGame.png');
         this.load.audio('letterPlace', 'assets/music/putLetter.mp3');
 
-        //Load the tile map of the scrabble board using JSON layout.
         this.load.tilemap('ScrabbleBoardTileSet', 'assets/tilemaps/ScrabbleBoardTiles.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tileImage', 'assets/images/ScrabbleBoardTilesetImage.png');
         this.load.image('alphabetImage', 'assets/images/ScrabbleAlphabetOneRowImage.png');

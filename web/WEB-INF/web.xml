@@ -101,6 +101,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ExchangeLetters</servlet-name>
+        <servlet-class>com.rostifar.servlets.ExchangeLetterServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ExchangeLetters</servlet-name>
+        <url-pattern>/ExchangeLetters/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>SkipTurn</servlet-name>
         <servlet-class>com.rostifar.servlets.SkipTurnServlet</servlet-class>
     </servlet>

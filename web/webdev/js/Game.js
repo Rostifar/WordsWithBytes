@@ -388,31 +388,46 @@ WordsWithBytes.Game.prototype = {
         var that = this;
         var lettersToExchange = [];
         var wg = WordsWithBytes.Game;
-
-        (function() {
-            alert("click on the letters you would like to exchange");
-            for (var letter of wg.lettersOnRack) {
-                wg.isExchangingLetters = true;
-                letter.originalKey = letter.key;
-                letter.input.disableDrag(true);
-                letter.input.disableSnap(true);
-                letter.x = letter.originalPosition.x;
-                letter.y = letter.originalPosition.y;
-                letter.isSelectedToBeExchanged = false;
-                letter.events.onInputDown.add(function(letter) {
-                    if (wg.letterKeys.indexOf(letter.key) !== -1){
-                        letter.loadTexture(letter.key.concat("Selected"));
-                        lettersToExchange.push(letter.name);
-                    } else if(wg.letterKeys.indexOf(letter.key) === -1) {
-                        letter.loadTexture(letter.originalKey);
-                        lettersToExchange.splice(lettersToExchange.indexOf(letter.name), 1);
-                    }
-                    console.log(lettersToExchange);
-                }, this);
+        let proto = wg.prototype;
+        let confirmButton = game.add.button(game.world.centerX / 2, game.world.centerY, 'submitLetters', function () {
+            $.post("/ExchangeLetters", {"lettersToExchange": lettersToExchange}, function(data, status) {
+                while(!data.finish) {
+                    proto.deactivateButtons();
                 }
-        })();
+                if (data !== "failed") {
+                    WordsWithBytes.subSocket.push("game changed");
+                }
+            })
+        });
+        let cancelButton = game.add.button((game.world.centerX / 2) + game.world.centerX, game.world.centerY, 'cancelButton', function () {
+            wg.isExchangingLetters = false;
+            proto.removeExistingRack();
+            proto.initScrabbleRack(wg.jsonRack);
+            cancelButton.destroy();
+            confirmButton.destroy();
+        });
 
-        $.post("/ExchangeLetters", {"lettersToExchange" : lettersToExchange});
+        cancelButton.anchor.setTo(0.5, 0.5);
+        confirmButton.anchor.setTo(0.5, 0.5);
+        alert("click on the letters you would like to exchange");
+        for (var letter of wg.lettersOnRack) {
+            wg.isExchangingLetters = true;
+            letter.originalKey = letter.key;
+            letter.input.disableDrag(true);
+            letter.input.disableSnap(true);
+            letter.x = letter.originalPosition.x;
+            letter.y = letter.originalPosition.y;
+            letter.isSelectedToBeExchanged = false;
+            letter.events.onInputDown.add(function (letter) {
+                if (wg.letterKeys.indexOf(letter.key) !== -1) {
+                    letter.loadTexture(letter.key.concat("Selected"));
+                    lettersToExchange.push(letter.name);
+                } else if (wg.letterKeys.indexOf(letter.key) === -1) {
+                    letter.loadTexture(letter.originalKey);
+                    lettersToExchange.splice(lettersToExchange.indexOf(letter.name), 1);
+                }
+            }, this);
+        }
     },
 
     /**
@@ -535,6 +550,7 @@ WordsWithBytes.Game.prototype = {
      * purpose-> initializes sprite images placed on rack*/
     initScrabbleRack: function (playerRack) {
         var wg = WordsWithBytes.Game;
+        wg.jsonRack = playerRack;
 
         for (var rackCol = 0; rackCol < 7; rackCol++) {
             console.log(playerRack);
@@ -555,6 +571,14 @@ WordsWithBytes.Game.prototype = {
             sprite.events.onInputUp.add(function(sprite) {this.placeLetterOnBoard(sprite);}, this);
             sprite.events.onInputDown.add(function (sprite) {this.removeLetterFromWord(sprite);}, this)
         }
+    },
+    
+    removeExistingRack: function() {
+        let wg = WordsWithBytes.Game;
+        for (let letter of wg.lettersOnRack) {
+            letter.destroy();
+        }
+        wg.lettersOnRack.length = 0;
     },
 
     /**
