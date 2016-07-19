@@ -12,7 +12,7 @@ public class ScrabbleGameConfiguration {
      *
      * @throws Exception if file cannot be found or loaded
      */
-    private static Properties gameProperties = new Properties();
+    private static Properties gameProperties;
     private static final String PROPERTY_FILE = "scrabbleGame.properties";
 
     public static void initialize() throws ScrabbleGameException{
