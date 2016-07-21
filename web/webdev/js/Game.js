@@ -42,6 +42,19 @@ WordsWithBytes.Game.prototype = {
         }
     },
 
+    addWordToBoard: function(word) {
+        let wg = WordsWithBytes.Game;
+        for(let i = 0; i < word.length; i++) {
+            let obj = word[i];
+            let col = obj.desiredPositionCol;
+            let row = obj.desiredPositionRow;
+            let name = obj.letter;
+
+            wg.scrabbleBoardMap[col][row] = name;
+            let sprite = game.add.sprite(wg.SQUARE_SIZE * col, wg.SQUARE_SIZE * row, name);
+        }
+    },
+
     /**
      * @populateScrabbleBoard
      * #purpose -> sets up a blank scrabbleBoard.

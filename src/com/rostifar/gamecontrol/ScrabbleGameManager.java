@@ -38,6 +38,7 @@ public class ScrabbleGameManager implements Serializable {
     private boolean newPlayerJoined;
     private boolean gameStateChanged;
     private boolean wordsAreValid;
+    private String moveType;
 
 
     /**
@@ -148,6 +149,7 @@ public class ScrabbleGameManager implements Serializable {
         } else {
             return false;
         }
+        moveType = "play";
         return true;
     }
 
@@ -250,6 +252,7 @@ public class ScrabbleGameManager implements Serializable {
             }
             System.out.println(scrabbleLetter);
         }
+        moveType = "skip";
     }
 
     private boolean isWordInDictionary(String word) throws ScrabbleGameInvalidWordException {
@@ -273,6 +276,7 @@ public class ScrabbleGameManager implements Serializable {
         isFirstRound = false;
         refillRack();
         moveToNextPlayer();
+        moveType = "exchange";
     }
 
     public void skipTurn() {

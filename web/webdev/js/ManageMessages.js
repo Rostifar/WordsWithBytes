@@ -1,7 +1,6 @@
 WordsWithBytes.ManageMessages = function(gameJson) {
-    
     let gameState = gameJson.gameState;
-
+    
     if (gameState === undefined) {
         updateWaitForPlayers();
     } else if (gameState === "Game") {
@@ -62,6 +61,11 @@ WordsWithBytes.ManageMessages = function(gameJson) {
             } else {
                 proto.initScrabbleRack(jsonRack);
             }
+
+            if (gameJson !== undefined && gameJson.moveType !== undefined && gameJson.moveType === "play") {
+                proto.addWordToBoard(gameJson.currentWord.word);
+            }
+
             playerRack = jsonRack;
             proto.updatePlayerScores(jsonScore);
         }
