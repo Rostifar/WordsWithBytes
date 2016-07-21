@@ -302,9 +302,6 @@ WordsWithBytes.Game.prototype = {
                     "blankLetters": strBlankLetters
                 },
                 function (data, status) {
-                    while (!data.finish) {
-                        that.deactivateButtons();
-                    }
                     analyzeResponse(data);
                 }
             );

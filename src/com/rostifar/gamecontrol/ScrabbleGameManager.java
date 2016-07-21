@@ -169,7 +169,7 @@ public class ScrabbleGameManager implements Serializable {
     private boolean playedWordsAreValid(List<ScrabbleWord> playedWords) {
         for (ScrabbleWord word : playedWords) {
             try {
-                if (!isWordInDictionary(word.toString())) {
+                if (!isWordInDictionary(word.toString().toLowerCase())) {
                     return false;
                 }
             } catch (ScrabbleGameInvalidWordException e) {}
